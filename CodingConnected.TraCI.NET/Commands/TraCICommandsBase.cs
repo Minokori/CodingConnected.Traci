@@ -1,32 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace CodingConnected.TraCI.NET.Commands;
 
-namespace CodingConnected.TraCI.NET.Commands
-{
-	public abstract class TraCICommandsBase
-	{
-		#region Fields
 
-		protected readonly TraCIClient Client;
+/// <summary>
+/// Base class for TraCI Command
+/// </summary>
+/// <param name="client"> reference of a <see cref="TraCIClient"/> </param>
+public abstract class TraCICommandsBase(TraCIClient client)
+    {
+    #region Fields
 
-		#endregion // Fields
+    protected readonly TraCIClient Client = client;
 
-		#region Constructor
+    #endregion // Fields
 
-		protected TraCICommandsBase(TraCIClient client)
-		{
-			Client = client;
-		}
+    #region Abstract Methods
 
-        #endregion // Constructor
-
-        #region Abstract Methods
-
-        #endregion
-
-        
+    #endregion
     }
-}
