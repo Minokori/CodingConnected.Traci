@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using CodingConnected.TraCI.NET.Constants;
+using CodingConnected.TraCI.NET.Response;
 using CodingConnected.TraCI.NET.Types;
 
 namespace CodingConnected.TraCI.NET.Helpers
@@ -9,7 +11,7 @@ namespace CodingConnected.TraCI.NET.Helpers
     internal static class TraCIDataConverter
         {
         #region Static Methods
-
+        // TODO T确定
         internal static TraCIResponse<T> ExtractDataFromResponse<T>(TraCIResult[] response, byte commandType, byte messageType = 0)
             {
             if (response?.Length > 0)
@@ -120,7 +122,7 @@ namespace CodingConnected.TraCI.NET.Helpers
 
         private static object GetDataFromSimStepResponse(TraCIResult r1)
             {
-            var returnList = new List<TraCISubscriptionResponse>();
+            var returnList = new List<object>();
             int offset = 5;
 
             // extract number of subscriptions
@@ -226,7 +228,7 @@ namespace CodingConnected.TraCI.NET.Helpers
                     {
                     case TraCIConstants.POSITION_LON_LAT:
                             {
-                            variableSubscriptionResponce.responseByVariableCode.Add(
+                            variableSubscriptionResponce.ResponseData.Add(
                                 variable,
                             new TraCIResponse<LonLatPosition>
                                 {
@@ -239,7 +241,7 @@ namespace CodingConnected.TraCI.NET.Helpers
                             }
                     case TraCIConstants.POSITION_2D:
                             {
-                            variableSubscriptionResponce.responseByVariableCode.Add(
+                            variableSubscriptionResponce.ResponseData.Add(
                                 variable,
                             new TraCIResponse<Position2D>
                                 {
@@ -252,7 +254,7 @@ namespace CodingConnected.TraCI.NET.Helpers
                             }
                     case TraCIConstants.POSITION_LON_LAT_ALT:
                             {
-                            variableSubscriptionResponce.responseByVariableCode.Add(
+                            variableSubscriptionResponce.ResponseData.Add(
                                 variable,
                             new TraCIResponse<LonLatAltPosition>
                                 {
@@ -265,7 +267,7 @@ namespace CodingConnected.TraCI.NET.Helpers
                             }
                     case TraCIConstants.POSITION_3D:
                             {
-                            variableSubscriptionResponce.responseByVariableCode.Add(
+                            variableSubscriptionResponce.ResponseData.Add(
                                 variable,
                             new TraCIResponse<Position3D>
                                 {
@@ -278,7 +280,7 @@ namespace CodingConnected.TraCI.NET.Helpers
                             }
                     case TraCIConstants.POSITION_ROADMAP:
                             {
-                            variableSubscriptionResponce.responseByVariableCode.Add(
+                            variableSubscriptionResponce.ResponseData.Add(
                                 variable,
                             new TraCIResponse<RoadMapPosition>
                                 {
@@ -291,7 +293,7 @@ namespace CodingConnected.TraCI.NET.Helpers
                             }
                     case TraCIConstants.TYPE_BOUNDINGBOX:
                             {
-                            variableSubscriptionResponce.responseByVariableCode.Add(
+                            variableSubscriptionResponce.ResponseData.Add(
                                 variable,
                             new TraCIResponse<BoundaryBox>
                                 {
@@ -304,7 +306,7 @@ namespace CodingConnected.TraCI.NET.Helpers
                             }
                     case TraCIConstants.TYPE_POLYGON:
                             {
-                            variableSubscriptionResponce.responseByVariableCode.Add(
+                            variableSubscriptionResponce.ResponseData.Add(
                                 variable,
                             new TraCIResponse<Polygon>
                                 {
@@ -317,7 +319,7 @@ namespace CodingConnected.TraCI.NET.Helpers
                             }
                     case TraCIConstants.TYPE_UBYTE:
                             {
-                            variableSubscriptionResponce.responseByVariableCode.Add(
+                            variableSubscriptionResponce.ResponseData.Add(
                                 variable,
                             new TraCIResponse<byte>
                                 {
@@ -330,7 +332,7 @@ namespace CodingConnected.TraCI.NET.Helpers
                             }
                     case TraCIConstants.TYPE_BYTE:
                             {
-                            variableSubscriptionResponce.responseByVariableCode.Add(
+                            variableSubscriptionResponce.ResponseData.Add(
                                 variable,
                             new TraCIResponse<byte>
                                 {
@@ -343,7 +345,7 @@ namespace CodingConnected.TraCI.NET.Helpers
                             }
                     case TraCIConstants.TYPE_INTEGER:
                             {
-                            variableSubscriptionResponce.responseByVariableCode.Add(
+                            variableSubscriptionResponce.ResponseData.Add(
                                 variable,
                             new TraCIResponse<int>
                                 {
@@ -356,7 +358,7 @@ namespace CodingConnected.TraCI.NET.Helpers
                             }
                     case TraCIConstants.TYPE_FLOAT:
                             {
-                            variableSubscriptionResponce.responseByVariableCode.Add(
+                            variableSubscriptionResponce.ResponseData.Add(
                                 variable,
                             new TraCIResponse<float>
                                 {
@@ -369,7 +371,7 @@ namespace CodingConnected.TraCI.NET.Helpers
                             }
                     case TraCIConstants.TYPE_DOUBLE:
                             {
-                            variableSubscriptionResponce.responseByVariableCode.Add(
+                            variableSubscriptionResponce.ResponseData.Add(
                                 variable,
                             new TraCIResponse<double>
                                 {
@@ -382,7 +384,7 @@ namespace CodingConnected.TraCI.NET.Helpers
                             }
                     case TraCIConstants.TYPE_STRING:
                             {
-                            variableSubscriptionResponce.responseByVariableCode.Add(
+                            variableSubscriptionResponce.ResponseData.Add(
                                 variable,
                             new TraCIResponse<string>
                                 {
@@ -395,7 +397,7 @@ namespace CodingConnected.TraCI.NET.Helpers
                             }
                     case TraCIConstants.TYPE_STRINGLIST:
                             {
-                            variableSubscriptionResponce.responseByVariableCode.Add(
+                            variableSubscriptionResponce.ResponseData.Add(
                                 variable,
                             new TraCIResponse<List<string>>
                                 {
@@ -408,7 +410,7 @@ namespace CodingConnected.TraCI.NET.Helpers
                             }
                     case TraCIConstants.TYPE_COLOR:
                             {
-                            variableSubscriptionResponce.responseByVariableCode.Add(
+                            variableSubscriptionResponce.ResponseData.Add(
                                 variable,
                             new TraCIResponse<Color>
                                 {
@@ -425,7 +427,7 @@ namespace CodingConnected.TraCI.NET.Helpers
                             }
                     case TraCIConstants.TYPE_COMPOUND:
                             {
-                            variableSubscriptionResponce.responseByVariableCode.Add(
+                            variableSubscriptionResponce.ResponseData.Add(
                                 variable,
                             new TraCIResponse<CompoundObject>
                                 {

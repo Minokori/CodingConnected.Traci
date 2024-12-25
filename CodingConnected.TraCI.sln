@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26430.14
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35527.113
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CodingConnected.TraCI.C", "CodingConnected.Traci.C\CodingConnected.Traci.C.vcxproj", "{10C3C7D7-9D1E-4C78-B395-5FA46C0ADC0C}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CodingConnected.Traci.C", "CodingConnected.Traci.C\CodingConnected.Traci.C.vcxproj", "{10C3C7D7-9D1E-4C78-B395-5FA46C0ADC0C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodingConnected.TraCI.NET", "CodingConnected.Traci.NET\CodingConnected.TraCI.NET.csproj", "{2E2F7244-3E8C-41F0-8AD2-567ACF862B75}"
 EndProject

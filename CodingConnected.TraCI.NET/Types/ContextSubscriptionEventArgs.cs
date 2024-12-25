@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
+using CodingConnected.TraCI.NET.Response;
 
 namespace CodingConnected.TraCI.NET.Types
-{
+    {
     /// <summary>
     /// Please refer to  https://sumo.dlr.de/wiki/TraCI/Object_Context_Subscription
     /// </summary>

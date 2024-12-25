@@ -1,4 +1,6 @@
-﻿using CodingConnected.TraCI.NET.Helpers;
+﻿using CodingConnected.TraCI.NET.Constants;
+using CodingConnected.TraCI.NET.Helpers;
+using CodingConnected.TraCI.NET.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,12 +8,12 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace CodingConnected.TraCI.NET.Commands
-{
-    public abstract class TraCIContextSubscribableCommands : TraCICommandsBase
     {
+    public abstract class TraCIContextSubscribableCommands(ITcpService tcpService, ICommandHelperService helper) : TraCICommandsBase(tcpService, helper)
+        {
         // Cache an empty list of bytes to unsubscribe. Prevents allocation when multiple unsubscribe occur.
         private static readonly List<byte> EmptyVariableSubscriptionList = new List<byte>();
-        
+
         /// <summary>
         /// Should be overriden and return TraCIConstants.CMD_SUBSCRIBE_&lt; Command Domain &gt;_CONTEXT 
         /// for the corresponding domain.
@@ -26,11 +28,6 @@ namespace CodingConnected.TraCI.NET.Commands
         /// </summary>
         protected abstract byte ContextSubscribeCommand { get; }
 
-
-
-        protected TraCIContextSubscribableCommands(TraCIClient client) : base(client)
-        {
-        }
 
         /// <summary>
         /// SubscribeContext for the objects of the domain this class belongs to. The object the subscription happened under 
@@ -50,9 +47,8 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <param name="dist"> the radius of the surrounding </param>
         /// <param name="variables"> the list of variables to return </param>
         public void SubscribeContext(string objectId, double beginTime, double endTime, byte contextDomain, double dist, List<byte> ListOfVariablesToSubsribeTo)
-        {
-            TraCICommandHelper.ExecuteSubscribeContextCommand(
-            Client,
+            {
+            _helper.ExecuteSubscribeContextCommand(
             beginTime,
             endTime,
             objectId,
@@ -60,20 +56,19 @@ namespace CodingConnected.TraCI.NET.Commands
             dist,
             ContextSubscribeCommand,
             ListOfVariablesToSubsribeTo);
-        }
-        
+            }
+
         public void UnsubscribeContext(string objectId, byte contextDomain)
-        {
-            TraCICommandHelper.ExecuteSubscribeContextCommand(
-                Client,
-                TraCIConstants.INVALID_DOUBLE_VALUE, 
+            {
+            _helper.ExecuteSubscribeContextCommand(
+                TraCIConstants.INVALID_DOUBLE_VALUE,
             TraCIConstants.INVALID_DOUBLE_VALUE,
             objectId,
             contextDomain,
             TraCIConstants.INVALID_DOUBLE_VALUE,
             ContextSubscribeCommand,
             EmptyVariableSubscriptionList);
+            }
+
         }
-        
     }
-}

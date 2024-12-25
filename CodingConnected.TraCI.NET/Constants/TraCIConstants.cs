@@ -1,10 +1,10 @@
-﻿namespace CodingConnected.TraCI.NET
-{
+﻿namespace CodingConnected.TraCI.NET.Constants
+    {
     /// <summary>
     /// Based on TraCIConst
     /// </summary>
     public class TraCIConstants
-    {
+        {
 
         // ****************************************
         // VERSION
@@ -976,5 +976,5 @@
         // presence of view
         public const byte VAR_HAS_VIEW = 0xa7;
 
+        }
     }
-}

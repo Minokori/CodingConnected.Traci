@@ -1,18 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace CodingConnected.TraCI.NET.Types
-{
-    public class CompoundObject : ComposedTypeBase
     {
+    public class CompoundObject : ComposedTypeBase
+        {
         public List<ComposedTypeBase> Value { get; set; }
 
         public CompoundObject()
-        {
-            Value = new List<ComposedTypeBase>();
+            {
+            Value = [];
+            }
         }
     }
-}

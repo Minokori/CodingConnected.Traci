@@ -1,11 +1,15 @@
 ﻿using System.Collections.Generic;
+using CodingConnected.TraCI.NET.Constants;
 using CodingConnected.TraCI.NET.Helpers;
+using CodingConnected.TraCI.NET.Response;
+using CodingConnected.TraCI.NET.Services;
 using CodingConnected.TraCI.NET.Types;
 
 namespace CodingConnected.TraCI.NET.Commands
-{
-    public class PersonCommands : TraCICommandsBase
     {
+    public class PersonCommands(ITcpService tcpService, ICommandHelperService helper)
+        : TraCICommandsBase(tcpService, helper)
+        {
         #region Public Methods
 
         /// <summary>
@@ -13,28 +17,26 @@ namespace CodingConnected.TraCI.NET.Commands
         /// </summary>
         /// <returns></returns>
         public TraCIResponse<List<string>> GetIdList()
-        {
-            return
-                TraCICommandHelper.ExecuteGetCommand<List<string>>(
-                    Client,
-                    "ignored",
-                    TraCIConstants.CMD_GET_PERSON_VARIABLE,
-                    TraCIConstants.ID_LIST);
-        }
+            {
+            return _helper.ExecuteGetCommand<List<string>>(
+                "ignored",
+                TraCIConstants.CMD_GET_PERSON_VARIABLE,
+                TraCIConstants.ID_LIST
+            );
+            }
 
         /// <summary>
         /// 	Returns the number of persons currently running within the scenario (the given person ID is ignored)
         /// </summary>
         /// <returns></returns>
         public TraCIResponse<int> GetIdCount()
-        {
-            return
-                TraCICommandHelper.ExecuteGetCommand<int>(
-                    Client,
-                    "ignored",
-                    TraCIConstants.CMD_GET_PERSON_VARIABLE,
-                    TraCIConstants.ID_COUNT);
-        }
+            {
+            return _helper.ExecuteGetCommand<int>(
+                "ignored",
+                TraCIConstants.CMD_GET_PERSON_VARIABLE,
+                TraCIConstants.ID_COUNT
+            );
+            }
 
         /// <summary>
         /// 	Returns the speed of the named person within the last step [m/s]; error value: -2^30
@@ -42,14 +44,13 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <param name="id"></param>
         /// <returns></returns>
         public TraCIResponse<double> GetSpeed(string id)
-        {
-            return
-                TraCICommandHelper.ExecuteGetCommand<double>(
-                    Client,
-                    id,
-                    TraCIConstants.CMD_GET_PERSON_VARIABLE,
-                    TraCIConstants.VAR_SPEED);
-        }
+            {
+            return _helper.ExecuteGetCommand<double>(
+                id,
+                TraCIConstants.CMD_GET_PERSON_VARIABLE,
+                TraCIConstants.VAR_SPEED
+            );
+            }
 
         /// <summary>
         /// /	Returns the position(two doubles) of the named person within the last step [m,m]; error value: [-2^30, -2^30].
@@ -57,14 +58,13 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <param name="id"></param>
         /// <returns></returns>
         public TraCIResponse<Position2D> GetPosition(string id)
-        {
-            return
-                TraCICommandHelper.ExecuteGetCommand<Position2D>(
-                    Client,
-                    id,
-                    TraCIConstants.CMD_GET_PERSON_VARIABLE,
-                    TraCIConstants.VAR_POSITION);
-        }
+            {
+            return _helper.ExecuteGetCommand<Position2D>(
+                id,
+                TraCIConstants.CMD_GET_PERSON_VARIABLE,
+                TraCIConstants.VAR_POSITION
+            );
+            }
 
         /// <summary>
         /// /Returns the 3D-position(three doubles) of the named vehicle (center of the front bumper) within the last step [m,m,m]; error value: [-2^30, -2^30, -2^30].
@@ -72,14 +72,13 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <param name="id"></param>
         /// <returns></returns>
         public TraCIResponse<Position3D> GetPosition3D(string id)
-        {
-            return
-                TraCICommandHelper.ExecuteGetCommand<Position3D>(
-                    Client,
-                    id,
-                    TraCIConstants.CMD_GET_PERSON_VARIABLE,
-                    TraCIConstants.VAR_POSITION3D);
-        }
+            {
+            return _helper.ExecuteGetCommand<Position3D>(
+                id,
+                TraCIConstants.CMD_GET_PERSON_VARIABLE,
+                TraCIConstants.VAR_POSITION3D
+            );
+            }
 
         /// <summary>
         /// Returns the angle of the named person within the last step [°]; error value: -2^30
@@ -87,14 +86,13 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <param name="id"></param>
         /// <returns></returns>
         public TraCIResponse<double> GetAngle(string id)
-        {
-            return
-                TraCICommandHelper.ExecuteGetCommand<double>(
-                    Client,
-                    id,
-                    TraCIConstants.CMD_GET_PERSON_VARIABLE,
-                    TraCIConstants.VAR_ANGLE);
-        }
+            {
+            return _helper.ExecuteGetCommand<double>(
+                id,
+                TraCIConstants.CMD_GET_PERSON_VARIABLE,
+                TraCIConstants.VAR_ANGLE
+            );
+            }
 
         /// <summary>
         /// 	Returns the id of the edge the named person was at within the last step; error value: ""
@@ -102,14 +100,13 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <param name="id"></param>
         /// <returns></returns>
         public TraCIResponse<string> GetRoadID(string id)
-        {
-            return
-                TraCICommandHelper.ExecuteGetCommand<string>(
-                    Client,
-                    id,
-                    TraCIConstants.CMD_GET_PERSON_VARIABLE,
-                    TraCIConstants.VAR_ROAD_ID);
-        }
+            {
+            return _helper.ExecuteGetCommand<string>(
+                id,
+                TraCIConstants.CMD_GET_PERSON_VARIABLE,
+                TraCIConstants.VAR_ROAD_ID
+            );
+            }
 
         /// <summary>
         /// 	Returns the id of the type of the named person
@@ -117,14 +114,13 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <param name="id"></param>
         /// <returns></returns>
         public TraCIResponse<string> GetTypeID(string id)
-        {
-            return
-                TraCICommandHelper.ExecuteGetCommand<string>(
-                    Client,
-                    id,
-                    TraCIConstants.CMD_GET_PERSON_VARIABLE,
-                    TraCIConstants.VAR_TYPE);
-        }
+            {
+            return _helper.ExecuteGetCommand<string>(
+                id,
+                TraCIConstants.CMD_GET_PERSON_VARIABLE,
+                TraCIConstants.VAR_TYPE
+            );
+            }
 
         /// <summary>
         /// 	Returns the person's color.
@@ -132,14 +128,13 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <param name="id"></param>
         /// <returns></returns>
         public TraCIResponse<Color> GetColor(string id)
-        {
-            return
-                TraCICommandHelper.ExecuteGetCommand<Color>(
-                    Client,
-                    id,
-                    TraCIConstants.CMD_GET_PERSON_VARIABLE,
-                    TraCIConstants.VAR_COLOR);
-        }
+            {
+            return _helper.ExecuteGetCommand<Color>(
+                id,
+                TraCIConstants.CMD_GET_PERSON_VARIABLE,
+                TraCIConstants.VAR_COLOR
+            );
+            }
 
         /// <summary>
         /// The position of the person along the edge (in [m]); error value: -2^30
@@ -147,14 +142,13 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <param name="id"></param>
         /// <returns></returns>
         public TraCIResponse<double> GetLanePosition(string id)
-        {
-            return
-                TraCICommandHelper.ExecuteGetCommand<double>(
-                    Client,
-                    id,
-                    TraCIConstants.CMD_GET_PERSON_VARIABLE,
-                    TraCIConstants.VAR_LANEPOSITION);
-        }
+            {
+            return _helper.ExecuteGetCommand<double>(
+                id,
+                TraCIConstants.CMD_GET_PERSON_VARIABLE,
+                TraCIConstants.VAR_LANEPOSITION
+            );
+            }
 
         /// <summary>
         /// Returns the length of the persons [m]
@@ -162,14 +156,13 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <param name="id"></param>
         /// <returns></returns>
         public TraCIResponse<double> GetLength(string id)
-        {
-            return
-                TraCICommandHelper.ExecuteGetCommand<double>(
-                    Client,
-                    id,
-                    TraCIConstants.CMD_GET_PERSON_VARIABLE,
-                    TraCIConstants.VAR_LENGTH);
-        }
+            {
+            return _helper.ExecuteGetCommand<double>(
+                id,
+                TraCIConstants.CMD_GET_PERSON_VARIABLE,
+                TraCIConstants.VAR_LENGTH
+            );
+            }
 
         /// <summary>
         /// Returns the offset (gap to front person if halting) of this person [m]
@@ -177,14 +170,13 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <param name="id"></param>
         /// <returns></returns>
         public TraCIResponse<double> GetMinGap(string id)
-        {
-            return
-                TraCICommandHelper.ExecuteGetCommand<double>(
-                    Client,
-                    id,
-                    TraCIConstants.CMD_GET_PERSON_VARIABLE,
-                    TraCIConstants.VAR_MINGAP);
-        }
+            {
+            return _helper.ExecuteGetCommand<double>(
+                id,
+                TraCIConstants.CMD_GET_PERSON_VARIABLE,
+                TraCIConstants.VAR_MINGAP
+            );
+            }
 
         /// <summary>
         /// Returns the width of this person [m]
@@ -192,14 +184,13 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <param name="id"></param>
         /// <returns></returns>
         public TraCIResponse<double> GetWidth(string id)
-        {
-            return
-                TraCICommandHelper.ExecuteGetCommand<double>(
-                    Client,
-                    id,
-                    TraCIConstants.CMD_GET_PERSON_VARIABLE,
-                    TraCIConstants.VAR_WIDTH);
-        }
+            {
+            return _helper.ExecuteGetCommand<double>(
+                id,
+                TraCIConstants.CMD_GET_PERSON_VARIABLE,
+                TraCIConstants.VAR_WIDTH
+            );
+            }
 
         /// <summary>
         /// Returns the waiting time [s]
@@ -207,14 +198,13 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <param name="id"></param>
         /// <returns></returns>
         public TraCIResponse<double> GetWaitingTime(string id)
-        {
-            return
-                TraCICommandHelper.ExecuteGetCommand<double>(
-                    Client,
-                    id,
-                    TraCIConstants.CMD_GET_PERSON_VARIABLE,
-                    TraCIConstants.VAR_WAITING_TIME);
-        }
+            {
+            return _helper.ExecuteGetCommand<double>(
+                id,
+                TraCIConstants.CMD_GET_PERSON_VARIABLE,
+                TraCIConstants.VAR_WAITING_TIME
+            );
+            }
 
         /// <summary>
         /// Returns the next edge on the persons route while it is walking. If there is no further edge or the person is in another stage, returns the empty string.
@@ -222,14 +212,13 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <param name="id"></param>
         /// <returns></returns>
         public TraCIResponse<string> GetNextEdge(string id)
-        {
-            return
-                TraCICommandHelper.ExecuteGetCommand<string>(
-                    Client,
-                    id,
-                    TraCIConstants.CMD_GET_PERSON_VARIABLE,
-                    TraCIConstants.VAR_NEXT_EDGE);
-        }
+            {
+            return _helper.ExecuteGetCommand<string>(
+                id,
+                TraCIConstants.CMD_GET_PERSON_VARIABLE,
+                TraCIConstants.VAR_NEXT_EDGE
+            );
+            }
 
         /// <summary>
         /// Returns the number of remaining stages for the given person including the current stage.
@@ -237,14 +226,13 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <param name="id"></param>
         /// <returns></returns>
         public TraCIResponse<int> GetRemainingStages(string id)
-        {
-            return
-                TraCICommandHelper.ExecuteGetCommand<int>(
-                    Client,
-                    id,
-                    TraCIConstants.CMD_GET_PERSON_VARIABLE,
-                    TraCIConstants.VAR_STAGES_REMAINING);
-        }
+            {
+            return _helper.ExecuteGetCommand<int>(
+                id,
+                TraCIConstants.CMD_GET_PERSON_VARIABLE,
+                TraCIConstants.VAR_STAGES_REMAINING
+            );
+            }
 
         /// <summary>
         /// Returns the id of the vehicle if the person is in stage driving and has entered a vehicle.
@@ -252,14 +240,13 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <param name="id"></param>
         /// <returns></returns>
         public TraCIResponse<string> GetVehicle(string id)
-        {
-            return
-                TraCICommandHelper.ExecuteGetCommand<string>(
-                    Client,
-                    id,
-                    TraCIConstants.CMD_GET_PERSON_VARIABLE,
-                    TraCIConstants.VAR_VEHICLE);
-        }
+            {
+            return _helper.ExecuteGetCommand<string>(
+                id,
+                TraCIConstants.CMD_GET_PERSON_VARIABLE,
+                TraCIConstants.VAR_VEHICLE
+            );
+            }
 
         // TODO: 'extended retrieval', see: http://sumo.dlr.de/wiki/TraCI/Person_Value_Retrieval
 
@@ -272,22 +259,27 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <param name="departTime"></param>
         /// <param name="departPosition"></param>
         /// <returns></returns>
-        public TraCIResponse<object> Add(string id, string typeId, string initialEdgeId, double departTime, double departPosition)
-        {
+        public TraCIResponse<object> Add(
+            string id,
+            string typeId,
+            string initialEdgeId,
+            double departTime,
+            double departPosition
+        )
+            {
             var tmp = new CompoundObject();
             tmp.Value.Add(new TraCIString() { Value = typeId });
             tmp.Value.Add(new TraCIString() { Value = initialEdgeId });
             tmp.Value.Add(new TraCIDouble() { Value = departTime });
             tmp.Value.Add(new TraCIDouble() { Value = departPosition });
 
-            return TraCICommandHelper.ExecuteSetCommand<object, CompoundObject>(
-                     Client,
-                     id,
-                     TraCIConstants.CMD_SET_PERSON_VARIABLE,
-                     TraCIConstants.ADD,
-                     tmp
-                     );
-        }
+            return _helper.ExecuteSetCommand<object, CompoundObject>(
+                id,
+                TraCIConstants.CMD_SET_PERSON_VARIABLE,
+                TraCIConstants.ADD,
+                tmp
+            );
+            }
 
         /// <summary>
         /// Appends a stage driving to the plan of the given person.
@@ -297,21 +289,25 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <param name="lines"></param>
         /// <param name="stopId"></param>
         /// <returns></returns>
-        public TraCIResponse<object> AppendDrivingStage(string id, string destination, string lines, string stopId)
-        {
+        public TraCIResponse<object> AppendDrivingStage(
+            string id,
+            string destination,
+            string lines,
+            string stopId
+        )
+            {
             var tmp = new CompoundObject();
             tmp.Value.Add(new TraCIInteger() { Value = 3 });
             tmp.Value.Add(new TraCIString() { Value = destination });
             tmp.Value.Add(new TraCIString() { Value = lines });
             tmp.Value.Add(new TraCIString() { Value = stopId });
-            return TraCICommandHelper.ExecuteSetCommand<object, CompoundObject>(
-                Client,
+            return _helper.ExecuteSetCommand<object, CompoundObject>(
                 id,
                 TraCIConstants.CMD_SET_PERSON_VARIABLE,
                 TraCIConstants.APPEND_STAGE,
                 tmp
-                );
-        }
+            );
+            }
 
         /// <summary>
         /// 	Appends a stage waiting to the plan of the given person.
@@ -321,21 +317,25 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <param name="description"></param>
         /// <param name="stopId"></param>
         /// <returns></returns>
-        public TraCIResponse<object> AppendWaitingStage(string id, int duration, string description, string stopId)
-        {
+        public TraCIResponse<object> AppendWaitingStage(
+            string id,
+            int duration,
+            string description,
+            string stopId
+        )
+            {
             var tmp = new CompoundObject();
             tmp.Value.Add(new TraCIInteger() { Value = 1 });
             tmp.Value.Add(new TraCIInteger() { Value = duration });
             tmp.Value.Add(new TraCIString() { Value = description });
             tmp.Value.Add(new TraCIString() { Value = stopId });
-            return TraCICommandHelper.ExecuteSetCommand<object, CompoundObject>(
-                Client,
+            return _helper.ExecuteSetCommand<object, CompoundObject>(
                 id,
                 TraCIConstants.CMD_SET_PERSON_VARIABLE,
                 TraCIConstants.APPEND_STAGE,
                 tmp
-                );
-        }
+            );
+            }
 
         /// <summary>
         /// 	Appends a stage walking to the plan of the given person.
@@ -347,21 +347,27 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <param name="speed"></param>
         /// <param name="stopId"></param>
         /// <returns></returns>
-        public TraCIResponse<object> AppendWalkingStage(string id, List<string> edges, double arrivalPosition, int duration, double speed, string stopId)
-        {
+        public TraCIResponse<object> AppendWalkingStage(
+            string id,
+            List<string> edges,
+            double arrivalPosition,
+            int duration,
+            double speed,
+            string stopId
+        )
+            {
             var tmp = new CompoundObject();
             tmp.Value.Add(new TraCIInteger() { Value = 2 });
             tmp.Value.Add(new TraCIStringList() { Value = edges });
             tmp.Value.Add(new TraCIDouble() { Value = arrivalPosition });
             tmp.Value.Add(new TraCIString() { Value = stopId });
-            return TraCICommandHelper.ExecuteSetCommand<object, CompoundObject>(
-                Client,
+            return _helper.ExecuteSetCommand<object, CompoundObject>(
                 id,
                 TraCIConstants.CMD_SET_PERSON_VARIABLE,
                 TraCIConstants.APPEND_STAGE,
                 tmp
-                );
-        }
+            );
+            }
 
         /// <summary>
         /// Removes the nth next stage. nextStageIndex must be lower then value of getRemainingStages(personID). nextStageIndex 0 immediately aborts the current stage and proceeds to the next stage. When removing all stages, stage 0 should be removed last
@@ -370,15 +376,14 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <param name="stageIndex"></param>
         /// <returns></returns>
         public TraCIResponse<object> RemoveStage(string id, int stageIndex)
-        {
-            return TraCICommandHelper.ExecuteSetCommand<object, int>(
-                Client,
+            {
+            return _helper.ExecuteSetCommand<object, int>(
                 id,
                 TraCIConstants.CMD_SET_PERSON_VARIABLE,
                 TraCIConstants.ADD,
                 stageIndex
-                );
-        }
+            );
+            }
 
         /// <summary>
         /// Computes a new route to the current destination that minimizes travel time. The assumed values for each edge in the network can be customized in various ways.
@@ -386,16 +391,14 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <param name="id"></param>
         /// <returns></returns>
         public TraCIResponse<object> RerouteTraveltime(string id)
-        {
-
-            return TraCICommandHelper.ExecuteSetCommand<object, CompoundObject>(
-                Client,
+            {
+            return _helper.ExecuteSetCommand<object, CompoundObject>(
                 id,
                 TraCIConstants.CMD_SET_PERSON_VARIABLE,
                 TraCIConstants.CMD_REROUTE_TRAVELTIME,
                 new CompoundObject()
-                );
-        }
+            );
+            }
 
         /// <summary>
         /// Sets color for person with the given ID. i.e. (255,0,0,255) for the color red.
@@ -404,15 +407,14 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <param name="color"></param>
         /// <returns></returns>
         public TraCIResponse<object> SetColor(string id, Color color)
-        {
-            return TraCICommandHelper.ExecuteSetCommand<object, Color>(
-                Client,
+            {
+            return _helper.ExecuteSetCommand<object, Color>(
                 id,
                 TraCIConstants.CMD_SET_PERSON_VARIABLE,
                 TraCIConstants.VAR_COLOR,
                 color
-                );
-        }
+            );
+            }
 
         /// <summary>
         /// Sets the height in m for this person.
@@ -421,15 +423,14 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <param name="height"></param>
         /// <returns></returns>
         public TraCIResponse<object> SetHeight(string id, double height)
-        {
-            return TraCICommandHelper.ExecuteSetCommand<object, double>(
-                Client,
+            {
+            return _helper.ExecuteSetCommand<object, double>(
                 id,
                 TraCIConstants.CMD_SET_PERSON_VARIABLE,
                 TraCIConstants.VAR_HEIGHT,
                 height
-                );
-        }
+            );
+            }
 
         /// <summary>
         /// Sets the length in m for the given person.
@@ -438,15 +439,14 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <param name="length"></param>
         /// <returns></returns>
         public TraCIResponse<object> SetLength(string id, double length)
-        {
-            return TraCICommandHelper.ExecuteSetCommand<object, double>(
-                Client,
+            {
+            return _helper.ExecuteSetCommand<object, double>(
                 id,
                 TraCIConstants.CMD_SET_PERSON_VARIABLE,
                 TraCIConstants.ADD,
                 length
-                );
-        }
+            );
+            }
 
         /// <summary>
         /// Sets the offset (gap to front person if halting) for this vehicle.
@@ -455,15 +455,14 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <param name="minGap"></param>
         /// <returns></returns>
         public TraCIResponse<object> SetMinGap(string id, double minGap)
-        {
-            return TraCICommandHelper.ExecuteSetCommand<object, double>(
-                Client,
+            {
+            return _helper.ExecuteSetCommand<object, double>(
                 id,
                 TraCIConstants.CMD_SET_PERSON_VARIABLE,
                 TraCIConstants.VAR_MINGAP,
                 minGap
-                );
-        }
+            );
+            }
 
         /// <summary>
         /// Sets the maximum speed in m/s for the named person for subsequent step.
@@ -472,15 +471,14 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <param name="speed"></param>
         /// <returns></returns>
         public TraCIResponse<object> SetSpeed(string id, double speed)
-        {
-            return TraCICommandHelper.ExecuteSetCommand<object, double>(
-                Client,
+            {
+            return _helper.ExecuteSetCommand<object, double>(
                 id,
                 TraCIConstants.CMD_SET_PERSON_VARIABLE,
                 TraCIConstants.VAR_SPEED_FACTOR,
                 speed
-                );
-        }
+            );
+            }
 
         /// <summary>
         /// Sets the id of the type for the named person.
@@ -489,15 +487,14 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <param name="typeId"></param>
         /// <returns></returns>
         public TraCIResponse<object> SetType(string id, string typeId)
-        {
-            return TraCICommandHelper.ExecuteSetCommand<object, string>(
-                Client,
+            {
+            return _helper.ExecuteSetCommand<object, string>(
                 id,
                 TraCIConstants.CMD_SET_PERSON_VARIABLE,
                 TraCIConstants.VAR_TYPE,
                 typeId
-                );
-        }
+            );
+            }
 
         /// <summary>
         /// Sets the width in m for this person.
@@ -506,34 +503,30 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <param name="width"></param>
         /// <returns></returns>
         public TraCIResponse<object> SetWidth(string id, double width)
-        {
-            return TraCICommandHelper.ExecuteSetCommand<object, double>(
-                Client,
+            {
+            return _helper.ExecuteSetCommand<object, double>(
                 id,
                 TraCIConstants.CMD_SET_PERSON_VARIABLE,
                 TraCIConstants.VAR_WIDTH,
                 width
-                );
-        }
+            );
+            }
 
-        public void Subscribe(string objectId, int beginTime, int endTime, List<byte> ListOfVariablesToSubsribeTo)
-        {
-            TraCICommandHelper.ExecuteSubscribeCommand(
-                Client,
+        public void Subscribe(
+            string objectId,
+            int beginTime,
+            int endTime,
+            List<byte> ListOfVariablesToSubsribeTo
+        )
+            {
+            _helper.ExecuteSubscribeCommand(
                 beginTime,
                 endTime,
                 objectId,
                 TraCIConstants.CMD_SUBSCRIBE_PERSON_VARIABLE,
-                ListOfVariablesToSubsribeTo);
-        }
+                ListOfVariablesToSubsribeTo
+            );
+            }
         #endregion // Public Methods
-
-        #region Constructor
-
-        public PersonCommands(TraCIClient client) : base(client)
-        {
         }
-
-        #endregion // Constructor
     }
-}

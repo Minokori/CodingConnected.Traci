@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using CodingConnected.TraCI.NET;
+using CodingConnected.TraCI.NET.Constants;
+using CodingConnected.TraCI.NET.Response;
 using CodingConnected.TraCI.NET.Types;
 
 namespace CodingConnected.TraCI.UsageExample;
@@ -134,7 +136,7 @@ class UsageExample
             {
             /* Responses are object that can be casted to IResponseInfo so we can retrieve 
              the variable type. */
-            var respInfo = (r as IResponseInfo);
+            var respInfo = (r as IResponse);
             var variableCode = respInfo.Variable;
 
             /*We can then cast to TraCIResponse to get the Content
@@ -217,14 +219,14 @@ class UsageExample
             var vehicleID = variableSubscriptionResponse.ObjectId;
             Console.WriteLine(" Object id: " + vehicleID);
             Console.WriteLine("     VAR_SPEED  " +
-                (variableSubscriptionResponse.ResponseByVariableCode[TraCIConstants.VAR_SPEED]).GetContentAs<float>());
+                (variableSubscriptionResponse[TraCIConstants.VAR_SPEED]).GetContentAs<float>());
             Console.WriteLine("     VAR_ACCEL  " +
-                (variableSubscriptionResponse.ResponseByVariableCode[TraCIConstants.VAR_ACCEL]).GetContentAs<float>());
+                (variableSubscriptionResponse[TraCIConstants.VAR_ACCEL]).GetContentAs<float>());
             Console.WriteLine("     VAR_ANGLE  " +
                 /* We can also use TraCIResult<> (). Warning using TraCIResponse<> we must use the exact type (i.e for angle is double) */
-                (variableSubscriptionResponse.ResponseByVariableCode[TraCIConstants.VAR_ANGLE] as TraCIResponse<double>).Content);
+                (variableSubscriptionResponse[TraCIConstants.VAR_ANGLE] as TraCIResponse<double>).Content);
             Console.WriteLine("     VAR_ROUTE  " +
-                (variableSubscriptionResponse.ResponseByVariableCode[TraCIConstants.VAR_ROUTE_ID]).GetContentAs<string>());
+                (variableSubscriptionResponse[TraCIConstants.VAR_ROUTE_ID]).GetContentAs<string>());
             }
 
         //We can also get TraCIVariableSubscriptionResponse by objectID
@@ -237,7 +239,7 @@ class UsageExample
             /* We can handle variable responses like before either iterating responses or
              by using value by variable type */
             //*Printing VAR_SPEED just for demostration 
-            Console.WriteLine("     VAR_SPEED" + varResp.ResponseByVariableCode[TraCIConstants.VAR_SPEED].GetContentAs<float>());
+            Console.WriteLine("     VAR_SPEED" + varResp[TraCIConstants.VAR_SPEED].GetContentAs<float>());
             }
         }
 
@@ -258,7 +260,7 @@ class UsageExample
             Console.WriteLine(" Object id: " + vehicleID);
             foreach (var response in variableSubscriptionResponse.Responses)
                 {
-                var variableResponse = ((IResponseInfo)response);
+                var variableResponse = ((IResponse)response);
                 var variableCode = variableResponse.Variable;
 
                 switch (variableCode)
@@ -365,12 +367,12 @@ class UsageExample
 
         /* Subscribe to Variable Subscriptions Events 
          * (triggered each step if the vehicle that was subscribed to exists )*/
-        client.VehicleSubscription += Client_VehicleSubscriptionUsingResponses;
-        client.VehicleSubscription += Client_VehicleSubscriptionUsingDictionary;
+        client.EventService.VehicleSubscription += Client_VehicleSubscriptionUsingResponses;
+        client.EventService.VehicleSubscription += Client_VehicleSubscriptionUsingDictionary;
 
         /* Subscribe to Context Subscriptions Events*/
-        client.VehicleContextSubscription += Client_VehicleContextSubscriptionUsingDictionary;
-        client.VehicleContextSubscription += Client_VehicleContextSubscriptionUsingResponses;
+        client.EventService.VehicleContextSubscription += Client_VehicleContextSubscriptionUsingDictionary;
+        client.EventService.VehicleContextSubscription += Client_VehicleContextSubscriptionUsingResponses;
 
         string id; // id that will be used for subscriptions.
         Console.WriteLine("");

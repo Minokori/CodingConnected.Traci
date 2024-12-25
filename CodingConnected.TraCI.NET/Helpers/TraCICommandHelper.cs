@@ -1,17 +1,20 @@
-﻿using CodingConnected.TraCI.NET.Types;
-using System;
-using System.Collections.Generic;
+﻿using CodingConnected.TraCI.NET.Constants;
+using CodingConnected.TraCI.NET.Response;
+using CodingConnected.TraCI.NET.Services;
+using CodingConnected.TraCI.NET.Types;
 
 namespace CodingConnected.TraCI.NET.Helpers
-{
-	internal static class TraCICommandHelper
-	{
-        internal static TraCIResponse<Tres> ExecuteSetCommand<Tres, Tvalue>(TraCIClient client, string id, byte commandType, byte messageType, Tvalue value)
+    {
+    internal class TraCICommandHelper(ITcpService tcpService) : ICommandHelperService
         {
-            TraCICommand command = null;
 
-            switch (value)
+        private readonly ITcpService _tcpService = tcpService;
+
+        public TraCIResponse<Tresponse> ExecuteSetCommand<Tresponse, Tvalue>(string id, byte commandType, byte messageType, Tvalue value)
             {
+            TraCICommand command;
+            switch (value)
+                {
                 case byte b:
                     command = GetCommand(id, commandType, messageType, b);
                     break;
@@ -43,45 +46,35 @@ namespace CodingConnected.TraCI.NET.Helpers
                     command = GetCommand(id, commandType, messageType, bb);
                     break;
                 default:
-                    {
+                        {
                         throw new InvalidCastException($"Type {value.GetType().Name} is not implemented in method TraCICommandHelper.ExecuteSetCommand().");
-                    }
-            }
+                        }
+                }
 
             if (command != null)
-            {
-                var response = client.SendMessage(command);
+                {
+                TraCIResult[] response = _tcpService.SendMessage(command);
 
                 try
-                {
-                    return TraCIDataConverter.ExtractDataFromResponse<Tres>(response, commandType, messageType);
-                }
+                    {
+                    return TraCIDataConverter.ExtractDataFromResponse<Tresponse>(response, commandType, messageType);
+                    }
                 catch
-                {
+                    {
                     throw;
+                    }
+                }
+            else
+                {
+                return default;
                 }
             }
-            else
+
+        public void ExecuteSubscribeCommand(double beginTime, double endTime, string objectId, byte commandType, List<byte> variables)
             {
-                return default;
+            TraCICommand command = GetCommand(objectId, beginTime, endTime, commandType, variables);
+            _ = _tcpService.SendMessage(command);
             }
-        }
-
-        internal static void ExecuteSubscribeCommand(TraCIClient client, double beginTime, double endTime, string objectId, byte commandType, List<byte> variables)
-        {
-            TraCICommand command = null;
-            command = GetCommand(objectId, beginTime, endTime, commandType, variables);
-            var response = client.SendMessage(command);
-
-            //try
-            //{
-            //    var tmp = TraCIDataConverter.ExtractDataFromResponse<T>(response, commandType);
-            //}
-            //catch
-            //{
-            //    throw;
-            //}
-        }
 
         /// <summary>
         /// Context subscriptions are allowing the obtaining of specific values from surrounding objects of a certain so called "EGO" object.
@@ -100,84 +93,84 @@ namespace CodingConnected.TraCI.NET.Helpers
         /// <param name="contextRange"> the radius of the surrounding </param>
         /// <param name="commandType"> The identifier for the Object Context Subscription command. </param>
         /// <param name="variables"> the list of variables to return </param>
-        internal static void ExecuteSubscribeContextCommand(TraCIClient client, double beginTime, double endTime, string objectId, byte contextDomain, double contextRange, byte commandType, List<byte> variables)
-        {
-            TraCICommand command = null;
-            command = GetCommand(objectId, beginTime, endTime, contextDomain, contextRange, commandType, variables);
-            var response = client.SendMessage(command);
-        }
+        public void ExecuteSubscribeContextCommand(double beginTime, double endTime, string objectId, byte contextDomain, double contextRange, byte commandType, List<byte> variables)
+            {
+            TraCICommand command = GetCommand(objectId, beginTime, endTime, contextDomain, contextRange, commandType, variables);
+            _ = _tcpService.SendMessage(command);
+            }
 
-        internal static TraCIResponse<T> ExecuteGetCommand<T>(TraCIClient client, string id, byte commandType, byte messageType)
-        {
-            var command = GetCommand(id, commandType, messageType);
-            var response = client.SendMessage(command);
+        public TraCIResponse<T> ExecuteGetCommand<T>(string id, byte commandType, byte messageType)
+            {
+            TraCICommand command = GetCommand(id, commandType, messageType);
+            TraCIResult[] response = _tcpService.SendMessage(command);
 
             try
-            {
-                return TraCIDataConverter.ExtractDataFromResponse<T>(response, commandType, messageType); 
-            }
+                {
+                return TraCIDataConverter.ExtractDataFromResponse<T>(response, commandType, messageType);
+                }
             catch
-            {
+                {
                 throw;
-            }
-        }
-
-        internal static TraCICommand GetCommand(string objectId, double beginTime, double endTime, byte commandType, List<byte> variables)
-        {
-            var bytes = new List<byte>();
-            bytes.AddRange(TraCIDataConverter.GetTraCIBytesFromDouble(beginTime));
-            bytes.AddRange(TraCIDataConverter.GetTraCIBytesFromDouble(endTime));
-            bytes.AddRange(TraCIDataConverter.GetTraCIBytesFromASCIIString(objectId));
-            bytes.Add((byte)variables.Count);
-            foreach (var variable in variables)
-            {
-                bytes.Add(variable);
+                }
             }
 
-            var command = new TraCICommand
+        public static TraCICommand GetCommand(string objectId, double beginTime, double endTime, byte commandType, List<byte> variables)
             {
+            List<byte> bytes =
+                [
+                .. TraCIDataConverter.GetTraCIBytesFromDouble(beginTime),
+                .. TraCIDataConverter.GetTraCIBytesFromDouble(endTime),
+                .. TraCIDataConverter.GetTraCIBytesFromASCIIString(objectId),
+                (byte)variables.Count,
+                .. variables,
+                ];
+
+            TraCICommand command = new()
+                {
                 Identifier = commandType,
-                Contents = bytes.ToArray()
-            };
+                Contents = [.. bytes]
+                };
             return command;
-        }
+            }
 
         /// <summary>
         /// Helper GetCommand for Object Context Subscription
         /// </summary>
         /// <returns></returns>
-        internal static TraCICommand GetCommand(string objectId, double beginTime, double endTime, byte contextDomain, double contextRange, byte commandType, List<byte> variables)
-        {
-            var bytes = new List<byte>();
-            bytes.AddRange(TraCIDataConverter.GetTraCIBytesFromDouble(beginTime));
-            bytes.AddRange(TraCIDataConverter.GetTraCIBytesFromDouble(endTime));
-            bytes.AddRange(TraCIDataConverter.GetTraCIBytesFromASCIIString(objectId));
-            bytes.Add(contextDomain);
-            bytes.AddRange(TraCIDataConverter.GetTraCIBytesFromDouble(contextRange));
-            bytes.Add((byte)variables.Count);
-            foreach (var variable in variables)
+        public static TraCICommand GetCommand(string objectId, double beginTime, double endTime, byte contextDomain, double contextRange, byte commandType, List<byte> variables)
             {
-                bytes.Add(variable);
+            List<byte> bytes =
+                [
+                .. TraCIDataConverter.GetTraCIBytesFromDouble(beginTime),
+                .. TraCIDataConverter.GetTraCIBytesFromDouble(endTime),
+                .. TraCIDataConverter.GetTraCIBytesFromASCIIString(objectId),
+                contextDomain,
+                .. TraCIDataConverter.GetTraCIBytesFromDouble(contextRange),
+                (byte)variables.Count,
+                .. variables,
+                ];
+
+            TraCICommand command = new()
+                {
+                Identifier = commandType,
+                Contents = [.. bytes]
+                };
+            return command;
             }
 
-            var command = new TraCICommand
+        public static TraCICommand GetCommand(string id, byte commandType, byte messageType, CompoundObject co)
             {
-                Identifier = commandType,
-                Contents = bytes.ToArray()
-            };
-            return command;
-        }
-
-        internal static TraCICommand GetCommand(string id, byte commandType, byte messageType, CompoundObject co)
-        {
-            var bytes = new List<byte> { messageType };
-            bytes.AddRange(TraCIDataConverter.GetTraCIBytesFromASCIIString(id));
-            bytes.Add(TraCIConstants.TYPE_COMPOUND);
-            bytes.AddRange(TraCIDataConverter.GetTraCIBytesFromInt32(co.Value.Count));
-            foreach (var item in co.Value)
-            {
-                switch (item)
+            List<byte> bytes =
+                [
+                messageType,
+                .. TraCIDataConverter.GetTraCIBytesFromASCIIString(id),
+                TraCIConstants.TYPE_COMPOUND,
+                .. TraCIDataConverter.GetTraCIBytesFromInt32(co.Value.Count),
+                ];
+            foreach (ComposedTypeBase item in co.Value)
                 {
+                switch (item)
+                    {
                     case TraCIByte b:
                         bytes.Add(TraCIConstants.TYPE_BYTE);
                         bytes.Add(b.Value);
@@ -208,7 +201,6 @@ namespace CodingConnected.TraCI.NET.Helpers
                         break;
                     case CompoundObject CO:
                         throw new NotImplementedException("Nested compound objects are not implemented yet");
-                        break;
                     case Position2D p2d:
                         bytes.Add(TraCIConstants.POSITION_2D);
                         bytes.AddRange(TraCIDataConverter.GetTraCIBytesFromPosition2D(p2d));
@@ -227,7 +219,7 @@ namespace CodingConnected.TraCI.NET.Helpers
                         break;
                     case LonLatAltPosition llap:
                         bytes.Add(TraCIConstants.POSITION_LON_LAT_ALT);
-                        bytes.AddRange(TraCIDataConverter.GetTraCIBytesFromLonLatAltPosition(llap)); 
+                        bytes.AddRange(TraCIDataConverter.GetTraCIBytesFromLonLatAltPosition(llap));
                         break;
                     case BoundaryBox bb:
                         bytes.Add(TraCIConstants.TYPE_BOUNDINGBOX);
@@ -244,180 +236,202 @@ namespace CodingConnected.TraCI.NET.Helpers
                     case Color c:
 #warning missing code
                         throw new NotImplementedException();
-                        break;
-            } }
+                    }
+                }
 
-            var command = new TraCICommand
+            TraCICommand command = new()
+                {
+                Identifier = commandType,
+                Contents = [.. bytes]
+                };
+            return command;
+            }
+
+        public static TraCICommand GetCommand(string id, byte commandType, byte messageType)
             {
+            List<byte> bytes = [messageType, .. TraCIDataConverter.GetTraCIBytesFromASCIIString(id)];
+            TraCICommand command = new()
+                {
+                Identifier = commandType,
+                Contents = [.. bytes]
+                };
+            return command;
+            }
+
+        public static TraCICommand GetCommand(string id, byte commandType, byte messageType, BoundaryBox boundaryBox)
+            {
+            List<byte> bytes =
+                [
+                messageType,
+                .. TraCIDataConverter.GetTraCIBytesFromASCIIString(id),
+                TraCIConstants.TYPE_BOUNDINGBOX,
+                .. TraCIDataConverter.GetTraCIBytesFromDouble(boundaryBox.LowerLeftX),
+                .. TraCIDataConverter.GetTraCIBytesFromDouble(boundaryBox.LowerLeftY),
+                .. TraCIDataConverter.GetTraCIBytesFromDouble(boundaryBox.UpperRightX),
+                .. TraCIDataConverter.GetTraCIBytesFromDouble(boundaryBox.UpperRightY),
+                ];
+
+            TraCICommand command = new()
+                {
                 Identifier = commandType,
                 Contents = bytes.ToArray()
-            };
+                };
             return command;
-        }
+            }
 
-        internal static TraCICommand GetCommand(string id, byte commandType, byte messageType)
-		{
-			var bytes = new List<byte> { messageType };
-			bytes.AddRange(TraCIDataConverter.GetTraCIBytesFromASCIIString(id));
-			var command = new TraCICommand
-			{
-				Identifier = commandType,
-				Contents = bytes.ToArray()
-			};
-			return command;
-		}
-
-        internal static TraCICommand GetCommand(string id, byte commandType, byte messageType, BoundaryBox boundaryBox)
-        {
-            var bytes = new List<byte> { messageType };
-            bytes.AddRange(TraCIDataConverter.GetTraCIBytesFromASCIIString(id));
-            bytes.Add(TraCIConstants.TYPE_BOUNDINGBOX);
-            bytes.AddRange(TraCIDataConverter.GetTraCIBytesFromDouble(boundaryBox.LowerLeftX));
-            bytes.AddRange(TraCIDataConverter.GetTraCIBytesFromDouble(boundaryBox.LowerLeftY));
-            bytes.AddRange(TraCIDataConverter.GetTraCIBytesFromDouble(boundaryBox.UpperRightX));
-            bytes.AddRange(TraCIDataConverter.GetTraCIBytesFromDouble(boundaryBox.UpperRightY));
-
-            var command = new TraCICommand
+        public static TraCICommand GetCommand(string id, byte commandType, byte messageType, Polygon polygon)
             {
-                Identifier = commandType,
-                Contents = bytes.ToArray()
-            };
-            return command;
-        }
-
-        internal static TraCICommand GetCommand(string id, byte commandType, byte messageType, Polygon polygon)
-        {
-            var bytes = new List<byte> { messageType };
-            bytes.AddRange(TraCIDataConverter.GetTraCIBytesFromASCIIString(id));
-            bytes.Add(TraCIConstants.TYPE_POLYGON);
-            bytes.Add((byte)polygon.Points.Count);
-            foreach (var point in polygon.Points)
-            {
+            List<byte> bytes =
+                [
+                messageType,
+                .. TraCIDataConverter.GetTraCIBytesFromASCIIString(id),
+                TraCIConstants.TYPE_POLYGON,
+                (byte)polygon.Points.Count,
+                ];
+            foreach (Position2D point in polygon.Points)
+                {
                 bytes.AddRange(TraCIDataConverter.GetTraCIBytesFromDouble(point.X));
                 bytes.AddRange(TraCIDataConverter.GetTraCIBytesFromDouble(point.Y));
+                }
+
+            TraCICommand command = new()
+                {
+                Identifier = commandType,
+                Contents = bytes.ToArray()
+                };
+            return command;
             }
 
-            var command = new TraCICommand
+        public static TraCICommand GetCommand(string id, byte commandType, byte messageType, Position2D position2D)
             {
+            List<byte> bytes =
+                [
+                messageType,
+                .. TraCIDataConverter.GetTraCIBytesFromASCIIString(id),
+                TraCIConstants.POSITION_2D,
+                .. TraCIDataConverter.GetTraCIBytesFromDouble(position2D.X),
+                .. TraCIDataConverter.GetTraCIBytesFromDouble(position2D.Y),
+                ];
+
+            TraCICommand command = new()
+                {
                 Identifier = commandType,
                 Contents = bytes.ToArray()
-            };
+                };
             return command;
-        }
+            }
 
-        internal static TraCICommand GetCommand(string id, byte commandType, byte messageType, Position2D position2D)
-        {
-            var bytes = new List<byte> { messageType };
-            bytes.AddRange(TraCIDataConverter.GetTraCIBytesFromASCIIString(id));
-            bytes.Add(TraCIConstants.POSITION_2D);
-            bytes.AddRange(TraCIDataConverter.GetTraCIBytesFromDouble(position2D.X));
-            bytes.AddRange(TraCIDataConverter.GetTraCIBytesFromDouble(position2D.Y));
-
-            var command = new TraCICommand
+        public static TraCICommand GetCommand(string id, byte commandType, byte messageType, Color color)
             {
+            List<byte> bytes =
+                [
+                messageType,
+                .. TraCIDataConverter.GetTraCIBytesFromASCIIString(id),
+                TraCIConstants.TYPE_COLOR,
+                color.R,
+                color.G,
+                color.B,
+                color.A,
+                ];
+
+            TraCICommand command = new()
+                {
                 Identifier = commandType,
                 Contents = bytes.ToArray()
-            };
+                };
             return command;
-        }
+            }
 
-        internal static TraCICommand GetCommand(string id, byte commandType, byte messageType, Color color)
-        {
-            var bytes = new List<byte> { messageType };
-            bytes.AddRange(TraCIDataConverter.GetTraCIBytesFromASCIIString(id));
-            bytes.Add(TraCIConstants.TYPE_COLOR);
-            bytes.Add(color.R);
-            bytes.Add(color.G);
-            bytes.Add(color.B);
-            bytes.Add(color.A);
-
-            var command = new TraCICommand
+        public static TraCICommand GetCommand(string id, byte commandType, byte messageType, List<string> values)
             {
-                Identifier = commandType,
-                Contents = bytes.ToArray()
-            };
-            return command;
-        }
+            List<byte> bytes = [messageType, .. TraCIDataConverter.GetTraCIBytesFromASCIIString(id)];
 
-        internal static TraCICommand GetCommand(string id, byte commandType, byte messageType, List<string> values)
-        {
-            var bytes = new List<byte> { messageType };
-            bytes.AddRange(TraCIDataConverter.GetTraCIBytesFromASCIIString(id));
-            
             if (values != null && values.Count > 0)
-            {
+                {
                 bytes.Add(TraCIConstants.TYPE_STRINGLIST);
                 bytes.AddRange(TraCIDataConverter.GetTraCIBytesFromInt32(values.Count));
-                foreach (var parameter in values)
-                {
+                foreach (string parameter in values)
+                    {
                     bytes.AddRange(TraCIDataConverter.GetTraCIBytesFromASCIIString(parameter));
+                    }
                 }
+            TraCICommand command = new()
+                {
+                Identifier = commandType,
+                Contents = bytes.ToArray()
+                };
+            return command;
             }
-            var command = new TraCICommand
+
+        public static TraCICommand GetCommand(string id, byte commandType, byte messageType, string value)
             {
+            List<byte> bytes =
+                [
+                messageType,
+                .. TraCIDataConverter.GetTraCIBytesFromASCIIString(id),
+                TraCIConstants.TYPE_STRING,
+                .. TraCIDataConverter.GetTraCIBytesFromASCIIString(value),
+                ];
+            TraCICommand command = new()
+                {
                 Identifier = commandType,
                 Contents = bytes.ToArray()
-            };
+                };
             return command;
-        }
+            }
 
-        internal static TraCICommand GetCommand(string id, byte commandType, byte messageType, string value)
-        {
-            var bytes = new List<byte> { messageType };
-            bytes.AddRange(TraCIDataConverter.GetTraCIBytesFromASCIIString(id));
-            bytes.Add(TraCIConstants.TYPE_STRING);
-            bytes.AddRange(TraCIDataConverter.GetTraCIBytesFromASCIIString(value));
-            var command = new TraCICommand
+        public static TraCICommand GetCommand(string id, byte commandType, byte messageType, double value)
             {
+            List<byte> bytes =
+                [
+                messageType,
+                .. TraCIDataConverter.GetTraCIBytesFromASCIIString(id),
+                TraCIConstants.TYPE_DOUBLE,
+                .. TraCIDataConverter.GetTraCIBytesFromDouble(value),
+                ];
+            TraCICommand command = new()
+                {
                 Identifier = commandType,
                 Contents = bytes.ToArray()
-            };
+                };
             return command;
-        }
+            }
 
-        internal static TraCICommand GetCommand(string id, byte commandType, byte messageType, double value)
-        {
-            var bytes = new List<byte> { messageType };
-            bytes.AddRange(TraCIDataConverter.GetTraCIBytesFromASCIIString(id));
-            bytes.Add(TraCIConstants.TYPE_DOUBLE);
-            bytes.AddRange(TraCIDataConverter.GetTraCIBytesFromDouble(value));
-            var command = new TraCICommand
+        public static TraCICommand GetCommand(string id, byte commandType, byte messageType, int value)
             {
+            List<byte> bytes =
+                [
+                messageType,
+                .. TraCIDataConverter.GetTraCIBytesFromASCIIString(id),
+                TraCIConstants.TYPE_INTEGER,
+                .. TraCIDataConverter.GetTraCIBytesFromInt32(value),
+                ];
+            TraCICommand command = new()
+                {
                 Identifier = commandType,
                 Contents = bytes.ToArray()
-            };
+                };
             return command;
-        }
+            }
 
-        internal static TraCICommand GetCommand(string id, byte commandType, byte messageType, int value)
-        {
-            var bytes = new List<byte> { messageType };
-            bytes.AddRange(TraCIDataConverter.GetTraCIBytesFromASCIIString(id));
-            bytes.Add(TraCIConstants.TYPE_INTEGER);
-            bytes.AddRange(TraCIDataConverter.GetTraCIBytesFromInt32(value));
-            var command = new TraCICommand
+        public static TraCICommand GetCommand(string id, byte commandType, byte messageType, byte value)
             {
+            List<byte> bytes =
+                [
+                messageType,
+                .. TraCIDataConverter.GetTraCIBytesFromASCIIString(id),
+                TraCIConstants.TYPE_BYTE,
+                value,
+                ];
+            TraCICommand command = new()
+                {
                 Identifier = commandType,
                 Contents = bytes.ToArray()
-            };
+                };
             return command;
+            }
+
+
         }
-
-        internal static TraCICommand GetCommand(string id, byte commandType, byte messageType, byte value)
-        {
-            var bytes = new List<byte> { messageType };
-            bytes.AddRange(TraCIDataConverter.GetTraCIBytesFromASCIIString(id));
-            bytes.Add(TraCIConstants.TYPE_BYTE);
-            bytes.Add(value);
-            var command = new TraCICommand
-            {
-                Identifier = commandType,
-                Contents = bytes.ToArray()
-            };
-            return command;
-        }
-
-
     }
-}
 

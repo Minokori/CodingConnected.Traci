@@ -1,14 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using CodingConnected.TraCI.NET.Constants;
 using CodingConnected.TraCI.NET.Helpers;
+using CodingConnected.TraCI.NET.Response;
+using CodingConnected.TraCI.NET.Services;
 using CodingConnected.TraCI.NET.Types;
 
 namespace CodingConnected.TraCI.NET.Commands
-{
-	public class LaneCommands : TraCIContextSubscribableCommands
-	{
+    {
+    public class LaneCommands(ITcpService tcpService, ICommandHelperService helper)
+        : TraCIContextSubscribableCommands(tcpService, helper)
+        {
         #region Protected Override Methods
-        protected override byte ContextSubscribeCommand => TraCIConstants.CMD_SUBSCRIBE_LANE_CONTEXT;
+        protected override byte ContextSubscribeCommand =>
+            TraCIConstants.CMD_SUBSCRIBE_LANE_CONTEXT;
 
         #endregion Protected Override Methods
 
@@ -19,258 +24,241 @@ namespace CodingConnected.TraCI.NET.Commands
         /// </summary>
         /// <returns></returns>
         public TraCIResponse<List<string>> GetIdList()
-		{
-			return 
-				TraCICommandHelper.ExecuteGetCommand<List<string>>(
-					Client, 
-					"ignored", 
-					TraCIConstants.CMD_GET_LANE_VARIABLE,
-					TraCIConstants.ID_LIST);
-		}
+            {
+            return _helper.ExecuteGetCommand<List<string>>(
+                "ignored",
+                TraCIConstants.CMD_GET_LANE_VARIABLE,
+                TraCIConstants.ID_LIST
+            );
+            }
 
         /// <summary>
         /// Returns the number of lanes within the scenario (the given Lane ID is ignored)
         /// </summary>
         /// <returns></returns>
-		public TraCIResponse<int> GetIdCount()
-		{
-			return 
-				TraCICommandHelper.ExecuteGetCommand<int>(
-					Client, 
-					"ignored", 
-					TraCIConstants.CMD_GET_LANE_VARIABLE,
-					TraCIConstants.ID_COUNT);
-		}
+        public TraCIResponse<int> GetIdCount()
+            {
+            return _helper.ExecuteGetCommand<int>(
+                "ignored",
+                TraCIConstants.CMD_GET_LANE_VARIABLE,
+                TraCIConstants.ID_COUNT
+            );
+            }
 
         /// <summary>
         /// Returns the number of links outgoing from this lane [#]
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-		public TraCIResponse<byte> GetLinkNumber(string id)
-		{
-			return 
-				TraCICommandHelper.ExecuteGetCommand<byte>(
-					Client, 
-					id, 
-					TraCIConstants.CMD_GET_LANE_VARIABLE,
-					TraCIConstants.LANE_LINK_NUMBER);
-		}
+        public TraCIResponse<byte> GetLinkNumber(string id)
+            {
+            return _helper.ExecuteGetCommand<byte>(
+                id,
+                TraCIConstants.CMD_GET_LANE_VARIABLE,
+                TraCIConstants.LANE_LINK_NUMBER
+            );
+            }
 
         /// <summary>
         /// Returns the id of the edge this lane belongs to
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-		public TraCIResponse<string> GetEdgeId(string id)
-		{
-			return 
-				TraCICommandHelper.ExecuteGetCommand<string>(
-					Client, 
-					id, 
-					TraCIConstants.CMD_GET_LANE_VARIABLE,
-					TraCIConstants.LANE_EDGE_ID);
-		}
+        public TraCIResponse<string> GetEdgeId(string id)
+            {
+            return _helper.ExecuteGetCommand<string>(
+                id,
+                TraCIConstants.CMD_GET_LANE_VARIABLE,
+                TraCIConstants.LANE_EDGE_ID
+            );
+            }
 
         /// <summary>
         /// Returns descriptions of the links outgoing from this lane [m]
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-		public TraCIResponse<CompoundObject> GetLinks(string id)
-		{
+        public TraCIResponse<CompoundObject> GetLinks(string id)
+            {
             //TODO: parse the result into a usable format
-			return 
-				TraCICommandHelper.ExecuteGetCommand<CompoundObject>(
-					Client, 
-					id, 
-					TraCIConstants.CMD_GET_LANE_VARIABLE,
-					TraCIConstants.LANE_LINKS);
-		}
+            return _helper.ExecuteGetCommand<CompoundObject>(
+                id,
+                TraCIConstants.CMD_GET_LANE_VARIABLE,
+                TraCIConstants.LANE_LINKS
+            );
+            }
 
         /// <summary>
         /// Returns the mml-definitions of vehicle classes allowed on this lane
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-		public TraCIResponse<List<string>> GetAllowed(string id)
-		{
-			return 
-				TraCICommandHelper.ExecuteGetCommand<List<string>>(
-					Client, 
-					id, 
-					TraCIConstants.CMD_GET_LANE_VARIABLE,
-					TraCIConstants.LANE_ALLOWED);
-		}
+        public TraCIResponse<List<string>> GetAllowed(string id)
+            {
+            return _helper.ExecuteGetCommand<List<string>>(
+                id,
+                TraCIConstants.CMD_GET_LANE_VARIABLE,
+                TraCIConstants.LANE_ALLOWED
+            );
+            }
 
         /// <summary>
         /// Returns the mml-definitions of vehicle classes not allowed on this lane
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-		public TraCIResponse<List<string>> GetDisallowed(string id)
-		{
-			return 
-				TraCICommandHelper.ExecuteGetCommand<List<string>>(
-					Client, 
-					id, 
-					TraCIConstants.CMD_GET_LANE_VARIABLE,
-					TraCIConstants.LANE_DISALLOWED);
-		}
+        public TraCIResponse<List<string>> GetDisallowed(string id)
+            {
+            return _helper.ExecuteGetCommand<List<string>>(
+                id,
+                TraCIConstants.CMD_GET_LANE_VARIABLE,
+                TraCIConstants.LANE_DISALLOWED
+            );
+            }
 
         /// <summary>
         /// Returns the length of the named lane [m]
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-		public TraCIResponse<double> GetLength(string id)
-		{
-			return 
-				TraCICommandHelper.ExecuteGetCommand<double>(
-					Client, 
-					id, 
-					TraCIConstants.CMD_GET_LANE_VARIABLE,
-					TraCIConstants.VAR_LENGTH);
-		}
+        public TraCIResponse<double> GetLength(string id)
+            {
+            return _helper.ExecuteGetCommand<double>(
+                id,
+                TraCIConstants.CMD_GET_LANE_VARIABLE,
+                TraCIConstants.VAR_LENGTH
+            );
+            }
 
         /// <summary>
         /// Returns the maximum speed allowed on this lane [m/s]
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-		public TraCIResponse<double> GetMaxSpeed(string id)
-		{
-			return 
-				TraCICommandHelper.ExecuteGetCommand<double>(
-					Client, 
-					id, 
-					TraCIConstants.CMD_GET_LANE_VARIABLE,
-					TraCIConstants.VAR_MAXSPEED);
-		}
+        public TraCIResponse<double> GetMaxSpeed(string id)
+            {
+            return _helper.ExecuteGetCommand<double>(
+                id,
+                TraCIConstants.CMD_GET_LANE_VARIABLE,
+                TraCIConstants.VAR_MAXSPEED
+            );
+            }
 
         /// <summary>
         /// Returns this lane's shape
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-		public TraCIResponse<Polygon> GetShape(string id)
-		{
-            return 
-				TraCICommandHelper.ExecuteGetCommand<Polygon>(
-					Client, 
-					id, 
-					TraCIConstants.CMD_GET_LANE_VARIABLE,
-					TraCIConstants.VAR_SHAPE);
-		}
+        public TraCIResponse<Polygon> GetShape(string id)
+            {
+            return _helper.ExecuteGetCommand<Polygon>(
+                id,
+                TraCIConstants.CMD_GET_LANE_VARIABLE,
+                TraCIConstants.VAR_SHAPE
+            );
+            }
 
         /// <summary>
         /// Returns the width of the named lane [m]
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-		public TraCIResponse<double> GetWidth(string id)
-		{
-			return 
-				TraCICommandHelper.ExecuteGetCommand<double>(
-					Client, 
-					id, 
-					TraCIConstants.CMD_GET_LANE_VARIABLE,
-					TraCIConstants.VAR_WIDTH);
-		}
+        public TraCIResponse<double> GetWidth(string id)
+            {
+            return _helper.ExecuteGetCommand<double>(
+                id,
+                TraCIConstants.CMD_GET_LANE_VARIABLE,
+                TraCIConstants.VAR_WIDTH
+            );
+            }
 
         /// <summary>
         /// Sum of CO2 emissions on this lane in mg during this time step.
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-		public TraCIResponse<double> GetCO2Emission(string id)
-		{
-			return 
-				TraCICommandHelper.ExecuteGetCommand<double>(
-					Client, 
-					id, 
-					TraCIConstants.CMD_GET_LANE_VARIABLE,
-					TraCIConstants.VAR_CO2EMISSION);
-		}
+        public TraCIResponse<double> GetCO2Emission(string id)
+            {
+            return _helper.ExecuteGetCommand<double>(
+                id,
+                TraCIConstants.CMD_GET_LANE_VARIABLE,
+                TraCIConstants.VAR_CO2EMISSION
+            );
+            }
 
         /// <summary>
         /// Sum of CO emissions on this lane in mg during this time step.
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-		public TraCIResponse<double> GetCOEmission(string id)
-		{
-			return 
-				TraCICommandHelper.ExecuteGetCommand<double>(
-					Client, 
-					id, 
-					TraCIConstants.CMD_GET_LANE_VARIABLE,
-					TraCIConstants.VAR_COEMISSION);
-		}
+        public TraCIResponse<double> GetCOEmission(string id)
+            {
+            return _helper.ExecuteGetCommand<double>(
+                id,
+                TraCIConstants.CMD_GET_LANE_VARIABLE,
+                TraCIConstants.VAR_COEMISSION
+            );
+            }
 
         /// <summary>
         /// Sum of HC emissions on this lane in mg during this time step.
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-		public TraCIResponse<double> GetHCEmission(string id)
-		{
-			return 
-				TraCICommandHelper.ExecuteGetCommand<double>(
-					Client, 
-					id, 
-					TraCIConstants.CMD_GET_LANE_VARIABLE,
-					TraCIConstants.VAR_HCEMISSION);
-		}
+        public TraCIResponse<double> GetHCEmission(string id)
+            {
+            return _helper.ExecuteGetCommand<double>(
+                id,
+                TraCIConstants.CMD_GET_LANE_VARIABLE,
+                TraCIConstants.VAR_HCEMISSION
+            );
+            }
 
         /// <summary>
         /// Sum of PMx emissions on this lane in mg during this time step.
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-		public TraCIResponse<double> GetPMxEmission(string id)
-		{
-			return 
-				TraCICommandHelper.ExecuteGetCommand<double>(
-					Client, 
-					id, 
-					TraCIConstants.CMD_GET_LANE_VARIABLE,
-					TraCIConstants.VAR_PMXEMISSION);
-		}
+        public TraCIResponse<double> GetPMxEmission(string id)
+            {
+            return _helper.ExecuteGetCommand<double>(
+                id,
+                TraCIConstants.CMD_GET_LANE_VARIABLE,
+                TraCIConstants.VAR_PMXEMISSION
+            );
+            }
 
         /// <summary>
         /// Sum of NOx emissions on this lane in mg during this time step.
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-		public TraCIResponse<double> GetNOxEmission(string id)
-		{
-			return 
-				TraCICommandHelper.ExecuteGetCommand<double>(
-					Client, 
-					id, 
-					TraCIConstants.CMD_GET_LANE_VARIABLE,
-					TraCIConstants.VAR_NOXEMISSION);
-		}
+        public TraCIResponse<double> GetNOxEmission(string id)
+            {
+            return _helper.ExecuteGetCommand<double>(
+                id,
+                TraCIConstants.CMD_GET_LANE_VARIABLE,
+                TraCIConstants.VAR_NOXEMISSION
+            );
+            }
 
         /// <summary>
         /// Sum of fuel consumption on this lane in ml during this time step.
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-		public TraCIResponse<double> GetFuelConsumption(string id)
-		{
-			return 
-				TraCICommandHelper.ExecuteGetCommand<double>(
-					Client, 
-					id, 
-					TraCIConstants.CMD_GET_LANE_VARIABLE,
-					TraCIConstants.VAR_FUELCONSUMPTION);
-		}
+        public TraCIResponse<double> GetFuelConsumption(string id)
+            {
+            return _helper.ExecuteGetCommand<double>(
+                id,
+                TraCIConstants.CMD_GET_LANE_VARIABLE,
+                TraCIConstants.VAR_FUELCONSUMPTION
+            );
+            }
 
         /// <summary>
         /// Returns the list of foe lanes. There are two modes for calling this method. If toLane is a normal road
-        /// lane that is reachable from the laneID argument, the list contains all lanes that are the origin of a 
+        /// lane that is reachable from the laneID argument, the list contains all lanes that are the origin of a
         /// connection with right-of-way over the connection between laneID and toLane. If toLane is empty and laneID
         /// is an internal lane, the list contains all internal lanes that intersect with laneID.
         /// </summary>
@@ -278,144 +266,135 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <param name="toLane"></param>
         /// <returns></returns>
         public TraCIResponse<object> GetFoes(string id, string toLane)
-        {
+            {
             throw new NotImplementedException();
-        }
+            }
 
         /// <summary>
         /// Sum of noise generated on this lane in dBA.
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-		public TraCIResponse<double> GetNoiseEmission(string id)
-		{
-			return 
-				TraCICommandHelper.ExecuteGetCommand<double>(
-					Client, 
-					id, 
-					TraCIConstants.CMD_GET_LANE_VARIABLE,
-					TraCIConstants.VAR_NOISEEMISSION);
-		}
+        public TraCIResponse<double> GetNoiseEmission(string id)
+            {
+            return _helper.ExecuteGetCommand<double>(
+                id,
+                TraCIConstants.CMD_GET_LANE_VARIABLE,
+                TraCIConstants.VAR_NOISEEMISSION
+            );
+            }
 
         /// <summary>
         /// Sum of electricity consumption on this lane in kWh during this time step.
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-		public TraCIResponse<double> GetElectricityConsumption(string id)
-		{
-			return 
-				TraCICommandHelper.ExecuteGetCommand<double>(
-					Client, 
-					id, 
-					TraCIConstants.CMD_GET_LANE_VARIABLE,
-					TraCIConstants.VAR_ELECTRICITYCONSUMPTION);
-		}
+        public TraCIResponse<double> GetElectricityConsumption(string id)
+            {
+            return _helper.ExecuteGetCommand<double>(
+                id,
+                TraCIConstants.CMD_GET_LANE_VARIABLE,
+                TraCIConstants.VAR_ELECTRICITYCONSUMPTION
+            );
+            }
 
         /// <summary>
         /// The number of vehicles on this lane within the last time step.
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-		public TraCIResponse<int> GetLastStepVehicleNumber(string id)
-		{
-			return 
-				TraCICommandHelper.ExecuteGetCommand<int>(
-					Client, 
-					id, 
-					TraCIConstants.CMD_GET_LANE_VARIABLE,
-					TraCIConstants.LAST_STEP_VEHICLE_NUMBER);
-		}
+        public TraCIResponse<int> GetLastStepVehicleNumber(string id)
+            {
+            return _helper.ExecuteGetCommand<int>(
+                id,
+                TraCIConstants.CMD_GET_LANE_VARIABLE,
+                TraCIConstants.LAST_STEP_VEHICLE_NUMBER
+            );
+            }
 
         /// <summary>
         /// Returns the mean speed of vehicles that were on this lane within the last simulation step [m/s]
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-		public TraCIResponse<double> GetLastStepMeanSpeed(string id)
-		{
-			return 
-				TraCICommandHelper.ExecuteGetCommand<double>(
-					Client, 
-					id, 
-					TraCIConstants.CMD_GET_LANE_VARIABLE,
-					TraCIConstants.LAST_STEP_MEAN_SPEED);
-		}
+        public TraCIResponse<double> GetLastStepMeanSpeed(string id)
+            {
+            return _helper.ExecuteGetCommand<double>(
+                id,
+                TraCIConstants.CMD_GET_LANE_VARIABLE,
+                TraCIConstants.LAST_STEP_MEAN_SPEED
+            );
+            }
 
         /// <summary>
         /// Returns the list of ids of vehicles that were on this lane in the last simulation step
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-		public TraCIResponse<List<string>> GetLastStepVehicleIds(string id)
-		{
-			return 
-				TraCICommandHelper.ExecuteGetCommand<List<string>>(
-					Client, 
-					id, 
-					TraCIConstants.CMD_GET_LANE_VARIABLE,
-					TraCIConstants.LAST_STEP_VEHICLE_ID_LIST);
-		}
+        public TraCIResponse<List<string>> GetLastStepVehicleIds(string id)
+            {
+            return _helper.ExecuteGetCommand<List<string>>(
+                id,
+                TraCIConstants.CMD_GET_LANE_VARIABLE,
+                TraCIConstants.LAST_STEP_VEHICLE_ID_LIST
+            );
+            }
 
         /// <summary>
         /// Returns the total lengths of vehicles on this lane during the last simulation step divided by the length of this lane
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-		public TraCIResponse<double> GetLastStepOccupancy(string id)
-		{
-			return 
-				TraCICommandHelper.ExecuteGetCommand<double>(
-					Client, 
-					id, 
-					TraCIConstants.CMD_GET_LANE_VARIABLE,
-					TraCIConstants.LAST_STEP_OCCUPANCY);
-		}
+        public TraCIResponse<double> GetLastStepOccupancy(string id)
+            {
+            return _helper.ExecuteGetCommand<double>(
+                id,
+                TraCIConstants.CMD_GET_LANE_VARIABLE,
+                TraCIConstants.LAST_STEP_OCCUPANCY
+            );
+            }
 
         /// <summary>
         /// The mean length of vehicles which were on this lane in the last step [m]
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-		public TraCIResponse<double> GetLastStepLength(string id)
-		{
-			return 
-				TraCICommandHelper.ExecuteGetCommand<double>(
-					Client, 
-					id, 
-					TraCIConstants.CMD_GET_LANE_VARIABLE,
-					TraCIConstants.LAST_STEP_LENGTH);
-		}
+        public TraCIResponse<double> GetLastStepLength(string id)
+            {
+            return _helper.ExecuteGetCommand<double>(
+                id,
+                TraCIConstants.CMD_GET_LANE_VARIABLE,
+                TraCIConstants.LAST_STEP_LENGTH
+            );
+            }
 
         /// <summary>
         /// Returns the waiting time for all vehicles on the lane [s]
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-		public TraCIResponse<double> GetWaitingTime(string id)
-		{
-			return 
-				TraCICommandHelper.ExecuteGetCommand<double>(
-					Client, 
-					id, 
-					TraCIConstants.CMD_GET_LANE_VARIABLE,
-					TraCIConstants.VAR_WAITING_TIME);
-		}
+        public TraCIResponse<double> GetWaitingTime(string id)
+            {
+            return _helper.ExecuteGetCommand<double>(
+                id,
+                TraCIConstants.CMD_GET_LANE_VARIABLE,
+                TraCIConstants.VAR_WAITING_TIME
+            );
+            }
 
         /// <summary>
         /// Returns the estimated travel time for the last time step on the given lane [s]
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-		public TraCIResponse<double> GetTravelTime(string id)
-		{
-			return 
-				TraCICommandHelper.ExecuteGetCommand<double>(
-					Client, 
-					id, 
-					TraCIConstants.CMD_GET_LANE_VARIABLE,
-					TraCIConstants.VAR_CURRENT_TRAVELTIME);
-		}
+        public TraCIResponse<double> GetTravelTime(string id)
+            {
+            return _helper.ExecuteGetCommand<double>(
+                id,
+                TraCIConstants.CMD_GET_LANE_VARIABLE,
+                TraCIConstants.VAR_CURRENT_TRAVELTIME
+            );
+            }
 
         /// <summary>
         /// Returns the total number of halting vehicles for the last time step on the given lane.
@@ -424,87 +403,84 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <param name="id"></param>
         /// <returns></returns>
         public TraCIResponse<int> GetLastStepHaltingNumber(string id)
-		{
-			return 
-				TraCICommandHelper.ExecuteGetCommand<int>(
-					Client, 
-					id, 
-					TraCIConstants.CMD_GET_LANE_VARIABLE,
-					TraCIConstants.LAST_STEP_VEHICLE_HALTING_NUMBER);
-		}
+            {
+            return _helper.ExecuteGetCommand<int>(
+                id,
+                TraCIConstants.CMD_GET_LANE_VARIABLE,
+                TraCIConstants.LAST_STEP_VEHICLE_HALTING_NUMBER
+            );
+            }
 
         /// <summary>
         /// Sets a list of allowed vehicle classes.
         /// </summary>
         public TraCIResponse<object> SetAllowed(string laneId, List<string> allowedVehicleClasses)
-        {
-            return TraCICommandHelper.ExecuteSetCommand<object, List<string>>(
-                Client,
+            {
+            return _helper.ExecuteSetCommand<object, List<string>>(
                 laneId,
                 TraCIConstants.CMD_SET_LANE_VARIABLE,
                 TraCIConstants.LANE_ALLOWED,
-                allowedVehicleClasses);
-        }
+                allowedVehicleClasses
+            );
+            }
 
         /// <summary>
         /// Sets a list of disallowed vehicle classes.
         /// </summary>
-        public TraCIResponse<object> SetDisallowed(string laneId, List<string> disallowedVehicleClasses)
-        {
-            return TraCICommandHelper.ExecuteSetCommand<object, List<string>>(
-                Client,
+        public TraCIResponse<object> SetDisallowed(
+            string laneId,
+            List<string> disallowedVehicleClasses
+        )
+            {
+            return _helper.ExecuteSetCommand<object, List<string>>(
                 laneId,
                 TraCIConstants.CMD_SET_LANE_VARIABLE,
                 TraCIConstants.LANE_DISALLOWED,
-                disallowedVehicleClasses);
-        }
+                disallowedVehicleClasses
+            );
+            }
 
         /// <summary>
         /// Sets the length of the lane in m
         /// </summary>
         public TraCIResponse<object> SetLength(string laneId, double length)
-        {
-            return TraCICommandHelper.ExecuteSetCommand<object, double>(
-                Client,
+            {
+            return _helper.ExecuteSetCommand<object, double>(
                 laneId,
                 TraCIConstants.CMD_SET_LANE_VARIABLE,
                 TraCIConstants.VAR_LENGTH,
-                length);
-        }
+                length
+            );
+            }
 
         /// <summary>
         /// Sets a new maximum allowed speed on the lane in m/s.
         /// </summary>
         public TraCIResponse<object> SetMaxSpeed(string laneId, double maxSpeed)
-        {
-            return TraCICommandHelper.ExecuteSetCommand<object, double>(
-                Client,
+            {
+            return _helper.ExecuteSetCommand<object, double>(
                 laneId,
                 TraCIConstants.CMD_SET_LANE_VARIABLE,
                 TraCIConstants.VAR_MAXSPEED,
-                maxSpeed);
-        }
+                maxSpeed
+            );
+            }
 
-
-
-        public void Subscribe(string objectId, int beginTime, int endTime, List<byte> ListOfVariablesToSubsribeTo)
-        {
-            TraCICommandHelper.ExecuteSubscribeCommand(
-                Client,
+        public void Subscribe(
+            string objectId,
+            int beginTime,
+            int endTime,
+            List<byte> ListOfVariablesToSubsribeTo
+        )
+            {
+            _helper.ExecuteSubscribeCommand(
                 beginTime,
                 endTime,
                 objectId,
                 TraCIConstants.CMD_SUBSCRIBE_LANE_VARIABLE,
-                ListOfVariablesToSubsribeTo);
-        }
+                ListOfVariablesToSubsribeTo
+            );
+            }
         #endregion // Public Methods
-
-        #region Constructor
-
-        public LaneCommands(TraCIClient client) : base(client)
-		{
-		}
-
-		#endregion // Constructor
-	}
-}
+        }
+    }

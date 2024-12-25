@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using CodingConnected.TraCI.NET.Constants;
 using CodingConnected.TraCI.NET.Helpers;
+using CodingConnected.TraCI.NET.Response;
+using CodingConnected.TraCI.NET.Services;
 using CodingConnected.TraCI.NET.Types;
 
 namespace CodingConnected.TraCI.NET.Commands
-{
-	public class TrafficLightCommands : TraCICommandsBase
-	{
+    {
+    public class TrafficLightCommands(ITcpService tcpService, ICommandHelperService helper) : TraCICommandsBase(tcpService, helper)
+        {
         #region Public Methods
 
         /// <summary>
@@ -14,28 +17,28 @@ namespace CodingConnected.TraCI.NET.Commands
         /// </summary>
         /// <returns></returns>
         public TraCIResponse<List<string>> GetIdList()
-		{
-			return 
-				TraCICommandHelper.ExecuteGetCommand<List<string>>(
-					Client, 
-					"ignored", 
-					TraCIConstants.CMD_GET_TL_VARIABLE,
-					TraCIConstants.ID_LIST);
-		}
+            {
+            return
+                _helper.ExecuteGetCommand<List<string>>(
+
+                    "ignored",
+                    TraCIConstants.CMD_GET_TL_VARIABLE,
+                    TraCIConstants.ID_LIST);
+            }
 
         /// <summary>
         /// Returns the number of currently loaded objects.
         /// </summary>
         /// <returns></returns>
 		public TraCIResponse<int> GetIdCount()
-		{
-			return 
-				TraCICommandHelper.ExecuteGetCommand<int>(
-					Client, 
-					"ignored", 
-					TraCIConstants.CMD_GET_TL_VARIABLE,
-					TraCIConstants.ID_COUNT);
-		}
+            {
+            return
+                _helper.ExecuteGetCommand<int>(
+
+                    "ignored",
+                    TraCIConstants.CMD_GET_TL_VARIABLE,
+                    TraCIConstants.ID_COUNT);
+            }
 
         /// <summary>
         /// Returns the named tl's state as a tuple of light definitions from
@@ -45,14 +48,14 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <param name="id"></param>
         /// <returns></returns>
         public TraCIResponse<string> GetState(string id)
-		{
-			return 
-				TraCICommandHelper.ExecuteGetCommand<string>(
-					Client, 
-					id, 
-					TraCIConstants.CMD_GET_TL_VARIABLE,
-					TraCIConstants.TL_RED_YELLOW_GREEN_STATE);
-		}
+            {
+            return
+                _helper.ExecuteGetCommand<string>(
+
+                    id,
+                    TraCIConstants.CMD_GET_TL_VARIABLE,
+                    TraCIConstants.TL_RED_YELLOW_GREEN_STATE);
+            }
 
         /// <summary>
         /// Returns the default total duration of the currently active phase in seconds; To obtain the remaining
@@ -62,14 +65,14 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <param name="id"></param>
         /// <returns></returns>
 		public TraCIResponse<double> GetPhaseDuration(string id)
-		{
-			return 
-				TraCICommandHelper.ExecuteGetCommand<double>(
-					Client, 
-					id, 
-					TraCIConstants.CMD_GET_TL_VARIABLE,
-					TraCIConstants.TL_PHASE_DURATION);
-		}
+            {
+            return
+                _helper.ExecuteGetCommand<double>(
+
+                    id,
+                    TraCIConstants.CMD_GET_TL_VARIABLE,
+                    TraCIConstants.TL_PHASE_DURATION);
+            }
 
         /// <summary>
         /// Returns the list of lanes which are controlled by the named traffic light. Returns at least one entry 
@@ -78,14 +81,14 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <param name="id"></param>
         /// <returns></returns>
 		public TraCIResponse<List<string>> GetControlledLanes(string id)
-		{
-			return 
-				TraCICommandHelper.ExecuteGetCommand<List<string>>(
-					Client, 
-					id, 
-					TraCIConstants.CMD_GET_TL_VARIABLE,
-					TraCIConstants.TL_CONTROLLED_LANES);
-		}
+            {
+            return
+                _helper.ExecuteGetCommand<List<string>>(
+
+                    id,
+                    TraCIConstants.CMD_GET_TL_VARIABLE,
+                    TraCIConstants.TL_CONTROLLED_LANES);
+            }
 
         /// <summary>
         /// Returns the links controlled by the traffic light, sorted by the signal index and described by giving 
@@ -94,9 +97,9 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <param name="id"></param>
         /// <returns></returns>
 		public TraCIResponse<ControlledLinks> GetControlledLinks(string id)
-		{
-            var tmp = TraCICommandHelper.ExecuteGetCommand<CompoundObject>(
-                    Client,
+            {
+            var tmp = _helper.ExecuteGetCommand<CompoundObject>(
+
                     id,
                     TraCIConstants.CMD_GET_TL_VARIABLE,
                     TraCIConstants.TL_CONTROLLED_LINKS);
@@ -104,17 +107,17 @@ namespace CodingConnected.TraCI.NET.Commands
             var controlledLinks = TraCIDataConverter.ConvertToControlledLinks(tmp.Content.Value);
 
             var ret = new TraCIResponse<ControlledLinks>
-            {
+                {
                 Content = controlledLinks,
                 ErrorMessage = tmp.ErrorMessage,
                 Identifier = tmp.Identifier,
                 ResponseIdentifier = tmp.ResponseIdentifier,
                 Result = tmp.Result,
                 Variable = tmp.Variable
-            };
+                };
 
             return ret;
-        }
+            }
 
         /// <summary>
         /// Returns the index of the current phase in the current program
@@ -122,14 +125,14 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <param name="id"></param>
         /// <returns></returns>
 		public TraCIResponse<int> GetCurrentPhase(string id)
-		{
-			return 
-				TraCICommandHelper.ExecuteGetCommand<int>(
-					Client, 
-					id, 
-					TraCIConstants.CMD_GET_TL_VARIABLE,
-					TraCIConstants.TL_CURRENT_PHASE);
-		}
+            {
+            return
+                _helper.ExecuteGetCommand<int>(
+
+                    id,
+                    TraCIConstants.CMD_GET_TL_VARIABLE,
+                    TraCIConstants.TL_CURRENT_PHASE);
+            }
 
         /// <summary>
         /// Returns the id of the current program
@@ -137,14 +140,14 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <param name="id"></param>
         /// <returns></returns>
 		public TraCIResponse<string> GetCurrentProgram(string id)
-		{
-			return 
-				TraCICommandHelper.ExecuteGetCommand<string>(
-					Client, 
-					id, 
-					TraCIConstants.CMD_GET_TL_VARIABLE,
-					TraCIConstants.TL_CURRENT_PROGRAM);
-		}
+            {
+            return
+                _helper.ExecuteGetCommand<string>(
+
+                    id,
+                    TraCIConstants.CMD_GET_TL_VARIABLE,
+                    TraCIConstants.TL_CURRENT_PROGRAM);
+            }
 
         /// <summary>
         /// Returns the complete traffic light program, structure described under data types
@@ -152,9 +155,9 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <param name="id"></param>
         /// <returns></returns>
 		public TraCIResponse<TrafficCompleteLightProgram> GetCompleteDefinition(string id)
-		{
-            var tmp = TraCICommandHelper.ExecuteGetCommand<CompoundObject>(
-                    Client,
+            {
+            var tmp = _helper.ExecuteGetCommand<CompoundObject>(
+
                     id,
                     TraCIConstants.CMD_GET_TL_VARIABLE,
                     TraCIConstants.TL_COMPLETE_DEFINITION_RYG);
@@ -162,17 +165,17 @@ namespace CodingConnected.TraCI.NET.Commands
             var tmp2 = TraCIDataConverter.ConvertToTrafficLightCompleteProgramm(tmp.Content);
 
             var ret = new TraCIResponse<TrafficCompleteLightProgram>
-            {
+                {
                 Content = tmp2,
                 ErrorMessage = tmp.ErrorMessage,
                 Identifier = tmp.Identifier,
                 ResponseIdentifier = tmp.ResponseIdentifier,
                 Result = tmp.Result,
                 Variable = tmp.Variable
-            };
+                };
 
             return ret;
-        }
+            }
 
         /// <summary>
         /// Returns the assumed time (in seconds) at which the tls changes the phase. Please note
@@ -184,14 +187,14 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <param name="id"></param>
         /// <returns></returns>
         public TraCIResponse<double> GetNextSwitch(string id)
-		{
-			return 
-				TraCICommandHelper.ExecuteGetCommand<double>(
-					Client, 
-					id, 
-					TraCIConstants.CMD_GET_TL_VARIABLE,
-					TraCIConstants.TL_NEXT_SWITCH);
-		}
+            {
+            return
+                _helper.ExecuteGetCommand<double>(
+
+                    id,
+                    TraCIConstants.CMD_GET_TL_VARIABLE,
+                    TraCIConstants.TL_NEXT_SWITCH);
+            }
 
         /// <summary>
         /// Sets the phase definition to the given. Assumes the given string is a tuple of light definitions
@@ -204,14 +207,14 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <param name="state"></param>
         /// <returns></returns>
         public TraCIResponse<object> SetRedYellowGreenState(string id, string state)
-        {
-            return TraCICommandHelper.ExecuteSetCommand<object, string>(
-                Client,
+            {
+            return _helper.ExecuteSetCommand<object, string>(
+
                 id,
                 TraCIConstants.CMD_SET_TL_VARIABLE,
                 TraCIConstants.TL_RED_YELLOW_GREEN_STATE,
                 state);
-        }
+            }
 
         /// <summary>
         /// Sets the phase of the traffic light to the given. The given index must be valid for the current 
@@ -222,14 +225,14 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <param name="phaseIndex"></param>
         /// <returns></returns>
         public TraCIResponse<object> SetPhase(string id, int phaseIndex)
-        {
-            return TraCICommandHelper.ExecuteSetCommand<object, int>(
-                Client,
+            {
+            return _helper.ExecuteSetCommand<object, int>(
+
                 id,
                 TraCIConstants.CMD_SET_TL_VARIABLE,
                 TraCIConstants.TL_PHASE_INDEX,
                 phaseIndex);
-        }
+            }
 
         /// <summary>
         /// Switches the traffic light to the given program. No WAUT algorithm is used, the program is 
@@ -239,14 +242,14 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <param name="program"></param>
         /// <returns></returns>
         public TraCIResponse<object> SetProgram(string id, string program)
-        {
-            return TraCICommandHelper.ExecuteSetCommand<object, string>(
-                Client,
+            {
+            return _helper.ExecuteSetCommand<object, string>(
+
                 id,
                 TraCIConstants.CMD_SET_TL_VARIABLE,
                 TraCIConstants.TL_PROGRAM,
                 program);
-        }
+            }
 
         /// <summary>
         /// Sets the remaining duration of the current phase in seconds.
@@ -255,14 +258,14 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <param name="phaseDuration"></param>
         /// <returns></returns>
         public TraCIResponse<object> SetPhaseDuration(string id, double phaseDuration)
-        {
-            return TraCICommandHelper.ExecuteSetCommand<object, double>(
-                Client,
+            {
+            return _helper.ExecuteSetCommand<object, double>(
+
                 id,
                 TraCIConstants.CMD_SET_TL_VARIABLE,
                 TraCIConstants.TL_PHASE_DURATION,
                 phaseDuration);
-        }
+            }
 
         /// <summary>
         /// Inserts a completely new program.
@@ -271,9 +274,9 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <param name="program"></param>
         /// <returns></returns>
         public TraCIResponse<object> SetCompleteRedYellowGreenDefinition(string id, TrafficLightProgram program)
-        {
-            // TODO: move this to TraCICommandHelper.ExecuteSetCommand
-            
+            {
+            // TODO: move this to _helper.ExecuteSetCommand
+
             var bytes = new List<byte> { TraCIConstants.TL_COMPLETE_PROGRAM_RYG }; //messageType (0x2c)
             bytes.AddRange(TraCIDataConverter.GetTraCIBytesFromASCIIString(id));
             bytes.Add(TraCIConstants.TYPE_COMPOUND); //value type compound
@@ -290,7 +293,7 @@ namespace CodingConnected.TraCI.NET.Commands
             bytes.AddRange(TraCIDataConverter.GetTraCIBytesFromInt32(program.Phases.Count)); //Phase Number
 
             foreach (var p in program.Phases)//Phases
-            {
+                {
                 bytes.Add(TraCIConstants.TYPE_DOUBLE); //value type integer
                 bytes.AddRange(TraCIDataConverter.GetTraCIBytesFromDouble(p.Duration)); //Duration[ms]
                 bytes.Add(TraCIConstants.TYPE_DOUBLE); //value type integer
@@ -299,26 +302,26 @@ namespace CodingConnected.TraCI.NET.Commands
                 bytes.AddRange(TraCIDataConverter.GetTraCIBytesFromDouble(0)); //unused
                 bytes.Add(TraCIConstants.TYPE_STRING); //value type string
                 bytes.AddRange(TraCIDataConverter.GetTraCIBytesFromASCIIString(p.Definition)); //State (light/priority-tuple)
-            }
+                }
 
             var command = new TraCICommand
-            {
+                {
                 Identifier = TraCIConstants.CMD_SET_TL_VARIABLE,
                 Contents = bytes.ToArray()
-            };
+                };
 
-            var response = Client.SendMessage(command);
+            var response = _tcpService.SendMessage(command);
 
 #warning is the try catch necessary?
             try
-            {
+                {
                 return TraCIDataConverter.ExtractDataFromResponse<object>(response, TraCIConstants.CMD_SET_TL_VARIABLE, TraCIConstants.TL_COMPLETE_PROGRAM_RYG);
-            }
+                }
             catch
-            {
+                {
                 throw;
+                }
             }
-        }
 
         /// <summary>
         /// 
@@ -328,23 +331,15 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <param name="endTime"></param>
         /// <param name="ListOfVariablesToSubsribeTo"></param>
         public void Subscribe(string objectId, int beginTime, int endTime, List<byte> ListOfVariablesToSubsribeTo)
-        {
-            TraCICommandHelper.ExecuteSubscribeCommand(
-                Client,
+            {
+            _helper.ExecuteSubscribeCommand(
+
                 beginTime,
                 endTime,
                 objectId,
                 TraCIConstants.CMD_SUBSCRIBE_TL_VARIABLE,
                 ListOfVariablesToSubsribeTo);
-        }
+            }
         #endregion // Public Methods
-
-        #region Constructor
-
-        public TrafficLightCommands(TraCIClient client) : base(client)
-		{
-		}
-
-		#endregion // Constructor
-	}
-}
+        }
+    }

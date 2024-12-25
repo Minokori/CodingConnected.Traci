@@ -1,96 +1,90 @@
-﻿using System.Collections.Generic;
-using CodingConnected.TraCI.NET.Helpers;
+﻿using CodingConnected.TraCI.NET.Constants;
+using CodingConnected.TraCI.NET.Response;
+using CodingConnected.TraCI.NET.Services;
 using CodingConnected.TraCI.NET.Types;
 
-namespace CodingConnected.TraCI.NET.Commands
-{
-	public class JunctionCommands : TraCIContextSubscribableCommands
-	{
-        #region Protected Override Methods
-        protected override byte ContextSubscribeCommand => TraCIConstants.CMD_SUBSCRIBE_JUNCTION_CONTEXT;
+namespace CodingConnected.TraCI.NET.Commands;
 
-        #endregion Protected Override Methods
+public class JunctionCommands(ITcpService tcpService, ICommandHelperService helper)
+    : TraCIContextSubscribableCommands(tcpService, helper)
+    {
+    #region Protected Override Methods
+    protected override byte ContextSubscribeCommand =>
+        TraCIConstants.CMD_SUBSCRIBE_JUNCTION_CONTEXT;
 
-        #region Public Methods
+    #endregion Protected Override Methods
 
-        /// <summary>
-        /// Returns a list of ids of all junctions within the scenario 
-        /// </summary>
-        /// <returns></returns>
-        public TraCIResponse<List<string>> GetIdList()
-		{
-			return
-				TraCICommandHelper.ExecuteGetCommand<List<string>>(
-					Client,
-					"ignored",
-					TraCIConstants.CMD_GET_JUNCTION_VARIABLE,
-					TraCIConstants.ID_LIST);
-		}
+    #region Public Methods
 
-        /// <summary>
-        /// Returns the number of junctions within the scenario
-        /// </summary>
-        /// <returns></returns>
-		public TraCIResponse<int> GetIdCount()
-		{
-			return
-				TraCICommandHelper.ExecuteGetCommand<int>(
-					Client,
-					"ignored",
-					TraCIConstants.CMD_GET_JUNCTION_VARIABLE,
-					TraCIConstants.ID_COUNT);
-		}
-
-        /// <summary>
-        /// Returns the position of the named junction [m,m]
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-		public TraCIResponse<Position2D> GetPosition(string id)
-		{
-			return
-				TraCICommandHelper.ExecuteGetCommand<Position2D>(
-					Client,
-					id,
-					TraCIConstants.CMD_GET_JUNCTION_VARIABLE,
-					TraCIConstants.VAR_POSITION);
-		}
-
-        /// <summary>
-        /// Returns the shape (list of 2D-positions) of the named junction
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-		public TraCIResponse<Polygon> GetShape(string id)
-		{
-			return
-				TraCICommandHelper.ExecuteGetCommand<Polygon>(
-				Client,
-				id,
-				TraCIConstants.CMD_GET_JUNCTION_VARIABLE,
-				TraCIConstants.VAR_SHAPE);
-		}
-
-
-        public void Subscribe(string objectId, int beginTime, int endTime, List<byte> ListOfVariablesToSubsribeTo)
+    /// <summary>
+    /// Returns a list of ids of all junctions within the scenario
+    /// </summary>
+    /// <returns></returns>
+    public TraCIResponse<List<string>> GetIdList()
         {
-            TraCICommandHelper.ExecuteSubscribeCommand(
-                Client,
-                beginTime,
-                endTime,
-                objectId,
-                TraCIConstants.CMD_SUBSCRIBE_JUNCTION_VARIABLE,
-                ListOfVariablesToSubsribeTo);
+        return _helper.ExecuteGetCommand<List<string>>(
+            "ignored",
+            TraCIConstants.CMD_GET_JUNCTION_VARIABLE,
+            TraCIConstants.ID_LIST
+        );
         }
-        #endregion // Public Methods
 
-        #region Constructor
+    /// <summary>
+    /// Returns the number of junctions within the scenario
+    /// </summary>
+    /// <returns></returns>
+    public TraCIResponse<int> GetIdCount()
+        {
+        return _helper.ExecuteGetCommand<int>(
+            "ignored",
+            TraCIConstants.CMD_GET_JUNCTION_VARIABLE,
+            TraCIConstants.ID_COUNT
+        );
+        }
 
-        public JunctionCommands(TraCIClient client) : base(client)
-		{
-		}
+    /// <summary>
+    /// Returns the position of the named junction [m,m]
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    public TraCIResponse<Position2D> GetPosition(string id)
+        {
+        return _helper.ExecuteGetCommand<Position2D>(
+            id,
+            TraCIConstants.CMD_GET_JUNCTION_VARIABLE,
+            TraCIConstants.VAR_POSITION
+        );
+        }
 
-		#endregion // Constructor
-	}
-}
+    /// <summary>
+    /// Returns the shape (list of 2D-positions) of the named junction
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    public TraCIResponse<Polygon> GetShape(string id)
+        {
+        return _helper.ExecuteGetCommand<Polygon>(
+            id,
+            TraCIConstants.CMD_GET_JUNCTION_VARIABLE,
+            TraCIConstants.VAR_SHAPE
+        );
+        }
+
+    public void Subscribe(
+        string objectId,
+        int beginTime,
+        int endTime,
+        List<byte> ListOfVariablesToSubsribeTo
+    )
+        {
+        _helper.ExecuteSubscribeCommand(
+            beginTime,
+            endTime,
+            objectId,
+            TraCIConstants.CMD_SUBSCRIBE_JUNCTION_VARIABLE,
+            ListOfVariablesToSubsribeTo
+        );
+        }
+    #endregion // Public Methods
+    }
 
