@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Linq;
-
-namespace CodingConnected.TraCI.NET.Types;
+﻿namespace CodingConnected.TraCI.NET.Types;
 
 public class SubscriptionEventArgs(string objectId, int variableCount) : EventArgs
     {

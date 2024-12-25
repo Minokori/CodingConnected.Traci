@@ -1,9 +1,9 @@
 ﻿using CodingConnected.TraCI.NET.Constants;
+using CodingConnected.TraCI.NET.Helpers;
 using CodingConnected.TraCI.NET.Response;
-using CodingConnected.TraCI.NET.Services;
 using CodingConnected.TraCI.NET.Types;
 
-namespace CodingConnected.TraCI.NET.Helpers
+namespace CodingConnected.TraCI.NET.Services
     {
     internal class TraCICommandHelper(ITcpService tcpService) : ICommandHelperService
         {
