@@ -1,21 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace CodingConnected.TraCI.NET.Types;
 
-namespace CodingConnected.TraCI.NET.Types
-{
-    public class EdgeInformation
+public readonly struct EdgeInformation : ITraCIType
     {
-        public string LaneId;
-        public double Length;
-        public double Occupation;
-        public byte OffsetToBestLane;
-        /// <summary>
-        /// 0: lane may not be used for continuing drive, 1: it may be used
-        /// </summary>
-        public byte laneInformation;
-        public List<string> BestSubsequentLanes;
+    public string LaneId { get; init; }
+    public double Length { get; init; }
+    public double Occupation { get; init; }
+    public byte OffsetToBestLane { get; init; }
+    /// <summary>
+    /// 0: lane may not be used for continuing drive, 1: it may be used
+    /// </summary>
+    public byte LaneInformation { get; init; }
+    public List<string> BestSubsequentLanes { get; init; }
     }
-}
+

@@ -6,10 +6,11 @@ namespace CodingConnected.TraCI.NET.Services;
 internal class TCPConnectService : ITcpService
     {
     private TcpClient _client;
-    public TcpClient Client => _client;
     private NetworkStream _stream;
-    public NetworkStream Stream => _stream;
     private readonly byte[] _receiveBuffer = new byte[32768];
+
+    public TcpClient Client => _client;
+    public NetworkStream Stream => _stream;
     /// <summary>
     /// Connects to the SUMO server instance
     /// </summary>
@@ -25,6 +26,7 @@ internal class TCPConnectService : ITcpService
         await _client.ConnectAsync(hostname, port);
         _stream = _client.GetStream();
         }
+
     public bool Connect(string hostname, int port)
         {
         _client = new TcpClient
@@ -52,6 +54,7 @@ internal class TCPConnectService : ITcpService
             return false;
             }
         }
+
     public TraCIResult[] SendMessage(TraCICommand command)
         {
         if (!_client.Connected)
@@ -59,7 +62,7 @@ internal class TCPConnectService : ITcpService
             return null;
             }
 
-        byte[] msg = TraCIDataConverter.GetMessageBytes(command);
+        byte[] msg = command.ToMessageBytes();
         _client.Client.Send(msg);
         try
             {
@@ -84,12 +87,12 @@ internal class TCPConnectService : ITcpService
                     }
                 }
             //var response = _receiveBuffer.Take(bytesRead).ToArray();
-            TraCIResult[] trresponse = TraCIDataConverter.HandleResponse([.. response]);
+            TraCIResult[] trresponse = response.ToTraCIResults();
             return trresponse?.Length > 0 ? trresponse : null;
             }
         catch
             {
-            return null; // TODO
+            return null;
             }
         }
     }

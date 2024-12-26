@@ -1,4 +1,5 @@
 ﻿using CodingConnected.TraCI.NET.Constants;
+using CodingConnected.TraCI.NET.Extensions;
 using CodingConnected.TraCI.NET.Helpers;
 using CodingConnected.TraCI.NET.Response;
 using CodingConnected.TraCI.NET.Services;
@@ -424,13 +425,13 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <returns></returns>
         public TraCIResponse<List<EdgeInformation>> GetBestLanes(string id)
             {
-            TraCIResponse<CompoundObject> tmp = _helper.ExecuteGetCommand<CompoundObject>(
+            TraCIResponse<TraCIObjects> tmp = _helper.ExecuteGetCommand<TraCIObjects>(
 
                     id,
                     TraCIConstants.CMD_GET_VEHICLE_VARIABLE,
                     TraCIConstants.VAR_BEST_LANES);
 
-            List<EdgeInformation> edgeInformation = TraCIDataConverter.ConvertToListOfEdgeInformation(tmp.Content);
+            List<EdgeInformation> edgeInformation = tmp.Content.ToEdgeInformations();
 
             return new TraCIResponse<List<EdgeInformation>>
                 {
@@ -705,13 +706,13 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <returns></returns>
         public TraCIResponse<List<TrafficLightSystem>> GetNextTLS(string id)
             {
-            TraCIResponse<CompoundObject> tmp = _helper.ExecuteGetCommand<CompoundObject>(
+            TraCIResponse<TraCIObjects> tmp = _helper.ExecuteGetCommand<TraCIObjects>(
 
                     id,
                     TraCIConstants.CMD_GET_VEHICLE_VARIABLE,
                     TraCIConstants.VAR_NEXT_TLS);
 
-            List<TrafficLightSystem> tls = TraCIDataConverter.ConvertToListOfTrafficLightSystem(tmp.Content);
+            List<TrafficLightSystem> tls = tmp.Content.ToTrafficLightSystems();
 
             return new TraCIResponse<List<TrafficLightSystem>>
                 {
@@ -968,19 +969,21 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <returns></returns>
         public TraCIResponse<object> SetStop(string id, string edgeId, double endPosition, byte laneIndex, double Duration, StopFlag stopFlag = StopFlag.STOP_DEFAULT, double startPosition = 0d, double until = 0)
             {
-            CompoundObject tmp = new();
-            //tmp.Value.Add(new TraCIInteger() { Value = itemNumber });
-            tmp.Value.Add(new TraCIString() { Value = edgeId });
-            tmp.Value.Add(new TraCIDouble() { Value = endPosition });
-            tmp.Value.Add(new TraCIByte() { Value = laneIndex });
-            tmp.Value.Add(new TraCIDouble() { Value = Duration });
-            tmp.Value.Add(new TraCIByte() { Value = (byte)stopFlag });
-            tmp.Value.Add(new TraCIDouble() { Value = startPosition });
-            tmp.Value.Add(new TraCIDouble() { Value = until });
+            TraCIObjects tmp =
+                [
+                //tmp.Value.Add(new TraCIInteger() { Value = itemNumber });
+                new TraCIString() { Value = edgeId },
+                new TraCIDouble() { Value = endPosition },
+                new TraCIByte() { Value = laneIndex },
+                new TraCIDouble() { Value = Duration },
+                new TraCIByte() { Value = (byte)stopFlag },
+                new TraCIDouble() { Value = startPosition },
+                new TraCIDouble() { Value = until },
+                ];
 
 
             return
-                _helper.ExecuteSetCommand<object, CompoundObject>(
+                _helper.ExecuteSetCommand<object, TraCIObjects>(
 
                     id,
                     TraCIConstants.CMD_SET_VEHICLE_VARIABLE,
@@ -998,13 +1001,11 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <returns></returns>
         public TraCIResponse<object> ChangeLane(string id, byte laneIndex, double duration)
             {
-            CompoundObject tmp = new();
-            tmp.Value.Add(new TraCIByte() { Value = laneIndex });
-            tmp.Value.Add(new TraCIDouble() { Value = duration });
+            TraCIObjects tmp = [new TraCIByte() { Value = laneIndex }, new TraCIDouble() { Value = duration }];
 
 
             return
-                _helper.ExecuteSetCommand<object, CompoundObject>(
+                _helper.ExecuteSetCommand<object, TraCIObjects>(
 
                     id,
                     TraCIConstants.CMD_SET_VEHICLE_VARIABLE,
@@ -1040,12 +1041,12 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <returns></returns>
         public TraCIResponse<object> UpdateBestLanes(string id)
             {
-            CompoundObject tmp = new();
+            TraCIObjects tmp = [];
 
             // TODO: fill compound object with data
 
             return
-                _helper.ExecuteSetCommand<object, CompoundObject>(
+                _helper.ExecuteSetCommand<object, TraCIObjects>(
 
                     id,
                     TraCIConstants.CMD_SET_VEHICLE_VARIABLE,
@@ -1063,13 +1064,11 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <returns></returns>
         public TraCIResponse<object> SlowDown(string id, double speed, double duration)
             {
-            CompoundObject tmp = new();
-            tmp.Value.Add(new TraCIDouble() { Value = speed });
-            tmp.Value.Add(new TraCIDouble() { Value = duration });
+            TraCIObjects tmp = [new TraCIDouble() { Value = speed }, new TraCIDouble() { Value = duration }];
 
 
             return
-                _helper.ExecuteSetCommand<object, CompoundObject>(
+                _helper.ExecuteSetCommand<object, TraCIObjects>(
 
                     id,
                     TraCIConstants.CMD_SET_VEHICLE_VARIABLE,
@@ -1085,10 +1084,10 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <returns></returns>
         public TraCIResponse<object> Resume(string id)
             {
-            CompoundObject tmp = new();
+            TraCIObjects tmp = [];
 
             return
-                _helper.ExecuteSetCommand<object, CompoundObject>(
+                _helper.ExecuteSetCommand<object, TraCIObjects>(
 
                     id,
                     TraCIConstants.CMD_SET_VEHICLE_VARIABLE,
@@ -1194,30 +1193,29 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <returns></returns>
         public TraCIResponse<object> SetEffort(string id, int numberOfElements, string edgeId, double beginTime = 0, double endTime = 0, double effortValue = 0)
             {
-            CompoundObject co;
+            TraCIObjects co;
             switch (numberOfElements)
                 {
                 case 4:
-                    co = new CompoundObject();
-                    co.Value.Add(new TraCIDouble() { Value = beginTime });
-                    co.Value.Add(new TraCIDouble() { Value = endTime });
-                    co.Value.Add(new TraCIString() { Value = edgeId });
-                    co.Value.Add(new TraCIDouble() { Value = effortValue });
+                    co =
+                        [
+                        new TraCIDouble() { Value = beginTime },
+                        new TraCIDouble() { Value = endTime },
+                        new TraCIString() { Value = edgeId },
+                        new TraCIDouble() { Value = effortValue },
+                        ];
                     break;
                 case 2:
 
-                    co = new CompoundObject();
-                    co.Value.Add(new TraCIString() { Value = edgeId });
-                    co.Value.Add(new TraCIDouble() { Value = effortValue });
+                    co = [new TraCIString() { Value = edgeId }, new TraCIDouble() { Value = effortValue }];
                     break;
                 case 1:
-                    co = new CompoundObject();
-                    co.Value.Add(new TraCIString() { Value = edgeId });
+                    co = [new TraCIString() { Value = edgeId }];
                     break;
                 default:
                     throw new ArgumentOutOfRangeException("numberOfElements", "Only 1, 2 or 4, is allowed as value for numberOfElements");
                 }
-            return _helper.ExecuteSetCommand<object, CompoundObject>(
+            return _helper.ExecuteSetCommand<object, TraCIObjects>(
 
                     id,
                     TraCIConstants.CMD_SET_VEHICLE_VARIABLE,
@@ -1238,30 +1236,30 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <returns></returns>
         public TraCIResponse<object> SetAdaptedTraveltime(string id, int numberOfElements, double beginTime, double endTime, string edgeId, double travelTimeValue)
             {
-            CompoundObject co;
+            TraCIObjects co;
             switch (numberOfElements)
                 {
                 case 4:
-                    co = new CompoundObject();
-                    co.Value.Add(new TraCIDouble() { Value = beginTime });
-                    co.Value.Add(new TraCIDouble() { Value = endTime });
-                    co.Value.Add(new TraCIString() { Value = edgeId });
-                    co.Value.Add(new TraCIDouble() { Value = travelTimeValue });
+                    co =
+                        [
+                        new TraCIDouble() { Value = beginTime },
+                        new TraCIDouble() { Value = endTime },
+                        new TraCIString() { Value = edgeId },
+                        new TraCIDouble() { Value = travelTimeValue },
+                        ];
                     break;
                 case 2:
 
-                    co = new CompoundObject();
-                    co.Value.Add(new TraCIString() { Value = edgeId });
-                    co.Value.Add(new TraCIDouble() { Value = travelTimeValue });
+                    co = [new TraCIString() { Value = edgeId }, new TraCIDouble() { Value = travelTimeValue }];
                     break;
                 case 1:
-                    co = new CompoundObject();
-                    co.Value.Add(new TraCIString() { Value = edgeId });
+                    co = [];
+                    co.Add(new TraCIString() { Value = edgeId });
                     break;
                 default:
                     throw new ArgumentOutOfRangeException("numberOfElements", "Only 1, 2 or 4, is allowed as value for numberOfElements");
                 }
-            return _helper.ExecuteSetCommand<object, CompoundObject>(
+            return _helper.ExecuteSetCommand<object, TraCIObjects>(
 
                     id,
                     TraCIConstants.CMD_SET_VEHICLE_VARIABLE,
@@ -1313,11 +1311,9 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <returns></returns>
         public TraCIResponse<object> MoveTo(string id, string laneId, double position)
             {
-            CompoundObject tmp = new();
-            tmp.Value.Add(new TraCIString() { Value = laneId });
-            tmp.Value.Add(new TraCIDouble() { Value = position });
+            TraCIObjects tmp = [new TraCIString() { Value = laneId }, new TraCIDouble() { Value = position }];
 
-            return _helper.ExecuteSetCommand<object, CompoundObject>(
+            return _helper.ExecuteSetCommand<object, TraCIObjects>(
 
                      id,
                      TraCIConstants.CMD_SET_VEHICLE_VARIABLE,
@@ -1339,18 +1335,20 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <returns></returns>
         public TraCIResponse<object> MoveToXY(string id, string edgeId, int laneIndex, double xPosition, double yPosition, double angle, int keepRoute = -1)
             {
-            CompoundObject tmp = new();
-            tmp.Value.Add(new TraCIString() { Value = edgeId });
-            tmp.Value.Add(new TraCIInteger() { Value = laneIndex });
-            tmp.Value.Add(new TraCIDouble() { Value = xPosition });
-            tmp.Value.Add(new TraCIDouble() { Value = yPosition });
-            tmp.Value.Add(new TraCIDouble() { Value = angle });
+            TraCIObjects tmp =
+                [
+                new TraCIString() { Value = edgeId },
+                new TraCIInteger() { Value = laneIndex },
+                new TraCIDouble() { Value = xPosition },
+                new TraCIDouble() { Value = yPosition },
+                new TraCIDouble() { Value = angle },
+                ];
             if (keepRoute == 0 || keepRoute == 1 || keepRoute == 2)
                 {
-                tmp.Value.Add(new TraCIByte() { Value = (byte)keepRoute });
+                tmp.Add(new TraCIByte() { Value = (byte)keepRoute });
                 }
 
-            return _helper.ExecuteSetCommand<object, CompoundObject>(
+            return _helper.ExecuteSetCommand<object, TraCIObjects>(
 
                      id,
                      TraCIConstants.CMD_SET_VEHICLE_VARIABLE,
@@ -1366,8 +1364,8 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <returns></returns>
         public TraCIResponse<object> RerouteTraveltime(string id)
             {
-            CompoundObject tmp = new();
-            return _helper.ExecuteSetCommand<object, CompoundObject>(
+            TraCIObjects tmp = [];
+            return _helper.ExecuteSetCommand<object, TraCIObjects>(
 
                      id,
                      TraCIConstants.CMD_SET_VEHICLE_VARIABLE,
@@ -1383,8 +1381,8 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <returns></returns>
         public TraCIResponse<object> RerouteEffort(string id)
             {
-            CompoundObject tmp = new();
-            return _helper.ExecuteSetCommand<object, CompoundObject>(
+            TraCIObjects tmp = [];
+            return _helper.ExecuteSetCommand<object, TraCIObjects>(
 
                      id,
                      TraCIConstants.CMD_SET_VEHICLE_VARIABLE,
@@ -1482,15 +1480,17 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <returns></returns>
         public TraCIResponse<object> Add(string id, string vehicleTypeId, string routeId, int departTime, double departPosition, double departSpeed, byte departLane)
             {
-            CompoundObject tmp = new();
-            tmp.Value.Add(new TraCIString() { Value = vehicleTypeId });
-            tmp.Value.Add(new TraCIString() { Value = routeId });
-            tmp.Value.Add(new TraCIInteger() { Value = departTime });
-            tmp.Value.Add(new TraCIDouble() { Value = departPosition });
-            tmp.Value.Add(new TraCIDouble() { Value = departSpeed });
-            tmp.Value.Add(new TraCIByte() { Value = departLane });
+            TraCIObjects tmp =
+                [
+                new TraCIString() { Value = vehicleTypeId },
+                new TraCIString() { Value = routeId },
+                new TraCIInteger() { Value = departTime },
+                new TraCIDouble() { Value = departPosition },
+                new TraCIDouble() { Value = departSpeed },
+                new TraCIByte() { Value = departLane },
+                ];
 
-            return _helper.ExecuteSetCommand<object, CompoundObject>(
+            return _helper.ExecuteSetCommand<object, TraCIObjects>(
 
                      id,
                      TraCIConstants.CMD_SET_VEHICLE_VARIABLE,
@@ -1519,23 +1519,25 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <returns></returns>
         public TraCIResponse<object> AddFull(string id, string routeId, string vehicleTypeId, string departTime, string departLane, string departPosition, string departSpeed, string arrivalLane, string arrivalPosition, string arrivalSpeed, string fromTaz, string toTaz, string line, int personCapacity, int personNumber)
             {
-            CompoundObject tmp = new();
-            tmp.Value.Add(new TraCIString() { Value = routeId });
-            tmp.Value.Add(new TraCIString() { Value = vehicleTypeId });
-            tmp.Value.Add(new TraCIString() { Value = departTime });
-            tmp.Value.Add(new TraCIString() { Value = departLane });
-            tmp.Value.Add(new TraCIString() { Value = departPosition });
-            tmp.Value.Add(new TraCIString() { Value = departSpeed });
-            tmp.Value.Add(new TraCIString() { Value = arrivalLane });
-            tmp.Value.Add(new TraCIString() { Value = arrivalPosition });
-            tmp.Value.Add(new TraCIString() { Value = arrivalSpeed });
-            tmp.Value.Add(new TraCIString() { Value = fromTaz });
-            tmp.Value.Add(new TraCIString() { Value = toTaz });
-            tmp.Value.Add(new TraCIString() { Value = line });
-            tmp.Value.Add(new TraCIInteger() { Value = personCapacity });
-            tmp.Value.Add(new TraCIInteger() { Value = personNumber });
+            TraCIObjects tmp =
+                [
+                new TraCIString() { Value = routeId },
+                new TraCIString() { Value = vehicleTypeId },
+                new TraCIString() { Value = departTime },
+                new TraCIString() { Value = departLane },
+                new TraCIString() { Value = departPosition },
+                new TraCIString() { Value = departSpeed },
+                new TraCIString() { Value = arrivalLane },
+                new TraCIString() { Value = arrivalPosition },
+                new TraCIString() { Value = arrivalSpeed },
+                new TraCIString() { Value = fromTaz },
+                new TraCIString() { Value = toTaz },
+                new TraCIString() { Value = line },
+                new TraCIInteger() { Value = personCapacity },
+                new TraCIInteger() { Value = personNumber },
+                ];
 
-            return _helper.ExecuteSetCommand<object, CompoundObject>(
+            return _helper.ExecuteSetCommand<object, TraCIObjects>(
 
                      id,
                      TraCIConstants.CMD_SET_VEHICLE_VARIABLE,

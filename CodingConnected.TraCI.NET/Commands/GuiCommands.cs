@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using CodingConnected.TraCI.NET.Constants;
-using CodingConnected.TraCI.NET.Helpers;
+﻿using CodingConnected.TraCI.NET.Constants;
 using CodingConnected.TraCI.NET.Response;
 using CodingConnected.TraCI.NET.Services;
 using CodingConnected.TraCI.NET.Types;
@@ -20,7 +18,6 @@ namespace CodingConnected.TraCI.NET.Commands
             {
             return
                 _helper.ExecuteGetCommand<bool>(
-
                     id,
                     TraCIConstants.CMD_GET_GUI_VARIABLE,
                     TraCIConstants.VAR_HAS_VIEW);

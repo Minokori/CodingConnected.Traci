@@ -1,6 +1,4 @@
-﻿using System.Net.Sockets;
-using System.Text;
-using CodingConnected.TraCI.NET.Commands;
+﻿using System.Text;
 using CodingConnected.TraCI.NET.Constants;
 using CodingConnected.TraCI.NET.Helpers;
 using CodingConnected.TraCI.NET.Services;
@@ -15,32 +13,9 @@ namespace CodingConnected.TraCI.NET;
 /// </summary>
 public partial class TraCIClient : IDisposable
     {
-    #region Fields
-    private ITcpService _tcpserivce { get => services.GetRequiredService<ITcpService>(); }
-
+    private ITcpService TcpSerivce => services.GetRequiredService<ITcpService>();
     private readonly ServiceProvider services;
 
-    public IEventService EventService { get => services.GetRequiredService<IEventService>(); }
-
-    // Commands
-    private ControlCommands _control;
-    private InductionLoopCommands _inductionLoop;
-    private LaneAreaDetectorCommands _laneAreaDetector;
-    private MultiEntryExitDetectorCommands _multiEntryExitDetector;
-    private LaneCommands _lane;
-    private TrafficLightCommands _trafficLight;
-    private VehicleCommands _vehicle;
-    private PersonCommands _person;
-    private VehicleTypeCommands _vehicleType;
-    private RouteCommands _route;
-    private POICommands _POI;
-    private PolygonCommands _polygon;
-    private GuiCommands _gui;
-    private JunctionCommands _junction;
-    private EdgeCommands _edge;
-    private SimulationCommands _simulation;
-
-    #endregion // Fields
 
 
 
@@ -53,13 +28,13 @@ public partial class TraCIClient : IDisposable
     /// <param name="port">Port at which SUMO exposes the API</param>
     public async Task ConnectAsync(string hostname, int port)
         {
-        await _tcpserivce.ConnectAsync(hostname, port);
+        await TcpSerivce.ConnectAsync(hostname, port);
         }
 
 
     public bool Connect(string hostname, int port)
         {
-        return _tcpserivce.Connect(hostname, port);
+        return TcpSerivce.Connect(hostname, port);
         }
 
     #endregion // Public Methods
@@ -78,14 +53,13 @@ public partial class TraCIClient : IDisposable
         List<byte> bytes =
             [
             TraCIConstants.TL_RED_YELLOW_GREEN_STATE,
-            .. TraCIDataConverter.GetTraCIBytesFromASCIIString(trafficLightId),
+            .. trafficLightId.ToTraCIBytes(),
             TraCIConstants.TYPE_STRING,
             .. BitConverter.GetBytes(state.Length).Reverse(),
             .. Encoding.ASCII.GetBytes(state),
             ];
 
         command.Contents = [.. bytes];
-        // ReSharper disable once UnusedVariable
         _ = SendMessage(command);
         }
 
@@ -93,36 +67,8 @@ public partial class TraCIClient : IDisposable
 
     #region Public Methods
 
-    internal TraCIResult[] SendMessage(TraCICommand command)
-        {
-        var tcpClient = services.GetRequiredService<ITcpService>();
-        return tcpClient.SendMessage(command);
-        }
+    public TraCIResult[] SendMessage(TraCICommand command) => TcpSerivce.SendMessage(command);
 
     #endregion // Public Methods
-    public TraCIClient()
-        {
-        var servicesbuilder = new ServiceCollection();
-        servicesbuilder.AddSingleton<ITcpService, TCPConnectService>();
-        servicesbuilder.AddSingleton<ICommandHelperService, TraCICommandHelper>();
-        servicesbuilder.AddSingleton<IEventService, EventService>();
-        servicesbuilder.AddSingleton<ControlCommands>();
-        servicesbuilder.AddSingleton<InductionLoopCommands>();
-        servicesbuilder.AddSingleton<LaneAreaDetectorCommands>();
-        servicesbuilder.AddSingleton<MultiEntryExitDetectorCommands>();
-        servicesbuilder.AddSingleton<LaneCommands>();
-        servicesbuilder.AddSingleton<TrafficLightCommands>();
-        servicesbuilder.AddSingleton<VehicleCommands>();
-        servicesbuilder.AddSingleton<PersonCommands>();
-        servicesbuilder.AddSingleton<VehicleTypeCommands>();
-        servicesbuilder.AddSingleton<RouteCommands>();
-        servicesbuilder.AddSingleton<POICommands>();
-        servicesbuilder.AddSingleton<PolygonCommands>();
-        servicesbuilder.AddSingleton<JunctionCommands>();
-        servicesbuilder.AddSingleton<EdgeCommands>();
-        servicesbuilder.AddSingleton<SimulationCommands>();
-        servicesbuilder.AddSingleton<GuiCommands>();
-        services = servicesbuilder.BuildServiceProvider();
-        }
     }
 

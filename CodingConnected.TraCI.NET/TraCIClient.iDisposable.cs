@@ -4,8 +4,8 @@ public partial class TraCIClient
     {
     public void Dispose()
         {
-        _tcpserivce.Client.Close();
-        _tcpserivce.Stream.Dispose();
+        TcpSerivce.Client.Close();
+        TcpSerivce.Stream.Dispose();
         GC.SuppressFinalize(this);
         }
     }

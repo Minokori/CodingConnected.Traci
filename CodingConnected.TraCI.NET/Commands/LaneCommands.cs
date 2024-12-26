@@ -78,10 +78,10 @@ namespace CodingConnected.TraCI.NET.Commands
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public TraCIResponse<CompoundObject> GetLinks(string id)
+        public TraCIResponse<TraCIObjects> GetLinks(string id)
             {
             //TODO: parse the result into a usable format
-            return _helper.ExecuteGetCommand<CompoundObject>(
+            return _helper.ExecuteGetCommand<TraCIObjects>(
                 id,
                 TraCIConstants.CMD_GET_LANE_VARIABLE,
                 TraCIConstants.LANE_LINKS

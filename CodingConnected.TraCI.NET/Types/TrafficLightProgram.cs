@@ -1,80 +1,56 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace CodingConnected.TraCI.NET.Types;
 
-namespace CodingConnected.TraCI.NET.Types
-{
+
+/// <summary>
+/// see http://sumo.dlr.de/wiki/Simulation/Traffic_Lights#Defining_New_TLS-Programs
+/// </summary>
+public struct TrafficLightProgram : ITraCIType
+    {
+    /// <summary>
+    /// Name of the program
+    /// </summary>
+    public string ProgramId { get; init; }
 
     /// <summary>
-    /// see http://sumo.dlr.de/wiki/Simulation/Traffic_Lights#Defining_New_TLS-Programs
+    /// Number of phase to start with
     /// </summary>
-    public class TrafficLightProgram : ComposedTypeBase
+    public int PhaseIndex { get; init; }
+    /// <summary>
+    /// List of phases
+    /// </summary>
+    public List<TrafficLightProgramPhase> Phases { get; init; }
+    }
+
+public struct TrafficCompleteLightProgram : ITraCIType
     {
-        /// <summary>
-        /// Name of the program
-        /// </summary>
-        public string ProgramId;
 
-        /// <summary>
-        /// Number of phase to start with
-        /// </summary>
-        public int PhaseIndex;
+    public int NumberOfLogics { get; init; }
 
-        /// <summary>
-        /// List of phases
-        /// </summary>
-        public List<TrafficLightProgramPhase> Phases;
+    public List<TrafficLightLogics> TrafficLightLogics { get; init; }
+    }
 
-        public TrafficLightProgram()
-        {
-            Phases = new List<TrafficLightProgramPhase>();
-        }
+public struct TrafficLightLogics
+    {
+    public string SubId { get; init; }
+    public int Type { get; init; }
+    public TraCIObjects SubParameter { get; init; }
+    public int CurrentPhaseIndex { get; init; }
+    public int NumberOfPhases { get; init; }
+    public List<TrafficLightProgramPhase> TrafficLightPhases { get; init; }
 
     }
 
-    public class TrafficCompleteLightProgram : ComposedTypeBase
+public class TrafficLightProgramPhase
     {
+    /// <summary>
+    /// Duration in ms
+    /// </summary>
+    public double Duration { get; init; }
 
-        public int NumberOfLogics;
+    public double MinDuration { get; init; }
 
-        public List<TrafficLightLogics> TrafficLightLogics;
+    public double MaxDuration { get; init; }
 
-        public TrafficCompleteLightProgram()
-        {
-            TrafficLightLogics = new List<TrafficLightLogics>();
-        }
-
+    public string Definition { get; init; }
     }
 
-    public class TrafficLightLogics
-    {
-        public string SubId;
-        public int Type;
-        public CompoundObject SubParameter; 
-        public int CurrentPhaseIndex;
-        public int NumberOfPhases;
-        public List<TrafficLightProgramPhase> TrafficLightPhases;
-
-        public TrafficLightLogics()
-        {
-            TrafficLightPhases = new List<TrafficLightProgramPhase>();
-        }
-
-    }
-
-    public class TrafficLightProgramPhase
-    {
-        /// <summary>
-        /// Duration in ms
-        /// </summary>
-        public double Duration;
-
-        public double MinDuration;
-
-        public double MaxDuration;
-
-        public string Definition;
-    }
-}

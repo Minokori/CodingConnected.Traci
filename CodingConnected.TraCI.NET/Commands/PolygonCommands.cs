@@ -183,14 +183,16 @@ namespace CodingConnected.TraCI.NET.Commands
             Polygon shape
         )
             {
-            var tmp = new CompoundObject();
-            tmp.Value.Add(new TraCIString() { Value = name });
-            tmp.Value.Add(color);
-            tmp.Value.Add(new TraCIUByte() { Value = filled == false ? (byte)0 : (byte)1 });
-            tmp.Value.Add(new TraCIInteger() { Value = layer });
-            tmp.Value.Add(shape);
+            var tmp = new TraCIObjects
+                {
+                new TraCIString() { Value = name },
+                color,
+                new TraCIUByte() { Value = filled == false ? (byte)0 : (byte)1 },
+                new TraCIInteger() { Value = layer },
+                shape
+                };
 
-            return _helper.ExecuteSetCommand<object, CompoundObject>(
+            return _helper.ExecuteSetCommand<object, TraCIObjects>(
                 id,
                 TraCIConstants.CMD_SET_POLYGON_VARIABLE,
                 TraCIConstants.ADD,

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Text;
 using CodingConnected.TraCI.NET.Constants;
 using CodingConnected.TraCI.NET.Helpers;
 using CodingConnected.TraCI.NET.Response;
@@ -12,7 +9,7 @@ namespace CodingConnected.TraCI.NET.Commands
     {
     public class ControlCommands(ITcpService tcpService, ICommandHelperService helper, IEventService events) : TraCICommandsBase(tcpService, helper)
         {
-        private IEventService _events = events;
+        private readonly IEventService _events = events;
         #region Public Methods
 
         /// <summary>
@@ -20,17 +17,13 @@ namespace CodingConnected.TraCI.NET.Commands
         /// </summary>
         public int GetVersionId()
             {
-            var command = new TraCICommand
+            TraCICommand command = new()
                 {
                 Identifier = TraCIConstants.CMD_GETVERSION,
                 Contents = null
                 };
-            var response = _tcpService.SendMessage(command);
-            if (response?.Length == 2)
-                {
-                return BitConverter.ToInt32(response[1].Response.Take(4).Reverse().ToArray(), 0);
-                }
-            return -1;
+            TraCIResult[] response = _tcpService.SendMessage(command);
+            return response?.Length == 2 ? BitConverter.ToInt32(response[1].Response.Take(4).Reverse().ToArray(), 0) : -1;
             }
 
         /// <summary>
@@ -38,17 +31,17 @@ namespace CodingConnected.TraCI.NET.Commands
         /// </summary>
         public string GetVersionString()
             {
-            var command = new TraCICommand
+            TraCICommand command = new()
                 {
                 Identifier = TraCIConstants.CMD_GETVERSION,
                 Contents = null
                 };
-            var response = _tcpService.SendMessage(command);
+            TraCIResult[] response = _tcpService.SendMessage(command);
             if (response?.Length == 2)
                 {
-                var strlen = response[1].Response.Skip(4).Take(4).Reverse().ToArray();
-                var idl = BitConverter.ToInt32(strlen, 0);
-                var ver = Encoding.ASCII.GetString(response[1].Response, 8, idl);
+                byte[] strlen = response[1].Response.Skip(4).Take(4).Reverse().ToArray();
+                int idl = BitConverter.ToInt32(strlen, 0);
+                string ver = Encoding.ASCII.GetString(response[1].Response, 8, idl);
                 return ver;
                 }
             return null;
@@ -63,23 +56,22 @@ namespace CodingConnected.TraCI.NET.Commands
             {
 
             // 执行一个模拟步骤
-            var command = new TraCICommand
+            TraCICommand command = new()
                 {
                 Identifier = TraCIConstants.CMD_SIMSTEP,
-                Contents = TraCIDataConverter.GetTraCIBytesFromDouble(targetTime)
+                Contents = targetTime.ToTraCIBytes()
                 };
 
             //TODO
             //获得返回值
-            var response = _tcpService.SendMessage(command);
-            var tmp = TraCIDataConverter.ExtractDataFromResponse<object>(response, TraCIConstants.CMD_SIMSTEP);
+            TraCIResult[] response = _tcpService.SendMessage(command);
+            TraCIResponse<object> tmp = TraCIDataConverter.ExtractDataFromResponse<object>(response, TraCIConstants.CMD_SIMSTEP);
 
             if (tmp.Content != null)
                 {
-                var listOfSubscriptions = tmp.Content as List<ISubscriptionResponse>;
-                foreach (var item in listOfSubscriptions)
+                List<ISubscriptionResponse> listOfSubscriptions = tmp.Content as List<ISubscriptionResponse>;
+                foreach (ISubscriptionResponse item in listOfSubscriptions)
                     {
-                    bool isVariableSubscription = true;
                     SubscriptionEventArgs eventArgs;
 
                     // subscription can only be Variable or Context Subrciption. If it isnt the first then it is the latter
@@ -90,12 +82,11 @@ namespace CodingConnected.TraCI.NET.Commands
                             item.VariableCount,
                             subscription.ResponseData
                             );
-                        isVariableSubscription = true;
                         }
 
                     else
                         {
-                        var i = (item as TraCIContextSubscriptionResponse);
+                        TraCIContextSubscriptionResponse i = (item as TraCIContextSubscriptionResponse);
                         eventArgs = new ContextSubscriptionEventArgs
                             (
                             i.ObjectId,
@@ -104,7 +95,6 @@ namespace CodingConnected.TraCI.NET.Commands
                             i.VariableCount,
                             i.ObjectCount
                             );
-                        isVariableSubscription = false;
                         }
 
                     eventArgs.Responses = item.Responses;
@@ -191,7 +181,7 @@ namespace CodingConnected.TraCI.NET.Commands
         /// </summary>
         public void Close()
             {
-            var command = new TraCICommand
+            TraCICommand command = new()
                 {
                 Identifier = TraCIConstants.CMD_CLOSE,
                 Contents = null
@@ -207,16 +197,16 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <param name="options">List of options to pass to SUMO</param>
         public void Load(List<string> options)
             {
-            var command = new TraCICommand
+            TraCICommand command = new()
                 {
                 Identifier = TraCIConstants.CMD_LOAD
                 };
-            var n = new List<byte>();
-            n.AddRange(TraCIDataConverter.GetTraCIBytesFromInt32(options.Count));
-            foreach (var opt in options)
+            List<byte> n = new();
+            n.AddRange((options.Count).ToTraCIBytes());
+            foreach (string opt in options)
                 {
-                n.AddRange(TraCIDataConverter.GetTraCIBytesFromInt32(opt.Length));
-                n.AddRange(TraCIDataConverter.GetTraCIBytesFromASCIIString(opt));
+                n.AddRange((opt.Length).ToTraCIBytes());
+                n.AddRange((opt).ToTraCIBytes());
                 }
             command.Contents = [.. n];
             // ReSharper disable once UnusedVariable
@@ -230,7 +220,7 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <param name="options">List of options to pass to SUMO</param>
         public void SetOrder(int index)
             {
-            var command = new TraCICommand
+            TraCICommand command = new()
                 {
                 Identifier = TraCIConstants.CMD_SETORDER,
                 Contents = BitConverter.GetBytes(index).Reverse().ToArray()

@@ -1,4 +1,5 @@
 ﻿using CodingConnected.TraCI.NET.Commands;
+using CodingConnected.TraCI.NET.Services;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace CodingConnected.TraCI.NET;
@@ -6,7 +7,7 @@ namespace CodingConnected.TraCI.NET;
 public partial class TraCIClient
     {
     #region Properties
-
+    public IEventService EventService => services.GetRequiredService<IEventService>();
     public ControlCommands Control => services.GetRequiredService<ControlCommands>();
 
     public InductionLoopCommands InductionLoop => services.GetRequiredService<InductionLoopCommands>();
@@ -41,4 +42,3 @@ public partial class TraCIClient
 
     #endregion // Properties
     }
-

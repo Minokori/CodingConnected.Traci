@@ -334,12 +334,14 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <returns></returns>
         public TraCIResponse<double> AdaptTraveltime(string id, int beginTime, int endTime, double travelTimeValue)
             {
-            CompoundObject tmp = new();
-            tmp.Value.Add(new TraCIInteger() { Value = beginTime });
-            tmp.Value.Add(new TraCIInteger() { Value = endTime });
-            tmp.Value.Add(new TraCIDouble() { Value = travelTimeValue });
+            TraCIObjects tmp =
+                [
+                new TraCIInteger() { Value = beginTime },
+                new TraCIInteger() { Value = endTime },
+                new TraCIDouble() { Value = travelTimeValue },
+                ];
 
-            return _helper.ExecuteSetCommand<double, CompoundObject>(
+            return _helper.ExecuteSetCommand<double, TraCIObjects>(
 
                      id,
                      TraCIConstants.CMD_SET_EDGE_VARIABLE,
@@ -358,12 +360,14 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <returns></returns>
         public TraCIResponse<object> SetEffort(string id, double beginTime, double endTime, double effortValue)
             {
-            CompoundObject tmp = new();
-            tmp.Value.Add(new TraCIDouble() { Value = beginTime });
-            tmp.Value.Add(new TraCIDouble() { Value = endTime });
-            tmp.Value.Add(new TraCIDouble() { Value = effortValue });
+            TraCIObjects tmp =
+                [
+                new TraCIDouble() { Value = beginTime },
+                new TraCIDouble() { Value = endTime },
+                new TraCIDouble() { Value = effortValue },
+                ];
 
-            return _helper.ExecuteSetCommand<object, CompoundObject>(
+            return _helper.ExecuteSetCommand<object, TraCIObjects>(
 
                      id,
                      TraCIConstants.CMD_SET_EDGE_VARIABLE,
