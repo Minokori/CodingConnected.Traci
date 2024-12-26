@@ -124,87 +124,6 @@ internal static partial class TraCIDataConverter
         return null;
         }
 
-
-    internal static byte[] ToTraCIBytes(this ITraCIType value)
-        {
-        switch (value)
-            {
-            case TrafficLightPhaseList tlpl:
-                    {
-                    List<byte> bytes = [.. ((byte)tlpl.Phases.Count).ToTraCIBytes()];
-
-                    foreach (TrafficLightPhase phase in tlpl.Phases)
-                        {
-                        bytes.AddRange((phase.PrecRoad).ToTraCIBytes());
-                        bytes.AddRange((phase.SuccRoad).ToTraCIBytes());
-                        bytes.AddRange(((byte)phase.Phase).ToTraCIBytes());
-                        }
-
-                    return [.. bytes];
-                    }
-            case BoundaryBox bb:
-                    {
-                    List<byte> bytes =
-                        [
-                        .. (bb.LowerLeftX).ToTraCIBytes(),
-                    .. (bb.LowerLeftY).ToTraCIBytes(),
-                    .. (bb.UpperRightX).ToTraCIBytes(),
-                    .. (bb.UpperRightY).ToTraCIBytes(),
-                    ];
-                    return [.. bytes];
-                    }
-            case Polygon p:
-                    {
-                    List<byte> bytes = [.. ((byte)p.Points.Count).ToTraCIBytes()];
-                    foreach (Position2D point in p.Points)
-                        {
-                        bytes.AddRange((point.X).ToTraCIBytes());
-                        bytes.AddRange((point.Y).ToTraCIBytes());
-                        }
-                    return [.. bytes];
-                    }
-            case LonLatAltPosition llap:
-                    {
-                    List<byte> bytes =
-            [.. (llap.Longitude).ToTraCIBytes(), .. (llap.Latitude).ToTraCIBytes(), .. (llap.Altitude).ToTraCIBytes(),];
-                    return [.. bytes];
-                    }
-            case LonLatPosition llp:
-                    {
-                    List<byte> bytes = [.. (llp.Longitude).ToTraCIBytes(), .. (llp.Latitude).ToTraCIBytes()];
-                    return [.. bytes];
-                    }
-            case RoadMapPosition rmp:
-                    {
-                    List<byte> bytes =
-            [
-            .. (rmp.RoadId).ToTraCIBytes(),
-            .. (rmp.Pos).ToTraCIBytes(),
-            .. (rmp.LaneId).ToTraCIBytes(),
-            ];
-                    return [.. bytes];
-                    }
-            case Position3D p3d:
-                    {
-                    List<byte> bytes =
-                        [
-                        .. (p3d.X).ToTraCIBytes(),
-            .. (p3d.Y).ToTraCIBytes(),
-            .. (p3d.Z).ToTraCIBytes(),
-            ];
-                    return [.. bytes];
-                    }
-            case Position2D p2d:
-                    {
-                    List<byte> bytes = [.. (p2d.X).ToTraCIBytes(), .. (p2d.Y).ToTraCIBytes()];
-                    return [.. bytes];
-                    }
-            default:
-                return [];
-            }
-
-        }
-
     internal static byte[] ToTraCIBytes(this object value)
         {
         if (value is null) { return []; }
@@ -212,6 +131,7 @@ internal static partial class TraCIDataConverter
             {
             case float:
                 return BitConverter.GetBytes((float)value).Reverse().ToArray();
+            // TODO byte 是不是直接返回Value？short对不对
             case byte:
                 return BitConverter.GetBytes((short)value).Reverse().ToArray();
             case int:
@@ -232,7 +152,6 @@ internal static partial class TraCIDataConverter
                 return [];
             }
         }
-
 
 
     internal static int GetValueFromTypeAndArray(byte type, IEnumerable<byte> array, out object Object)

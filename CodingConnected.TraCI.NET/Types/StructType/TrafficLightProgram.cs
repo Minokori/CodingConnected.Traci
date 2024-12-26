@@ -6,6 +6,7 @@
 /// </summary>
 public struct TrafficLightProgram : ITraCIType
     {
+    public byte TYPE => throw new NotImplementedException();
     /// <summary>
     /// Name of the program
     /// </summary>
@@ -23,14 +24,15 @@ public struct TrafficLightProgram : ITraCIType
 
 public struct TrafficCompleteLightProgram : ITraCIType
     {
-
+    public byte TYPE => throw new NotImplementedException();
     public int NumberOfLogics { get; init; }
 
     public List<TrafficLightLogics> TrafficLightLogics { get; init; }
     }
 
-public struct TrafficLightLogics
+public struct TrafficLightLogics : ITraCIType
     {
+    public byte TYPE => throw new NotImplementedException();
     public string SubId { get; init; }
     public int Type { get; init; }
     public TraCIObjects SubParameter { get; init; }
@@ -40,8 +42,9 @@ public struct TrafficLightLogics
 
     }
 
-public class TrafficLightProgramPhase
+public struct TrafficLightProgramPhase : ITraCIType
     {
+    public byte TYPE => throw new NotImplementedException();
     /// <summary>
     /// Duration in ms
     /// </summary>

@@ -2,6 +2,7 @@
 
 public readonly struct EdgeInformation : ITraCIType
     {
+    public byte TYPE => throw new NotImplementedException();
     public string LaneId { get; init; }
     public double Length { get; init; }
     public double Occupation { get; init; }

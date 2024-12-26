@@ -27,71 +27,27 @@ internal partial class TraCICommandHelper
             {
             switch (item)
                 {
-                case TraCIByte b:
-                    bytes.Add(TraCIConstants.TYPE_BYTE);
-                    bytes.Add(b.Value);
-                    break;
-                case TraCIUByte ub:
-                    bytes.Add(TraCIConstants.TYPE_UBYTE);
-                    bytes.Add(ub.Value);
-                    break;
-                case TraCIInteger i:
-                    bytes.Add(TraCIConstants.TYPE_INTEGER);
-                    bytes.AddRange(i.Value.ToTraCIBytes());
-                    break;
-                case TraCIFloat f:
-                    bytes.Add(TraCIConstants.TYPE_FLOAT);
-                    bytes.AddRange(f.Value.ToTraCIBytes());
-                    break;
-                case TraCIDouble d:
-                    bytes.Add(TraCIConstants.TYPE_DOUBLE);
-                    bytes.AddRange(d.Value.ToTraCIBytes());
-                    break;
-                case TraCIString s:
-                    bytes.Add(TraCIConstants.TYPE_STRING);
-                    bytes.AddRange(s.Value.ToTraCIBytes());
-                    break;
-                case TraCIStringList sl:
-                    bytes.Add(TraCIConstants.TYPE_STRINGLIST);
-                    bytes.AddRange(sl.Value.ToTraCIBytes());
+                case TraCIByte:
+                case TraCIUByte:
+                case TraCIInteger:
+                case TraCIFloat:
+                case TraCIDouble:
+                case TraCIString:
+                case TraCIStringList:
+                case Position2D:
+                case Position3D:
+                case RoadMapPosition:
+                case LonLatPosition:
+                case LonLatAltPosition:
+                case BoundaryBox:
+                case Polygon:
+                case TrafficLightPhaseList:
+                    bytes.Add(item.TYPE);
+                    bytes.AddRange(item.ToBytes());
                     break;
                 case TraCIObjects CO:
-                    throw new NotImplementedException("Nested compound objects are not implemented yet");
-                case Position2D p2d:
-                    bytes.Add(TraCIConstants.POSITION_2D);
-                    bytes.AddRange(p2d.ToTraCIBytes());
-                    break;
-                case Position3D p3d:
-                    bytes.Add(TraCIConstants.POSITION_3D);
-                    bytes.AddRange(p3d.ToTraCIBytes());
-                    break;
-                case RoadMapPosition rmp:
-                    bytes.Add(TraCIConstants.POSITION_ROADMAP);
-                    bytes.AddRange(rmp.ToTraCIBytes());
-                    break;
-                case LonLatPosition llp:
-                    bytes.Add(TraCIConstants.POSITION_LON_LAT);
-                    bytes.AddRange(llp.ToTraCIBytes());
-                    break;
-                case LonLatAltPosition llap:
-                    bytes.Add(TraCIConstants.POSITION_LON_LAT_ALT);
-                    bytes.AddRange(llap.ToTraCIBytes());
-                    break;
-                case BoundaryBox bb:
-                    bytes.Add(TraCIConstants.TYPE_BOUNDINGBOX);
-                    bytes.AddRange(bb.ToTraCIBytes());
-                    break;
-                case Polygon p:
-                    bytes.Add(TraCIConstants.TYPE_POLYGON);
-                    bytes.AddRange(p.ToTraCIBytes());
-                    break;
-                case TrafficLightPhaseList tlpl:
-                    bytes.Add(TraCIConstants.TYPE_TLPHASELIST);
-                    bytes.AddRange(tlpl.ToTraCIBytes());
-                    break;
                 case Color c:
-#warning missing code
-                    throw new NotImplementedException();
+                    throw new NotImplementedException($"{item.GetType()} objects are not implemented yet");
                 }
             }
 
