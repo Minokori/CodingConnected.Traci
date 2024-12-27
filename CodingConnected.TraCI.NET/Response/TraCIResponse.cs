@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace CodingConnected.TraCI.NET.Response;
+﻿namespace CodingConnected.TraCI.NET.Response;
 
 public enum ResultCode : byte
     {

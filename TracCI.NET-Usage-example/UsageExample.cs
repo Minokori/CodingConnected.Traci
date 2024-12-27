@@ -376,6 +376,8 @@ class UsageExample
 
         string id; // id that will be used for subscriptions.
         Console.WriteLine("");
+        Console.WriteLine($"Sumo 版本: {client.Control.GetVersionId()}, {client.Control.GetVersionString()}");
+
         var instructions =
             @"
                 ************************************************************

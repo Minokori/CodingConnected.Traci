@@ -8,119 +8,92 @@ namespace CodingConnected.TraCI.NET.Helpers;
 
 internal static partial class TraCIDataConverter
     {
-    internal static TraCIResponse<T> ExtractDataFromResponse<T>(
-        TraCIResult[] response,
-        byte commandType,
-        byte messageType = 0
+    internal static TraCIResponse<T> ExtractDataFromResponse<T>(TraCIResult[] response, byte commandType, byte messageType = 0
     )
         {
-        if (response?.Length > 0)
+        // check if response is null
+        if (response == null) { return null; }
+
+        // find response of specific command type, statusResponse is status response ,r2 is result
+        var statusResponse = (TraCIStatusResponse)response.FirstOrDefault(x => x.Identifier == commandType);
+
+        if (statusResponse is null) { return null; }
+
+        switch (statusResponse.Result)
             {
-            var r1 = response.FirstOrDefault(x => x.Identifier == commandType);
-            if (r1?.Response[0] == 0x00) // Success
-                {
-                if (r1.Identifier == TraCIConstants.CMD_SIMSTEP)
+            case ResultCode.Success:
                     {
-                    if (r1.Length != 5)
+
+
+                    if (statusResponse.Identifier == TraCIConstants.CMD_SIMSTEP)
                         {
-                        var tmp = GetDataFromSimStepResponse(r1);
+                        if (statusResponse.Length != 5)
+                            {
+                            var tmp = GetDataFromSimStepResponse(statusResponse);
+
+                            return new TraCIResponse<T>
+                                {
+                                Identifier = statusResponse.Identifier,
+                                ResponseIdentifier = null,
+                                Variable = null,
+                                Result = ResultCode.Success,
+                                Content = (T)tmp,
+                                };
+                            }
+                        }
+
+
+                    // check if first byte is as requested (it gives the type of data requested)
+                    var r2 = response.FirstOrDefault(x => x.Identifier == commandType + 0x10 /*response's identifier is GET command's identifire +0x10*/);
+                    if (r2?.Response[0] == messageType)
+                        {
+                        // after the type of data, there is the length of the id (a string that we will skip)
+                        var take = r2.Response.Skip(1).Take(4).Reverse().ToArray();
+                        var idl = ToInt32(take, 0);
+                        // after the string is the type of data returned
+                        var type = r2.Response[5 + idl];
+                        // now read and translate the data
+                        GetValueFromTypeAndArray(
+                            type,
+                            r2.Response.Skip(6 + idl).ToArray(),
+                            out var contentAsObject
+                        );
 
                         return new TraCIResponse<T>
                             {
-                            Identifier = r1.Identifier,
+                            Identifier = statusResponse.Identifier,
+                            ResponseIdentifier = r2.Identifier,
+                            Variable = r2.Response[0],
+                            Result = ResultCode.Success,
+                            Content = (T)contentAsObject,
+                            };
+                        }
+                    else
+                        {
+                        // for state changing methods without response content
+                        return new TraCIResponse<T>
+                            {
+                            Identifier = statusResponse.Identifier,
                             ResponseIdentifier = null,
                             Variable = null,
                             Result = ResultCode.Success,
-                            Content = (T)tmp,
+                            Content = default,
                             };
                         }
                     }
-                // check if first byte is as requested (it gives the type of data requested)
-                var r2 = response.FirstOrDefault(x =>
-                    x.Identifier == commandType + 0x10
-                );
-                if (r2?.Response[0] == messageType)
+            case ResultCode.Failed:
+            case ResultCode.NotImplemented:
                     {
-                    // after the type of data, there is the length of the id (a string that we will skip)
-                    var take = r2.Response.Skip(1).Take(4).Reverse().ToArray();
-                    var idl = BitConverter.ToInt32(take, 0);
-                    // after the string is the type of data returned
-                    var type = r2.Response[5 + idl];
-                    // now read and translate the data
-                    GetValueFromTypeAndArray(
-                        type,
-                        r2.Response.Skip(6 + idl).ToArray(),
-                        out var contentAsObject
-                    );
-
                     return new TraCIResponse<T>
                         {
-                        Identifier = r1.Identifier,
-                        ResponseIdentifier = r2.Identifier,
-                        Variable = r2.Response[0],
-                        Result = ResultCode.Success,
-                        Content = (T)contentAsObject,
-                        };
-                    }
-                else
-                    {
-                    // for state changing methods without response content
-                    return new TraCIResponse<T>
-                        {
-                        Identifier = r1.Identifier,
+                        Identifier = statusResponse.Identifier,
                         ResponseIdentifier = null,
                         Variable = null,
-                        Result = ResultCode.Success,
+                        Result = statusResponse.Result,
                         Content = default,
+                        ErrorMessage = $"TraCI reports command {Enum.GetName(statusResponse.Result)}: {statusResponse.Description}",
                         };
                     }
-                }
-
-            if (r1?.Response[0] == 0xFF) // Failed
-                {
-                var take = r1.Response.Skip(1).Take(4).Reverse().ToArray();
-                var dlen = BitConverter.ToInt32(take, 0);
-                StringBuilder sb = new();
-                var k1 = 5;
-                for (var j = 0; j < dlen; ++j)
-                    {
-                    sb.Append((char)r1.Response[k1]);
-                    ++k1;
-                    }
-
-                return new TraCIResponse<T>
-                    {
-                    Identifier = r1.Identifier,
-                    ResponseIdentifier = null,
-                    Variable = null,
-                    Result = ResultCode.Failed,
-                    Content = default,
-                    ErrorMessage = "TraCI reports command failure: " + sb,
-                    };
-                }
-
-            if (r1?.Response[0] == 0x01) // Not implemented
-                {
-                var take = r1.Response.Skip(1).Take(4).Reverse().ToArray();
-                var dlen = BitConverter.ToInt32(take, 0);
-                StringBuilder sb = new();
-                var k1 = 5;
-                for (var j = 0; j < dlen; ++j)
-                    {
-                    sb.Append((char)r1.Response[k1]);
-                    ++k1;
-                    }
-
-                return new TraCIResponse<T>
-                    {
-                    Identifier = r1.Identifier,
-                    ResponseIdentifier = null,
-                    Variable = null,
-                    Result = ResultCode.NotImplemented,
-                    Content = default,
-                    ErrorMessage = "TraCI reports command not implemented: " + sb,
-                    };
-                }
             }
         return null;
         }
