@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TraCIClassCreator", "TraCIC
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TracCI.NET-Usage-example", "TracCI.NET-Usage-example\TracCI.NET-Usage-example.csproj", "{C510A87A-1B59-4B12-B915-66BC7F19D02F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TraCI.Protocol", "TraCI.Protocol\TraCI.Protocol.csproj", "{724BEC77-3D83-447D-8E39-0F0BCC235295}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -73,6 +75,18 @@ Global
 		{C510A87A-1B59-4B12-B915-66BC7F19D02F}.Release|x64.Build.0 = Release|Any CPU
 		{C510A87A-1B59-4B12-B915-66BC7F19D02F}.Release|x86.ActiveCfg = Release|Any CPU
 		{C510A87A-1B59-4B12-B915-66BC7F19D02F}.Release|x86.Build.0 = Release|Any CPU
+		{724BEC77-3D83-447D-8E39-0F0BCC235295}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{724BEC77-3D83-447D-8E39-0F0BCC235295}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{724BEC77-3D83-447D-8E39-0F0BCC235295}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{724BEC77-3D83-447D-8E39-0F0BCC235295}.Debug|x64.Build.0 = Debug|Any CPU
+		{724BEC77-3D83-447D-8E39-0F0BCC235295}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{724BEC77-3D83-447D-8E39-0F0BCC235295}.Debug|x86.Build.0 = Debug|Any CPU
+		{724BEC77-3D83-447D-8E39-0F0BCC235295}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{724BEC77-3D83-447D-8E39-0F0BCC235295}.Release|Any CPU.Build.0 = Release|Any CPU
+		{724BEC77-3D83-447D-8E39-0F0BCC235295}.Release|x64.ActiveCfg = Release|Any CPU
+		{724BEC77-3D83-447D-8E39-0F0BCC235295}.Release|x64.Build.0 = Release|Any CPU
+		{724BEC77-3D83-447D-8E39-0F0BCC235295}.Release|x86.ActiveCfg = Release|Any CPU
+		{724BEC77-3D83-447D-8E39-0F0BCC235295}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

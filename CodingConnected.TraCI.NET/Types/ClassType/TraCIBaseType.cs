@@ -7,8 +7,8 @@ namespace CodingConnected.TraCI.NET.Types;
 public class TraCIByte : ITraCIType
     {
     public byte TYPE { get; } = TraCIConstants.TYPE_BYTE;
-    public byte Value { get; set; }
-    public byte[] ToBytes() => [Value];
+    public SByte Value { get; set; }
+    public byte[] ToBytes() => [(byte)Value];
     }
 public class TraCIUByte : ITraCIType
     {

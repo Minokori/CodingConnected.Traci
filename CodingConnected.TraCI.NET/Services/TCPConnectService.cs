@@ -57,38 +57,42 @@ internal class TCPConnectService : ITcpService
 
     public TraCIResult[] SendMessage(TraCICommand command)
         {
-        if (!_client.Connected)
-            {
-            return null;
-            }
+        if (!_client.Connected) { return null; }
 
-        byte[] msg = command.ToMessageBytes();
+        //send message
+        var msg = command.ToMessageBytes();
         _client.Client.Send(msg);
+
+        //read response
         try
             {
-            int bytesRead = _stream.Read(_receiveBuffer, 0, 32768);
-            if (bytesRead < 0)
+            var hasReadLength = _stream.Read(_receiveBuffer, 0, 32768);
+            if (hasReadLength < 0)
                 {
                 // Read returns 0 if the client closes the connection
                 throw new IOException();
                 }
 
-            byte[] revLength = _receiveBuffer.Take(4).Reverse().ToArray();
-            int totlength = BitConverter.ToInt32(revLength, 0);
-            List<byte> response = [.. _receiveBuffer.Take(bytesRead).ToArray()];
+            // Totol Byte to read
+            var totalLength = BitConverter.ToInt32(_receiveBuffer.Take(4).Reverse().ToArray(), 0);
 
-            if (bytesRead != totlength)
+            // push all byte to response
+            List<byte> response = [.. _receiveBuffer.Take(hasReadLength).ToArray()];
+
+
+            // if buffer is not enough to read all bytes, read until all bytes are read
+            if (hasReadLength != totalLength)
                 {
-                while (bytesRead < totlength)
+                while (hasReadLength < totalLength)
                     {
-                    int innerBytesRead = _stream.Read(_receiveBuffer, 0, 32768);
-                    response.AddRange(_receiveBuffer.Take(innerBytesRead).ToArray());
-                    bytesRead += innerBytesRead;
+                    var innerLength = _stream.Read(_receiveBuffer, 0, 32768);
+                    response.AddRange(_receiveBuffer.Take(innerLength).ToArray());
+                    hasReadLength += innerLength;
                     }
                 }
-            //var response = _receiveBuffer.Take(bytesRead).ToArray();
-            TraCIResult[] trresponse = response.ToTraCIResults();
-            return trresponse?.Length > 0 ? trresponse : null;
+            //var response = _receiveBuffer.Take(hasReadLength).ToArray();
+            var traciResults = response.ToTraCIResults();
+            return traciResults?.Length > 0 ? traciResults : null;
             }
         catch
             {
