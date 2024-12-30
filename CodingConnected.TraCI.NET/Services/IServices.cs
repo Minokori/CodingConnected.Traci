@@ -1,4 +1,5 @@
-﻿using System.Net.Sockets;
+﻿using System.Diagnostics;
+using System.Net.Sockets;
 using CodingConnected.TraCI.NET.Response;
 using CodingConnected.TraCI.NET.Types;
 
@@ -95,3 +96,8 @@ public interface IEventService
     void OnEdgeContextSubscription(ContextSubscriptionEventArgs eventArgs);
     }
 
+public interface IProcessService
+    {
+    Process GetProcess(string sumoCfgFile, int remotePort,
+        bool useSumoGui = true, bool quitOnEnd = true, bool redirectOutputToConsole = false);
+    }

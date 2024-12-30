@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace CodingConnected.TraCI.NET.Response;
+﻿namespace CodingConnected.TraCI.NET.Response;
 
 public class TraCIContextSubscriptionResponse(string objectId, byte responseCode, byte contextDomain, int variableCount, int objectCount)
     : ISubscriptionResponse

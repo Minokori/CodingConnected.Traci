@@ -97,13 +97,13 @@ public class TrafficLightCommands(ITcpService tcpService, ICommandHelperService 
     /// <returns></returns>
     public TraCIResponse<ControlledLinks> GetControlledLinks(string id)
         {
-        TraCIResponse<TraCIObjects> tmp = _helper.ExecuteGetCommand<TraCIObjects>(
+        var tmp = _helper.ExecuteGetCommand<TraCIObjects>(
 
                 id,
                 TraCIConstants.CMD_GET_TL_VARIABLE,
                 TraCIConstants.TL_CONTROLLED_LINKS);
 
-        ControlledLinks controlledLinks = tmp.Content.ToControlledLinks();
+        var controlledLinks = tmp.Content.ToControlledLinks();
 
         TraCIResponse<ControlledLinks> ret = new()
             {
@@ -155,13 +155,13 @@ public class TrafficLightCommands(ITcpService tcpService, ICommandHelperService 
     /// <returns></returns>
     public TraCIResponse<TrafficCompleteLightProgram> GetCompleteDefinition(string id)
         {
-        TraCIResponse<TraCIObjects> tmp = _helper.ExecuteGetCommand<TraCIObjects>(
+        var tmp = _helper.ExecuteGetCommand<TraCIObjects>(
 
                 id,
                 TraCIConstants.CMD_GET_TL_VARIABLE,
                 TraCIConstants.TL_COMPLETE_DEFINITION_RYG);
 
-        TrafficCompleteLightProgram tmp2 = tmp.Content.ToTrafficLightCompleteProgram();
+        var tmp2 = tmp.Content.ToTrafficLightCompleteProgram();
 
         TraCIResponse<TrafficCompleteLightProgram> ret = new()
             {
@@ -279,22 +279,22 @@ public class TrafficLightCommands(ITcpService tcpService, ICommandHelperService 
         List<byte> bytes =
             [
             TraCIConstants.TL_COMPLETE_PROGRAM_RYG,
-            .. (id).ToTraCIBytes(),
+            .. id.ToTraCIBytes(),
             TraCIConstants.TYPE_COMPOUND, //value type compound
             .. (5 + (program.Phases.Count * 4)).ToTraCIBytes(), //item number
             TraCIConstants.TYPE_STRING, //value type string
-            .. (program.ProgramId).ToTraCIBytes(), //program ID
+            .. program.ProgramId.ToTraCIBytes(), //program ID
             TraCIConstants.TYPE_INTEGER, //value type integer
             .. 0.ToTraCIBytes(), //Type (always 0)
             TraCIConstants.TYPE_COMPOUND, //value type compound
-            .. 0.ToTraCIBytes(),//Compound Length (always 0!)
+            .. 0.ToTraCIBytes(),//Compound ContentLength (always 0!)
             TraCIConstants.TYPE_INTEGER, //value type integer
             .. program.PhaseIndex.ToTraCIBytes(), //Phase Index
             TraCIConstants.TYPE_INTEGER, //value type integer
             .. program.Phases.Count.ToTraCIBytes(),
             ]; //messageType (0x2c)
 
-        foreach (TrafficLightProgramPhase p in program.Phases)//Phases
+        foreach (var p in program.Phases)//Phases
             {
             bytes.Add(TraCIConstants.TYPE_DOUBLE); //value type integer
             bytes.AddRange(p.Duration.ToTraCIBytes()); //Duration[ms]
@@ -312,7 +312,7 @@ public class TrafficLightCommands(ITcpService tcpService, ICommandHelperService 
             Contents = [.. bytes]
             };
 
-        TraCIResult[] response = _tcpService.SendMessage(command);
+        var response = _tcpService.SendMessage(command);
 
 #warning is the try catch necessary?
         try

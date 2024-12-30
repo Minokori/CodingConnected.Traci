@@ -1,4 +1,5 @@
-﻿using System.Net.Sockets;
+﻿using System.Diagnostics;
+using System.Net.Sockets;
 using CodingConnected.TraCI.NET.Helpers;
 
 namespace CodingConnected.TraCI.NET.Services;
@@ -23,7 +24,19 @@ internal class TCPConnectService : ITcpService
             ReceiveBufferSize = 32768,
             SendBufferSize = 32768
             };
-        await _client.ConnectAsync(hostname, port);
+        while (!_client.Connected)
+            {
+            try
+                {
+                await _client.ConnectAsync(hostname, port);
+                }
+            catch (Exception)
+                {
+                Console.WriteLine("Failed to connect to SUMO server. Retrying in 0.1 second");
+                await Task.Delay(100);
+                }
+            }
+
         _stream = _client.GetStream();
         }
 
@@ -90,6 +103,7 @@ internal class TCPConnectService : ITcpService
                     hasReadLength += innerLength;
                     }
                 }
+
             //var response = _receiveBuffer.Take(hasReadLength).ToArray();
             var traciResults = response.ToTraCIResults();
             return traciResults?.Length > 0 ? traciResults : null;

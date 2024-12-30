@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Threading.Tasks;
 using CodingConnected.TraCI.NET;
 using CodingConnected.TraCI.NET.Constants;
 using CodingConnected.TraCI.NET.Response;
@@ -9,11 +10,11 @@ using CodingConnected.TraCI.NET.Types;
 
 namespace CodingConnected.TraCI.UsageExample;
 
-class UsageExample
+internal class UsageExample
     {
     #region Creating SUMO process and serving it
 
-    static Process ServeSumo(string sumoCfgFile, int remotePort,
+    private static async Task<Process> ServeSumo(string sumoCfgFile, int remotePort,
         bool useSumoGui = true, bool quitOnEnd = true, bool redirectOutputToConsole = false)
         {
         Process sumoProcess;
@@ -29,9 +30,9 @@ class UsageExample
             // Assumes that bin is in PATHs
             var sumoExecutable = useSumoGui ? @"sumo-gui" : "sumo";
 
-            sumoProcess = new Process()
+            sumoProcess = new()
                 {
-                StartInfo = new ProcessStartInfo()
+                StartInfo = new()
                     {
                     Arguments = args,
                     FileName = sumoExecutable, // The executable for the sumo
@@ -53,7 +54,8 @@ class UsageExample
                 sumoProcess.OutputDataReceived += SumoProcess_OutputDataReceived;
                 }
 
-            sumoProcess.Start();
+            // TODO 加载卡顿
+            await Task.Run(() => sumoProcess.Start());
 
             if (redirectOutputToConsole)
                 {
@@ -96,22 +98,22 @@ class UsageExample
 
     #region static variables
 
-    private static string DEFAULT_SUMOCFG =
+    private static readonly string DEFAULT_SUMOCFG =
         Path.Combine(".", "sumo-scenarios", "usage-example", "run.sumocfg");
 
     /* The Variables used for Variable and Context Subscription for this example */
-    private static List<byte> variablesToSubscribeTo = new List<byte>()
-    {
+    private static readonly List<byte> variablesToSubscribeTo =
+    [
         TraCIConstants.VAR_SPEED,
         TraCIConstants.VAR_ANGLE,
         TraCIConstants.VAR_ACCEL,
         TraCIConstants.VAR_ROUTE_ID
-    };
+    ];
 
-    private static List<byte> globlVariablesToSubscribeTo = new List<byte>
-    {
+    private static readonly List<byte> globlVariablesToSubscribeTo =
+    [
         TraCIConstants.ID_COUNT
-    };
+    ];
 
     private static int NumberOfVehcicles;
     private static List<string> vehicleIds;
@@ -120,7 +122,7 @@ class UsageExample
 
     private static string ByteToHex(byte? b)
         {
-        return $"0x{((byte)b).ToString("X2")}";
+        return $"0x{(byte)b:X2}";
         }
 
     #region subscription listeners
@@ -136,7 +138,7 @@ class UsageExample
             {
             /* Responses are object that can be casted to IResponseInfo so we can retrieve 
              the variable type. */
-            var respInfo = (r as IResponse);
+            var respInfo = r as IResponse;
             var variableCode = respInfo.Variable;
 
             /*We can then cast to TraCIResponse to get the Content
@@ -219,14 +221,14 @@ class UsageExample
             var vehicleID = variableSubscriptionResponse.ObjectId;
             Console.WriteLine(" Object id: " + vehicleID);
             Console.WriteLine("     VAR_SPEED  " +
-                (variableSubscriptionResponse[TraCIConstants.VAR_SPEED]).GetContentAs<float>());
+                variableSubscriptionResponse[TraCIConstants.VAR_SPEED].GetContentAs<float>());
             Console.WriteLine("     VAR_ACCEL  " +
-                (variableSubscriptionResponse[TraCIConstants.VAR_ACCEL]).GetContentAs<float>());
+                variableSubscriptionResponse[TraCIConstants.VAR_ACCEL].GetContentAs<float>());
             Console.WriteLine("     VAR_ANGLE  " +
                 /* We can also use TraCIResult<> (). Warning using TraCIResponse<> we must use the exact type (i.e for angle is double) */
                 (variableSubscriptionResponse[TraCIConstants.VAR_ANGLE] as TraCIResponse<double>).Content);
             Console.WriteLine("     VAR_ROUTE  " +
-                (variableSubscriptionResponse[TraCIConstants.VAR_ROUTE_ID]).GetContentAs<string>());
+                variableSubscriptionResponse[TraCIConstants.VAR_ROUTE_ID].GetContentAs<string>());
             }
 
         //We can also get TraCIVariableSubscriptionResponse by objectID
@@ -260,7 +262,7 @@ class UsageExample
             Console.WriteLine(" Object id: " + vehicleID);
             foreach (var response in variableSubscriptionResponse.Responses)
                 {
-                var variableResponse = ((IResponse)response);
+                var variableResponse = (IResponse)response;
                 var variableCode = variableResponse.Variable;
 
                 switch (variableCode)
@@ -333,7 +335,7 @@ class UsageExample
 
     #endregion Printing vehicle ids methods
 
-    static void Main(string[] args)
+    private static async Task Main(string[] args)
         {
         /* Create a TraCIClient for the commands */
         var client = new TraCIClient();
@@ -354,7 +356,7 @@ class UsageExample
 
         /* Create a new sumo process so the client can connect to it. 
          * This step is optional if a sumo server is already running. */
-        var sumoProcess = ServeSumo(sumoCfgPath, 4321, useSumoGui: true, redirectOutputToConsole: false);
+        var sumoProcess = await ServeSumo(sumoCfgPath, 4321, useSumoGui: true, redirectOutputToConsole: false);
         if (sumoProcess == null)
             {
             Console.WriteLine("Something went wrong launching SUMO server. Maybe .sumocfg path is wrong" +
@@ -362,17 +364,20 @@ class UsageExample
             }
 
         /* Connecting to Sumo Server is async but we wait for the task to complete for simplicity */
-        var task = client.ConnectAsync("127.0.0.1", 4321);
-        while (!task.IsCompleted) { /*  Wait for task to be completed before using traci commands */ }
+        await client.ConnectAsync("127.0.0.1", 4321);
+
+        //while (!task.IsCompleted) { /*  Wait for task to be completed before using traci commands */ }
 
         /* Subscribe to Variable Subscriptions Events 
          * (triggered each step if the vehicle that was subscribed to exists )*/
+        Console.WriteLine("Subscribing to Vehicle Variable Subscription");
         client.EventService.VehicleSubscription += Client_VehicleSubscriptionUsingResponses;
         client.EventService.VehicleSubscription += Client_VehicleSubscriptionUsingDictionary;
 
         /* Subscribe to Context Subscriptions Events*/
         client.EventService.VehicleContextSubscription += Client_VehicleContextSubscriptionUsingDictionary;
         client.EventService.VehicleContextSubscription += Client_VehicleContextSubscriptionUsingResponses;
+        Console.WriteLine("Subscribing to Vehicle Context Subscription Complete");
 
         string id; // id that will be used for subscriptions.
         Console.WriteLine("");
@@ -393,7 +398,7 @@ class UsageExample
                 ************************************************************";
         Console.WriteLine(instructions);
 
-        bool isEscapePressed = false;
+        var isEscapePressed = false;
 
         do
             {

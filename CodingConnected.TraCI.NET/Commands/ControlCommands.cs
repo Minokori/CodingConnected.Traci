@@ -65,115 +65,119 @@ namespace CodingConnected.TraCI.NET.Commands
             //TODO
             //获得返回值
             TraCIResult[] response = _tcpService.SendMessage(command);
-            TraCIResponse<object> tmp = TraCIDataConverter.ExtractDataFromResponse<object>(response, TraCIConstants.CMD_SIMSTEP);
-
-            if (tmp.Content != null)
+            if (response.Length != 1)
                 {
-                List<ISubscriptionResponse> listOfSubscriptions = tmp.Content as List<ISubscriptionResponse>;
-                foreach (ISubscriptionResponse item in listOfSubscriptions)
+                TraCIResponse<object> tmp = TraCIDataConverter.ExtractDataFromResponse<object>(response, TraCIConstants.CMD_SIMSTEP);
+
+                if (tmp.Content != null)
                     {
-                    SubscriptionEventArgs eventArgs;
-
-                    // subscription can only be Variable or Context Subrciption. If it isnt the first then it is the latter
-                    if (item is TraCIVariableSubscriptionResponse subscription)
+                    List<ISubscriptionResponse> listOfSubscriptions = tmp.Content as List<ISubscriptionResponse>;
+                    foreach (ISubscriptionResponse item in listOfSubscriptions)
                         {
-                        eventArgs = new VariableSubscriptionEventArgs(
-                            item.ObjectId,
-                            item.VariableCount,
-                            subscription.ResponseData
-                            );
-                        }
+                        SubscriptionEventArgs eventArgs;
 
-                    else
-                        {
-                        TraCIContextSubscriptionResponse i = (item as TraCIContextSubscriptionResponse);
-                        eventArgs = new ContextSubscriptionEventArgs
-                            (
-                            i.ObjectId,
-                            i.VariableSubscriptionByObjectId,
-                            i.ContextDomain,
-                            i.VariableCount,
-                            i.ObjectCount
-                            );
-                        }
+                        // subscription can only be Variable or Context Subrciption. If it isnt the first then it is the latter
+                        if (item is TraCIVariableSubscriptionResponse subscription)
+                            {
+                            eventArgs = new VariableSubscriptionEventArgs(
+                                item.ObjectId,
+                                item.VariableCount,
+                                subscription.ResponseData
+                                );
+                            }
 
-                    eventArgs.Responses = item.Responses;
+                        else
+                            {
+                            TraCIContextSubscriptionResponse i = (item as TraCIContextSubscriptionResponse);
+                            eventArgs = new ContextSubscriptionEventArgs
+                                (
+                                i.ObjectId,
+                                i.VariableSubscriptionByObjectId,
+                                i.ContextDomain,
+                                i.VariableCount,
+                                i.ObjectCount
+                                );
+                            }
 
-                    switch (item.ResponseCode)
-                        {
-                        case TraCIConstants.RESPONSE_SUBSCRIBE_INDUCTIONLOOP_VARIABLE:
-                            _events.OnInductionLoopSubscription(eventArgs);
-                            break;
-                        case TraCIConstants.RESPONSE_SUBSCRIBE_MULTIENTRYEXIT_VARIABLE:
-                            _events.OnMultiEntryExitSubscription(eventArgs);
-                            break;
-                        case TraCIConstants.RESPONSE_SUBSCRIBE_TL_VARIABLE:
-                            _events.OnTrafficLightSubscription(eventArgs);
-                            break;
-                        case TraCIConstants.RESPONSE_SUBSCRIBE_LANE_VARIABLE:
-                            _events.OnLaneSubscription(eventArgs);
-                            break;
-                        case TraCIConstants.RESPONSE_SUBSCRIBE_VEHICLE_VARIABLE:
-                            _events.OnVehicleSubscription(eventArgs);
-                            break;
-                        case TraCIConstants.RESPONSE_SUBSCRIBE_VEHICLETYPE_VARIABLE:
-                            _events.OnVehicleTypeSubscription(eventArgs);
-                            break;
-                        case TraCIConstants.RESPONSE_SUBSCRIBE_ROUTE_VARIABLE:
-                            _events.OnRouteSubscription(eventArgs);
-                            break;
-                        case TraCIConstants.RESPONSE_SUBSCRIBE_POI_VARIABLE:
-                            _events.OnPOISubscription(eventArgs);
-                            break;
-                        case TraCIConstants.RESPONSE_SUBSCRIBE_POLYGON_VARIABLE:
-                            _events.OnPolygonSubscription(eventArgs);
-                            break;
-                        case TraCIConstants.RESPONSE_SUBSCRIBE_JUNCTION_VARIABLE:
-                            _events.OnJunctionSubscription(eventArgs);
-                            break;
-                        case TraCIConstants.RESPONSE_SUBSCRIBE_EDGE_VARIABLE:
-                            _events.OnEdgeSubscription(eventArgs);
-                            break;
-                        case TraCIConstants.RESPONSE_SUBSCRIBE_SIM_VARIABLE:
-                            _events.OnSimulationSubscription(eventArgs);
-                            break;
-                        case TraCIConstants.RESPONSE_SUBSCRIBE_GUI_VARIABLE:
-                            _events.OnGUISubscription(eventArgs);
-                            break;
-                        case TraCIConstants.RESPONSE_SUBSCRIBE_LANEAREA_VARIABLE:
-                            _events.OnLaneAreaSubscription(eventArgs);
-                            break;
-                        case TraCIConstants.RESPONSE_SUBSCRIBE_PERSON_VARIABLE:
-                            _events.OnPersonSubscription(eventArgs);
-                            break;
-                        case TraCIConstants.RESPONSE_SUBSCRIBE_INDUCTIONLOOP_CONTEXT:
-                            _events.OnInductionLoopContextSubscription(eventArgs as ContextSubscriptionEventArgs);
-                            break;
-                        case TraCIConstants.RESPONSE_SUBSCRIBE_LANE_CONTEXT:
-                            _events.OnLaneContextSubscription(eventArgs as ContextSubscriptionEventArgs);
-                            break;
-                        case TraCIConstants.RESPONSE_SUBSCRIBE_VEHICLE_CONTEXT:
-                            _events.OnVehicleContextSubscription(eventArgs as ContextSubscriptionEventArgs);
-                            break;
-                        case TraCIConstants.RESPONSE_SUBSCRIBE_POI_CONTEXT:
-                            _events.OnPOIContextSubscription(eventArgs as ContextSubscriptionEventArgs);
-                            break;
-                        case TraCIConstants.RESPONSE_SUBSCRIBE_POLYGON_CONTEXT:
-                            _events.OnPolygonContextSubscription(eventArgs as ContextSubscriptionEventArgs);
-                            break;
-                        case TraCIConstants.RESPONSE_SUBSCRIBE_JUNCTION_CONTEXT:
-                            _events.OnJunctionContextSubscription(eventArgs as ContextSubscriptionEventArgs);
-                            break;
-                        case TraCIConstants.RESPONSE_SUBSCRIBE_EDGE_CONTEXT:
-                            _events.OnEdgeContextSubscription(eventArgs as ContextSubscriptionEventArgs);
-                            break;
-                        default:
-                            throw new ArgumentOutOfRangeException();
+                        eventArgs.Responses = item.Responses;
+
+                        switch (item.ResponseCode)
+                            {
+                            case TraCIConstants.RESPONSE_SUBSCRIBE_INDUCTIONLOOP_VARIABLE:
+                                _events.OnInductionLoopSubscription(eventArgs);
+                                break;
+                            case TraCIConstants.RESPONSE_SUBSCRIBE_MULTIENTRYEXIT_VARIABLE:
+                                _events.OnMultiEntryExitSubscription(eventArgs);
+                                break;
+                            case TraCIConstants.RESPONSE_SUBSCRIBE_TL_VARIABLE:
+                                _events.OnTrafficLightSubscription(eventArgs);
+                                break;
+                            case TraCIConstants.RESPONSE_SUBSCRIBE_LANE_VARIABLE:
+                                _events.OnLaneSubscription(eventArgs);
+                                break;
+                            case TraCIConstants.RESPONSE_SUBSCRIBE_VEHICLE_VARIABLE:
+                                _events.OnVehicleSubscription(eventArgs);
+                                break;
+                            case TraCIConstants.RESPONSE_SUBSCRIBE_VEHICLETYPE_VARIABLE:
+                                _events.OnVehicleTypeSubscription(eventArgs);
+                                break;
+                            case TraCIConstants.RESPONSE_SUBSCRIBE_ROUTE_VARIABLE:
+                                _events.OnRouteSubscription(eventArgs);
+                                break;
+                            case TraCIConstants.RESPONSE_SUBSCRIBE_POI_VARIABLE:
+                                _events.OnPOISubscription(eventArgs);
+                                break;
+                            case TraCIConstants.RESPONSE_SUBSCRIBE_POLYGON_VARIABLE:
+                                _events.OnPolygonSubscription(eventArgs);
+                                break;
+                            case TraCIConstants.RESPONSE_SUBSCRIBE_JUNCTION_VARIABLE:
+                                _events.OnJunctionSubscription(eventArgs);
+                                break;
+                            case TraCIConstants.RESPONSE_SUBSCRIBE_EDGE_VARIABLE:
+                                _events.OnEdgeSubscription(eventArgs);
+                                break;
+                            case TraCIConstants.RESPONSE_SUBSCRIBE_SIM_VARIABLE:
+                                _events.OnSimulationSubscription(eventArgs);
+                                break;
+                            case TraCIConstants.RESPONSE_SUBSCRIBE_GUI_VARIABLE:
+                                _events.OnGUISubscription(eventArgs);
+                                break;
+                            case TraCIConstants.RESPONSE_SUBSCRIBE_LANEAREA_VARIABLE:
+                                _events.OnLaneAreaSubscription(eventArgs);
+                                break;
+                            case TraCIConstants.RESPONSE_SUBSCRIBE_PERSON_VARIABLE:
+                                _events.OnPersonSubscription(eventArgs);
+                                break;
+                            case TraCIConstants.RESPONSE_SUBSCRIBE_INDUCTIONLOOP_CONTEXT:
+                                _events.OnInductionLoopContextSubscription(eventArgs as ContextSubscriptionEventArgs);
+                                break;
+                            case TraCIConstants.RESPONSE_SUBSCRIBE_LANE_CONTEXT:
+                                _events.OnLaneContextSubscription(eventArgs as ContextSubscriptionEventArgs);
+                                break;
+                            case TraCIConstants.RESPONSE_SUBSCRIBE_VEHICLE_CONTEXT:
+                                _events.OnVehicleContextSubscription(eventArgs as ContextSubscriptionEventArgs);
+                                break;
+                            case TraCIConstants.RESPONSE_SUBSCRIBE_POI_CONTEXT:
+                                _events.OnPOIContextSubscription(eventArgs as ContextSubscriptionEventArgs);
+                                break;
+                            case TraCIConstants.RESPONSE_SUBSCRIBE_POLYGON_CONTEXT:
+                                _events.OnPolygonContextSubscription(eventArgs as ContextSubscriptionEventArgs);
+                                break;
+                            case TraCIConstants.RESPONSE_SUBSCRIBE_JUNCTION_CONTEXT:
+                                _events.OnJunctionContextSubscription(eventArgs as ContextSubscriptionEventArgs);
+                                break;
+                            case TraCIConstants.RESPONSE_SUBSCRIBE_EDGE_CONTEXT:
+                                _events.OnEdgeContextSubscription(eventArgs as ContextSubscriptionEventArgs);
+                                break;
+                            default:
+                                throw new ArgumentOutOfRangeException();
+                            }
                         }
                     }
-                }
 
-            return tmp;
+                return tmp;
+                }
+            else { return null; }
             }
 
         /// <summary>
@@ -201,8 +205,7 @@ namespace CodingConnected.TraCI.NET.Commands
                 {
                 Identifier = TraCIConstants.CMD_LOAD
                 };
-            List<byte> n = new();
-            n.AddRange((options.Count).ToTraCIBytes());
+            List<byte> n = [.. (options.Count).ToTraCIBytes()];
             foreach (string opt in options)
                 {
                 n.AddRange((opt.Length).ToTraCIBytes());

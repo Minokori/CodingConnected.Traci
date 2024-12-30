@@ -15,22 +15,20 @@ internal static partial class TraCIDataConverter
         if (response == null) { return null; }
 
         // find response of specific command type, statusResponse is status response ,r2 is result
-        var statusResponse = (TraCIStatusResponse)response.FirstOrDefault(x => x.Identifier == commandType);
-
+        var statusResponse = response.FirstOrDefault(x => x.Identifier == commandType);
+        var i = Array.IndexOf(response, statusResponse);
         if (statusResponse is null) { return null; }
 
-        switch (statusResponse.Result)
+        switch (((IStatusResponse)statusResponse).Result)
             {
             case ResultCode.Success:
                     {
 
-
                     if (statusResponse.Identifier == TraCIConstants.CMD_SIMSTEP)
                         {
-                        if (statusResponse.Length != 5)
+                        if (statusResponse.ContentLength != 5)// statusResponse has description
                             {
-                            var tmp = GetDataFromSimStepResponse(statusResponse);
-
+                            var tmp = GetDataFromSimStepResponse(statusResponse); // simstep will return subscription. 
                             return new TraCIResponse<T>
                                 {
                                 Identifier = statusResponse.Identifier,
@@ -44,7 +42,7 @@ internal static partial class TraCIDataConverter
 
 
                     // check if first byte is as requested (it gives the type of data requested)
-                    var r2 = response.FirstOrDefault(x => x.Identifier == commandType + 0x10 /*response's identifier is GET command's identifire +0x10*/);
+                    var r2 = response.Skip(i + 1).FirstOrDefault(x => x.Identifier == commandType + 0x10 /*response's identifier is GET command's identifire +0x10*/);
                     if (r2?.Response[0] == messageType)
                         {
                         // after the type of data, there is the length of the id (a string that we will skip)
@@ -89,9 +87,9 @@ internal static partial class TraCIDataConverter
                         Identifier = statusResponse.Identifier,
                         ResponseIdentifier = null,
                         Variable = null,
-                        Result = statusResponse.Result,
+                        Result = ((IStatusResponse)statusResponse).Result,
                         Content = default,
-                        ErrorMessage = $"TraCI reports command {Enum.GetName(statusResponse.Result)}: {statusResponse.Description}",
+                        ErrorMessage = $"TraCI reports command {Enum.GetName(((IStatusResponse)statusResponse).Result)}: {((IStatusResponse)statusResponse).Description}",
                         };
                     }
             }
@@ -104,19 +102,19 @@ internal static partial class TraCIDataConverter
         switch (value)
             {
             case float:
-                return BitConverter.GetBytes((float)value).Reverse().ToArray();
+                return GetBytes((float)value).Reverse().ToArray();
             // TODO byte 是不是直接返回Value？short对不对
             case byte:
-                return BitConverter.GetBytes((short)value).Reverse().ToArray();
+                return GetBytes((short)value).Reverse().ToArray();
             case int:
-                return BitConverter.GetBytes((int)value).Reverse().ToArray();
+                return GetBytes((int)value).Reverse().ToArray();
             case double:
-                return BitConverter.GetBytes((double)value).Reverse().ToArray();
+                return GetBytes((double)value).Reverse().ToArray();
             case string:
-                return [.. BitConverter.GetBytes(((string)value).Length).Reverse(), .. Encoding.ASCII.GetBytes((string)value)];
+                return [.. GetBytes(((string)value).Length).Reverse(), .. Encoding.ASCII.GetBytes((string)value)];
             case List<string>:
                 var los = (List<string>)value;
-                List<byte> bytes = [.. BitConverter.GetBytes(los.Count).Reverse()];
+                List<byte> bytes = [.. GetBytes(los.Count).Reverse()];
                 foreach (var str in los)
                     {
                     bytes.AddRange(str.ToTraCIBytes());
@@ -424,9 +422,11 @@ internal static partial class TraCIDataConverter
         try
             {
             List<TraCIResult> results = [];
-
             //<summary>数据总长度（多少byte）</summary>
-            var totalLength = ToInt32(response.Take(4).Reverse().ToArray(), 0);
+            var totalLength = ToInt32(response.Take(4).Reverse().ToArray());
+            if (totalLength != response.Count) { throw new Exception($"length(byte){totalLength} != length(count){response.Count}"); }
+
+
 
             //已经解析过的byte指针，contentStartIndex = 4 说明从 response[4] 开始还没被读取解析
             var contentStartIndex = 4;
@@ -441,7 +441,7 @@ internal static partial class TraCIDataConverter
                 int singleResultLength = response[contentStartIndex];
                 if (singleResultLength != 0)
                     {
-                    traciResult.Length = singleResultLength - 2; // content length = messageTotalLength - Length(1byte) - identifier(1byte)
+                    traciResult.ContentLength = singleResultLength - 2; // content length = messageTotalLength - ContentLength(1byte) - identifier(1byte)
                     contentPointer++; //move Pointer
                     }
                 // 若消息长度为0,说明result过长，一个byte不够用
@@ -450,10 +450,10 @@ internal static partial class TraCIDataConverter
                     if (contentStartIndex + 6 /*1byte(0),  4byte(messagelength), 1byte(identifier)*/ < totalLength)
                         {
                         singleResultLength = ToInt32(response.Skip(contentStartIndex + 1).Take(4).Reverse().ToArray(), 0);
-                        traciResult.Length = singleResultLength - 6; // content length = messageTotalLength - Length(5byte, 0(1byte), length(4byte) ) - identifier(1byte)
+                        traciResult.ContentLength = singleResultLength - 6; // content length = messageTotalLength - ContentLength(5byte, 0(1byte), length(4byte) ) - identifier(1byte)
                         contentPointer += 5;//move Pointer
                         }
-                    else { break;/*说明已经解析完最后一条 result*/ }
+                    else { break; /*说明已经解析完最后一条 result*/ }
                     }
 
 
@@ -466,19 +466,19 @@ internal static partial class TraCIDataConverter
                 // why we need it?
                 // 模拟步骤的result包括多个子result , = length + identifier + content(result1,result2,...)
                 // https://sumo.dlr.de/docs/TraCI/Control-related_commands.html#response_0x02_simulation_step
-                if (
-                    traciResult.Identifier == TraCIConstants.CMD_SIMSTEP
-                    && totalLength == response.Count
-                    && singleResultLength + 8 != response.Count
-                )
+                if (traciResult.Identifier == TraCIConstants.CMD_SIMSTEP && /*返回的结果是 执行一个仿真步骤的result*/ singleResultLength + 8 != response.Count)
                     {
-                    var subscriptionResponsesCount = ToInt32(response.Skip(contentStartIndex + singleResultLength).Take(4/*int(4byte)*/).Reverse().ToArray(), 0);
-                    singleResultLength += 5;
+                    // int 
+                    var subscriptionResponsesCount = ToInt32(response.Skip(contentStartIndex + singleResultLength).Take(4/*int(4byte)*/).Reverse().ToArray());
+
+
+                    singleResultLength += 4 /*int 的4byte也算进去*/;
                     for (var n = 0; n < subscriptionResponsesCount; n++)
                         {
                         var offset = contentStartIndex + singleResultLength;
-                        offset += 4;
-                        var subResponseLength = ToInt32(response.Skip(offset).Take(4).Reverse().ToArray(), 0);
+                        offset += 4;//不该在这加，在下一句加
+                        // BUG 错误，溢出了变成负数了
+                        var subResponseLength = ToInt32(response.Skip(offset).Take(4).Reverse().ToArray());
                         singleResultLength += subResponseLength;
                         // For some reason when the subscription is context subscription
                         // we need one extra byte in the singleResultLength than simply adding SubResponseLength
@@ -486,7 +486,7 @@ internal static partial class TraCIDataConverter
                         var identifierHighPart = identifier >> 4;
                         if (identifierHighPart == 0x09) singleResultLength++;
                         }
-                    traciResult.Length = --singleResultLength;
+                    traciResult.ContentLength = --singleResultLength;
                     }
 
 
@@ -496,8 +496,6 @@ internal static partial class TraCIDataConverter
                 // 更新已解析的byte指针
                 contentStartIndex += singleResultLength;
                 results.Add(traciResult);
-
-
                 }
             return [.. results];
             }

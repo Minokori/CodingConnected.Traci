@@ -4,6 +4,7 @@
         <OutputType>Exe</OutputType>
         <RootNamespace>TracCI.NET_Usage_example</RootNamespace>
         <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+        <LangVersion>latest</LangVersion>
     </PropertyGroup>
     <ItemGroup>
         <ProjectReference Include="..\CodingConnected.Traci.NET\CodingConnected.TraCI.NET.csproj" />
