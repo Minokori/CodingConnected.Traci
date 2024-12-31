@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace CodingConnected.TraCI.NET.Response;
+﻿namespace CodingConnected.TraCI.NET.Response;
 
 public interface IResponse
     {
@@ -13,17 +11,17 @@ public interface IResponse
     ResultCode Result { get; set; }
 
     /// <summary>
-    /// The Variable type
+    /// The VariableType type
     /// </summary>
-    byte? Variable { get; set; }
+    byte? VariableType { get; set; }
 
     T GetContentAs<T>();
     }
 
 /// <summary>
-/// Represents a response to a subscription request. Contains Object Variable Subscription and Object Context Subscription.<para/>
+/// Represents a response to a subscription request. Contains Object VariableType Subscription and Object Context Subscription.<para/>
 /// <list type="bullet">
-/// <item>Object Variable Subscription refers to https://sumo.dlr.de/wiki/TraCI/Object_Variable_Subscription</item>
+/// <item>Object VariableType Subscription refers to https://sumo.dlr.de/wiki/TraCI/Object_Variable_Subscription</item>
 /// <item>Object Context Subscription refers to https://sumo.dlr.de/docs/TraCI/Object_Context_Subscription.html</item>
 /// </list>
 /// </summary>

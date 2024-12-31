@@ -13,7 +13,7 @@ public interface ITcpService
 
     public bool Connect(string hostname, int port);
 
-    public TraCIResult[] SendMessage(TraCICommand command);
+    public List<TraCIResult> SendMessage(TraCICommand command);
     }
 
 public interface ICommandHelperService
@@ -96,7 +96,7 @@ public interface IEventService
     void OnEdgeContextSubscription(ContextSubscriptionEventArgs eventArgs);
     }
 
-public interface IProcessService
+public interface IResponseService
     {
     Process GetProcess(string sumoCfgFile, int remotePort,
         bool useSumoGui = true, bool quitOnEnd = true, bool redirectOutputToConsole = false);

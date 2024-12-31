@@ -52,11 +52,11 @@ namespace CodingConnected.TraCI.NET.Services
 
             if (command != null)
                 {
-                TraCIResult[] response = _tcpService.SendMessage(command);
+                var response = _tcpService.SendMessage(command);
 
                 try
                     {
-                    return TraCIDataConverter.ExtractDataFromResponse<Tresponse>(response, commandType, messageType);
+                    return TraCIDataConverter.ExtractDataFromResponse<Tresponse>(response.ToArray(), commandType, messageType);
                     }
                 catch
                     {
@@ -101,11 +101,11 @@ namespace CodingConnected.TraCI.NET.Services
         public TraCIResponse<T> ExecuteGetCommand<T>(string id, byte commandType, byte messageType)
             {
             TraCICommand command = GetCommand(id, commandType, messageType);
-            TraCIResult[] response = _tcpService.SendMessage(command);
+            var response = _tcpService.SendMessage(command);
 
             try
                 {
-                return TraCIDataConverter.ExtractDataFromResponse<T>(response, commandType, messageType);
+                return TraCIDataConverter.ExtractDataFromResponse<T>([.. response], commandType, messageType);
                 }
             catch
                 {

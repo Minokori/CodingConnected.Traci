@@ -112,7 +112,7 @@ public class TrafficLightCommands(ITcpService tcpService, ICommandHelperService 
             Identifier = tmp.Identifier,
             ResponseIdentifier = tmp.ResponseIdentifier,
             Result = tmp.Result,
-            Variable = tmp.Variable
+            VariableType = tmp.VariableType
             };
 
         return ret;
@@ -170,7 +170,7 @@ public class TrafficLightCommands(ITcpService tcpService, ICommandHelperService 
             Identifier = tmp.Identifier,
             ResponseIdentifier = tmp.ResponseIdentifier,
             Result = tmp.Result,
-            Variable = tmp.Variable
+            VariableType = tmp.VariableType
             };
 
         return ret;
@@ -317,7 +317,7 @@ public class TrafficLightCommands(ITcpService tcpService, ICommandHelperService 
 #warning is the try catch necessary?
         try
             {
-            return TraCIDataConverter.ExtractDataFromResponse<object>(response, TraCIConstants.CMD_SET_TL_VARIABLE, TraCIConstants.TL_COMPLETE_PROGRAM_RYG);
+            return TraCIDataConverter.ExtractDataFromResponse<object>(response.ToArray(), TraCIConstants.CMD_SET_TL_VARIABLE, TraCIConstants.TL_COMPLETE_PROGRAM_RYG);
             }
         catch
             {

@@ -440,7 +440,7 @@ namespace CodingConnected.TraCI.NET.Commands
                 Identifier = tmp.Identifier,
                 ResponseIdentifier = tmp.ResponseIdentifier,
                 Result = tmp.Result,
-                Variable = tmp.Variable
+                VariableType = tmp.VariableType
                 };
             }
 
@@ -721,7 +721,7 @@ namespace CodingConnected.TraCI.NET.Commands
                 Identifier = tmp.Identifier,
                 ResponseIdentifier = tmp.ResponseIdentifier,
                 Result = tmp.Result,
-                Variable = tmp.Variable
+                VariableType = tmp.VariableType
                 };
             }
 

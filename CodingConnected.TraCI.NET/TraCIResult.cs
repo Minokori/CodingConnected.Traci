@@ -1,22 +1,78 @@
 ﻿using System.Text;
 using CodingConnected.TraCI.NET.Response;
+using CodingConnected.TraCI.NET.Types;
+using static CodingConnected.TraCI.NET.Helpers.TraCIDataConverter;
 
 namespace CodingConnected.TraCI.NET;
 
-public class TraCIResult : IStatusResponse
+/// <summary>
+/// 从 TCP 传回来的基本数据结构
+/// </summary>
+public class TraCIResult : IStatusResponse, IAnswerFromSUMO
     {
     /// <summary>
     /// The length of the content
     /// </summary>
     public int ContentLength { get; set; }
+
+    /// <summary>
+    /// The identifier of the command
+    /// </summary>
     public byte Identifier { get; set; }
-    public byte[] Response { get; set; }
 
-    ResultCode IStatusResponse.Result => (ResultCode)Response[0];
+    /// <summary>
+    /// The response content(excludes length and identifier)
+    /// </summary>
+    public byte[] Content { get; set; }
 
-    int IStatusResponse.DescriptionLength => BitConverter.ToInt32(Response.Take(4).ToArray());
+    #region IStatusResponse
+    /// <summary>
+    /// result of the command
+    /// </summary>
+    ResultCode IStatusResponse.Result => (ResultCode)Content[0];
 
-    string IStatusResponse.Description => Encoding.ASCII.GetString(Response.Skip(1 + 4).Take(((IStatusResponse)this).DescriptionLength).ToArray());
+    /// <summary>
+    /// length of the description
+    /// </summary>
+    int IStatusResponse.DescriptionLength => BitConverter.ToInt32(Content.Take(4).ToArray());
+
+    /// <summary>
+    /// description of the result
+    /// </summary>
+    string IStatusResponse.Description =>
+        Encoding.ASCII.GetString(
+            Content.Skip(1 + 4).Take(((IStatusResponse)this).DescriptionLength).ToArray()
+        );
+    #endregion
+
+
+
+
+
+    #region IAnswerFromSUMO
+
+    byte IAnswerFromSUMO.Variable => Content[0];
+    int IAnswerFromSUMO.SumoIdLength =>
+        BitConverter.ToInt32(Content.Skip(1).Take(4).Reverse().ToArray());
+
+    string IAnswerFromSUMO.SumoId =>
+        Encoding.ASCII.GetString(
+            Content.Skip(1 + 4).Take(((IAnswerFromSUMO)this).SumoIdLength).ToArray()
+        );
+    byte IAnswerFromSUMO.ReturnType =>
+        Content.Skip(5 + ((IAnswerFromSUMO)this).SumoIdLength).First();
+    ITraCIType IAnswerFromSUMO.Value
+        {
+        get
+            {
+            var (obj, bytes) = GetValueFromTypeAndArray(
+                ((IAnswerFromSUMO)this).ReturnType,
+                Content.Skip(6)
+            );
+            return bytes.Any() ? throw new Exception("Not all bytes were consumed") : obj;
+            }
+        }
+    #endregion
     }
 
 /// <summary>
@@ -29,3 +85,23 @@ public interface IStatusResponse
     public string Description { get; }
     }
 
+/// <summary>
+/// <see href="https://sumo.dlr.de/docs/TraCI/SUMO_ID_Commands_Structure.html#answer_from_sumo"/>
+/// </summary>
+public interface IAnswerFromSUMO
+    {
+    internal int SumoIdLength { get; }
+
+    /// <summary>
+    /// Variable and SUMO ID repeat the values from the command.
+    /// </summary>
+    public byte Variable { get; }
+
+    /// <summary>
+    /// Variable and SUMO ID repeat the values from the command.
+    /// </summary>
+    public string SumoId { get; }
+    public byte ReturnType { get; }
+
+    public ITraCIType Value { get; }
+    }

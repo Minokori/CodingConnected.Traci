@@ -19,7 +19,7 @@ public class TraCIResponse<T> : IResponse
 
     public string ErrorMessage { get; set; }
 
-    public byte? Variable { get; set; }
+    public byte? VariableType { get; set; }
 
     public U GetContentAs<U>()
         {

@@ -63,11 +63,11 @@ public partial class TraCIClient : IDisposable
         _ = SendMessage(command);
         }
 
-    #endregion // Set Variable Methods
+    #endregion // Set VariableType Methods
 
     #region Public Methods
 
-    public TraCIResult[] SendMessage(TraCICommand command) => TcpSerivce.SendMessage(command);
+    public List<TraCIResult> SendMessage(TraCICommand command) => TcpSerivce.SendMessage(command);
 
     #endregion // Public Methods
     }

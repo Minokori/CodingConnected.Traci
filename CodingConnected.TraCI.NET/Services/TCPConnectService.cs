@@ -68,7 +68,7 @@ internal class TCPConnectService : ITcpService
             }
         }
 
-    public TraCIResult[] SendMessage(TraCICommand command)
+    public List<TraCIResult> SendMessage(TraCICommand command)
         {
         if (!_client.Connected) { return null; }
 
@@ -105,8 +105,9 @@ internal class TCPConnectService : ITcpService
                 }
 
             //var response = _receiveBuffer.Take(hasReadLength).ToArray();
-            var traciResults = response.ToTraCIResults();
-            return traciResults?.Length > 0 ? traciResults : null;
+
+
+            return response.AsTraCIResults();
             }
         catch
             {

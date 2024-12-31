@@ -101,7 +101,7 @@ internal class UsageExample
     private static readonly string DEFAULT_SUMOCFG =
         Path.Combine(".", "sumo-scenarios", "usage-example", "run.sumocfg");
 
-    /* The Variables used for Variable and Context Subscription for this example */
+    /* The Variables used for VariableType and Context Subscription for this example */
     private static readonly List<byte> variablesToSubscribeTo =
     [
         TraCIConstants.VAR_SPEED,
@@ -139,7 +139,7 @@ internal class UsageExample
             /* Responses are object that can be casted to IResponseInfo so we can retrieve 
              the variable type. */
             var respInfo = r as IResponse;
-            var variableCode = respInfo.Variable;
+            var variableCode = respInfo.VariableType;
 
             /*We can then cast to TraCIResponse to get the Content
              We can also use IResponseInfo.GetContentAs<> ()s*/
@@ -180,7 +180,7 @@ internal class UsageExample
         var objectID = e.ObjectId;
 
         /* We can cast to VariableSubscriptionEventArgs to use the new features where 
-         we can get the response by the Variable Type */
+         we can get the response by the VariableType Type */
         var eventArgsNew = e as VariableSubscriptionEventArgs;
 
         Console.WriteLine("Subscription Object Id: " + objectID);
@@ -263,7 +263,7 @@ internal class UsageExample
             foreach (var response in variableSubscriptionResponse.Responses)
                 {
                 var variableResponse = (IResponse)response;
-                var variableCode = variableResponse.Variable;
+                var variableCode = variableResponse.VariableType;
 
                 switch (variableCode)
                     {
@@ -368,7 +368,7 @@ internal class UsageExample
 
         //while (!task.IsCompleted) { /*  Wait for task to be completed before using traci commands */ }
 
-        /* Subscribe to Variable Subscriptions Events 
+        /* Subscribe to VariableType Subscriptions Events 
          * (triggered each step if the vehicle that was subscribed to exists )*/
         Console.WriteLine("Subscribing to Vehicle Variable Subscription");
         client.EventService.VehicleSubscription += Client_VehicleSubscriptionUsingResponses;
@@ -381,7 +381,7 @@ internal class UsageExample
 
         string id; // id that will be used for subscriptions.
         Console.WriteLine("");
-        Console.WriteLine($"Sumo 版本: {client.Control.GetVersionId()}, {client.Control.GetVersionString()}");
+        Console.WriteLine($"Sumo 版本: {client.Control.GetVersion()}");
 
         var instructions =
             @"

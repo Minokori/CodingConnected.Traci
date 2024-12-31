@@ -1,5 +1,4 @@
-﻿using System.Text;
-using CodingConnected.TraCI.NET.Constants;
+﻿using CodingConnected.TraCI.NET.Constants;
 using CodingConnected.TraCI.NET.Response;
 using CodingConnected.TraCI.NET.Types;
 using static System.BitConverter;
@@ -13,12 +12,12 @@ internal static partial class TraCIDataConverter
         var offset = 5;
 
         // extract number of subscriptions
-        var revSubCount = r1.Response.Skip(offset).Take(4).Reverse().ToArray();
+        var revSubCount = r1.Content.Skip(offset).Take(4).Reverse().ToArray();
         var subCount = ToInt32(revSubCount);
 
         offset = 9;
         // extract the result of the subscriptions
-        var subResult = r1.Response[offset++];
+        var subResult = r1.Content[offset++];
 
 
         // if subscription result is success
@@ -27,25 +26,25 @@ internal static partial class TraCIDataConverter
             for (var i = 0; i < subCount; i++)
                 {
                 // extract the length of the subscription
-                var revSubLen = r1.Response.Skip(offset).Take(4).Reverse().ToArray();
+                var revSubLen = r1.Content.Skip(offset).Take(4).Reverse().ToArray();
                 _ = ToInt32(revSubLen, 0);
                 offset += 4;
 
                 // Subscription
-                var subResponseCode = r1.Response[offset++];
+                var subResponseCode = r1.Content[offset++];
 
                 var low = subResponseCode & 0x0F;
                 var high = subResponseCode >> 4;
 
-                // 0xeX => Variable Subscription Response
-                // 0x9X => Object Context Subscription Response
+                // 0xeX => VariableType Subscription Content
+                // 0x9X => Object Context Subscription Content
                 if (high == 0x0e)
                     {
                     // extract the object id
-                    offset = GetString(r1.Response, offset, out var objectId);
+                    offset = GetString(r1.Content, offset, out var objectId);
 
                     // extract the number of variables
-                    var countVariables = r1.Response[offset++];
+                    var countVariables = r1.Content[offset++];
 
                     offset = CreateVariableSubscriptionResponse(
                         objectId,
@@ -62,16 +61,16 @@ internal static partial class TraCIDataConverter
                 else if (high == 0x09)
                     {
                     // extract the object id of the EGO object
-                    offset = GetString(r1.Response, offset, out var objectId);
+                    offset = GetString(r1.Content, offset, out var objectId);
 
                     // extract the context domain the subscription happened under
-                    var contextDomain = r1.Response[offset++];
+                    var contextDomain = r1.Content[offset++];
 
                     // extract the number of variables that was returned for each object
-                    var countVariables = r1.Response[offset++];
+                    var countVariables = r1.Content[offset++];
 
                     // extract the number of objects that are inside the context range
-                    offset = GetInteger(r1.Response, offset, out var countObject);
+                    offset = GetInteger(r1.Content, offset, out var countObject);
                     var objectCount = countObject.Value;
 
                     TraCIContextSubscriptionResponse subContextResponse = new(
@@ -84,7 +83,7 @@ internal static partial class TraCIDataConverter
 
                     for (var objectNum = 0; objectNum < objectCount; objectNum++)
                         {
-                        offset = GetString(r1.Response, offset, out var curObjectId);
+                        offset = GetString(r1.Content, offset, out var curObjectId);
 
                         offset = CreateVariableSubscriptionResponse(
                             curObjectId,
@@ -113,14 +112,7 @@ internal static partial class TraCIDataConverter
             }
         }
 
-    private static int CreateVariableSubscriptionResponse(
-        TraCIString objectId,
-        TraCIResult r1,
-        byte subResponseCode,
-        byte countVariables,
-        int offset,
-        out TraCIVariableSubscriptionResponse variableSubscriptionResponce
-    )
+    private static int CreateVariableSubscriptionResponse(TraCIString objectId, TraCIResult r1, byte subResponseCode, byte countVariables, int offset, out TraCIVariableSubscriptionResponse variableSubscriptionResponce)
         {
         variableSubscriptionResponce = new TraCIVariableSubscriptionResponse(
             objectId.Value,
@@ -131,14 +123,14 @@ internal static partial class TraCIDataConverter
         for (var varNum = 0; varNum < countVariables; varNum++)
             {
             // extract variable identifier, status and datatype of the response
-            var variable = r1.Response[offset++];
-            var result = r1.Response[offset++];
-            var datatype = r1.Response[offset++];
+            var variable = r1.Content[offset++];
+            var result = r1.Content[offset++];
+            var datatype = r1.Content[offset++];
 
             // extract value by datatype
             offset += GetValueFromTypeAndArray(
                 datatype,
-                r1.Response.Skip(offset),
+                r1.Content.Skip(offset),
                 out var contentAsObject
             );
 
@@ -151,7 +143,7 @@ internal static partial class TraCIDataConverter
                             new TraCIResponse<LonLatPosition>
                                 {
                                 Identifier = subResponseCode,
-                                Variable = variable,
+                                VariableType = variable,
                                 Result = (ResultCode)result,
                                 Content = (LonLatPosition)contentAsObject,
                                 }
@@ -165,7 +157,7 @@ internal static partial class TraCIDataConverter
                             new TraCIResponse<Position2D>
                                 {
                                 Identifier = subResponseCode,
-                                Variable = variable,
+                                VariableType = variable,
                                 Result = (ResultCode)result,
                                 Content = (Position2D)contentAsObject,
                                 }
@@ -179,7 +171,7 @@ internal static partial class TraCIDataConverter
                             new TraCIResponse<LonLatAltPosition>
                                 {
                                 Identifier = subResponseCode,
-                                Variable = variable,
+                                VariableType = variable,
                                 Result = (ResultCode)result,
                                 Content = (LonLatAltPosition)contentAsObject,
                                 }
@@ -193,7 +185,7 @@ internal static partial class TraCIDataConverter
                             new TraCIResponse<Position3D>
                                 {
                                 Identifier = subResponseCode,
-                                Variable = variable,
+                                VariableType = variable,
                                 Result = (ResultCode)result,
                                 Content = (Position3D)contentAsObject,
                                 }
@@ -207,7 +199,7 @@ internal static partial class TraCIDataConverter
                             new TraCIResponse<RoadMapPosition>
                                 {
                                 Identifier = subResponseCode,
-                                Variable = variable,
+                                VariableType = variable,
                                 Result = (ResultCode)result,
                                 Content = (RoadMapPosition)contentAsObject,
                                 }
@@ -221,7 +213,7 @@ internal static partial class TraCIDataConverter
                             new TraCIResponse<BoundaryBox>
                                 {
                                 Identifier = subResponseCode,
-                                Variable = variable,
+                                VariableType = variable,
                                 Result = (ResultCode)result,
                                 Content = (BoundaryBox)contentAsObject,
                                 }
@@ -235,7 +227,7 @@ internal static partial class TraCIDataConverter
                             new TraCIResponse<Polygon>
                                 {
                                 Identifier = subResponseCode,
-                                Variable = variable,
+                                VariableType = variable,
                                 Result = (ResultCode)result,
                                 Content = (Polygon)contentAsObject,
                                 }
@@ -249,7 +241,7 @@ internal static partial class TraCIDataConverter
                             new TraCIResponse<byte>
                                 {
                                 Identifier = subResponseCode,
-                                Variable = variable,
+                                VariableType = variable,
                                 Result = (ResultCode)result,
                                 Content = (byte)contentAsObject,
                                 }
@@ -263,7 +255,7 @@ internal static partial class TraCIDataConverter
                             new TraCIResponse<byte>
                                 {
                                 Identifier = subResponseCode,
-                                Variable = variable,
+                                VariableType = variable,
                                 Result = (ResultCode)result,
                                 Content = (byte)contentAsObject,
                                 }
@@ -277,7 +269,7 @@ internal static partial class TraCIDataConverter
                             new TraCIResponse<int>
                                 {
                                 Identifier = subResponseCode,
-                                Variable = variable,
+                                VariableType = variable,
                                 Result = (ResultCode)result,
                                 Content = (int)contentAsObject,
                                 }
@@ -291,7 +283,7 @@ internal static partial class TraCIDataConverter
                             new TraCIResponse<float>
                                 {
                                 Identifier = subResponseCode,
-                                Variable = variable,
+                                VariableType = variable,
                                 Result = (ResultCode)result,
                                 Content = (float)contentAsObject,
                                 }
@@ -305,7 +297,7 @@ internal static partial class TraCIDataConverter
                             new TraCIResponse<double>
                                 {
                                 Identifier = subResponseCode,
-                                Variable = variable,
+                                VariableType = variable,
                                 Result = (ResultCode)result,
                                 Content = (double)contentAsObject,
                                 }
@@ -319,7 +311,7 @@ internal static partial class TraCIDataConverter
                             new TraCIResponse<string>
                                 {
                                 Identifier = subResponseCode,
-                                Variable = variable,
+                                VariableType = variable,
                                 Result = (ResultCode)result,
                                 Content = (string)contentAsObject,
                                 }
@@ -333,7 +325,7 @@ internal static partial class TraCIDataConverter
                             new TraCIResponse<List<string>>
                                 {
                                 Identifier = subResponseCode,
-                                Variable = variable,
+                                VariableType = variable,
                                 Result = (ResultCode)result,
                                 Content = (List<string>)contentAsObject,
                                 }
@@ -347,7 +339,7 @@ internal static partial class TraCIDataConverter
                             new TraCIResponse<Color>
                                 {
                                 Identifier = subResponseCode,
-                                Variable = variable,
+                                VariableType = variable,
                                 Result = (ResultCode)result,
                                 Content = (Color)contentAsObject,
                                 }
@@ -367,7 +359,7 @@ internal static partial class TraCIDataConverter
                             new TraCIResponse<TraCIObjects>
                                 {
                                 Identifier = subResponseCode,
-                                Variable = variable,
+                                VariableType = variable,
                                 Result = (ResultCode)result,
                                 Content = (TraCIObjects)contentAsObject,
                                 }
@@ -384,267 +376,6 @@ internal static partial class TraCIDataConverter
         return offset;
         }
 
-    private static int GetTrafficLightPhaseList(
-        IEnumerable<byte> array,
-        int offset,
-        out TrafficLightPhaseList trafficLightPhaseList
-    )
-        {
-        trafficLightPhaseList = new TrafficLightPhaseList();
-
-        offset = GetByte(array, offset, out var count);
-
-        for (var i = 0; i < count.Value; i++)
-            {
-            offset = GetString(array, offset, out var precRoad);
-            offset = GetString(array, offset, out var succRoad);
-            offset = GetByte(array, offset, out var phase);
-
-            trafficLightPhaseList.Phases.Add(
-                new TrafficLightPhase()
-                    {
-                    PrecRoad = precRoad.Value,
-                    SuccRoad = succRoad.Value,
-                    Phase = (PhaseState)phase.Value,
-                    }
-            );
-            }
-        return offset;
-        }
-
-    private static int GetColor(IEnumerable<byte> array, int offset, out Color color)
-        {
-        color = new Color
-            {
-            R = array.Skip(offset++).First(),
-            G = array.Skip(offset++).First(),
-            B = array.Skip(offset++).First(),
-            A = array.Skip(offset++).First(),
-            };
-
-        return offset;
-        }
-
-    private static int GetBoundaryBox(
-        IEnumerable<byte> array,
-        int offset,
-        out BoundaryBox boundaryBox
-    )
-        {
-        BoundaryBox bb = new();
-        var take = array.Skip(offset).Take(TraCIConstants.DOUBLE_SIZE).Reverse().ToArray();
-        offset += TraCIConstants.DOUBLE_SIZE;
-        bb.LowerLeftX = BitConverter.ToDouble(take, 0);
-        take = array.Skip(offset).Take(TraCIConstants.DOUBLE_SIZE).Reverse().ToArray();
-        offset += TraCIConstants.DOUBLE_SIZE;
-        bb.LowerLeftY = BitConverter.ToDouble(take, 0);
-        take = array.Skip(offset).Take(TraCIConstants.DOUBLE_SIZE).Reverse().ToArray();
-        offset += TraCIConstants.DOUBLE_SIZE;
-        bb.UpperRightX = BitConverter.ToDouble(take, 0);
-        take = array.Skip(offset).Take(TraCIConstants.DOUBLE_SIZE).Reverse().ToArray();
-        offset += TraCIConstants.DOUBLE_SIZE;
-        bb.UpperRightY = BitConverter.ToDouble(take, 0);
-        boundaryBox = bb;
-        return offset;
-        }
-
-    private static int GetPositionRoadmap(
-        IEnumerable<byte> array,
-        int offset,
-        out RoadMapPosition roadMapPosition
-    )
-        {
-        RoadMapPosition rmp = new();
-        StringBuilder sb = new();
-        var take = array.Skip(offset).Take(TraCIConstants.INTEGER_SIZE).Reverse().ToArray();
-        offset += TraCIConstants.INTEGER_SIZE;
-        var length = BitConverter.ToInt32(take, 0);
-        for (var j = 0; j < length; ++j)
-            {
-            sb.Append((char)array.Skip(j + TraCIConstants.INTEGER_SIZE).First());
-            ++offset;
-            }
-        rmp.RoadId = sb.ToString();
-        take = array.Skip(offset).Take(TraCIConstants.DOUBLE_SIZE).Reverse().ToArray();
-        offset += TraCIConstants.DOUBLE_SIZE;
-        rmp.Pos = BitConverter.ToDouble(take, 0);
-        rmp.LaneId = array.Skip(offset).First();
-        roadMapPosition = rmp;
-        return offset;
-        }
-
-    private static int GetPostion3D(IEnumerable<byte> array, int offset, out Position3D position3D)
-        {
-        Position3D pos3d = new();
-        var take = array.Skip(offset).Take(TraCIConstants.DOUBLE_SIZE).Reverse().ToArray();
-        offset += TraCIConstants.DOUBLE_SIZE;
-        pos3d.X = BitConverter.ToDouble(take, 0);
-        take = array.Skip(offset).Take(TraCIConstants.DOUBLE_SIZE).Reverse().ToArray();
-        offset += TraCIConstants.DOUBLE_SIZE;
-        pos3d.Y = BitConverter.ToDouble(take, 0);
-        take = array.Skip(offset).Take(TraCIConstants.DOUBLE_SIZE).Reverse().ToArray();
-        offset += TraCIConstants.DOUBLE_SIZE;
-        pos3d.Z = BitConverter.ToDouble(take, 0);
-        position3D = pos3d;
-        return offset;
-        }
-
-    private static int GetPositionLonLatAlt(
-        IEnumerable<byte> array,
-        int offset,
-        out LonLatAltPosition lonLatAltPosition
-    )
-        {
-        LonLatAltPosition lonlatalt = new();
-        var take = array.Skip(offset).Take(TraCIConstants.DOUBLE_SIZE).Reverse().ToArray();
-        offset += TraCIConstants.DOUBLE_SIZE;
-        lonlatalt.Longitude = BitConverter.ToDouble(take, 0);
-        take = array.Skip(offset).Take(TraCIConstants.DOUBLE_SIZE).Reverse().ToArray();
-        offset += TraCIConstants.DOUBLE_SIZE;
-        lonlatalt.Latitude = BitConverter.ToDouble(take, 0);
-        take = array.Skip(offset).Take(TraCIConstants.DOUBLE_SIZE).Reverse().ToArray();
-        offset += TraCIConstants.DOUBLE_SIZE;
-        lonlatalt.Altitude = BitConverter.ToDouble(take, 0);
-        lonLatAltPosition = lonlatalt;
-        return offset;
-        }
-
-    private static int Get2DPosition(IEnumerable<byte> array, int offset, out Position2D position2D)
-        {
-        Position2D pos2d = new();
-        var take = array.Skip(offset).Take(TraCIConstants.DOUBLE_SIZE).Reverse().ToArray();
-        offset += TraCIConstants.DOUBLE_SIZE;
-        pos2d.X = BitConverter.ToDouble(take, 0);
-        take = array.Skip(offset).Take(TraCIConstants.DOUBLE_SIZE).Reverse().ToArray();
-        offset += TraCIConstants.DOUBLE_SIZE;
-        pos2d.Y = BitConverter.ToDouble(take, 0);
-        position2D = pos2d;
-
-        return offset;
-        }
-
-    private static int GetPositionLonLat(
-        IEnumerable<byte> array,
-        int offset,
-        out LonLatPosition lonLatPosition
-    )
-        {
-        byte[] take;
-        LonLatPosition lonlat = new();
-        take = array.Skip(offset).Take(TraCIConstants.DOUBLE_SIZE).Reverse().ToArray();
-        offset += TraCIConstants.DOUBLE_SIZE;
-        lonlat.Longitude = BitConverter.ToDouble(take, 0);
-        take = array.Skip(offset).Take(TraCIConstants.DOUBLE_SIZE).Reverse().ToArray();
-        offset += TraCIConstants.DOUBLE_SIZE;
-        lonlat.Latitude = BitConverter.ToDouble(take, 0);
-        lonLatPosition = lonlat;
-        return offset;
-        }
-
-    private static int GetStringList(
-        IEnumerable<byte> array,
-        int offset,
-        out TraCIStringList StringList
-    )
-        {
-        StringList = new TraCIStringList();
-
-        StringBuilder sb = new();
-        var take = array.Skip(offset).Take(TraCIConstants.INTEGER_SIZE).Reverse().ToArray();
-        var count = BitConverter.ToInt32(take, 0);
-        List<string> list = [];
-        offset += TraCIConstants.INTEGER_SIZE;
-        for (var i1 = 0; i1 < count; ++i1)
-            {
-            sb.Clear();
-            take = array.Skip(offset).Take(TraCIConstants.INTEGER_SIZE).Reverse().ToArray();
-            offset += TraCIConstants.INTEGER_SIZE;
-            var length = BitConverter.ToInt32(take, 0);
-            for (var j = 0; j < length; ++j)
-                {
-                sb.Append((char)array.Skip(offset).First());
-                ++offset;
-                }
-            list.Add(sb.ToString());
-            }
-        StringList.Value = list;
-        return offset;
-        }
-
-    private static int GetString(IEnumerable<byte> array, int offset, out TraCIString String)
-        {
-        String = new TraCIString();
-        StringBuilder sb = new();
-        var take = array.Skip(offset).Take(TraCIConstants.INTEGER_SIZE).Reverse().ToArray();
-        var length = BitConverter.ToInt32(take, 0);
-        offset += TraCIConstants.INTEGER_SIZE;
-        for (var i = 0; i < length; ++i)
-            {
-            sb.Append((char)array.Skip(offset).First());
-            offset++;
-            }
-        String.Value = sb.ToString();
-
-        return offset;
-        }
-
-    private static int GetDouble(IEnumerable<byte> array, int offset, out TraCIDouble Double)
-        {
-        Double = new TraCIDouble();
-        var take = array.Skip(offset).Take(TraCIConstants.DOUBLE_SIZE).Reverse().ToArray();
-        Double.Value = BitConverter.ToDouble(take, 0);
-        return offset + TraCIConstants.DOUBLE_SIZE;
-        }
-
-    private static int GetFloat(IEnumerable<byte> array, int offset, out TraCIFloat Float)
-        {
-        Float = new TraCIFloat();
-        var take = array.Skip(offset).Take(TraCIConstants.FLOAT_SIZE).Reverse().ToArray();
-        Float.Value = BitConverter.ToSingle(take, 0);
-        return offset + TraCIConstants.FLOAT_SIZE;
-        }
-
-    private static int GetInteger(IEnumerable<byte> array, int offset, out TraCIInteger integer)
-        {
-        integer = new TraCIInteger();
-        var take = array.Skip(offset).Take(TraCIConstants.INTEGER_SIZE).Reverse().ToArray();
-        integer.Value = BitConverter.ToInt32(take, 0);
-        return offset + TraCIConstants.INTEGER_SIZE;
-        }
-
-    private static int GetByte(IEnumerable<byte> array, int offset, out TraCIByte Byte)
-        {
-        Byte = new TraCIByte { Value = array.Skip(offset).First() };
-        return offset + TraCIConstants.BYTE_SIZE;
-        }
-
-    private static int GetUByte(IEnumerable<byte> array, int offset, out TraCIUByte Byte)
-        {
-        Byte = new TraCIUByte { Value = array.Skip(offset).First() };
-        return offset + TraCIConstants.UBYTE_SIZE;
-        }
-
-    private static int GetPolygon(IEnumerable<byte> array, int offset, out Polygon pol)
-        {
-        byte[] take;
-        var length = array.Skip(offset).First();
-        var skip = offset + 1; // first byte is length of data
-
-        pol = new Polygon();
-
-        for (var j = 1; j <= length; j++)
-            {
-            Position2D p = new();
-            take = array.Skip(skip).Take(TraCIConstants.DOUBLE_SIZE).Reverse().ToArray();
-            skip += TraCIConstants.DOUBLE_SIZE;
-            p.X = BitConverter.ToDouble(take, 0);
-            take = array.Skip(skip).Take(TraCIConstants.DOUBLE_SIZE).Reverse().ToArray();
-            skip += TraCIConstants.DOUBLE_SIZE;
-            p.Y = BitConverter.ToDouble(take, 0);
-            pol.Points.Add(p);
-            }
-        return skip;
-        }
 
     private static byte[] GetMessagesBytes(IEnumerable<TraCICommand> commands)
         {
@@ -663,7 +394,7 @@ internal static partial class TraCIDataConverter
             else
                 {
                 cmessage.Add(0);
-                cmessage.AddRange(BitConverter.GetBytes(c.Contents.Length + 6).Reverse());
+                cmessage.AddRange(GetBytes(c.Contents.Length + 6).Reverse());
                 }
             cmessage.Add(c.Identifier);
             if (c.Contents != null)
@@ -673,7 +404,7 @@ internal static partial class TraCIDataConverter
             cmessages.Add(cmessage);
             }
         var totlength = cmessages.Select(x => x.Count).Sum() + 4;
-        List<byte> totmessage = [.. BitConverter.GetBytes(totlength).Reverse()];
+        List<byte> totmessage = [.. GetBytes(totlength).Reverse()];
         cmessages.ForEach(x => totmessage.AddRange(x));
         //totmessage.AddRange(BitConverter.GetBytes('\n'));
         return [.. totmessage];

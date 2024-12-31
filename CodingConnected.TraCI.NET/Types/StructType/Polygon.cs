@@ -19,4 +19,17 @@ public struct Polygon : ITraCIType
             }
         return [.. bytes];
         }
+
+    public static Tuple<Polygon, IEnumerable<byte>> FromBytes(IEnumerable<byte> bytes)
+        {
+        int count = bytes.First();
+        bytes = bytes.Skip(1).ToArray();
+        List<Position2D> points = [];
+        for (int i = 0; i < count; i++)
+            {
+            (var result, bytes) = Position2D.FromBytes([.. bytes]);
+            points.Add(result);
+            }
+        return new(new Polygon { Points = points }, bytes);
+        }
     }

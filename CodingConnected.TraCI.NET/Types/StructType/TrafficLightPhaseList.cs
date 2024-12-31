@@ -21,6 +21,15 @@ public struct TrafficLightPhase : ITraCIType
 
     public readonly byte[] ToBytes() => [..PrecRoad.ToTraCIBytes(),
     ..SuccRoad.ToTraCIBytes(),..Phase.ToTraCIBytes()];
+
+    public static Tuple<TrafficLightPhase, IEnumerable<byte>> FromBytes(IEnumerable<byte> bytes)
+        {
+        (var precRoad, bytes) = TraCIString.FromBytes(bytes);
+        (var succRoad, bytes) = TraCIString.FromBytes(bytes);
+        (var phase, bytes) = TraCIByte.FromBytes(bytes);
+        TrafficLightPhase result = new() { PrecRoad = precRoad.Value, SuccRoad = succRoad.Value, Phase = (PhaseState)phase.Value };
+        return new(result, bytes);
+        }
     }
 
 public struct TrafficLightPhaseList : ITraCIType
@@ -35,5 +44,21 @@ public struct TrafficLightPhaseList : ITraCIType
             bytes.AddRange(item.ToBytes());
             }
         return [.. bytes];
+        }
+
+    public static Tuple<TrafficLightPhaseList, IEnumerable<byte>> FromBytes(IEnumerable<byte> bytes)
+        {
+        int count = bytes.First();
+        bytes = bytes.Skip(1);
+        List<TrafficLightPhase> phases = [];
+
+        for (var i = 0; i < count; i++)
+            {
+            (var phase, bytes) = TrafficLightPhase.FromBytes(bytes);
+            phases.Add(phase);
+            }
+
+        TrafficLightPhaseList result = new() { Phases = phases };
+        return new(result, bytes);
         }
     }

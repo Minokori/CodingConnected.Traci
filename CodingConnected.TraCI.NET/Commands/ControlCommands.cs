@@ -15,36 +15,22 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <summary>
         /// Gets an identifying version number as described here: http://sumo.dlr.de/wiki/TraCI/Control-related_commands
         /// </summary>
-        public int GetVersionId()
+        public Tuple<int, string> GetVersion()
             {
             TraCICommand command = new()
                 {
                 Identifier = TraCIConstants.CMD_GETVERSION,
                 Contents = null
                 };
-            TraCIResult[] response = _tcpService.SendMessage(command);
-            return response?.Length == 2 ? BitConverter.ToInt32(response[1].Response.Take(4).Reverse().ToArray(), 0) : -1;
-            }
-
-        /// <summary>
-        /// Gets a user friendly string describing the version of SUMO
-        /// </summary>
-        public string GetVersionString()
-            {
-            TraCICommand command = new()
+            var results = _tcpService.SendMessage(command);
+            if (((IStatusResponse)results[0]).Result == ResultCode.Success)
                 {
-                Identifier = TraCIConstants.CMD_GETVERSION,
-                Contents = null
-                };
-            TraCIResult[] response = _tcpService.SendMessage(command);
-            if (response?.Length == 2)
-                {
-                byte[] strlen = response[1].Response.Skip(4).Take(4).Reverse().ToArray();
-                int idl = BitConverter.ToInt32(strlen, 0);
-                string ver = Encoding.ASCII.GetString(response[1].Response, 8, idl);
-                return ver;
+                return new(BitConverter.ToInt32(results[1].Content.Take(4).Reverse().ToArray()), ((IStatusResponse)results[1]).Description);
                 }
-            return null;
+            else
+                {
+                return new(-1, "");
+                }
             }
 
         /// <summary>
@@ -64,10 +50,10 @@ namespace CodingConnected.TraCI.NET.Commands
 
             //TODO
             //获得返回值
-            TraCIResult[] response = _tcpService.SendMessage(command);
-            if (response.Length != 1)
+            var response = _tcpService.SendMessage(command);
+            if (response.Count != 1)
                 {
-                TraCIResponse<object> tmp = TraCIDataConverter.ExtractDataFromResponse<object>(response, TraCIConstants.CMD_SIMSTEP);
+                TraCIResponse<object> tmp = TraCIDataConverter.ExtractDataFromResponse<object>(response.ToArray(), TraCIConstants.CMD_SIMSTEP);
 
                 if (tmp.Content != null)
                     {
@@ -76,7 +62,7 @@ namespace CodingConnected.TraCI.NET.Commands
                         {
                         SubscriptionEventArgs eventArgs;
 
-                        // subscription can only be Variable or Context Subrciption. If it isnt the first then it is the latter
+                        // subscription can only be VariableType or Context Subrciption. If it isnt the first then it is the latter
                         if (item is TraCIVariableSubscriptionResponse subscription)
                             {
                             eventArgs = new VariableSubscriptionEventArgs(
@@ -190,7 +176,6 @@ namespace CodingConnected.TraCI.NET.Commands
                 Identifier = TraCIConstants.CMD_CLOSE,
                 Contents = null
                 };
-            // ReSharper disable once UnusedVariable
             _ = _tcpService.SendMessage(command);
             }
 
