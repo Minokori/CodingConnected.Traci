@@ -89,7 +89,7 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <param name="id"></param>
         /// <param name="zoom"></param>
         /// <returns></returns>
-        public TraCIResponse<object> SetZoom(string id, double zoom)
+        public bool SetZoom(string id, double zoom)
             {
             return _helper.ExecuteSetCommand<object, double>(
 
@@ -106,7 +106,7 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <param name="id"></param>
         /// <param name="position"></param>
         /// <returns></returns>
-        public TraCIResponse<object> SetOffset(string id, Position2D position)
+        public bool SetOffset(string id, Position2D position)
             {
             return _helper.ExecuteSetCommand<object, Position2D>(
 
@@ -123,7 +123,7 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <param name="id"></param>
         /// <param name="schema"></param>
         /// <returns></returns>
-        public TraCIResponse<object> SetSchema(string id, string schema)
+        public bool SetSchema(string id, string schema)
             {
             return _helper.ExecuteSetCommand<object, string>(
 
@@ -140,7 +140,7 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <param name="id"></param>
         /// <param name="boundaryBox"></param>
         /// <returns></returns>
-        public TraCIResponse<object> SetBoundary(string id, Polygon boundaryBox)
+        public bool SetBoundary(string id, Polygon boundaryBox)
             {
             return _helper.ExecuteSetCommand<object, Polygon>(
 
@@ -157,7 +157,7 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <param name="id"></param>
         /// <param name="filename"></param>
         /// <returns></returns>
-        public TraCIResponse<object> Screenshot(string id, string filename)
+        public bool Screenshot(string id, string filename)
             {
             return _helper.ExecuteSetCommand<object, string>(
 
@@ -174,7 +174,7 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <param name="id"></param>
         /// <param name="vehicleId"></param>
         /// <returns></returns>
-        public TraCIResponse<object> TrackVehicle(string id, string vehicleId)
+        public bool TrackVehicle(string id, string vehicleId)
             {
             return _helper.ExecuteSetCommand<object, string>(
 

@@ -89,7 +89,7 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <param name="id"></param>
         /// <param name="type"></param>
         /// <returns></returns>
-        public TraCIResponse<object> SetType(string id, string type)
+        public bool SetType(string id, string type)
             {
             return _helper.ExecuteSetCommand<object, string>(
                 id,
@@ -105,7 +105,7 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <param name="id"></param>
         /// <param name="color"></param>
         /// <returns></returns>
-        public TraCIResponse<object> SetColor(string id, Color color)
+        public bool SetColor(string id, Color color)
             {
             return _helper.ExecuteSetCommand<object, Color>(
                 id,
@@ -121,7 +121,7 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <param name="id"></param>
         /// <param name="position2D"></param>
         /// <returns></returns>
-        public TraCIResponse<object> SetPosition(string id, Position2D position2D)
+        public bool SetPosition(string id, Position2D position2D)
             {
             return _helper.ExecuteSetCommand<object, Position2D>(
                 id,
@@ -140,7 +140,7 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <param name="layer"></param>
         /// <param name="position2D"></param>
         /// <returns></returns>
-        public TraCIResponse<object> Add(
+        public bool Add(
             string id,
             string name,
             Color color,
@@ -169,7 +169,7 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <param name="id"></param>
         /// <param name="layer"></param>
         /// <returns></returns>
-        public TraCIResponse<object> Remove(string id, int layer)
+        public bool Remove(string id, int layer)
             {
             return _helper.ExecuteSetCommand<object, int>(
                 id,

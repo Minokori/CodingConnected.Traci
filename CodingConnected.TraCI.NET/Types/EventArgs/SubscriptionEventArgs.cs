@@ -1,4 +1,6 @@
-﻿namespace CodingConnected.TraCI.NET.Types;
+﻿using CodingConnected.TraCI.NET.Response;
+
+namespace CodingConnected.TraCI.NET.Types;
 
 public class SubscriptionEventArgs(string objectId, int variableCount) : EventArgs
     {
@@ -13,7 +15,7 @@ public class SubscriptionEventArgs(string objectId, int variableCount) : EventAr
     /// <summary>
     /// The responses must be cast to the right type in order to be used.
     /// </summary>
-    public IEnumerable<object> Responses { get; set; }
+    public IEnumerable<TraciSubscriptionResponseUnit> Responses { get; set; }
 
     public int Length
         {

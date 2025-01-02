@@ -9,7 +9,9 @@ namespace CodingConnected.TraCI.NET.Services
 
         private readonly ITcpService _tcpService = tcpService;
 
-        public TraCIResponse<Tresponse> ExecuteSetCommand<Tresponse, Tvalue>(string id, byte commandType, byte messageType, Tvalue value)
+
+        public bool ExecuteSetCommand<Tresponse, Tvalue>(string id, byte commandType, byte messageType, Tvalue value)
+        //public TraCIResponse<Tresponse> ExecuteSetCommand<Tresponse, Tvalue>(string id, byte commandType, byte messageType, Tvalue value)
             {
             TraCICommand command;
             switch (value)
@@ -53,19 +55,21 @@ namespace CodingConnected.TraCI.NET.Services
             if (command != null)
                 {
                 var response = _tcpService.SendMessage(command);
-
-                try
-                    {
-                    return TraCIDataConverter.ExtractDataFromResponse<Tresponse>(response.ToArray(), commandType, messageType);
-                    }
-                catch
-                    {
-                    throw;
-                    }
+                var result = ((IStatusResponse)response[0]).Result == ResultCode.Success;
+                return result;
+                //try
+                //    {
+                //    return TraCIDataConverter.ExtractDataFromResults<Tresponse>([.. response], commandType, messageType);
+                //    }
+                //catch
+                //    {
+                //    throw;
+                //    }
                 }
             else
                 {
-                return default;
+                return false;
+                //return default;
                 }
             }
 
@@ -105,7 +109,7 @@ namespace CodingConnected.TraCI.NET.Services
 
             try
                 {
-                return TraCIDataConverter.ExtractDataFromResponse<T>([.. response], commandType, messageType);
+                return TraCIDataConverter.ExtractDataFromResults<T>([.. response], commandType, messageType);
                 }
             catch
                 {

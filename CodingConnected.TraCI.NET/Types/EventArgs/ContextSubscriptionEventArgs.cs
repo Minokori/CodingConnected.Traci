@@ -7,7 +7,7 @@ namespace CodingConnected.TraCI.NET.Types;
 /// </summary>
 public class ContextSubscriptionEventArgs(
     string objectId,
-    IReadOnlyDictionary<string, TraCIVariableSubscriptionResponse> variableSubscriptionResponseByObjectId,
+   List<TraciSubscriptionResponseUnit> variableSubscriptionResponseByObjectId,
     byte contextDomain,
     int variableCount,
     int objectCount) : SubscriptionEventArgs(objectId, variableCount)
@@ -16,7 +16,7 @@ public class ContextSubscriptionEventArgs(
     /// Get the variable subscription of the object by the id of the object.
     /// The object was inside the context range of the object this subscription happened under.
     /// </summary>
-    public IReadOnlyDictionary<string, TraCIVariableSubscriptionResponse> VariableSubscriptionByObjectId { get; } = variableSubscriptionResponseByObjectId;
+    public List<TraciSubscriptionResponseUnit> ResponseUnits { get; set; } = variableSubscriptionResponseByObjectId;
 
     /// <summary>
     /// the type of objects in the addressed object's surrounding to ask values from. <para/>

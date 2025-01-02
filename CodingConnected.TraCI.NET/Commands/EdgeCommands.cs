@@ -332,7 +332,7 @@ public class EdgeCommands(ITcpService tcpService, ICommandHelperService helper) 
     /// <param name="endTime"></param>
     /// <param name="travelTimeValue"></param>
     /// <returns></returns>
-    public TraCIResponse<double> AdaptTraveltime(string id, int beginTime, int endTime, double travelTimeValue)
+    public bool AdaptTraveltime(string id, int beginTime, int endTime, double travelTimeValue)
         {
         TraCIObjects tmp =
             [
@@ -358,7 +358,7 @@ public class EdgeCommands(ITcpService tcpService, ICommandHelperService helper) 
     /// <param name="endTime"></param>
     /// <param name="effortValue"></param>
     /// <returns></returns>
-    public TraCIResponse<object> SetEffort(string id, double beginTime, double endTime, double effortValue)
+    public bool SetEffort(string id, double beginTime, double endTime, double effortValue)
         {
         TraCIObjects tmp =
             [
@@ -382,7 +382,7 @@ public class EdgeCommands(ITcpService tcpService, ICommandHelperService helper) 
     /// <param name="id"></param>
     /// <param name="speed"></param>
     /// <returns></returns>
-    public TraCIResponse<object> SetMaxSpeed(string id, double speed)
+    public bool SetMaxSpeed(string id, double speed)
         {
         return _helper.ExecuteSetCommand<object, double>(
 

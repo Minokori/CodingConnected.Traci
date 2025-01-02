@@ -309,7 +309,7 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <param name="id"></param>
         /// <param name="length"></param>
         /// <returns></returns>
-        public TraCIResponse<object> SetLength(string id, double length)
+        public bool SetLength(string id, double length)
             {
             return _helper.ExecuteSetCommand<object, double>(
                     id,
@@ -325,7 +325,7 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <param name="id"></param>
         /// <param name="speed"></param>
         /// <returns></returns>
-        public TraCIResponse<object> SetMaxSpeed(string id, double speed)
+        public bool SetMaxSpeed(string id, double speed)
             {
             return _helper.ExecuteSetCommand<object, double>(
                     id,
@@ -341,7 +341,7 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <param name="id"></param>
         /// <param name="vehicleClass"></param>
         /// <returns></returns>
-        public TraCIResponse<object> SetVehicleClass(string id, string vehicleClass)
+        public bool SetVehicleClass(string id, string vehicleClass)
             {
             return _helper.ExecuteSetCommand<object, string>(
                     id,
@@ -357,7 +357,7 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <param name="id"></param>
         /// <param name="speedFactor"></param>
         /// <returns></returns>
-        public TraCIResponse<object> SetSpeedFactor(string id, double speedFactor)
+        public bool SetSpeedFactor(string id, double speedFactor)
             {
             return _helper.ExecuteSetCommand<object, double>(
                     id,
@@ -373,7 +373,7 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <param name="id"></param>
         /// <param name="speedDeviation"></param>
         /// <returns></returns>
-        public TraCIResponse<object> SetSpeedDeviation(string id, double speedDeviation)
+        public bool SetSpeedDeviation(string id, double speedDeviation)
             {
             return _helper.ExecuteSetCommand<object, double>(
                     id,
@@ -389,7 +389,7 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <param name="id"></param>
         /// <param name="emissionClass"></param>
         /// <returns></returns>
-        public TraCIResponse<object> SetEmissionClass(string id, string emissionClass)
+        public bool SetEmissionClass(string id, string emissionClass)
             {
             return _helper.ExecuteSetCommand<object, string>(
                     id,
@@ -405,7 +405,7 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <param name="id"></param>
         /// <param name="width"></param>
         /// <returns></returns>
-        public TraCIResponse<object> SetWidth(string id, double width)
+        public bool SetWidth(string id, double width)
             {
             return _helper.ExecuteSetCommand<object, double>(
                     id,
@@ -421,7 +421,7 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <param name="id"></param>
         /// <param name="height"></param>
         /// <returns></returns>
-        public TraCIResponse<object> SetHeight(string id, double height)
+        public bool SetHeight(string id, double height)
             {
             return _helper.ExecuteSetCommand<object, double>(
                     id,
@@ -437,7 +437,7 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <param name="id"></param>
         /// <param name="minGap"></param>
         /// <returns></returns>
-        public TraCIResponse<object> SetMinGap(string id, double minGap)
+        public bool SetMinGap(string id, double minGap)
             {
             return _helper.ExecuteSetCommand<object, double>(
                     id,
@@ -453,7 +453,7 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <param name="id"></param>
         /// <param name="shapeClass"></param>
         /// <returns></returns>
-        public TraCIResponse<object> SetShapeClass(string id, string shapeClass)
+        public bool SetShapeClass(string id, string shapeClass)
             {
             return _helper.ExecuteSetCommand<object, string>(
                     id,
@@ -469,7 +469,7 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <param name="id"></param>
         /// <param name="acceleration"></param>
         /// <returns></returns>
-        public TraCIResponse<object> SetAccel(string id, double acceleration)
+        public bool SetAccel(string id, double acceleration)
             {
             return _helper.ExecuteSetCommand<object, double>(
                     id,
@@ -485,7 +485,7 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <param name="id"></param>
         /// <param name="decceleration"></param>
         /// <returns></returns>
-        public TraCIResponse<object> SetDecel(string id, double decceleration)
+        public bool SetDecel(string id, double decceleration)
             {
             return _helper.ExecuteSetCommand<object, double>(
                     id,
@@ -501,7 +501,7 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <param name="id"></param>
         /// <param name="imperfection"></param>
         /// <returns></returns>
-        public TraCIResponse<object> SetImperfection(string id, double imperfection)
+        public bool SetImperfection(string id, double imperfection)
             {
             return _helper.ExecuteSetCommand<object, double>(
                     id,
@@ -517,7 +517,7 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <param name="id"></param>
         /// <param name="tau"></param>
         /// <returns></returns>
-        public TraCIResponse<object> SetTau(string id, double tau)
+        public bool SetTau(string id, double tau)
             {
             return _helper.ExecuteSetCommand<object, double>(
                     id,
@@ -533,7 +533,7 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <param name="id"></param>
         /// <param name="color"></param>
         /// <returns></returns>
-        public TraCIResponse<object> SetColor(string id, Color color)
+        public bool SetColor(string id, Color color)
             {
             return _helper.ExecuteSetCommand<object, Color>(
                     id,
@@ -549,7 +549,7 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <param name="id"></param>
         /// <param name="maxSpeed"></param>
         /// <returns></returns>
-        public TraCIResponse<object> SetMaxSpeedLat(string id, double maxSpeed)
+        public bool SetMaxSpeedLat(string id, double maxSpeed)
             {
             return _helper.ExecuteSetCommand<object, double>(
                     id,
@@ -565,7 +565,7 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <param name="id"></param>
         /// <param name="minGap"></param>
         /// <returns></returns>
-        public TraCIResponse<object> SetMinGapLat(string id, double minGap)
+        public bool SetMinGapLat(string id, double minGap)
             {
             return _helper.ExecuteSetCommand<object, double>(
                     id,
@@ -581,7 +581,7 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <param name="id"></param>
         /// <param name="alignment"></param>
         /// <returns></returns>
-        public TraCIResponse<object> SetLateralAlignment(string id, string alignment)
+        public bool SetLateralAlignment(string id, string alignment)
             {
             return _helper.ExecuteSetCommand<object, string>(
                     id,
@@ -597,7 +597,7 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <param name="id"></param>
         /// <param name="newId"></param>
         /// <returns></returns>
-        public TraCIResponse<object> Copy(string id, string newId)
+        public bool Copy(string id, string newId)
             {
             return _helper.ExecuteSetCommand<object, string>(
                     id,

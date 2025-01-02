@@ -414,7 +414,7 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <summary>
         /// Sets a list of allowed vehicle classes.
         /// </summary>
-        public TraCIResponse<object> SetAllowed(string laneId, List<string> allowedVehicleClasses)
+        public bool SetAllowed(string laneId, List<string> allowedVehicleClasses)
             {
             return _helper.ExecuteSetCommand<object, List<string>>(
                 laneId,
@@ -427,7 +427,7 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <summary>
         /// Sets a list of disallowed vehicle classes.
         /// </summary>
-        public TraCIResponse<object> SetDisallowed(
+        public bool SetDisallowed(
             string laneId,
             List<string> disallowedVehicleClasses
         )
@@ -443,7 +443,7 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <summary>
         /// Sets the length of the lane in m
         /// </summary>
-        public TraCIResponse<object> SetLength(string laneId, double length)
+        public bool SetLength(string laneId, double length)
             {
             return _helper.ExecuteSetCommand<object, double>(
                 laneId,
@@ -456,7 +456,7 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <summary>
         /// Sets a new maximum allowed speed on the lane in m/s.
         /// </summary>
-        public TraCIResponse<object> SetMaxSpeed(string laneId, double maxSpeed)
+        public bool SetMaxSpeed(string laneId, double maxSpeed)
             {
             return _helper.ExecuteSetCommand<object, double>(
                 laneId,

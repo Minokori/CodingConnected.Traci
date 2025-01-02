@@ -8,8 +8,8 @@ namespace CodingConnected.TraCI.NET.Types;
 public class VariableSubscriptionEventArgs(
     string objectId,
     int variableCount,
-    IReadOnlyDictionary<byte, IResponse> responseByVariableCode) : SubscriptionEventArgs(objectId, variableCount)
+    List<TraciSubscriptionResponseUnit> responseByVariableCode) : SubscriptionEventArgs(objectId, variableCount)
     {
-    public IReadOnlyDictionary<byte, IResponse> ResponseByVariableCode { get; } = responseByVariableCode;
+    public List<TraciSubscriptionResponseUnit> ResponseByVariableCode { get; set; } = responseByVariableCode;
     }
 

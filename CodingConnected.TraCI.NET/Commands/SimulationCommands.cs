@@ -424,7 +424,7 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <param name="id"></param>
         /// <param name="routeId"></param>
         /// <returns></returns>
-        public TraCIResponse<object> ClearPending(string id, string routeId)
+        public bool ClearPending(string id, string routeId)
             {
             return _helper.ExecuteSetCommand<object, string>(
                 id,
@@ -440,7 +440,7 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <param name="id"></param>
         /// <param name="filename"></param>
         /// <returns></returns>
-        public TraCIResponse<object> SaveState(string id, string filename)
+        public bool SaveState(string id, string filename)
             {
             return _helper.ExecuteSetCommand<object, string>(
                 id,

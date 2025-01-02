@@ -19,7 +19,11 @@ public interface ITcpService
 public interface ICommandHelperService
     {
     TraCIResponse<T> ExecuteGetCommand<T>(string id, byte commandType, byte messageType);
-    TraCIResponse<Tresponse> ExecuteSetCommand<Tresponse, Tvalue>(string id, byte commandType, byte messageType, Tvalue value);
+
+
+    bool ExecuteSetCommand<Tresponse, Tvalue>(string id, byte commandType, byte messageType, Tvalue value);
+
+    //TraCIResponse<Tresponse> ExecuteSetCommand<Tresponse, Tvalue>(string id, byte commandType, byte messageType, Tvalue value);
     void ExecuteSubscribeCommand(double beginTime, double endTime, string objectId, byte commandType, List<byte> variables);
     void ExecuteSubscribeContextCommand(double beginTime, double endTime, string objectId, byte contextDomain, double contextRange, byte commandType, List<byte> variables);
 

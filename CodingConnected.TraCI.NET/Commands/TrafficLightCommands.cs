@@ -205,7 +205,7 @@ public class TrafficLightCommands(ITcpService tcpService, ICommandHelperService 
     /// <param name="id"></param>
     /// <param name="state"></param>
     /// <returns></returns>
-    public TraCIResponse<object> SetRedYellowGreenState(string id, string state)
+    public bool SetRedYellowGreenState(string id, string state)
         {
         return _helper.ExecuteSetCommand<object, string>(
 
@@ -223,7 +223,7 @@ public class TrafficLightCommands(ITcpService tcpService, ICommandHelperService 
     /// <param name="id"></param>
     /// <param name="phaseIndex"></param>
     /// <returns></returns>
-    public TraCIResponse<object> SetPhase(string id, int phaseIndex)
+    public bool SetPhase(string id, int phaseIndex)
         {
         return _helper.ExecuteSetCommand<object, int>(
 
@@ -240,7 +240,7 @@ public class TrafficLightCommands(ITcpService tcpService, ICommandHelperService 
     /// <param name="id"></param>
     /// <param name="program"></param>
     /// <returns></returns>
-    public TraCIResponse<object> SetProgram(string id, string program)
+    public bool SetProgram(string id, string program)
         {
         return _helper.ExecuteSetCommand<object, string>(
 
@@ -256,7 +256,7 @@ public class TrafficLightCommands(ITcpService tcpService, ICommandHelperService 
     /// <param name="id"></param>
     /// <param name="phaseDuration"></param>
     /// <returns></returns>
-    public TraCIResponse<object> SetPhaseDuration(string id, double phaseDuration)
+    public bool SetPhaseDuration(string id, double phaseDuration)
         {
         return _helper.ExecuteSetCommand<object, double>(
 
@@ -317,7 +317,7 @@ public class TrafficLightCommands(ITcpService tcpService, ICommandHelperService 
 #warning is the try catch necessary?
         try
             {
-            return TraCIDataConverter.ExtractDataFromResponse<object>(response.ToArray(), TraCIConstants.CMD_SET_TL_VARIABLE, TraCIConstants.TL_COMPLETE_PROGRAM_RYG);
+            return TraCIDataConverter.ExtractDataFromResults<object>([.. response], TraCIConstants.CMD_SET_TL_VARIABLE, TraCIConstants.TL_COMPLETE_PROGRAM_RYG);
             }
         catch
             {

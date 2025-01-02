@@ -106,7 +106,7 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <param name="id"></param>
         /// <param name="typeId"></param>
         /// <returns></returns>
-        public TraCIResponse<object> SetType(string id, string typeId)
+        public bool SetType(string id, string typeId)
             {
             return _helper.ExecuteSetCommand<object, string>(
                 id,
@@ -122,7 +122,7 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <param name="id"></param>
         /// <param name="color"></param>
         /// <returns></returns>
-        public TraCIResponse<object> SetColor(string id, Color color)
+        public bool SetColor(string id, Color color)
             {
             return _helper.ExecuteSetCommand<object, Color>(
                 id,
@@ -138,7 +138,7 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <param name="id"></param>
         /// <param name="polygon"></param>
         /// <returns></returns>
-        public TraCIResponse<object> SetShape(string id, Polygon polygon)
+        public bool SetShape(string id, Polygon polygon)
             {
             return _helper.ExecuteSetCommand<object, Polygon>(
                 id,
@@ -154,7 +154,7 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <param name="id"></param>
         /// <param name="filled"></param>
         /// <returns></returns>
-        public TraCIResponse<object> SetFilled(string id, byte filled)
+        public bool SetFilled(string id, byte filled)
             {
             return _helper.ExecuteSetCommand<object, byte>(
                 id,
@@ -174,7 +174,7 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <param name="layer"></param>
         /// <param name="shape"></param>
         /// <returns></returns>
-        public TraCIResponse<object> Add(
+        public bool Add(
             string id,
             string name,
             Color color,
@@ -206,7 +206,7 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <param name="id"></param>
         /// <param name="layer"></param>
         /// <returns></returns>
-        public TraCIResponse<object> Remove(string id, int layer)
+        public bool Remove(string id, int layer)
             {
             return _helper.ExecuteSetCommand<object, int>(
                 id,

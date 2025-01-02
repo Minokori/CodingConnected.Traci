@@ -56,7 +56,7 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <param name="id"></param>
         /// <param name="edges"></param>
         /// <returns></returns>
-        public TraCIResponse<object> Add(string id, List<string> edges)
+        public bool Add(string id, List<string> edges)
             {
             return _helper.ExecuteSetCommand<object, List<string>>(
                 id,

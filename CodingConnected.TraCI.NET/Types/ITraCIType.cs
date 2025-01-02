@@ -17,3 +17,9 @@ public class TraCIObjects : List<ITraCIType>, ITraCIType
     public byte TYPE { get; } = TraCIConstants.TYPE_COMPOUND;
     }
 
+
+
+public class OriginBytesStream : List<byte>
+    {
+
+    }
