@@ -31,7 +31,7 @@ namespace CodingConnected.TraCI.NET.Services
                 case List<string> los:
                     command = GetCommand(id, commandType, messageType, los);
                     break;
-                case TraCIObjects co:
+                case TraCICompoundObject co:
                     command = GetCommand(id, commandType, messageType, co);
                     break;
                 case Color c:
@@ -109,7 +109,7 @@ namespace CodingConnected.TraCI.NET.Services
 
             try
                 {
-                return TraCIDataConverter.ExtractDataFromResults<T>([.. response], commandType, messageType);
+                return TraCIDataConverter.ExtractDataFromResults<T>(response, commandType, messageType);
                 }
             catch
                 {

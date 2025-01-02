@@ -183,7 +183,7 @@ namespace CodingConnected.TraCI.NET.Commands
             Polygon shape
         )
             {
-            var tmp = new TraCIObjects
+            var tmp = new TraCICompoundObject
                 {
                 new TraCIString() { Value = name },
                 color,
@@ -192,7 +192,7 @@ namespace CodingConnected.TraCI.NET.Commands
                 shape
                 };
 
-            return _helper.ExecuteSetCommand<object, TraCIObjects>(
+            return _helper.ExecuteSetCommand<object, TraCICompoundObject>(
                 id,
                 TraCIConstants.CMD_SET_POLYGON_VARIABLE,
                 TraCIConstants.ADD,

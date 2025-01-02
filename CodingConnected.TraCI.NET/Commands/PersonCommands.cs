@@ -267,7 +267,7 @@ namespace CodingConnected.TraCI.NET.Commands
             double departPosition
         )
             {
-            var tmp = new TraCIObjects
+            var tmp = new TraCICompoundObject
                 {
                 new TraCIString() { Value = typeId },
                 new TraCIString() { Value = initialEdgeId },
@@ -275,7 +275,7 @@ namespace CodingConnected.TraCI.NET.Commands
                 new TraCIDouble() { Value = departPosition }
                 };
 
-            return _helper.ExecuteSetCommand<object, TraCIObjects>(
+            return _helper.ExecuteSetCommand<object, TraCICompoundObject>(
                 id,
                 TraCIConstants.CMD_SET_PERSON_VARIABLE,
                 TraCIConstants.ADD,
@@ -298,14 +298,14 @@ namespace CodingConnected.TraCI.NET.Commands
             string stopId
         )
             {
-            var tmp = new TraCIObjects
+            var tmp = new TraCICompoundObject
                 {
                 new TraCIInteger() { Value = 3 },
                 new TraCIString() { Value = destination },
                 new TraCIString() { Value = lines },
                 new TraCIString() { Value = stopId }
                 };
-            return _helper.ExecuteSetCommand<object, TraCIObjects>(
+            return _helper.ExecuteSetCommand<object, TraCICompoundObject>(
                 id,
                 TraCIConstants.CMD_SET_PERSON_VARIABLE,
                 TraCIConstants.APPEND_STAGE,
@@ -328,14 +328,14 @@ namespace CodingConnected.TraCI.NET.Commands
             string stopId
         )
             {
-            var tmp = new TraCIObjects
+            var tmp = new TraCICompoundObject
                 {
                 new TraCIInteger() { Value = 1 },
                 new TraCIInteger() { Value = duration },
                 new TraCIString() { Value = description },
                 new TraCIString() { Value = stopId }
                 };
-            return _helper.ExecuteSetCommand<object, TraCIObjects>(
+            return _helper.ExecuteSetCommand<object, TraCICompoundObject>(
                 id,
                 TraCIConstants.CMD_SET_PERSON_VARIABLE,
                 TraCIConstants.APPEND_STAGE,
@@ -362,14 +362,14 @@ namespace CodingConnected.TraCI.NET.Commands
             string stopId
         )
             {
-            var tmp = new TraCIObjects
+            var tmp = new TraCICompoundObject
                 {
                 new TraCIInteger() { Value = 2 },
                 new TraCIStringList() { Value = edges },
                 new TraCIDouble() { Value = arrivalPosition },
                 new TraCIString() { Value = stopId }
                 };
-            return _helper.ExecuteSetCommand<object, TraCIObjects>(
+            return _helper.ExecuteSetCommand<object, TraCICompoundObject>(
                 id,
                 TraCIConstants.CMD_SET_PERSON_VARIABLE,
                 TraCIConstants.APPEND_STAGE,
@@ -400,7 +400,7 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <returns></returns>
         public bool RerouteTraveltime(string id)
             {
-            return _helper.ExecuteSetCommand<object, TraCIObjects>(
+            return _helper.ExecuteSetCommand<object, TraCICompoundObject>(
                 id,
                 TraCIConstants.CMD_SET_PERSON_VARIABLE,
                 TraCIConstants.CMD_REROUTE_TRAVELTIME,

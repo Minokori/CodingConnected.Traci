@@ -9,7 +9,7 @@ static public class TraCIConstants
     /// <summary>
     /// VERSION
     /// </summary>
-    public static int TRACI_VERSION => 18;
+    public static int TRACI_VERSION => 20;
 
     // ****************************************
     // COMMANDS

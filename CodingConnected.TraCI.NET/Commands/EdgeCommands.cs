@@ -334,14 +334,14 @@ public class EdgeCommands(ITcpService tcpService, ICommandHelperService helper) 
     /// <returns></returns>
     public bool AdaptTraveltime(string id, int beginTime, int endTime, double travelTimeValue)
         {
-        TraCIObjects tmp =
+        TraCICompoundObject tmp =
             [
             new TraCIInteger() { Value = beginTime },
             new TraCIInteger() { Value = endTime },
             new TraCIDouble() { Value = travelTimeValue },
             ];
 
-        return _helper.ExecuteSetCommand<double, TraCIObjects>(
+        return _helper.ExecuteSetCommand<double, TraCICompoundObject>(
 
                  id,
                  TraCIConstants.CMD_SET_EDGE_VARIABLE,
@@ -360,14 +360,14 @@ public class EdgeCommands(ITcpService tcpService, ICommandHelperService helper) 
     /// <returns></returns>
     public bool SetEffort(string id, double beginTime, double endTime, double effortValue)
         {
-        TraCIObjects tmp =
+        TraCICompoundObject tmp =
             [
             new TraCIDouble() { Value = beginTime },
             new TraCIDouble() { Value = endTime },
             new TraCIDouble() { Value = effortValue },
             ];
 
-        return _helper.ExecuteSetCommand<object, TraCIObjects>(
+        return _helper.ExecuteSetCommand<object, TraCICompoundObject>(
 
                  id,
                  TraCIConstants.CMD_SET_EDGE_VARIABLE,

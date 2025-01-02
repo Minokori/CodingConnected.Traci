@@ -148,14 +148,14 @@ namespace CodingConnected.TraCI.NET.Commands
             Position2D position2D
         )
             {
-            TraCIObjects tmp =
+            TraCICompoundObject tmp =
                 [
                 new TraCIString() { Value = name },
                 color,
                 new TraCIInteger() { Value = layer },
                 position2D,
                 ];
-            return _helper.ExecuteSetCommand<object, TraCIObjects>(
+            return _helper.ExecuteSetCommand<object, TraCICompoundObject>(
                 id,
                 TraCIConstants.CMD_SET_POI_VARIABLE,
                 TraCIConstants.ADD,

@@ -1,6 +1,4 @@
-﻿using CodingConnected.TraCI.NET.Constants;
-
-namespace CodingConnected.TraCI.NET.Types;
+﻿namespace CodingConnected.TraCI.NET.Types;
 
 public struct ControlledLinks : ITraCIType
     {

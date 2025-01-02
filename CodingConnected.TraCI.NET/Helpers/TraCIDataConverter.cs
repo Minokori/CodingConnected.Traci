@@ -16,14 +16,13 @@ internal static partial class TraCIDataConverter
     /// <param name="commandType"></param>
     /// <param name="variableType"></param>
     /// <returns></returns>
-    internal static TraCIResponse<T> ExtractDataFromResults<T>(TraCIResult[] results, byte commandType, byte variableType = 0)
+    internal static TraCIResponse<T> ExtractDataFromResults<T>(IEnumerable<TraCIResult> results, byte commandType, byte variableType = 0)
         {
         // check if results is null
         if (results == null) { return null; }
 
         // find results of specific command type, statusResponse is status results ,result is result
-        var statusResponse = results.FirstOrDefault(x => x.Identifier == commandType);
-        var i = Array.IndexOf(results, statusResponse);
+        var (statusResponse, i) = results.Select((item, index) => (item, index)).FirstOrDefault(x => x.item.Identifier == commandType);
         if (statusResponse is null) { return null; }
 
         switch (((IStatusResponse)statusResponse).Result)
@@ -36,20 +35,13 @@ internal static partial class TraCIDataConverter
 
                     if (result?.Content[0] == variableType)
                         {
-                        //// after the type of data, there is the length of the id (a string that we will skip)
-                        //var idLength = ToInt32(result.Content.Skip(1/* varibale */).Take(4 /* stringLength(4byte) */ ).Reverse().ToArray());
-                        //// after the string is the type of data returned
-                        //var type = result.Content[5/*var(1) + strLen(4)*/ + idLength/*str*/];
-                        //// now read and translate the data
-                        //GetValueFromTypeAndArray(type, result.Content.Skip(6/**/ + idLength).ToArray(), out var contentAsObject);
-
                         return new TraCIResponse<T>
                             {
                             Identifier = statusResponse.Identifier,
                             ResponseIdentifier = result.Identifier,
-                            VariableType = ((IAnswerFromSUMO)result).ReturnType,
+                            VariableType = ((IAnswerFromSumo)result).ReturnType,
                             Result = ResultCode.Success,
-                            Content = (T)((IAnswerFromSUMO)result).Value,
+                            Content = (T)((IAnswerFromSumo)result).Value,
                             };
                         }
                     else
@@ -106,7 +98,7 @@ internal static partial class TraCIDataConverter
                     {
                     foreach (var item in results.Skip(i + 1))
                         {
-                        var response = GetDataFromSimStepResponse(item);
+                        var response = item.ToSimStepResponse();
                         responses.Add(response);
                         return responses;
                         }
@@ -254,7 +246,7 @@ internal static partial class TraCIDataConverter
                         (var result, bytes) = GetValueFromTypeAndArray(innerItemType, bytes);
                         innerDataList.Add(result);
                         }
-                    return new((TraCIObjects)innerDataList, bytes);
+                    return new((TraCICompoundObject)innerDataList, bytes);
 
                     }
             default:
@@ -266,7 +258,32 @@ internal static partial class TraCIDataConverter
 
     internal static byte[] ToMessageBytes(this TraCICommand command)
         {
-        return GetMessagesBytes([command]);
+        List<byte> cmessage = [];
+
+        switch (command.Contents?.Length)
+            {
+            case <= 255 - 2:
+                    {
+                    cmessage.Add((byte)(command.Contents.Length + 2));
+                    break;
+                    }
+            case > 255 - 2:
+                    {
+                    cmessage.Add(0);
+                    cmessage.AddRange(GetBytes(command.Contents.Length + 6).Reverse());
+                    break;
+                    }
+            case null:
+                    {
+                    cmessage.Add(2);
+                    break;
+                    }
+            }
+        cmessage.Add(command.Identifier);
+        cmessage = command.Contents is null ? cmessage : [.. cmessage, .. command.Contents];
+        var totmessage = GetBytes(cmessage.Count + 4).Reverse();
+        return [.. totmessage, .. cmessage];
+
         }
 
 

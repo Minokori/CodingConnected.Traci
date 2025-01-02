@@ -1,6 +1,6 @@
-﻿using static CodingConnected.TraCI.NET.Constants.TraCIConstants;
+﻿using CodingConnected.TraCI.NET.Helpers;
 using static System.BitConverter;
-using CodingConnected.TraCI.NET.Helpers;
+using static CodingConnected.TraCI.NET.Constants.TraCIConstants;
 
 namespace CodingConnected.TraCI.NET.Types;
 
@@ -15,7 +15,7 @@ public struct LonLatAltPosition : ITraCIType
 
     public static Tuple<LonLatAltPosition, IEnumerable<byte>> FromBytes(IEnumerable<byte> bytes)
         {
-        LonLatAltPosition result = new LonLatAltPosition()
+        var result = new LonLatAltPosition()
             {
             Longitude = ToDouble(bytes.Take(DOUBLE_SIZE).Reverse().ToArray()),
             Latitude = ToDouble(bytes.Skip(DOUBLE_SIZE).Take(DOUBLE_SIZE).Reverse().ToArray()),

@@ -12,14 +12,7 @@ public interface ITraCIType
     };
 
 
-public class TraCIObjects : List<ITraCIType>, ITraCIType
+public class TraCICompoundObject : List<ITraCIType>, ITraCIType
     {
     public byte TYPE { get; } = TraCIConstants.TYPE_COMPOUND;
-    }
-
-
-
-public class OriginBytesStream : List<byte>
-    {
-
     }

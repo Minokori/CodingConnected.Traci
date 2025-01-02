@@ -35,7 +35,7 @@ public struct TrafficLightLogics : ITraCIType
     public byte TYPE => throw new NotImplementedException();
     public string SubId { get; init; }
     public int Type { get; init; }
-    public TraCIObjects SubParameter { get; init; }
+    public TraCICompoundObject SubParameter { get; init; }
     public int CurrentPhaseIndex { get; init; }
     public int NumberOfPhases { get; init; }
     public List<TrafficLightProgramPhase> TrafficLightPhases { get; init; }

@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using System.Net.Sockets;
+﻿using System.Net.Sockets;
 using CodingConnected.TraCI.NET.Helpers;
 
 namespace CodingConnected.TraCI.NET.Services;
@@ -12,6 +11,7 @@ internal class TCPConnectService : ITcpService
 
     public TcpClient Client => _client;
     public NetworkStream Stream => _stream;
+
     /// <summary>
     /// Connects to the SUMO server instance
     /// </summary>
@@ -19,11 +19,7 @@ internal class TCPConnectService : ITcpService
     /// <param name="port">Port at which SUMO exposes the API</param>
     public async Task ConnectAsync(string hostname, int port)
         {
-        _client = new TcpClient
-            {
-            ReceiveBufferSize = 32768,
-            SendBufferSize = 32768
-            };
+        _client = new TcpClient { ReceiveBufferSize = 32768, SendBufferSize = 32768 };
         while (!_client.Connected)
             {
             try
@@ -42,11 +38,7 @@ internal class TCPConnectService : ITcpService
 
     public bool Connect(string hostname, int port)
         {
-        _client = new TcpClient
-            {
-            ReceiveBufferSize = 32768,
-            SendBufferSize = 32768
-            };
+        _client = new TcpClient { ReceiveBufferSize = 32768, SendBufferSize = 32768 };
 
         try
             {
@@ -70,11 +62,13 @@ internal class TCPConnectService : ITcpService
 
     public List<TraCIResult> SendMessage(TraCICommand command)
         {
-        if (!_client.Connected) { return null; }
+        if (!_client.Connected)
+            {
+            return null;
+            }
 
         //send message
-        var msg = command.ToMessageBytes();
-        _client.Client.Send(msg);
+        _client.Client.Send(command.ToMessageBytes());
 
         //read response
         try
@@ -92,7 +86,6 @@ internal class TCPConnectService : ITcpService
             // push all byte to response
             List<byte> response = [.. _receiveBuffer.Take(hasReadLength).ToArray()];
 
-
             // if buffer is not enough to read all bytes, read until all bytes are read
             if (hasReadLength != totalLength)
                 {
@@ -103,10 +96,6 @@ internal class TCPConnectService : ITcpService
                     hasReadLength += innerLength;
                     }
                 }
-
-            //var response = _receiveBuffer.Take(hasReadLength).ToArray();
-
-
             return response.AsTraCIResults();
             }
         catch
@@ -115,4 +104,3 @@ internal class TCPConnectService : ITcpService
             }
         }
     }
-

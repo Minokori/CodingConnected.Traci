@@ -6,7 +6,6 @@ namespace CodingConnected.TraCI.NET;
 
 public partial class TraCIClient
     {
-    #region Properties
     public IEventService EventService => services.GetRequiredService<IEventService>();
     public ControlCommands Control => services.GetRequiredService<ControlCommands>();
 
@@ -40,5 +39,4 @@ public partial class TraCIClient
 
     public GuiCommands Gui => services.GetRequiredService<GuiCommands>();
 
-    #endregion // Properties
     }

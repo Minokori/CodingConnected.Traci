@@ -8,7 +8,7 @@ namespace CodingConnected.TraCI.NET.Extensions;
 internal static class TraCITypeExtensions
     {
 
-    internal static List<EdgeInformation> ToEdgeInformations(this TraCIObjects content)
+    internal static List<EdgeInformation> ToEdgeInformations(this TraCICompoundObject content)
         {
         List<EdgeInformation> ret = [];
 
@@ -30,7 +30,7 @@ internal static class TraCITypeExtensions
         return ret;
         }
 
-    internal static List<TrafficLightSystem> ToTrafficLightSystems(this TraCIObjects content)
+    internal static List<TrafficLightSystem> ToTrafficLightSystems(this TraCICompoundObject content)
         {
         List<TrafficLightSystem> ret = [];
 
@@ -55,7 +55,7 @@ internal static class TraCITypeExtensions
 
         return ret;
         }
-    internal static TrafficCompleteLightProgram ToTrafficLightCompleteProgram(this TraCIObjects content)
+    internal static TrafficCompleteLightProgram ToTrafficLightCompleteProgram(this TraCICompoundObject content)
         {
         TrafficCompleteLightProgram ret = new()
             {
@@ -72,7 +72,7 @@ internal static class TraCITypeExtensions
                 SubId = (content[offset + 0] as TraCIString).Value,
                 Type = (content[offset + 1] as TraCIInteger).Value,
                 // TODO
-                SubParameter = (content[offset + 2] as TraCIObjects),
+                SubParameter = (content[offset + 2] as TraCICompoundObject),
                 CurrentPhaseIndex = (content[offset + 3] as TraCIInteger).Value,
                 NumberOfPhases = (content[offset + 4] as TraCIInteger).Value,
                 };

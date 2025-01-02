@@ -97,7 +97,7 @@ public class TrafficLightCommands(ITcpService tcpService, ICommandHelperService 
     /// <returns></returns>
     public TraCIResponse<ControlledLinks> GetControlledLinks(string id)
         {
-        var tmp = _helper.ExecuteGetCommand<TraCIObjects>(
+        var tmp = _helper.ExecuteGetCommand<TraCICompoundObject>(
 
                 id,
                 TraCIConstants.CMD_GET_TL_VARIABLE,
@@ -155,7 +155,7 @@ public class TrafficLightCommands(ITcpService tcpService, ICommandHelperService 
     /// <returns></returns>
     public TraCIResponse<TrafficCompleteLightProgram> GetCompleteDefinition(string id)
         {
-        var tmp = _helper.ExecuteGetCommand<TraCIObjects>(
+        var tmp = _helper.ExecuteGetCommand<TraCICompoundObject>(
 
                 id,
                 TraCIConstants.CMD_GET_TL_VARIABLE,
@@ -317,7 +317,7 @@ public class TrafficLightCommands(ITcpService tcpService, ICommandHelperService 
 #warning is the try catch necessary?
         try
             {
-            return TraCIDataConverter.ExtractDataFromResults<object>([.. response], TraCIConstants.CMD_SET_TL_VARIABLE, TraCIConstants.TL_COMPLETE_PROGRAM_RYG);
+            return TraCIDataConverter.ExtractDataFromResults<object>(response, TraCIConstants.CMD_SET_TL_VARIABLE, TraCIConstants.TL_COMPLETE_PROGRAM_RYG);
             }
         catch
             {

@@ -14,7 +14,7 @@ internal partial class TraCICommandHelper
         return null;
         }
 
-    public static TraCICommand GetCommand(string id, byte commandType, byte messageType, TraCIObjects co)
+    public static TraCICommand GetCommand(string id, byte commandType, byte messageType, TraCICompoundObject co)
         {
         List<byte> bytes =
             [
@@ -45,7 +45,7 @@ internal partial class TraCICommandHelper
                     bytes.Add(item.TYPE);
                     bytes.AddRange(item.ToBytes());
                     break;
-                case TraCIObjects CO:
+                case TraCICompoundObject CO:
                 case Color c:
                     throw new NotImplementedException($"{item.GetType()} objects are not implemented yet");
                 }
@@ -140,10 +140,10 @@ internal partial class TraCICommandHelper
             messageType,
                 .. id.ToTraCIBytes(),
                 TraCIConstants.TYPE_COLOR,
-                color.R,
-                color.G,
-                color.B,
-                color.A,
+                ..color.R.ToBytes(),
+                ..color.G.ToBytes(),
+                ..color.B.ToBytes(),
+                ..color.A.ToBytes(),
                 ];
 
         TraCICommand command = new()

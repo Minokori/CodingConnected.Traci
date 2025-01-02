@@ -1,7 +1,7 @@
 ﻿using System.Text;
-using static CodingConnected.TraCI.NET.Constants.TraCIConstants;
-using static System.BitConverter;
 using CodingConnected.TraCI.NET.Helpers;
+using static System.BitConverter;
+using static CodingConnected.TraCI.NET.Constants.TraCIConstants;
 
 namespace CodingConnected.TraCI.NET.Types;
 
@@ -65,11 +65,11 @@ public class TraCIString : ITraCIType
     {
     public byte TYPE { get; } = TYPE_STRING;
     public string Value { get; set; }
-    public byte[] ToBytes() => [.. GetBytes((Value).Length).Reverse(), .. Encoding.ASCII.GetBytes(Value)];
+    public byte[] ToBytes() => [.. GetBytes(Value.Length).Reverse(), .. Encoding.ASCII.GetBytes(Value)];
 
     public static Tuple<TraCIString, IEnumerable<byte>> FromBytes(IEnumerable<byte> bytes)
         {
-        int length = ToInt32(bytes.Take(INTEGER_SIZE).Reverse().ToArray());
+        var length = ToInt32(bytes.Take(INTEGER_SIZE).Reverse().ToArray());
         return new(new TraCIString { Value = Encoding.ASCII.GetString(bytes.Skip(INTEGER_SIZE).Take(length).ToArray()) }, bytes.Skip(INTEGER_SIZE + length));
         }
     }
@@ -80,7 +80,7 @@ public class TraCIStringList : ITraCIType
     public byte[] ToBytes()
         {
         List<byte> bytes = [.. GetBytes(Value.Count).Reverse()];
-        foreach (string str in Value)
+        foreach (var str in Value)
             {
             bytes.AddRange(str.ToTraCIBytes());
             }
@@ -89,10 +89,10 @@ public class TraCIStringList : ITraCIType
 
     public static Tuple<TraCIStringList, IEnumerable<byte>> FromBytes(IEnumerable<byte> bytes)
         {
-        int count = ToInt32(bytes.Take(INTEGER_SIZE).Reverse().ToArray());
+        var count = ToInt32(bytes.Take(INTEGER_SIZE).Reverse().ToArray());
         bytes = bytes.Skip(INTEGER_SIZE);
         List<string> strings = [];
-        for (int i = 0; i < count; i++)
+        for (var i = 0; i < count; i++)
             {
             (var result, bytes) = TraCIString.FromBytes(bytes);
             strings.Add(result.Value);

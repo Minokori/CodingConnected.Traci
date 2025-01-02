@@ -1,5 +1,4 @@
-﻿using System;
-using CodingConnected.TraCI.NET.Constants;
+﻿using CodingConnected.TraCI.NET.Constants;
 using CodingConnected.TraCI.NET.Helpers;
 using CodingConnected.TraCI.NET.Response;
 using CodingConnected.TraCI.NET.Services;
@@ -7,16 +6,12 @@ using CodingConnected.TraCI.NET.Types;
 
 namespace CodingConnected.TraCI.NET.Commands;
 
-public class ControlCommands(
-    ITcpService tcpService,
-    ICommandHelperService helper,
-    IEventService events
-) : TraCICommandsBase(tcpService, helper)
+public class ControlCommands(ITcpService tcpService, ICommandHelperService helper, IEventService eventService) : TraCICommandsBase(tcpService, helper)
     {
-    private readonly IEventService _events = events;
+    private readonly IEventService _events = eventService;
 
     /// <summary>
-    /// Gets an identifying version number as described here: http://sumo.dlr.de/wiki/TraCI/Control-related_commands
+    /// Gets an identifying version number as described here: <see href="http://sumo.dlr.de/wiki/TraCI/Control-related_commands"/>
     /// </summary>
     public Tuple<int, string> GetVersion()
         {
@@ -25,6 +20,7 @@ public class ControlCommands(
             Identifier = TraCIConstants.CMD_GETVERSION,
             Contents = null,
             };
+
         var results = _tcpService.SendMessage(command);
         return ((IStatusResponse)results[0]).Result == ResultCode.Success
             ? new(
@@ -67,11 +63,7 @@ public class ControlCommands(
                     {
                     case 0x0e:
                             {
-                            eventArgs = new VariableSubscriptionEventArgs(
-                                 item.ObjectID.Value,
-                                 item.VariableCount.Value,
-                                 item.Responses
-                             /*item.Responses*/);
+                            eventArgs = new VariableSubscriptionEventArgs(item.ObjectID.Value, item.VariableCount.Value);
                             break;
                             }
                     case 0x09:
@@ -79,7 +71,6 @@ public class ControlCommands(
                             var c = item as ContextSubscriptionResponse;
                             eventArgs = new ContextSubscriptionEventArgs(
                                 c.ObjectID.Value,
-                                item.Responses,
                                 c.ContextDomain.Value,
                                 c.VariableCount.Value,
                                 c.ObjectCount.Value);
@@ -88,7 +79,7 @@ public class ControlCommands(
                     default:
                         break;
                     }
-                //eventArgs.Responses = item.Responses;
+                eventArgs.Responses = item.Responses;
                 if (eventArgs is null) { return; }
 
                 switch (item.Identifier)
@@ -198,13 +189,11 @@ public class ControlCommands(
         {
         TraCICommand command = new() { Identifier = TraCIConstants.CMD_LOAD };
         List<byte> n = [.. options.Count.ToTraCIBytes()];
-        foreach (var opt in options)
+        foreach (var option in options)
             {
-            n.AddRange(opt.Length.ToTraCIBytes());
-            n.AddRange(opt.ToTraCIBytes());
+            n = [.. n, .. option.Length.ToTraCIBytes(), .. option.ToTraCIBytes()];
             }
         command.Contents = [.. n];
-        // ReSharper disable once UnusedVariable
         _ = _tcpService.SendMessage(command);
         }
 
