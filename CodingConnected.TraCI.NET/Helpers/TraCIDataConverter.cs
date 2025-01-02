@@ -256,35 +256,7 @@ internal static partial class TraCIDataConverter
             }
         }
 
-    internal static byte[] ToMessageBytes(this TraCICommand command)
-        {
-        List<byte> cmessage = [];
 
-        switch (command.Contents?.Length)
-            {
-            case <= 255 - 2:
-                    {
-                    cmessage.Add((byte)(command.Contents.Length + 2));
-                    break;
-                    }
-            case > 255 - 2:
-                    {
-                    cmessage.Add(0);
-                    cmessage.AddRange(GetBytes(command.Contents.Length + 6).Reverse());
-                    break;
-                    }
-            case null:
-                    {
-                    cmessage.Add(2);
-                    break;
-                    }
-            }
-        cmessage.Add(command.Identifier);
-        cmessage = command.Contents is null ? cmessage : [.. cmessage, .. command.Contents];
-        var totmessage = GetBytes(cmessage.Count + 4).Reverse();
-        return [.. totmessage, .. cmessage];
-
-        }
 
 
     internal static List<TraCIResult> AsTraCIResults(this List<byte> response)

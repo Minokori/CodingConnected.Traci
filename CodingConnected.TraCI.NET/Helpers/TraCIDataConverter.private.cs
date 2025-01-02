@@ -6,7 +6,6 @@ internal static partial class TraCIDataConverter
     {
     private static TraCISubscriptionResponse ToSimStepResponse(this TraCIResult traciResult)
         {
-        // extract number of subscriptions
         var commandType = traciResult.Identifier >> 4;
         // 0xeX => VariableType Subscription Content
         // 0x9X => Object Context Subscription Content
@@ -28,6 +27,4 @@ internal static partial class TraCIDataConverter
                 throw new NotImplementedException();
             }
         }
-
-
     }

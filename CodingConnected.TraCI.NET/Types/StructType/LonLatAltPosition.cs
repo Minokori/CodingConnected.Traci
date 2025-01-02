@@ -1,26 +1,27 @@
-﻿using CodingConnected.TraCI.NET.Helpers;
-using static System.BitConverter;
-using static CodingConnected.TraCI.NET.Constants.TraCIConstants;
+﻿using static CodingConnected.TraCI.NET.Constants.TraCIConstants;
 
 namespace CodingConnected.TraCI.NET.Types;
 
 public struct LonLatAltPosition : ITraCIType
     {
     public readonly byte TYPE => POSITION_LON_LAT_ALT;
-    public double Longitude { get; set; }
-    public double Latitude { get; set; }
-    public double Altitude { get; set; }
+    public TraCIDouble Longitude { get; set; }
+    public TraCIDouble Latitude { get; set; }
+    public TraCIDouble Altitude { get; set; }
 
-    public readonly byte[] ToBytes() => [.. Longitude.ToTraCIBytes(), .. Latitude.ToTraCIBytes(), .. Altitude.ToTraCIBytes()];
+    public readonly byte[] ToBytes() => [.. Longitude.ToBytes(), .. Latitude.ToBytes(), .. Altitude.ToBytes()];
 
     public static Tuple<LonLatAltPosition, IEnumerable<byte>> FromBytes(IEnumerable<byte> bytes)
         {
+        (var longitude, bytes) = TraCIDouble.FromBytes(bytes);
+        (var latitude, bytes) = TraCIDouble.FromBytes(bytes);
+        (var altitude, bytes) = TraCIDouble.FromBytes(bytes);
         var result = new LonLatAltPosition()
             {
-            Longitude = ToDouble(bytes.Take(DOUBLE_SIZE).Reverse().ToArray()),
-            Latitude = ToDouble(bytes.Skip(DOUBLE_SIZE).Take(DOUBLE_SIZE).Reverse().ToArray()),
-            Altitude = ToDouble(bytes.Skip(DOUBLE_SIZE * 2).Take(DOUBLE_SIZE).Reverse().ToArray())
+            Longitude = longitude,
+            Latitude = latitude,
+            Altitude = altitude
             };
-        return new(result, bytes.Skip(DOUBLE_SIZE * 3));
+        return new(result, bytes);
         }
     }

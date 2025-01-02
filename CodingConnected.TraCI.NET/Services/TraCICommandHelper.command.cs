@@ -7,7 +7,7 @@ namespace CodingConnected.TraCI.NET.Services;
 internal partial class TraCICommandHelper
     {
 
-    public static TraCICommand GetCommand<T>(string id, byte commandType, byte messageType, T contents)
+    public static TraCICommand GetCommand<T>(TraCIString id, TraCIByte commandType, TraCIByte messageType, ITraCIType contents)
         {
 
 
@@ -17,12 +17,7 @@ internal partial class TraCICommandHelper
     public static TraCICommand GetCommand(string id, byte commandType, byte messageType, TraCICompoundObject co)
         {
         List<byte> bytes =
-            [
-            messageType,
-                .. id.ToTraCIBytes(),
-                TraCIConstants.TYPE_COMPOUND,
-                .. co.Count.ToTraCIBytes(),
-                ];
+            [messageType, .. id.ToTraCIBytes(), TraCIConstants.TYPE_COMPOUND, .. co.Count.ToTraCIBytes(),];
         foreach (ITraCIType item in co)
             {
             switch (item)
