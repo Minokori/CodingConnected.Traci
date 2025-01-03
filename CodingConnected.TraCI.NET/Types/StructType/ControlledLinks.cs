@@ -3,7 +3,7 @@
 public struct ControlledLinks : ITraCIType
     {
     public readonly byte TYPE => throw new NotImplementedException();
-    public int NumberOfSignals { get; set; }
-    public List<List<string>> Links { get; set; }
+    public TraCIInteger NumberOfSignals { get; set; }
+    public List<TraCIStringList> Links { get; set; }
     }
 

@@ -7,12 +7,10 @@ using CodingConnected.TraCI.NET.Types;
 
 namespace CodingConnected.TraCI.NET.Commands
     {
-    public class PolygonCommands(ITcpService tcpService, ICommandHelperService helper)
-        : TraCIContextSubscribableCommands(tcpService, helper)
+    public class PolygonCommands(ITcpService tcpService, ICommandHelperService helper) : TraCIContextSubscribableCommands(tcpService, helper)
         {
         #region Protected Override Methods
-        protected override byte ContextSubscribeCommand =>
-            TraCIConstants.CMD_SUBSCRIBE_POLYGON_CONTEXT;
+        protected override byte ContextSubscribeCommand => TraCIConstants.CMD_SUBSCRIBE_POLYGON_CONTEXT;
 
         #endregion Protected Override Methods
 
@@ -22,26 +20,20 @@ namespace CodingConnected.TraCI.NET.Commands
         /// Returns a list of ids of all polygons
         /// </summary>
         /// <returns></returns>
-        public TraCIResponse<List<string>> GetIdList()
+        public List<string> GetIdList()
             {
-            return _helper.ExecuteGetCommand<List<string>>(
-                "ignored",
-                TraCIConstants.CMD_GET_POLYGON_VARIABLE,
-                TraCIConstants.ID_LIST
-            );
+            var result = _helper.ExecuteGetCommand("ignored", TraCIConstants.CMD_GET_POLYGON_VARIABLE, TraCIConstants.ID_LIST);
+            return ((TraCIStringList)result.Value).Value;
             }
 
         /// <summary>
         /// Returns the number of polygons
         /// </summary>
         /// <returns></returns>
-        public TraCIResponse<int> GetIdCount()
+        public int GetIdCount()
             {
-            return _helper.ExecuteGetCommand<int>(
-                "ignored",
-                TraCIConstants.CMD_GET_POLYGON_VARIABLE,
-                TraCIConstants.ID_COUNT
-            );
+            var result = _helper.ExecuteGetCommand("ignored", TraCIConstants.CMD_GET_POLYGON_VARIABLE, TraCIConstants.ID_COUNT);
+            return ((TraCIInteger)result.Value).Value;
             }
 
         /// <summary>
@@ -49,13 +41,10 @@ namespace CodingConnected.TraCI.NET.Commands
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public TraCIResponse<string> GetType(string id)
+        public string GetType(string id)
             {
-            return _helper.ExecuteGetCommand<string>(
-                id,
-                TraCIConstants.CMD_GET_POLYGON_VARIABLE,
-                TraCIConstants.VAR_TYPE
-            );
+            var result = _helper.ExecuteGetCommand(id, TraCIConstants.CMD_GET_POLYGON_VARIABLE, TraCIConstants.VAR_TYPE);
+            return ((TraCIString)result.Value).Value;
             }
 
         /// <summary>
@@ -63,13 +52,10 @@ namespace CodingConnected.TraCI.NET.Commands
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public TraCIResponse<Color> GetColor(string id)
+        public Color GetColor(string id)
             {
-            return _helper.ExecuteGetCommand<Color>(
-                id,
-                TraCIConstants.CMD_GET_POLYGON_VARIABLE,
-                TraCIConstants.VAR_COLOR
-            );
+            var result = _helper.ExecuteGetCommand(id, TraCIConstants.CMD_GET_POLYGON_VARIABLE, TraCIConstants.VAR_COLOR);
+            return (Color)result.Value;
             }
 
         /// <summary>
@@ -77,13 +63,10 @@ namespace CodingConnected.TraCI.NET.Commands
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public TraCIResponse<Polygon> GetShape(string id)
+        public Polygon GetShape(string id)
             {
-            return _helper.ExecuteGetCommand<Polygon>(
-                id,
-                TraCIConstants.CMD_GET_POLYGON_VARIABLE,
-                TraCIConstants.VAR_SHAPE
-            );
+            var result = _helper.ExecuteGetCommand(id, TraCIConstants.CMD_GET_POLYGON_VARIABLE, TraCIConstants.VAR_SHAPE);
+            return (Polygon)result.Value;
             }
 
         /// <summary>
@@ -91,13 +74,10 @@ namespace CodingConnected.TraCI.NET.Commands
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public TraCIResponse<byte> GetFilled(string id)
+        public bool GetFilled(string id)
             {
-            return _helper.ExecuteGetCommand<byte>(
-                id,
-                TraCIConstants.CMD_GET_POLYGON_VARIABLE,
-                TraCIConstants.VAR_FILL
-            );
+            var result = _helper.ExecuteGetCommand(id, TraCIConstants.CMD_GET_POLYGON_VARIABLE, TraCIConstants.VAR_FILL);
+            return ((TraCIUByte)result.Value).Value == 1;
             }
 
         /// <summary>
@@ -108,12 +88,7 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <returns></returns>
         public bool SetType(string id, string typeId)
             {
-            return _helper.ExecuteSetCommand<object, string>(
-                id,
-                TraCIConstants.CMD_SET_POLYGON_VARIABLE,
-                TraCIConstants.VAR_TYPE,
-                typeId
-            );
+            return _helper.ExecuteSetCommand<object, string>(id, TraCIConstants.CMD_SET_POLYGON_VARIABLE, TraCIConstants.VAR_TYPE, typeId);
             }
 
         /// <summary>
@@ -124,12 +99,7 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <returns></returns>
         public bool SetColor(string id, Color color)
             {
-            return _helper.ExecuteSetCommand<object, Color>(
-                id,
-                TraCIConstants.CMD_SET_POLYGON_VARIABLE,
-                TraCIConstants.VAR_COLOR,
-                color
-            );
+            return _helper.ExecuteSetCommand<object, Color>(id, TraCIConstants.CMD_SET_POLYGON_VARIABLE, TraCIConstants.VAR_COLOR, color);
             }
 
         /// <summary>
@@ -140,12 +110,7 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <returns></returns>
         public bool SetShape(string id, Polygon polygon)
             {
-            return _helper.ExecuteSetCommand<object, Polygon>(
-                id,
-                TraCIConstants.CMD_SET_POLYGON_VARIABLE,
-                TraCIConstants.VAR_SHAPE,
-                polygon
-            );
+            return _helper.ExecuteSetCommand<object, Polygon>(id, TraCIConstants.CMD_SET_POLYGON_VARIABLE, TraCIConstants.VAR_SHAPE, polygon);
             }
 
         /// <summary>
@@ -156,12 +121,7 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <returns></returns>
         public bool SetFilled(string id, byte filled)
             {
-            return _helper.ExecuteSetCommand<object, byte>(
-                id,
-                TraCIConstants.CMD_SET_POLYGON_VARIABLE,
-                TraCIConstants.VAR_FILL,
-                filled
-            );
+            return _helper.ExecuteSetCommand<object, byte>(id, TraCIConstants.CMD_SET_POLYGON_VARIABLE, TraCIConstants.VAR_FILL, filled);
             }
 
         /// <summary>
@@ -174,30 +134,18 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <param name="layer"></param>
         /// <param name="shape"></param>
         /// <returns></returns>
-        public bool Add(
-            string id,
-            string name,
-            Color color,
-            bool filled,
-            int layer,
-            Polygon shape
-        )
+        public bool Add(string id, string name, Color color, bool filled, int layer, Polygon shape)
             {
             var tmp = new TraCICompoundObject
-                {
+            {
                 new TraCIString() { Value = name },
                 color,
                 new TraCIUByte() { Value = filled == false ? (byte)0 : (byte)1 },
                 new TraCIInteger() { Value = layer },
-                shape
-                };
+                shape,
+            };
 
-            return _helper.ExecuteSetCommand<object, TraCICompoundObject>(
-                id,
-                TraCIConstants.CMD_SET_POLYGON_VARIABLE,
-                TraCIConstants.ADD,
-                tmp
-            );
+            return _helper.ExecuteSetCommand<object, TraCICompoundObject>(id, TraCIConstants.CMD_SET_POLYGON_VARIABLE, TraCIConstants.ADD, tmp);
             }
 
         /// <summary>
@@ -208,28 +156,12 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <returns></returns>
         public bool Remove(string id, int layer)
             {
-            return _helper.ExecuteSetCommand<object, int>(
-                id,
-                TraCIConstants.CMD_SET_POLYGON_VARIABLE,
-                TraCIConstants.REMOVE,
-                layer
-            );
+            return _helper.ExecuteSetCommand<object, int>(id, TraCIConstants.CMD_SET_POLYGON_VARIABLE, TraCIConstants.REMOVE, layer);
             }
 
-        public void Subscribe(
-            string objectId,
-            int beginTime,
-            int endTime,
-            List<byte> ListOfVariablesToSubsribeTo
-        )
+        public void Subscribe(string objectId, int beginTime, int endTime, List<byte> ListOfVariablesToSubsribeTo)
             {
-            _helper.ExecuteSubscribeCommand(
-                beginTime,
-                endTime,
-                objectId,
-                TraCIConstants.CMD_SUBSCRIBE_POLYGON_VARIABLE,
-                ListOfVariablesToSubsribeTo
-            );
+            _helper.ExecuteSubscribeCommand(beginTime, endTime, objectId, TraCIConstants.CMD_SUBSCRIBE_POLYGON_VARIABLE, ListOfVariablesToSubsribeTo);
             }
         #endregion // Public Methods
         }

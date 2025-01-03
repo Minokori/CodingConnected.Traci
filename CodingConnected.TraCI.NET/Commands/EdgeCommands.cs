@@ -7,10 +7,7 @@ namespace CodingConnected.TraCI.NET.Commands;
 
 public class EdgeCommands(ITcpService tcpService, ICommandHelperService helper) : TraCIContextSubscribableCommands(tcpService, helper)
     {
-    #region Protected Override Methods
     protected override byte ContextSubscribeCommand => TraCIConstants.CMD_SUBSCRIBE_EDGE_CONTEXT;
-
-    #endregion Protected Override Methods
 
     #region Public Methods
 
@@ -18,26 +15,20 @@ public class EdgeCommands(ITcpService tcpService, ICommandHelperService helper) 
     /// Returns a list of ids of all edges within the scenario
     /// </summary>
     /// <returns></returns>
-    public TraCIResponse<List<string>> GetIdList()
+    public List<string> GetIdList()
         {
-        return
-            _helper.ExecuteGetCommand<List<string>>(
-                "ignored",
-                TraCIConstants.CMD_GET_EDGE_VARIABLE,
-                TraCIConstants.ID_LIST);
+        var result = _helper.ExecuteGetCommand("ignored", TraCIConstants.CMD_GET_EDGE_VARIABLE, TraCIConstants.ID_LIST);
+        return ((TraCIStringList)result.Value).Value;
         }
 
     /// <summary>
     /// Returns the number of edges within the scenario
     /// </summary>
     /// <returns></returns>
-    public TraCIResponse<int> GetIdCount()
+    public int GetIdCount()
         {
-        return
-            _helper.ExecuteGetCommand<int>(
-                "ignored",
-                TraCIConstants.CMD_GET_EDGE_VARIABLE,
-                TraCIConstants.ID_COUNT);
+        var result = _helper.ExecuteGetCommand("ignored", TraCIConstants.CMD_GET_EDGE_VARIABLE, TraCIConstants.ID_COUNT);
+        return ((TraCIInteger)result.Value).Value;
         }
 
     /// <summary>
@@ -45,13 +36,10 @@ public class EdgeCommands(ITcpService tcpService, ICommandHelperService helper) 
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    public TraCIResponse<int> GetLaneNumber(string id)
+    public int GetLaneNumber(string id)
         {
-        return
-            _helper.ExecuteGetCommand<int>(
-                id,
-                TraCIConstants.CMD_GET_EDGE_VARIABLE,
-                TraCIConstants.VAR_LANE_INDEX);
+        var result = _helper.ExecuteGetCommand(id, TraCIConstants.CMD_GET_EDGE_VARIABLE, TraCIConstants.VAR_LANE_INDEX);
+        return ((TraCIInteger)result.Value).Value;
         }
 
     /// <summary>
@@ -59,13 +47,10 @@ public class EdgeCommands(ITcpService tcpService, ICommandHelperService helper) 
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    public TraCIResponse<string> GetStreetName(string id)
+    public string GetStreetName(string id)
         {
-        return
-            _helper.ExecuteGetCommand<string>(
-                id,
-                TraCIConstants.CMD_GET_EDGE_VARIABLE,
-                TraCIConstants.VAR_STREET_NAME);
+        var result = _helper.ExecuteGetCommand(id, TraCIConstants.CMD_GET_EDGE_VARIABLE, TraCIConstants.VAR_STREET_NAME);
+        return ((TraCIString)result.Value).Value;
         }
 
     /// <summary>
@@ -73,13 +58,10 @@ public class EdgeCommands(ITcpService tcpService, ICommandHelperService helper) 
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    public TraCIResponse<double> GetTraveltime(string id)
+    public double GetTraveltime(string id)
         {
-        return
-            _helper.ExecuteGetCommand<double>(
-                id,
-                TraCIConstants.CMD_GET_EDGE_VARIABLE,
-                TraCIConstants.VAR_CURRENT_TRAVELTIME);
+        var result = _helper.ExecuteGetCommand(id, TraCIConstants.CMD_GET_EDGE_VARIABLE, TraCIConstants.VAR_CURRENT_TRAVELTIME);
+        return ((TraCIDouble)result.Value).Value;
         }
 
     /// <summary>
@@ -87,13 +69,10 @@ public class EdgeCommands(ITcpService tcpService, ICommandHelperService helper) 
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    public TraCIResponse<double> GetCO2Emission(string id)
+    public double GetCO2Emission(string id)
         {
-        return
-            _helper.ExecuteGetCommand<double>(
-                id,
-                TraCIConstants.CMD_GET_EDGE_VARIABLE,
-                TraCIConstants.VAR_CO2EMISSION);
+        var result = _helper.ExecuteGetCommand(id, TraCIConstants.CMD_GET_EDGE_VARIABLE, TraCIConstants.VAR_CO2EMISSION);
+        return ((TraCIDouble)result.Value).Value;
         }
 
     /// <summary>
@@ -101,14 +80,10 @@ public class EdgeCommands(ITcpService tcpService, ICommandHelperService helper) 
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    public TraCIResponse<double> GetCOEmission(string id)
+    public double GetCOEmission(string id)
         {
-        return
-            _helper.ExecuteGetCommand<double>(
-
-                id,
-                TraCIConstants.CMD_GET_EDGE_VARIABLE,
-                TraCIConstants.VAR_COEMISSION);
+        var result = _helper.ExecuteGetCommand(id, TraCIConstants.CMD_GET_EDGE_VARIABLE, TraCIConstants.VAR_COEMISSION);
+        return ((TraCIDouble)result.Value).Value;
         }
 
     /// <summary>
@@ -116,14 +91,10 @@ public class EdgeCommands(ITcpService tcpService, ICommandHelperService helper) 
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    public TraCIResponse<double> GetHCEmission(string id)
+    public double GetHCEmission(string id)
         {
-        return
-            _helper.ExecuteGetCommand<double>(
-
-                id,
-                TraCIConstants.CMD_GET_EDGE_VARIABLE,
-                TraCIConstants.VAR_HCEMISSION);
+        var result = _helper.ExecuteGetCommand(id, TraCIConstants.CMD_GET_EDGE_VARIABLE, TraCIConstants.VAR_HCEMISSION);
+        return ((TraCIDouble)result.Value).Value;
         }
 
     /// <summary>
@@ -131,14 +102,10 @@ public class EdgeCommands(ITcpService tcpService, ICommandHelperService helper) 
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    public TraCIResponse<double> GetPMxEmission(string id)
+    public double GetPMxEmission(string id)
         {
-        return
-            _helper.ExecuteGetCommand<double>(
-
-                id,
-                TraCIConstants.CMD_GET_EDGE_VARIABLE,
-                TraCIConstants.VAR_PMXEMISSION);
+        var result = _helper.ExecuteGetCommand(id, TraCIConstants.CMD_GET_EDGE_VARIABLE, TraCIConstants.VAR_PMXEMISSION);
+        return ((TraCIDouble)result.Value).Value;
         }
 
     /// <summary>
@@ -146,14 +113,10 @@ public class EdgeCommands(ITcpService tcpService, ICommandHelperService helper) 
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    public TraCIResponse<double> GetNOxEmission(string id)
+    public double GetNOxEmission(string id)
         {
-        return
-            _helper.ExecuteGetCommand<double>(
-
-                id,
-                TraCIConstants.CMD_GET_EDGE_VARIABLE,
-                TraCIConstants.VAR_NOXEMISSION);
+        var result = _helper.ExecuteGetCommand(id, TraCIConstants.CMD_GET_EDGE_VARIABLE, TraCIConstants.VAR_NOXEMISSION);
+        return ((TraCIDouble)result.Value).Value;
         }
 
     /// <summary>
@@ -161,14 +124,10 @@ public class EdgeCommands(ITcpService tcpService, ICommandHelperService helper) 
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    public TraCIResponse<double> GetFuelConsumption(string id)
+    public double GetFuelConsumption(string id)
         {
-        return
-            _helper.ExecuteGetCommand<double>(
-
-                id,
-                TraCIConstants.CMD_GET_EDGE_VARIABLE,
-                TraCIConstants.VAR_FUELCONSUMPTION);
+        var result = _helper.ExecuteGetCommand(id, TraCIConstants.CMD_GET_EDGE_VARIABLE, TraCIConstants.VAR_FUELCONSUMPTION);
+        return ((TraCIDouble)result.Value).Value;
         }
 
     /// <summary>
@@ -176,14 +135,10 @@ public class EdgeCommands(ITcpService tcpService, ICommandHelperService helper) 
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    public TraCIResponse<double> GetNoiseEmission(string id)
+    public double GetNoiseEmission(string id)
         {
-        return
-            _helper.ExecuteGetCommand<double>(
-
-                id,
-                TraCIConstants.CMD_GET_EDGE_VARIABLE,
-                TraCIConstants.VAR_NOISEEMISSION);
+        var result = _helper.ExecuteGetCommand(id, TraCIConstants.CMD_GET_EDGE_VARIABLE, TraCIConstants.VAR_NOISEEMISSION);
+        return ((TraCIDouble)result.Value).Value;
         }
 
     /// <summary>
@@ -191,14 +146,10 @@ public class EdgeCommands(ITcpService tcpService, ICommandHelperService helper) 
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    public TraCIResponse<double> GetElectricityConsumption(string id)
+    public double GetElectricityConsumption(string id)
         {
-        return
-            _helper.ExecuteGetCommand<double>(
-
-                id,
-                TraCIConstants.CMD_GET_EDGE_VARIABLE,
-                TraCIConstants.VAR_ELECTRICITYCONSUMPTION);
+        var result = _helper.ExecuteGetCommand(id, TraCIConstants.CMD_GET_EDGE_VARIABLE, TraCIConstants.VAR_ELECTRICITYCONSUMPTION);
+        return ((TraCIDouble)result.Value).Value;
         }
 
     /// <summary>
@@ -206,14 +157,10 @@ public class EdgeCommands(ITcpService tcpService, ICommandHelperService helper) 
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    public TraCIResponse<int> GetLastStepVehicleNumber(string id)
+    public int GetLastStepVehicleNumber(string id)
         {
-        return
-            _helper.ExecuteGetCommand<int>(
-
-                id,
-                TraCIConstants.CMD_GET_EDGE_VARIABLE,
-                TraCIConstants.STOP_CONTAINER_STOP);
+        var result = _helper.ExecuteGetCommand(id, TraCIConstants.CMD_GET_EDGE_VARIABLE, TraCIConstants.STOP_CONTAINER_STOP);
+        return ((TraCIInteger)result.Value).Value;
         }
 
     /// <summary>
@@ -221,14 +168,10 @@ public class EdgeCommands(ITcpService tcpService, ICommandHelperService helper) 
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    public TraCIResponse<double> GetLastStepMeanSpeed(string id)
+    public double GetLastStepMeanSpeed(string id)
         {
-        return
-            _helper.ExecuteGetCommand<double>(
-
-                id,
-                TraCIConstants.CMD_GET_EDGE_VARIABLE,
-                TraCIConstants.TYPE_COLOR);
+        var result = _helper.ExecuteGetCommand(id, TraCIConstants.CMD_GET_EDGE_VARIABLE, TraCIConstants.TYPE_COLOR);
+        return ((TraCIDouble)result.Value).Value;
         }
 
     /// <summary>
@@ -236,14 +179,10 @@ public class EdgeCommands(ITcpService tcpService, ICommandHelperService helper) 
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    public TraCIResponse<List<string>> GetLastStepVehicleIDs(string id)
+    public List<string> GetLastStepVehicleIDs(string id)
         {
-        return
-            _helper.ExecuteGetCommand<List<string>>(
-
-                id,
-                TraCIConstants.CMD_GET_EDGE_VARIABLE,
-                TraCIConstants.LAST_STEP_VEHICLE_ID_LIST);
+        var result = _helper.ExecuteGetCommand(id, TraCIConstants.CMD_GET_EDGE_VARIABLE, TraCIConstants.LAST_STEP_VEHICLE_ID_LIST);
+        return ((TraCIStringList)result.Value).Value;
         }
 
     /// <summary>
@@ -251,14 +190,10 @@ public class EdgeCommands(ITcpService tcpService, ICommandHelperService helper) 
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    public TraCIResponse<double> GetLastStepOccupancy(string id)
+    public double GetLastStepOccupancy(string id)
         {
-        return
-            _helper.ExecuteGetCommand<double>(
-
-                id,
-                TraCIConstants.CMD_GET_EDGE_VARIABLE,
-                TraCIConstants.LAST_STEP_OCCUPANCY);
+        var result = _helper.ExecuteGetCommand(id, TraCIConstants.CMD_GET_EDGE_VARIABLE, TraCIConstants.LAST_STEP_OCCUPANCY);
+        return ((TraCIDouble)result.Value).Value;
         }
 
     /// <summary>
@@ -266,14 +201,10 @@ public class EdgeCommands(ITcpService tcpService, ICommandHelperService helper) 
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    public TraCIResponse<double> GetLastStepLength(string id)
+    public double GetLastStepLength(string id)
         {
-        return
-            _helper.ExecuteGetCommand<double>(
-
-                id,
-                TraCIConstants.CMD_GET_EDGE_VARIABLE,
-                TraCIConstants.LAST_STEP_LENGTH);
+        var result = _helper.ExecuteGetCommand(id, TraCIConstants.CMD_GET_EDGE_VARIABLE, TraCIConstants.LAST_STEP_LENGTH);
+        return ((TraCIDouble)result.Value).Value;
         }
 
     /// <summary>
@@ -281,14 +212,10 @@ public class EdgeCommands(ITcpService tcpService, ICommandHelperService helper) 
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    public TraCIResponse<double> GetWaitingTime(string id)
+    public double GetWaitingTime(string id)
         {
-        return
-            _helper.ExecuteGetCommand<double>(
-
-                id,
-                TraCIConstants.CMD_GET_EDGE_VARIABLE,
-                TraCIConstants.VAR_WAITING_TIME);
+        var result = _helper.ExecuteGetCommand(id, TraCIConstants.CMD_GET_EDGE_VARIABLE, TraCIConstants.VAR_WAITING_TIME);
+        return ((TraCIDouble)result.Value).Value;
         }
 
     /// <summary>
@@ -296,14 +223,10 @@ public class EdgeCommands(ITcpService tcpService, ICommandHelperService helper) 
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    public TraCIResponse<List<string>> GetLastStepPersonIDs(string id)
+    public List<string> GetLastStepPersonIDs(string id)
         {
-        return
-            _helper.ExecuteGetCommand<List<string>>(
-
-                id,
-                TraCIConstants.CMD_GET_EDGE_VARIABLE,
-                TraCIConstants.LAST_STEP_PERSON_ID_LIST);
+        var result = _helper.ExecuteGetCommand(id, TraCIConstants.CMD_GET_EDGE_VARIABLE, TraCIConstants.LAST_STEP_PERSON_ID_LIST);
+        return ((TraCIStringList)result.Value).Value;
         }
 
     /// <summary>
@@ -311,14 +234,10 @@ public class EdgeCommands(ITcpService tcpService, ICommandHelperService helper) 
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    public TraCIResponse<int> GetLastStepHaltingNumber(string id)
+    public int GetLastStepHaltingNumber(string id)
         {
-        return
-            _helper.ExecuteGetCommand<int>(
-
-                id,
-                TraCIConstants.CMD_GET_EDGE_VARIABLE,
-                TraCIConstants.LAST_STEP_VEHICLE_HALTING_NUMBER);
+        var result = _helper.ExecuteGetCommand(id, TraCIConstants.CMD_GET_EDGE_VARIABLE, TraCIConstants.LAST_STEP_VEHICLE_HALTING_NUMBER);
+        return ((TraCIInteger)result.Value).Value;
         }
 
     // TODO: 'extended retrieval', see: http://sumo.dlr.de/wiki/TraCI/Edge_Value_Retrieval
@@ -335,19 +254,18 @@ public class EdgeCommands(ITcpService tcpService, ICommandHelperService helper) 
     public bool AdaptTraveltime(string id, int beginTime, int endTime, double travelTimeValue)
         {
         TraCICompoundObject tmp =
-            [
+        [
             new TraCIInteger() { Value = beginTime },
             new TraCIInteger() { Value = endTime },
             new TraCIDouble() { Value = travelTimeValue },
-            ];
+        ];
 
         return _helper.ExecuteSetCommand<double, TraCICompoundObject>(
-
-                 id,
-                 TraCIConstants.CMD_SET_EDGE_VARIABLE,
-                 TraCIConstants.VAR_EDGE_TRAVELTIME,
-                 tmp
-                 );
+            id,
+            TraCIConstants.CMD_SET_EDGE_VARIABLE,
+            TraCIConstants.VAR_EDGE_TRAVELTIME,
+            tmp
+        );
         }
 
     /// <summary>
@@ -361,19 +279,13 @@ public class EdgeCommands(ITcpService tcpService, ICommandHelperService helper) 
     public bool SetEffort(string id, double beginTime, double endTime, double effortValue)
         {
         TraCICompoundObject tmp =
-            [
+        [
             new TraCIDouble() { Value = beginTime },
             new TraCIDouble() { Value = endTime },
             new TraCIDouble() { Value = effortValue },
-            ];
+        ];
 
-        return _helper.ExecuteSetCommand<object, TraCICompoundObject>(
-
-                 id,
-                 TraCIConstants.CMD_SET_EDGE_VARIABLE,
-                 TraCIConstants.VAR_EDGE_EFFORT,
-                 tmp
-                 );
+        return _helper.ExecuteSetCommand<object, TraCICompoundObject>(id, TraCIConstants.CMD_SET_EDGE_VARIABLE, TraCIConstants.VAR_EDGE_EFFORT, tmp);
         }
 
     /// <summary>
@@ -384,27 +296,12 @@ public class EdgeCommands(ITcpService tcpService, ICommandHelperService helper) 
     /// <returns></returns>
     public bool SetMaxSpeed(string id, double speed)
         {
-        return _helper.ExecuteSetCommand<object, double>(
-
-                             id,
-                             TraCIConstants.CMD_SET_EDGE_VARIABLE,
-                             TraCIConstants.VAR_MAXSPEED,
-                             speed
-                             );
+        return _helper.ExecuteSetCommand<object, double>(id, TraCIConstants.CMD_SET_EDGE_VARIABLE, TraCIConstants.VAR_MAXSPEED, speed);
         }
 
     public void Subscribe(string objectId, int beginTime, int endTime, List<byte> ListOfVariablesToSubsribeTo)
         {
-        _helper.ExecuteSubscribeCommand(
-
-            beginTime,
-            endTime,
-            objectId,
-            TraCIConstants.CMD_SUBSCRIBE_EDGE_VARIABLE,
-            ListOfVariablesToSubsribeTo);
+        _helper.ExecuteSubscribeCommand(beginTime, endTime, objectId, TraCIConstants.CMD_SUBSCRIBE_EDGE_VARIABLE, ListOfVariablesToSubsribeTo);
         }
     #endregion // Public Methods
-
     }
-
-

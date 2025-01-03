@@ -1,11 +1,11 @@
 ﻿namespace CodingConnected.TraCI.NET.Types;
 
-public readonly struct TrafficLightSystem : ITraCIType
+public class TrafficLightSystem : TraCICompoundObject, ITraCIType
     {
-    public readonly byte TYPE => throw new NotImplementedException();
-    public string TrafficLightSystemId { get; init; }
-    public int TrafficLightSystemLinkIndex { get; init; }
-    public double DistanceToTrafficLightSystem { get; init; }
-    public byte LinkState { get; init; }
+    public new byte TYPE => throw new NotImplementedException();
+    public TraCIString TrafficLightSystemId { get; init; }
+    public TraCIInteger TrafficLightSystemLinkIndex { get; init; }
+    public TraCIDouble DistanceToTrafficLightSystem { get; init; }
+    public TraCIByte LinkState { get; init; }
     }
 

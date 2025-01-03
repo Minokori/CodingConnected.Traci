@@ -292,7 +292,7 @@ internal class UsageExample
 
     private static void PrintActiveVehicles(TraCIClient client)
         {
-        vehicleIds = client.Vehicle.GetIdList().Content;
+        vehicleIds = client.Vehicle.GetIdList();
         Console.Write("Active Vehicles: [");
         foreach (var id in vehicleIds)
             {
@@ -303,7 +303,7 @@ internal class UsageExample
 
     private static void PrintArrivedVehicles(TraCIClient client)
         {
-        vehicleIds = client.Simulation.GetArrivedIDList("ignored").Content;
+        vehicleIds = client.Simulation.GetArrivedIDList("ignored");
         Console.Write("Arrived Vehicles: [");
         foreach (var id in vehicleIds)
             {
@@ -314,7 +314,7 @@ internal class UsageExample
 
     private static void PrintLoadedVehicles(TraCIClient client)
         {
-        vehicleIds = client.Simulation.GetLoadedIDList("ignored").Content;
+        vehicleIds = client.Simulation.GetLoadedIDList("ignored");
         Console.Write("Loaded Vehicles: [");
         foreach (var id in vehicleIds)
             {
@@ -325,7 +325,7 @@ internal class UsageExample
 
     private static void PrintDepartedVehicles(TraCIClient client)
         {
-        vehicleIds = client.Simulation.GetDepartedIDList("ignored").Content;
+        vehicleIds = client.Simulation.GetDepartedIDList("ignored");
         Console.Write("Departed Vehicles: [");
         foreach (var id in vehicleIds)
             {
@@ -405,7 +405,7 @@ internal class UsageExample
             {
             Console.Write("\n>");
 
-            var curTime = client.Simulation.GetCurrentTime("ignored")?.Content;
+            var curTime = client.Simulation.GetCurrentTime("ignored");
 
             var keyPressed = Console.ReadKey(false).Key;
             switch (keyPressed)

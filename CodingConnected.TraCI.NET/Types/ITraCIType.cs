@@ -9,6 +9,7 @@ public interface ITraCIType
     {
     public byte TYPE { get; }
     byte[] ToBytes() { return []; }
+
     };
 
 

@@ -15,16 +15,18 @@ public partial class TraCIResult
             Content.Skip(1 + 4).Take(((IAnswerFromSumo)this).SumoIdLength).ToArray()
         );
     byte IAnswerFromSumo.ReturnType =>
-        Content.Skip(5 + ((IAnswerFromSumo)this).SumoIdLength).First();
+        Content.Skip(1 + 4 + ((IAnswerFromSumo)this).SumoIdLength).First();
     ITraCIType IAnswerFromSumo.Value
         {
         get
             {
             var (obj, bytes) = GetValueFromTypeAndArray(
                 ((IAnswerFromSumo)this).ReturnType,
-                Content.Skip(6)
+                Content.Skip(1 + 4 + ((IAnswerFromSumo)this).SumoIdLength + 1)
             );
-            return bytes.Any() ? throw new Exception("Not all bytes were consumed") : obj;
+            if (bytes.Any()) { Console.WriteLine($"Not all bytes were consumed {bytes}"); }
+
+            return obj;
             }
         }
     }

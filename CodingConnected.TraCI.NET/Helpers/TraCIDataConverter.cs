@@ -16,7 +16,7 @@ internal static partial class TraCIDataConverter
     /// <param name="commandType"></param>
     /// <param name="variableType"></param>
     /// <returns></returns>
-    internal static TraCIResponse<T> ExtractDataFromResults<T>(IEnumerable<TraCIResult> results, byte commandType, byte variableType = 0)
+    internal static IAnswerFromSumo ExtractDataFromResults(IEnumerable<TraCIResult> results, byte commandType, byte variableType = 0)
         {
         // check if results is null
         if (results == null) { return null; }
@@ -35,40 +35,18 @@ internal static partial class TraCIDataConverter
 
                     if (result?.Content[0] == variableType)
                         {
-                        return new TraCIResponse<T>
-                            {
-                            Identifier = statusResponse.Identifier,
-                            ResponseIdentifier = result.Identifier,
-                            VariableType = ((IAnswerFromSumo)result).ReturnType,
-                            Result = ResultCode.Success,
-                            Content = (T)((IAnswerFromSumo)result).Value,
-                            };
+                        return (IAnswerFromSumo)result;
                         }
                     else
                         {
                         // for state changing methods without results content
-                        return new TraCIResponse<T>
-                            {
-                            Identifier = statusResponse.Identifier,
-                            ResponseIdentifier = null,
-                            VariableType = null,
-                            Result = ResultCode.Success,
-                            Content = default,
-                            };
+                        return null;
                         }
                     }
             case ResultCode.Failed:
             case ResultCode.NotImplemented:
                     {
-                    return new TraCIResponse<T>
-                        {
-                        Identifier = statusResponse.Identifier,
-                        ResponseIdentifier = null,
-                        VariableType = null,
-                        Result = ((IStatusResponse)statusResponse).Result,
-                        Content = default,
-                        ErrorMessage = $"TraCI reports command {Enum.GetName(((IStatusResponse)statusResponse).Result)}: {((IStatusResponse)statusResponse).Description}",
-                        };
+                    return null;
                     }
             }
         return null;

@@ -1,4 +1,6 @@
-﻿namespace CodingConnected.TraCI.NET.Types;
+﻿using System.Data.Common;
+
+namespace CodingConnected.TraCI.NET.Types;
 
 
 /// <summary>
@@ -22,38 +24,43 @@ public struct TrafficLightProgram : ITraCIType
     public List<TrafficLightProgramPhase> Phases { get; init; }
     }
 
-public struct TrafficCompleteLightProgram : ITraCIType
+public class TrafficCompleteLightProgram : ITraCIType
     {
     public byte TYPE => throw new NotImplementedException();
-    public int NumberOfLogics { get; init; }
+    public TraCIInteger NumberOfLogics { get; init; }
 
     public List<TrafficLightLogics> TrafficLightLogics { get; init; }
     }
 
-public struct TrafficLightLogics : ITraCIType
+public class TrafficLightLogics : TraCICompoundObject, ITraCIType
     {
-    public byte TYPE => throw new NotImplementedException();
-    public string SubId { get; init; }
-    public int Type { get; init; }
-    public TraCICompoundObject SubParameter { get; init; }
-    public int CurrentPhaseIndex { get; init; }
-    public int NumberOfPhases { get; init; }
-    public List<TrafficLightProgramPhase> TrafficLightPhases { get; init; }
+    public new byte TYPE => throw new NotImplementedException();
+    public TraCIString SubId => this[0] as TraCIString;
+    public TraCIInteger Type => this[1] as TraCIInteger;
+    public TraCICompoundObject SubParameter => this[2] as TraCICompoundObject;
+    public TraCIInteger CurrentPhaseIndex => this[3] as TraCIInteger;
+    public TraCIInteger NumberOfPhases => this[4] as TraCIInteger;
+    public List<TrafficLightProgramPhase> TrafficLightPhases
+        {
+        get => this.Skip(5).Take(NumberOfPhases.Value * 4)
+                .Chunk(4).Select(i => i.ToList() as TraCICompoundObject as TrafficLightProgramPhase)
+                .ToList();
+        }
 
     }
 
-public struct TrafficLightProgramPhase : ITraCIType
+public class TrafficLightProgramPhase : TraCICompoundObject, ITraCIType
     {
-    public byte TYPE => throw new NotImplementedException();
+    public new byte TYPE => throw new NotImplementedException();
     /// <summary>
     /// Duration in ms
     /// </summary>
-    public double Duration { get; init; }
+    public TraCIDouble Duration => this[0] as TraCIDouble;
 
-    public double MinDuration { get; init; }
+    public TraCIDouble MinDuration => this[1] as TraCIDouble;
 
-    public double MaxDuration { get; init; }
+    public TraCIDouble MaxDuration => this[2] as TraCIDouble;
 
-    public string Definition { get; init; }
+    public TraCIString Definition => this[3] as TraCIString;
     }
 

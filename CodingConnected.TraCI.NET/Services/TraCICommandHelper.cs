@@ -102,14 +102,13 @@ namespace CodingConnected.TraCI.NET.Services
             _ = _tcpService.SendMessage(command);
             }
 
-        public TraCIResponse<T> ExecuteGetCommand<T>(string id, byte commandType, byte messageType)
+        public IAnswerFromSumo ExecuteGetCommand(string id, byte commandType, byte messageType)
             {
             TraCICommand command = GetCommand(id, commandType, messageType);
             var response = _tcpService.SendMessage(command);
-
             try
                 {
-                return TraCIDataConverter.ExtractDataFromResults<T>(response, commandType, messageType);
+                return TraCIDataConverter.ExtractDataFromResults(response, commandType, messageType);
                 }
             catch
                 {

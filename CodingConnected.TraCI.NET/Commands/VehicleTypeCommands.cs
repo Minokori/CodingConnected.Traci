@@ -7,33 +7,26 @@ namespace CodingConnected.TraCI.NET.Commands
     {
     public class VehicleTypeCommands(ITcpService tcpService, ICommandHelperService helper) : TraCICommandsBase(tcpService, helper)
         {
-
         #region Public Methods
 
         /// <summary>
-        /// Returns a list of ids of currently loaded vehicle types 
+        /// Returns a list of ids of currently loaded vehicle types
         /// </summary>
         /// <returns></returns>
-        public TraCIResponse<List<string>> GetIdList()
+        public List<string> GetIdList()
             {
-            return
-                _helper.ExecuteGetCommand<List<string>>(
-                    "ignored",
-                    TraCIConstants.CMD_GET_VEHICLETYPE_VARIABLE,
-                    TraCIConstants.ID_LIST);
+            var result = _helper.ExecuteGetCommand("ignored", TraCIConstants.CMD_GET_VEHICLETYPE_VARIABLE, TraCIConstants.ID_LIST);
+            return ((TraCIStringList)result.Value).Value;
             }
 
         /// <summary>
         /// Returns the number of currently loaded vehicle types
         /// </summary>
         /// <returns></returns>
-        public TraCIResponse<int> GetIdCount()
+        public int GetIdCount()
             {
-            return
-                _helper.ExecuteGetCommand<int>(
-                    "ignored",
-                    TraCIConstants.CMD_GET_VEHICLETYPE_VARIABLE,
-                    TraCIConstants.ID_COUNT);
+            var result = _helper.ExecuteGetCommand("ignored", TraCIConstants.CMD_GET_VEHICLETYPE_VARIABLE, TraCIConstants.ID_COUNT);
+            return ((TraCIInteger)result.Value).Value;
             }
 
         /// <summary>
@@ -41,13 +34,10 @@ namespace CodingConnected.TraCI.NET.Commands
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public TraCIResponse<double> GetLength(string id)
+        public double GetLength(string id)
             {
-            return
-                _helper.ExecuteGetCommand<double>(
-                    id,
-                    TraCIConstants.CMD_GET_VEHICLETYPE_VARIABLE,
-                    TraCIConstants.VAR_LENGTH);
+            var result = _helper.ExecuteGetCommand(id, TraCIConstants.CMD_GET_VEHICLETYPE_VARIABLE, TraCIConstants.VAR_LENGTH);
+            return ((TraCIDouble)result.Value).Value;
             }
 
         /// <summary>
@@ -55,13 +45,10 @@ namespace CodingConnected.TraCI.NET.Commands
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public TraCIResponse<double> GetMaxSpeed(string id)
+        public double GetMaxSpeed(string id)
             {
-            return
-                _helper.ExecuteGetCommand<double>(
-                    id,
-                    TraCIConstants.CMD_GET_VEHICLETYPE_VARIABLE,
-                    TraCIConstants.VAR_MAXSPEED);
+            var result = _helper.ExecuteGetCommand(id, TraCIConstants.CMD_GET_VEHICLETYPE_VARIABLE, TraCIConstants.VAR_MAXSPEED);
+            return ((TraCIDouble)result.Value).Value;
             }
 
         /// <summary>
@@ -69,13 +56,10 @@ namespace CodingConnected.TraCI.NET.Commands
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public TraCIResponse<double> GetAccel(string id)
+        public double GetAccel(string id)
             {
-            return
-                _helper.ExecuteGetCommand<double>(
-                    id,
-                    TraCIConstants.CMD_GET_VEHICLETYPE_VARIABLE,
-                    TraCIConstants.VAR_ACCEL);
+            var result = _helper.ExecuteGetCommand(id, TraCIConstants.CMD_GET_VEHICLETYPE_VARIABLE, TraCIConstants.VAR_ACCEL);
+            return ((TraCIDouble)result.Value).Value;
             }
 
         /// <summary>
@@ -83,13 +67,10 @@ namespace CodingConnected.TraCI.NET.Commands
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public TraCIResponse<double> GetDecel(string id)
+        public double GetDecel(string id)
             {
-            return
-                _helper.ExecuteGetCommand<double>(
-                    id,
-                    TraCIConstants.CMD_GET_VEHICLETYPE_VARIABLE,
-                    TraCIConstants.VAR_DECEL);
+            var result = _helper.ExecuteGetCommand(id, TraCIConstants.CMD_GET_VEHICLETYPE_VARIABLE, TraCIConstants.VAR_DECEL);
+            return ((TraCIDouble)result.Value).Value;
             }
 
         /// <summary>
@@ -97,13 +78,10 @@ namespace CodingConnected.TraCI.NET.Commands
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public TraCIResponse<double> GetTau(string id)
+        public double GetTau(string id)
             {
-            return
-                _helper.ExecuteGetCommand<double>(
-                    id,
-                    TraCIConstants.CMD_GET_VEHICLETYPE_VARIABLE,
-                    TraCIConstants.VAR_TAU);
+            var result = _helper.ExecuteGetCommand(id, TraCIConstants.CMD_GET_VEHICLETYPE_VARIABLE, TraCIConstants.VAR_TAU);
+            return ((TraCIDouble)result.Value).Value;
             }
 
         /// <summary>
@@ -111,13 +89,10 @@ namespace CodingConnected.TraCI.NET.Commands
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public TraCIResponse<double> GetImperfection(string id)
+        public double GetImperfection(string id)
             {
-            return
-                _helper.ExecuteGetCommand<double>(
-                    id,
-                    TraCIConstants.CMD_GET_VEHICLETYPE_VARIABLE,
-                    TraCIConstants.VAR_IMPERFECTION);
+            var result = _helper.ExecuteGetCommand(id, TraCIConstants.CMD_GET_VEHICLETYPE_VARIABLE, TraCIConstants.VAR_IMPERFECTION);
+            return ((TraCIDouble)result.Value).Value;
             }
 
         /// <summary>
@@ -125,13 +100,10 @@ namespace CodingConnected.TraCI.NET.Commands
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public TraCIResponse<double> GetSpeedFactor(string id)
+        public double GetSpeedFactor(string id)
             {
-            return
-                _helper.ExecuteGetCommand<double>(
-                    id,
-                    TraCIConstants.CMD_GET_VEHICLETYPE_VARIABLE,
-                    TraCIConstants.VAR_SPEED_FACTOR);
+            var result = _helper.ExecuteGetCommand(id, TraCIConstants.CMD_GET_VEHICLETYPE_VARIABLE, TraCIConstants.VAR_SPEED_FACTOR);
+            return ((TraCIDouble)result.Value).Value;
             }
 
         /// <summary>
@@ -139,13 +111,10 @@ namespace CodingConnected.TraCI.NET.Commands
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public TraCIResponse<double> GetSpeedDeviation(string id)
+        public double GetSpeedDeviation(string id)
             {
-            return
-                _helper.ExecuteGetCommand<double>(
-                    id,
-                    TraCIConstants.CMD_GET_VEHICLETYPE_VARIABLE,
-                    TraCIConstants.VAR_SPEED_DEVIATION);
+            var result = _helper.ExecuteGetCommand(id, TraCIConstants.CMD_GET_VEHICLETYPE_VARIABLE, TraCIConstants.VAR_SPEED_DEVIATION);
+            return ((TraCIDouble)result.Value).Value;
             }
 
         /// <summary>
@@ -153,13 +122,10 @@ namespace CodingConnected.TraCI.NET.Commands
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public TraCIResponse<string> GetVehicleClass(string id)
+        public string GetVehicleClass(string id)
             {
-            return
-                _helper.ExecuteGetCommand<string>(
-                    id,
-                    TraCIConstants.CMD_GET_VEHICLETYPE_VARIABLE,
-                    TraCIConstants.VAR_VEHICLECLASS);
+            var result = _helper.ExecuteGetCommand(id, TraCIConstants.CMD_GET_VEHICLETYPE_VARIABLE, TraCIConstants.VAR_VEHICLECLASS);
+            return ((TraCIString)result.Value).Value;
             }
 
         /// <summary>
@@ -167,13 +133,10 @@ namespace CodingConnected.TraCI.NET.Commands
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public TraCIResponse<string> GetEmissionClass(string id)
+        public string GetEmissionClass(string id)
             {
-            return
-                _helper.ExecuteGetCommand<string>(
-                    id,
-                    TraCIConstants.CMD_GET_VEHICLETYPE_VARIABLE,
-                    TraCIConstants.VAR_EMISSIONCLASS);
+            var result = _helper.ExecuteGetCommand(id, TraCIConstants.CMD_GET_VEHICLETYPE_VARIABLE, TraCIConstants.VAR_EMISSIONCLASS);
+            return ((TraCIString)result.Value).Value;
             }
 
         /// <summary>
@@ -181,13 +144,10 @@ namespace CodingConnected.TraCI.NET.Commands
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public TraCIResponse<string> GetShapeClass(string id)
+        public string GetShapeClass(string id)
             {
-            return
-                _helper.ExecuteGetCommand<string>(
-                    id,
-                    TraCIConstants.CMD_GET_VEHICLETYPE_VARIABLE,
-                    TraCIConstants.VAR_SHAPECLASS);
+            var result = _helper.ExecuteGetCommand(id, TraCIConstants.CMD_GET_VEHICLETYPE_VARIABLE, TraCIConstants.VAR_SHAPECLASS);
+            return ((TraCIString)result.Value).Value;
             }
 
         /// <summary>
@@ -195,13 +155,10 @@ namespace CodingConnected.TraCI.NET.Commands
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public TraCIResponse<double> GetMinGap(string id)
+        public double GetMinGap(string id)
             {
-            return
-                _helper.ExecuteGetCommand<double>(
-                    id,
-                    TraCIConstants.CMD_GET_VEHICLETYPE_VARIABLE,
-                    TraCIConstants.VAR_MINGAP);
+            var result = _helper.ExecuteGetCommand(id, TraCIConstants.CMD_GET_VEHICLETYPE_VARIABLE, TraCIConstants.VAR_MINGAP);
+            return ((TraCIDouble)result.Value).Value;
             }
 
         /// <summary>
@@ -209,13 +166,10 @@ namespace CodingConnected.TraCI.NET.Commands
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public TraCIResponse<double> GetWidth(string id)
+        public double GetWidth(string id)
             {
-            return
-                _helper.ExecuteGetCommand<double>(
-                    id,
-                    TraCIConstants.CMD_GET_VEHICLETYPE_VARIABLE,
-                    TraCIConstants.VAR_WIDTH);
+            var result = _helper.ExecuteGetCommand(id, TraCIConstants.CMD_GET_VEHICLETYPE_VARIABLE, TraCIConstants.VAR_WIDTH);
+            return ((TraCIDouble)result.Value).Value;
             }
 
         /// <summary>
@@ -223,13 +177,10 @@ namespace CodingConnected.TraCI.NET.Commands
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public TraCIResponse<double> GetHeight(string id)
+        public double GetHeight(string id)
             {
-            return
-                _helper.ExecuteGetCommand<double>(
-                    id,
-                    TraCIConstants.CMD_GET_VEHICLETYPE_VARIABLE,
-                    TraCIConstants.VAR_HEIGHT);
+            var result = _helper.ExecuteGetCommand(id, TraCIConstants.CMD_GET_VEHICLETYPE_VARIABLE, TraCIConstants.VAR_HEIGHT);
+            return ((TraCIDouble)result.Value).Value;
             }
 
         /// <summary>
@@ -237,13 +188,10 @@ namespace CodingConnected.TraCI.NET.Commands
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public TraCIResponse<Color> GetColor(string id)
+        public Color GetColor(string id)
             {
-            return
-                _helper.ExecuteGetCommand<Color>(
-                    id,
-                    TraCIConstants.CMD_GET_VEHICLETYPE_VARIABLE,
-                    TraCIConstants.VAR_COLOR);
+            var result = _helper.ExecuteGetCommand(id, TraCIConstants.CMD_GET_VEHICLETYPE_VARIABLE, TraCIConstants.VAR_COLOR);
+            return ((Color)result.Value);
             }
 
         /// <summary>
@@ -251,13 +199,10 @@ namespace CodingConnected.TraCI.NET.Commands
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public TraCIResponse<double> GetMaxSpeedLat(string id)
+        public double GetMaxSpeedLat(string id)
             {
-            return
-                _helper.ExecuteGetCommand<double>(
-                    id,
-                    TraCIConstants.CMD_GET_VEHICLETYPE_VARIABLE,
-                    TraCIConstants.VAR_MAXSPEED_LAT);
+            var result = _helper.ExecuteGetCommand(id, TraCIConstants.CMD_GET_VEHICLETYPE_VARIABLE, TraCIConstants.VAR_MAXSPEED_LAT);
+            return ((TraCIDouble)result.Value).Value;
             }
 
         /// <summary>
@@ -265,13 +210,10 @@ namespace CodingConnected.TraCI.NET.Commands
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public TraCIResponse<double> GetMinGapLat(string id)
+        public double GetMinGapLat(string id)
             {
-            return
-                _helper.ExecuteGetCommand<double>(
-                    id,
-                    TraCIConstants.CMD_GET_VEHICLETYPE_VARIABLE,
-                    TraCIConstants.VAR_MINGAP_LAT);
+            var result = _helper.ExecuteGetCommand(id, TraCIConstants.CMD_GET_VEHICLETYPE_VARIABLE, TraCIConstants.VAR_MINGAP_LAT);
+            return ((TraCIDouble)result.Value).Value;
             }
 
         /// <summary>
@@ -279,13 +221,10 @@ namespace CodingConnected.TraCI.NET.Commands
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public TraCIResponse<string> GetLateralAlignment(string id)
+        public string GetLateralAlignment(string id)
             {
-            return
-                _helper.ExecuteGetCommand<string>(
-                    id,
-                    TraCIConstants.CMD_GET_VEHICLETYPE_VARIABLE,
-                    TraCIConstants.VAR_LATALIGNMENT);
+            var result = _helper.ExecuteGetCommand(id, TraCIConstants.CMD_GET_VEHICLETYPE_VARIABLE, TraCIConstants.VAR_LATALIGNMENT);
+            return ((TraCIString)result.Value).Value;
             }
 
         /// <summary>
@@ -293,14 +232,12 @@ namespace CodingConnected.TraCI.NET.Commands
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public TraCIResponse<double> GetActionStepLength(string id)
+        public double GetActionStepLength(string id)
             {
-            return
-                _helper.ExecuteGetCommand<double>(
-                    id,
-                    TraCIConstants.CMD_GET_VEHICLETYPE_VARIABLE,
+            var result = _helper.ExecuteGetCommand(id, TraCIConstants.CMD_GET_VEHICLETYPE_VARIABLE,
 #warning Check this
-                    TraCIConstants.VAR_MIN_EXPECTED_VEHICLES);
+                TraCIConstants.VAR_MIN_EXPECTED_VEHICLES);
+            return ((TraCIDouble)result.Value).Value;
             }
 
         /// <summary>
@@ -311,12 +248,7 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <returns></returns>
         public bool SetLength(string id, double length)
             {
-            return _helper.ExecuteSetCommand<object, double>(
-                    id,
-                    TraCIConstants.CMD_SET_VEHICLE_VARIABLE,
-                    TraCIConstants.VAR_LENGTH,
-                    length
-                    );
+            return _helper.ExecuteSetCommand<object, double>(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_LENGTH, length);
             }
 
         /// <summary>
@@ -327,12 +259,7 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <returns></returns>
         public bool SetMaxSpeed(string id, double speed)
             {
-            return _helper.ExecuteSetCommand<object, double>(
-                    id,
-                    TraCIConstants.CMD_SET_VEHICLE_VARIABLE,
-                    TraCIConstants.VAR_MAXSPEED,
-                    speed
-                    );
+            return _helper.ExecuteSetCommand<object, double>(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_MAXSPEED, speed);
             }
 
         /// <summary>
@@ -344,11 +271,11 @@ namespace CodingConnected.TraCI.NET.Commands
         public bool SetVehicleClass(string id, string vehicleClass)
             {
             return _helper.ExecuteSetCommand<object, string>(
-                    id,
-                    TraCIConstants.CMD_SET_VEHICLE_VARIABLE,
-                    TraCIConstants.VAR_VEHICLECLASS,
-                    vehicleClass
-                    );
+                id,
+                TraCIConstants.CMD_SET_VEHICLE_VARIABLE,
+                TraCIConstants.VAR_VEHICLECLASS,
+                vehicleClass
+            );
             }
 
         /// <summary>
@@ -360,11 +287,11 @@ namespace CodingConnected.TraCI.NET.Commands
         public bool SetSpeedFactor(string id, double speedFactor)
             {
             return _helper.ExecuteSetCommand<object, double>(
-                    id,
-                    TraCIConstants.CMD_SET_VEHICLE_VARIABLE,
-                    TraCIConstants.VAR_SPEED_FACTOR,
-                    speedFactor
-                    );
+                id,
+                TraCIConstants.CMD_SET_VEHICLE_VARIABLE,
+                TraCIConstants.VAR_SPEED_FACTOR,
+                speedFactor
+            );
             }
 
         /// <summary>
@@ -376,11 +303,11 @@ namespace CodingConnected.TraCI.NET.Commands
         public bool SetSpeedDeviation(string id, double speedDeviation)
             {
             return _helper.ExecuteSetCommand<object, double>(
-                    id,
-                    TraCIConstants.CMD_SET_VEHICLE_VARIABLE,
-                    TraCIConstants.VAR_SPEED_DEVIATION,
-                    speedDeviation
-                    );
+                id,
+                TraCIConstants.CMD_SET_VEHICLE_VARIABLE,
+                TraCIConstants.VAR_SPEED_DEVIATION,
+                speedDeviation
+            );
             }
 
         /// <summary>
@@ -392,11 +319,11 @@ namespace CodingConnected.TraCI.NET.Commands
         public bool SetEmissionClass(string id, string emissionClass)
             {
             return _helper.ExecuteSetCommand<object, string>(
-                    id,
-                    TraCIConstants.CMD_SET_VEHICLE_VARIABLE,
-                    TraCIConstants.VAR_EMISSIONCLASS,
-                    emissionClass
-                    );
+                id,
+                TraCIConstants.CMD_SET_VEHICLE_VARIABLE,
+                TraCIConstants.VAR_EMISSIONCLASS,
+                emissionClass
+            );
             }
 
         /// <summary>
@@ -407,12 +334,7 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <returns></returns>
         public bool SetWidth(string id, double width)
             {
-            return _helper.ExecuteSetCommand<object, double>(
-                    id,
-                    TraCIConstants.CMD_SET_VEHICLE_VARIABLE,
-                    TraCIConstants.VAR_WIDTH,
-                    width
-                    );
+            return _helper.ExecuteSetCommand<object, double>(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_WIDTH, width);
             }
 
         /// <summary>
@@ -423,12 +345,7 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <returns></returns>
         public bool SetHeight(string id, double height)
             {
-            return _helper.ExecuteSetCommand<object, double>(
-                    id,
-                    TraCIConstants.CMD_SET_VEHICLE_VARIABLE,
-                    TraCIConstants.VAR_HEIGHT,
-                    height
-                    );
+            return _helper.ExecuteSetCommand<object, double>(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_HEIGHT, height);
             }
 
         /// <summary>
@@ -439,12 +356,7 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <returns></returns>
         public bool SetMinGap(string id, double minGap)
             {
-            return _helper.ExecuteSetCommand<object, double>(
-                    id,
-                    TraCIConstants.CMD_SET_VEHICLE_VARIABLE,
-                    TraCIConstants.VAR_MINGAP,
-                    minGap
-                    );
+            return _helper.ExecuteSetCommand<object, double>(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_MINGAP, minGap);
             }
 
         /// <summary>
@@ -455,12 +367,7 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <returns></returns>
         public bool SetShapeClass(string id, string shapeClass)
             {
-            return _helper.ExecuteSetCommand<object, string>(
-                    id,
-                    TraCIConstants.CMD_SET_VEHICLE_VARIABLE,
-                    TraCIConstants.VAR_SHAPECLASS,
-                    shapeClass
-                    );
+            return _helper.ExecuteSetCommand<object, string>(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_SHAPECLASS, shapeClass);
             }
 
         /// <summary>
@@ -471,12 +378,7 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <returns></returns>
         public bool SetAccel(string id, double acceleration)
             {
-            return _helper.ExecuteSetCommand<object, double>(
-                    id,
-                    TraCIConstants.CMD_SET_VEHICLE_VARIABLE,
-                    TraCIConstants.VAR_ACCEL,
-                    acceleration
-                    );
+            return _helper.ExecuteSetCommand<object, double>(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_ACCEL, acceleration);
             }
 
         /// <summary>
@@ -487,12 +389,7 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <returns></returns>
         public bool SetDecel(string id, double decceleration)
             {
-            return _helper.ExecuteSetCommand<object, double>(
-                    id,
-                    TraCIConstants.CMD_SET_VEHICLE_VARIABLE,
-                    TraCIConstants.VAR_DECEL,
-                    decceleration
-                    );
+            return _helper.ExecuteSetCommand<object, double>(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_DECEL, decceleration);
             }
 
         /// <summary>
@@ -504,11 +401,11 @@ namespace CodingConnected.TraCI.NET.Commands
         public bool SetImperfection(string id, double imperfection)
             {
             return _helper.ExecuteSetCommand<object, double>(
-                    id,
-                    TraCIConstants.CMD_SET_VEHICLE_VARIABLE,
-                    TraCIConstants.VAR_IMPERFECTION,
-                    imperfection
-                    );
+                id,
+                TraCIConstants.CMD_SET_VEHICLE_VARIABLE,
+                TraCIConstants.VAR_IMPERFECTION,
+                imperfection
+            );
             }
 
         /// <summary>
@@ -519,12 +416,7 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <returns></returns>
         public bool SetTau(string id, double tau)
             {
-            return _helper.ExecuteSetCommand<object, double>(
-                    id,
-                    TraCIConstants.CMD_SET_VEHICLE_VARIABLE,
-                    TraCIConstants.VAR_TAU,
-                    tau
-                    );
+            return _helper.ExecuteSetCommand<object, double>(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_TAU, tau);
             }
 
         /// <summary>
@@ -535,12 +427,7 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <returns></returns>
         public bool SetColor(string id, Color color)
             {
-            return _helper.ExecuteSetCommand<object, Color>(
-                    id,
-                    TraCIConstants.CMD_SET_VEHICLE_VARIABLE,
-                    TraCIConstants.VAR_COLOR,
-                    color
-                    );
+            return _helper.ExecuteSetCommand<object, Color>(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_COLOR, color);
             }
 
         /// <summary>
@@ -551,12 +438,7 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <returns></returns>
         public bool SetMaxSpeedLat(string id, double maxSpeed)
             {
-            return _helper.ExecuteSetCommand<object, double>(
-                    id,
-                    TraCIConstants.CMD_SET_VEHICLE_VARIABLE,
-                    TraCIConstants.VAR_MAXSPEED_LAT,
-                    maxSpeed
-                    );
+            return _helper.ExecuteSetCommand<object, double>(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_MAXSPEED_LAT, maxSpeed);
             }
 
         /// <summary>
@@ -567,12 +449,7 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <returns></returns>
         public bool SetMinGapLat(string id, double minGap)
             {
-            return _helper.ExecuteSetCommand<object, double>(
-                    id,
-                    TraCIConstants.CMD_SET_VEHICLE_VARIABLE,
-                    TraCIConstants.VAR_MINGAP_LAT,
-                    minGap
-                    );
+            return _helper.ExecuteSetCommand<object, double>(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_MINGAP_LAT, minGap);
             }
 
         /// <summary>
@@ -583,12 +460,7 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <returns></returns>
         public bool SetLateralAlignment(string id, string alignment)
             {
-            return _helper.ExecuteSetCommand<object, string>(
-                    id,
-                    TraCIConstants.CMD_SET_VEHICLE_VARIABLE,
-                    TraCIConstants.VAR_LATALIGNMENT,
-                    alignment
-                    );
+            return _helper.ExecuteSetCommand<object, string>(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_LATALIGNMENT, alignment);
             }
 
         /// <summary>
@@ -599,12 +471,7 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <returns></returns>
         public bool Copy(string id, string newId)
             {
-            return _helper.ExecuteSetCommand<object, string>(
-                    id,
-                    TraCIConstants.CMD_SET_VEHICLE_VARIABLE,
-                    TraCIConstants.COPY,
-                    newId
-                    );
+            return _helper.ExecuteSetCommand<object, string>(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.COPY, newId);
             }
 
         /// <summary>
@@ -612,7 +479,7 @@ namespace CodingConnected.TraCI.NET.Commands
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public TraCIResponse<object> SetActionStepLengt(string id)
+        public TraCIResult SetActionStepLengt(string id)
             {
             throw new NotImplementedException();
             }
@@ -624,7 +491,8 @@ namespace CodingConnected.TraCI.NET.Commands
                 endTime,
                 objectId,
                 TraCIConstants.CMD_SUBSCRIBE_VEHICLETYPE_VARIABLE,
-                ListOfVariablesToSubsribeTo);
+                ListOfVariablesToSubsribeTo
+            );
             }
 
         #endregion // Public Methods

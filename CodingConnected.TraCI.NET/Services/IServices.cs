@@ -18,7 +18,7 @@ public interface ITcpService
 
 public interface ICommandHelperService
     {
-    TraCIResponse<T> ExecuteGetCommand<T>(string id, byte commandType, byte messageType);
+    IAnswerFromSumo ExecuteGetCommand(string id, byte commandType, byte messageType);
 
 
     bool ExecuteSetCommand<Tresponse, Tvalue>(string id, byte commandType, byte messageType, Tvalue value);

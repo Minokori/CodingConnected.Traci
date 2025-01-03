@@ -1,16 +1,16 @@
 ﻿namespace CodingConnected.TraCI.NET.Types;
 
-public readonly struct EdgeInformation : ITraCIType
+public class EdgeInformation : TraCICompoundObject, ITraCIType
     {
-    public byte TYPE => throw new NotImplementedException();
-    public string LaneId { get; init; }
-    public double Length { get; init; }
-    public double Occupation { get; init; }
-    public byte OffsetToBestLane { get; init; }
+    public new byte TYPE => throw new NotImplementedException();
+    public TraCIString LaneId => this[0] as TraCIString;
+    public TraCIDouble Length => this[1] as TraCIDouble;
+    public TraCIDouble Occupation => this[2] as TraCIDouble;
+    public TraCIByte OffsetToBestLane => this[3] as TraCIByte;
     /// <summary>
     /// 0: lane may not be used for continuing drive, 1: it may be used
     /// </summary>
-    public byte LaneInformation { get; init; }
-    public List<string> BestSubsequentLanes { get; init; }
+    public TraCIUByte LaneInformation => this[4] as TraCIUByte;
+    public TraCIStringList BestSubsequentLanes => this[5] as TraCIStringList;
     }
 

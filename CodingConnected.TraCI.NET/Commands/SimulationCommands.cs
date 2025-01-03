@@ -5,23 +5,18 @@ using CodingConnected.TraCI.NET.Types;
 
 namespace CodingConnected.TraCI.NET.Commands
     {
-    public class SimulationCommands(ITcpService tcpService, ICommandHelperService helper)
-        : TraCICommandsBase(tcpService, helper)
+    public class SimulationCommands(ITcpService tcpService, ICommandHelperService helper) : TraCICommandsBase(tcpService, helper)
         {
-        #region Public Methods
 
         /// <summary>
         /// Returns the current simulation time (in s)
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public TraCIResponse<int> GetCurrentTime(string id)
+        public int GetCurrentTime(string id)
             {
-            return _helper.ExecuteGetCommand<int>(
-                id,
-                TraCIConstants.CMD_GET_SIM_VARIABLE,
-                TraCIConstants.VAR_TIME_STEP
-            );
+            var result = _helper.ExecuteGetCommand(id, TraCIConstants.CMD_GET_SIM_VARIABLE, TraCIConstants.VAR_TIME_STEP);
+            return ((TraCIInteger)result.Value).Value;
             }
 
         /// <summary>
@@ -29,13 +24,10 @@ namespace CodingConnected.TraCI.NET.Commands
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public TraCIResponse<double> GetTime(string id)
+        public double GetTime(string id)
             {
-            return _helper.ExecuteGetCommand<double>(
-                id,
-                TraCIConstants.CMD_GET_SIM_VARIABLE,
-                TraCIConstants.VAR_TIME
-            );
+            var result = _helper.ExecuteGetCommand(id, TraCIConstants.CMD_GET_SIM_VARIABLE, TraCIConstants.VAR_TIME);
+            return ((TraCIDouble)result.Value).Value;
             }
 
         /// <summary>
@@ -43,13 +35,10 @@ namespace CodingConnected.TraCI.NET.Commands
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public TraCIResponse<int> GetLoadedNumber(string id)
+        public int GetLoadedNumber(string id)
             {
-            return _helper.ExecuteGetCommand<int>(
-                id,
-                TraCIConstants.CMD_GET_SIM_VARIABLE,
-                TraCIConstants.VAR_LOADED_VEHICLES_NUMBER
-            );
+            var result = _helper.ExecuteGetCommand(id, TraCIConstants.CMD_GET_SIM_VARIABLE, TraCIConstants.VAR_LOADED_VEHICLES_NUMBER);
+            return ((TraCIInteger)result.Value).Value;
             }
 
         /// <summary>
@@ -57,13 +46,10 @@ namespace CodingConnected.TraCI.NET.Commands
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public TraCIResponse<List<string>> GetLoadedIDList(string id)
+        public List<string> GetLoadedIDList(string id)
             {
-            return _helper.ExecuteGetCommand<List<string>>(
-                id,
-                TraCIConstants.CMD_GET_SIM_VARIABLE,
-                TraCIConstants.VAR_LOADED_VEHICLES_IDS
-            );
+            var result = _helper.ExecuteGetCommand(id, TraCIConstants.CMD_GET_SIM_VARIABLE, TraCIConstants.VAR_LOADED_VEHICLES_IDS);
+            return ((TraCIStringList)result.Value).Value;
             }
 
         /// <summary>
@@ -71,13 +57,10 @@ namespace CodingConnected.TraCI.NET.Commands
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public TraCIResponse<int> GetDepartedNumber(string id)
+        public int GetDepartedNumber(string id)
             {
-            return _helper.ExecuteGetCommand<int>(
-                id,
-                TraCIConstants.CMD_GET_SIM_VARIABLE,
-                TraCIConstants.VAR_DEPARTED_VEHICLES_NUMBER
-            );
+            var result = _helper.ExecuteGetCommand(id, TraCIConstants.CMD_GET_SIM_VARIABLE, TraCIConstants.VAR_DEPARTED_VEHICLES_NUMBER);
+            return ((TraCIInteger)result.Value).Value;
             }
 
         /// <summary>
@@ -85,13 +68,10 @@ namespace CodingConnected.TraCI.NET.Commands
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public TraCIResponse<List<string>> GetDepartedIDList(string id)
+        public List<string> GetDepartedIDList(string id)
             {
-            return _helper.ExecuteGetCommand<List<string>>(
-                id,
-                TraCIConstants.CMD_GET_SIM_VARIABLE,
-                TraCIConstants.VAR_DEPARTED_VEHICLES_IDS
-            );
+            var result = _helper.ExecuteGetCommand(id, TraCIConstants.CMD_GET_SIM_VARIABLE, TraCIConstants.VAR_DEPARTED_VEHICLES_IDS);
+            return ((TraCIStringList)result.Value).Value;
             }
 
         /// <summary>
@@ -99,13 +79,10 @@ namespace CodingConnected.TraCI.NET.Commands
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public TraCIResponse<int> GetStartingTeleportNumber(string id)
+        public int GetStartingTeleportNumber(string id)
             {
-            return _helper.ExecuteGetCommand<int>(
-                id,
-                TraCIConstants.CMD_GET_SIM_VARIABLE,
-                TraCIConstants.VAR_TELEPORT_STARTING_VEHICLES_NUMBER
-            );
+            var result = _helper.ExecuteGetCommand(id, TraCIConstants.CMD_GET_SIM_VARIABLE, TraCIConstants.VAR_TELEPORT_STARTING_VEHICLES_NUMBER);
+            return ((TraCIInteger)result.Value).Value;
             }
 
         /// <summary>
@@ -113,13 +90,14 @@ namespace CodingConnected.TraCI.NET.Commands
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public TraCIResponse<List<string>> GetStartingTeleportIDList(string id)
+        public List<string> GetStartingTeleportIDList(string id)
             {
-            return _helper.ExecuteGetCommand<List<string>>(
+            var result = _helper.ExecuteGetCommand(
                 id,
                 TraCIConstants.CMD_GET_SIM_VARIABLE,
                 TraCIConstants.VAR_TELEPORT_STARTING_VEHICLES_IDS
             );
+            return ((TraCIStringList)result.Value).Value;
             }
 
         /// <summary>
@@ -127,13 +105,10 @@ namespace CodingConnected.TraCI.NET.Commands
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public TraCIResponse<int> GetEndingTeleportNumber(string id)
+        public int GetEndingTeleportNumber(string id)
             {
-            return _helper.ExecuteGetCommand<int>(
-                id,
-                TraCIConstants.CMD_GET_SIM_VARIABLE,
-                TraCIConstants.VAR_TELEPORT_ENDING_VEHICLES_NUMBER
-            );
+            var result = _helper.ExecuteGetCommand(id, TraCIConstants.CMD_GET_SIM_VARIABLE, TraCIConstants.VAR_TELEPORT_ENDING_VEHICLES_NUMBER);
+            return ((TraCIInteger)result.Value).Value;
             }
 
         /// <summary>
@@ -141,13 +116,10 @@ namespace CodingConnected.TraCI.NET.Commands
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public TraCIResponse<List<string>> GetEndingTeleportIDList(string id)
+        public List<string> GetEndingTeleportIDList(string id)
             {
-            return _helper.ExecuteGetCommand<List<string>>(
-                id,
-                TraCIConstants.CMD_GET_SIM_VARIABLE,
-                TraCIConstants.VAR_TELEPORT_ENDING_VEHICLES_IDS
-            );
+            var result = _helper.ExecuteGetCommand(id, TraCIConstants.CMD_GET_SIM_VARIABLE, TraCIConstants.VAR_TELEPORT_ENDING_VEHICLES_IDS);
+            return ((TraCIStringList)result.Value).Value;
             }
 
         /// <summary>
@@ -155,13 +127,10 @@ namespace CodingConnected.TraCI.NET.Commands
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public TraCIResponse<int> GetArrivedNumber(string id)
+        public int GetArrivedNumber(string id)
             {
-            return _helper.ExecuteGetCommand<int>(
-                id,
-                TraCIConstants.CMD_GET_SIM_VARIABLE,
-                TraCIConstants.VAR_ARRIVED_VEHICLES_NUMBER
-            );
+            var result = _helper.ExecuteGetCommand(id, TraCIConstants.CMD_GET_SIM_VARIABLE, TraCIConstants.VAR_ARRIVED_VEHICLES_NUMBER);
+            return ((TraCIInteger)result.Value).Value;
             }
 
         /// <summary>
@@ -169,13 +138,10 @@ namespace CodingConnected.TraCI.NET.Commands
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public TraCIResponse<List<string>> GetArrivedIDList(string id)
+        public List<string> GetArrivedIDList(string id)
             {
-            return _helper.ExecuteGetCommand<List<string>>(
-                id,
-                TraCIConstants.CMD_GET_SIM_VARIABLE,
-                TraCIConstants.VAR_ARRIVED_VEHICLES_IDS
-            );
+            var result = _helper.ExecuteGetCommand(id, TraCIConstants.CMD_GET_SIM_VARIABLE, TraCIConstants.VAR_ARRIVED_VEHICLES_IDS);
+            return ((TraCIStringList)result.Value).Value;
             }
 
         /// <summary>
@@ -183,13 +149,10 @@ namespace CodingConnected.TraCI.NET.Commands
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public TraCIResponse<Polygon> GetNetBoundary(string id)
+        public Polygon GetNetBoundary(string id)
             {
-            return _helper.ExecuteGetCommand<Polygon>(
-                id,
-                TraCIConstants.CMD_GET_SIM_VARIABLE,
-                TraCIConstants.VAR_NET_BOUNDING_BOX
-            );
+            var result = _helper.ExecuteGetCommand(id, TraCIConstants.CMD_GET_SIM_VARIABLE, TraCIConstants.VAR_NET_BOUNDING_BOX);
+            return (Polygon)result.Value;
             }
 
         /// <summary>
@@ -197,13 +160,10 @@ namespace CodingConnected.TraCI.NET.Commands
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public TraCIResponse<int> GetMinExpectedNumber(string id)
+        public int GetMinExpectedNumber(string id)
             {
-            return _helper.ExecuteGetCommand<int>(
-                id,
-                TraCIConstants.CMD_GET_SIM_VARIABLE,
-                TraCIConstants.VAR_MIN_EXPECTED_VEHICLES
-            );
+            var result = _helper.ExecuteGetCommand(id, TraCIConstants.CMD_GET_SIM_VARIABLE, TraCIConstants.VAR_MIN_EXPECTED_VEHICLES);
+            return ((TraCIInteger)result.Value).Value;
             }
 
         /// <summary>
@@ -211,13 +171,10 @@ namespace CodingConnected.TraCI.NET.Commands
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public TraCIResponse<int> GetStopStartingVehiclesNumber(string id)
+        public int GetStopStartingVehiclesNumber(string id)
             {
-            return _helper.ExecuteGetCommand<int>(
-                id,
-                TraCIConstants.CMD_GET_SIM_VARIABLE,
-                TraCIConstants.VAR_STOP_STARTING_VEHICLES_NUMBER
-            );
+            var result = _helper.ExecuteGetCommand(id, TraCIConstants.CMD_GET_SIM_VARIABLE, TraCIConstants.VAR_STOP_STARTING_VEHICLES_NUMBER);
+            return ((TraCIInteger)result.Value).Value;
             }
 
         /// <summary>
@@ -225,13 +182,10 @@ namespace CodingConnected.TraCI.NET.Commands
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public TraCIResponse<List<string>> GetStopStartingVehiclesIDList(string id)
+        public List<string> GetStopStartingVehiclesIDList(string id)
             {
-            return _helper.ExecuteGetCommand<List<string>>(
-                id,
-                TraCIConstants.CMD_GET_SIM_VARIABLE,
-                TraCIConstants.VAR_STOP_STARTING_VEHICLES_IDS
-            );
+            var result = _helper.ExecuteGetCommand(id, TraCIConstants.CMD_GET_SIM_VARIABLE, TraCIConstants.VAR_STOP_STARTING_VEHICLES_IDS);
+            return ((TraCIStringList)result.Value).Value;
             }
 
         /// <summary>
@@ -239,13 +193,10 @@ namespace CodingConnected.TraCI.NET.Commands
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public TraCIResponse<int> GetStopEndingVehiclesNumber(string id)
+        public int GetStopEndingVehiclesNumber(string id)
             {
-            return _helper.ExecuteGetCommand<int>(
-                id,
-                TraCIConstants.CMD_GET_SIM_VARIABLE,
-                TraCIConstants.VAR_STOP_ENDING_VEHICLES_NUMBER
-            );
+            var result = _helper.ExecuteGetCommand(id, TraCIConstants.CMD_GET_SIM_VARIABLE, TraCIConstants.VAR_STOP_ENDING_VEHICLES_NUMBER);
+            return ((TraCIInteger)result.Value).Value;
             }
 
         /// <summary>
@@ -253,13 +204,10 @@ namespace CodingConnected.TraCI.NET.Commands
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public TraCIResponse<List<string>> GetStopEndingVehiclesIDList(string id)
+        public List<string> GetStopEndingVehiclesIDList(string id)
             {
-            return _helper.ExecuteGetCommand<List<string>>(
-                id,
-                TraCIConstants.CMD_GET_SIM_VARIABLE,
-                TraCIConstants.VAR_STOP_ENDING_VEHICLES_IDS
-            );
+            var result = _helper.ExecuteGetCommand(id, TraCIConstants.CMD_GET_SIM_VARIABLE, TraCIConstants.VAR_STOP_ENDING_VEHICLES_IDS);
+            return ((TraCIStringList)result.Value).Value;
             }
 
         /// <summary>
@@ -267,13 +215,10 @@ namespace CodingConnected.TraCI.NET.Commands
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public TraCIResponse<int> GetCollidingVehiclesNumber(string id)
+        public int GetCollidingVehiclesNumber(string id)
             {
-            return _helper.ExecuteGetCommand<int>(
-                id,
-                TraCIConstants.CMD_GET_SIM_VARIABLE,
-                TraCIConstants.VAR_COLLIDING_VEHICLES_NUMBER
-            );
+            var result = _helper.ExecuteGetCommand(id, TraCIConstants.CMD_GET_SIM_VARIABLE, TraCIConstants.VAR_COLLIDING_VEHICLES_NUMBER);
+            return ((TraCIInteger)result.Value).Value;
             }
 
         /// <summary>
@@ -281,13 +226,10 @@ namespace CodingConnected.TraCI.NET.Commands
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public TraCIResponse<List<string>> GetCollidingVehiclesIDList(string id)
+        public List<string> GetCollidingVehiclesIDList(string id)
             {
-            return _helper.ExecuteGetCommand<List<string>>(
-                id,
-                TraCIConstants.CMD_GET_SIM_VARIABLE,
-                TraCIConstants.VAR_COLLIDING_VEHICLES_IDS
-            );
+            var result = _helper.ExecuteGetCommand(id, TraCIConstants.CMD_GET_SIM_VARIABLE, TraCIConstants.VAR_COLLIDING_VEHICLES_IDS);
+            return ((TraCIStringList)result.Value).Value;
             }
 
         /// <summary>
@@ -295,13 +237,10 @@ namespace CodingConnected.TraCI.NET.Commands
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public TraCIResponse<int> GetEmergencyStoppingVehiclesNumber(string id)
+        public int GetEmergencyStoppingVehiclesNumber(string id)
             {
-            return _helper.ExecuteGetCommand<int>(
-                id,
-                TraCIConstants.CMD_GET_SIM_VARIABLE,
-                TraCIConstants.VAR_EMERGENCYSTOPPING_VEHICLES_NUMBER
-            );
+            var result = _helper.ExecuteGetCommand(id, TraCIConstants.CMD_GET_SIM_VARIABLE, TraCIConstants.VAR_EMERGENCYSTOPPING_VEHICLES_NUMBER);
+            return ((TraCIInteger)result.Value).Value;
             }
 
         /// <summary>
@@ -309,13 +248,14 @@ namespace CodingConnected.TraCI.NET.Commands
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public TraCIResponse<List<string>> GetEmergencyStoppingVehiclesIDList(string id)
+        public List<string> GetEmergencyStoppingVehiclesIDList(string id)
             {
-            return _helper.ExecuteGetCommand<List<string>>(
+            var result = _helper.ExecuteGetCommand(
                 id,
                 TraCIConstants.CMD_GET_SIM_VARIABLE,
                 TraCIConstants.VAR_EMERGENCYSTOPPING_VEHICLES_IDS
             );
+            return ((TraCIStringList)result.Value).Value;
             }
 
         /// <summary>
@@ -323,13 +263,10 @@ namespace CodingConnected.TraCI.NET.Commands
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public TraCIResponse<int> GetParkingStartingVehiclesNumber(string id)
+        public int GetParkingStartingVehiclesNumber(string id)
             {
-            return _helper.ExecuteGetCommand<int>(
-                id,
-                TraCIConstants.CMD_GET_SIM_VARIABLE,
-                TraCIConstants.VAR_PARKING_STARTING_VEHICLES_NUMBER
-            );
+            var result = _helper.ExecuteGetCommand(id, TraCIConstants.CMD_GET_SIM_VARIABLE, TraCIConstants.VAR_PARKING_STARTING_VEHICLES_NUMBER);
+            return ((TraCIInteger)result.Value).Value;
             }
 
         /// <summary>
@@ -337,27 +274,22 @@ namespace CodingConnected.TraCI.NET.Commands
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public TraCIResponse<List<string>> GetParkingStartingVehiclesIDList(string id)
+        public List<string> GetParkingStartingVehiclesIDList(string id)
             {
-            return _helper.ExecuteGetCommand<List<string>>(
-                id,
-                TraCIConstants.CMD_GET_SIM_VARIABLE,
-                TraCIConstants.VAR_PARKING_STARTING_VEHICLES_IDS
-            );
+            var result = _helper.ExecuteGetCommand(id, TraCIConstants.CMD_GET_SIM_VARIABLE, TraCIConstants.VAR_PARKING_STARTING_VEHICLES_IDS);
+            return ((TraCIStringList)result.Value).Value;
             }
+
 
         /// <summary>
         /// 	The number of vehicles that begin to continue their journey, leaving a scheduled parking in this time step.
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public TraCIResponse<int> GetParkingEndingVehiclesNumber(string id)
+        public int GetParkingEndingVehiclesNumber(string id)
             {
-            return _helper.ExecuteGetCommand<int>(
-                id,
-                TraCIConstants.CMD_GET_SIM_VARIABLE,
-                TraCIConstants.VAR_PARKING_ENDING_VEHICLES_NUMBER
-            );
+            var result = _helper.ExecuteGetCommand(id, TraCIConstants.CMD_GET_SIM_VARIABLE, TraCIConstants.VAR_PARKING_ENDING_VEHICLES_NUMBER);
+            return ((TraCIInteger)result.Value).Value;
             }
 
         /// <summary>
@@ -365,13 +297,10 @@ namespace CodingConnected.TraCI.NET.Commands
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public TraCIResponse<List<string>> GetParkingEndingVehiclesIDList(string id)
+        public List<string> GetParkingEndingVehiclesIDList(string id)
             {
-            return _helper.ExecuteGetCommand<List<string>>(
-                id,
-                TraCIConstants.CMD_GET_SIM_VARIABLE,
-                TraCIConstants.VAR_PARKING_ENDING_VEHICLES_IDS
-            );
+            var result = _helper.ExecuteGetCommand(id, TraCIConstants.CMD_GET_SIM_VARIABLE, TraCIConstants.VAR_PARKING_ENDING_VEHICLES_IDS);
+            return ((TraCIStringList)result.Value).Value;
             }
 
         /// <summary>
@@ -379,13 +308,10 @@ namespace CodingConnected.TraCI.NET.Commands
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public TraCIResponse<int> GetBusStopWaiting(string id)
+        public int GetBusStopWaiting(string id)
             {
-            return _helper.ExecuteGetCommand<int>(
-                id,
-                TraCIConstants.CMD_GET_SIM_VARIABLE,
-                TraCIConstants.VAR_BUS_STOP_WAITING
-            );
+            var result = _helper.ExecuteGetCommand(id, TraCIConstants.CMD_GET_SIM_VARIABLE, TraCIConstants.VAR_BUS_STOP_WAITING);
+            return ((TraCIInteger)result.Value).Value;
             }
 
         /// <summary>
@@ -393,13 +319,10 @@ namespace CodingConnected.TraCI.NET.Commands
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public TraCIResponse<double> GetDeltaT(string id)
+        public double GetDeltaT(string id)
             {
-            return _helper.ExecuteGetCommand<double>(
-                id,
-                TraCIConstants.CMD_GET_SIM_VARIABLE,
-                TraCIConstants.VAR_DELTA_T
-            );
+            var result = _helper.ExecuteGetCommand(id, TraCIConstants.CMD_GET_SIM_VARIABLE, TraCIConstants.VAR_DELTA_T);
+            return ((TraCIDouble)result.Value).Value;
             }
 
         /// <summary>
@@ -407,13 +330,10 @@ namespace CodingConnected.TraCI.NET.Commands
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public TraCIResponse<string> GetParameter(string id)
+        public string GetParameter(string id)
             {
-            return _helper.ExecuteGetCommand<string>(
-                id,
-                TraCIConstants.CMD_GET_SIM_VARIABLE,
-                TraCIConstants.VAR_PARAMETER
-            );
+            var result = _helper.ExecuteGetCommand(id, TraCIConstants.CMD_GET_SIM_VARIABLE, TraCIConstants.VAR_PARAMETER);
+            return ((TraCIString)result.Value).Value;
             }
 
         // TODO: 'extended retrieval', see: http://sumo.dlr.de/wiki/TraCI/Simulation_Value_Retrieval
@@ -442,29 +362,12 @@ namespace CodingConnected.TraCI.NET.Commands
         /// <returns></returns>
         public bool SaveState(string id, string filename)
             {
-            return _helper.ExecuteSetCommand<object, string>(
-                id,
-                TraCIConstants.CMD_SET_SIM_VARIABLE,
-                TraCIConstants.CMD_SAVE_SIMSTATE,
-                filename
-            );
+            return _helper.ExecuteSetCommand<object, string>(id, TraCIConstants.CMD_SET_SIM_VARIABLE, TraCIConstants.CMD_SAVE_SIMSTATE, filename);
             }
 
-        public void Subscribe(
-            string objectId,
-            int beginTime,
-            int endTime,
-            List<byte> ListOfVariablesToSubsribeTo
-        )
+        public void Subscribe(string objectId, int beginTime, int endTime, List<byte> ListOfVariablesToSubsribeTo)
             {
-            _helper.ExecuteSubscribeCommand(
-                beginTime,
-                endTime,
-                objectId,
-                TraCIConstants.CMD_SUBSCRIBE_SIM_VARIABLE,
-                ListOfVariablesToSubsribeTo
-            );
+            _helper.ExecuteSubscribeCommand(beginTime, endTime, objectId, TraCIConstants.CMD_SUBSCRIBE_SIM_VARIABLE, ListOfVariablesToSubsribeTo);
             }
-        #endregion // Public Methods
         }
     }

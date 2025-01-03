@@ -5,12 +5,10 @@ using CodingConnected.TraCI.NET.Types;
 
 namespace CodingConnected.TraCI.NET.Commands;
 
-public class JunctionCommands(ITcpService tcpService, ICommandHelperService helper)
-    : TraCIContextSubscribableCommands(tcpService, helper)
+public class JunctionCommands(ITcpService tcpService, ICommandHelperService helper) : TraCIContextSubscribableCommands(tcpService, helper)
     {
     #region Protected Override Methods
-    protected override byte ContextSubscribeCommand =>
-        TraCIConstants.CMD_SUBSCRIBE_JUNCTION_CONTEXT;
+    protected override byte ContextSubscribeCommand => TraCIConstants.CMD_SUBSCRIBE_JUNCTION_CONTEXT;
 
     #endregion Protected Override Methods
 
@@ -20,26 +18,20 @@ public class JunctionCommands(ITcpService tcpService, ICommandHelperService help
     /// Returns a list of ids of all junctions within the scenario
     /// </summary>
     /// <returns></returns>
-    public TraCIResponse<List<string>> GetIdList()
+    public List<string> GetIdList()
         {
-        return _helper.ExecuteGetCommand<List<string>>(
-            "ignored",
-            TraCIConstants.CMD_GET_JUNCTION_VARIABLE,
-            TraCIConstants.ID_LIST
-        );
+        var result = _helper.ExecuteGetCommand("ignored", TraCIConstants.CMD_GET_JUNCTION_VARIABLE, TraCIConstants.ID_LIST);
+        return ((TraCIStringList)result).Value;
         }
 
     /// <summary>
     /// Returns the number of junctions within the scenario
     /// </summary>
     /// <returns></returns>
-    public TraCIResponse<int> GetIdCount()
+    public int GetIdCount()
         {
-        return _helper.ExecuteGetCommand<int>(
-            "ignored",
-            TraCIConstants.CMD_GET_JUNCTION_VARIABLE,
-            TraCIConstants.ID_COUNT
-        );
+        var result = _helper.ExecuteGetCommand("ignored", TraCIConstants.CMD_GET_JUNCTION_VARIABLE, TraCIConstants.ID_COUNT);
+        return ((TraCIInteger)result).Value;
         }
 
     /// <summary>
@@ -47,13 +39,10 @@ public class JunctionCommands(ITcpService tcpService, ICommandHelperService help
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    public TraCIResponse<Position2D> GetPosition(string id)
+    public Position2D GetPosition(string id)
         {
-        return _helper.ExecuteGetCommand<Position2D>(
-            id,
-            TraCIConstants.CMD_GET_JUNCTION_VARIABLE,
-            TraCIConstants.VAR_POSITION
-        );
+        var result = _helper.ExecuteGetCommand(id, TraCIConstants.CMD_GET_JUNCTION_VARIABLE, TraCIConstants.VAR_POSITION);
+        return (Position2D)result.Value;
         }
 
     /// <summary>
@@ -61,30 +50,15 @@ public class JunctionCommands(ITcpService tcpService, ICommandHelperService help
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    public TraCIResponse<Polygon> GetShape(string id)
+    public Polygon GetShape(string id)
         {
-        return _helper.ExecuteGetCommand<Polygon>(
-            id,
-            TraCIConstants.CMD_GET_JUNCTION_VARIABLE,
-            TraCIConstants.VAR_SHAPE
-        );
+        var result = _helper.ExecuteGetCommand(id, TraCIConstants.CMD_GET_JUNCTION_VARIABLE, TraCIConstants.VAR_SHAPE);
+        return (Polygon)result.Value;
         }
 
-    public void Subscribe(
-        string objectId,
-        int beginTime,
-        int endTime,
-        List<byte> ListOfVariablesToSubsribeTo
-    )
+    public void Subscribe(string objectId, int beginTime, int endTime, List<byte> ListOfVariablesToSubsribeTo)
         {
-        _helper.ExecuteSubscribeCommand(
-            beginTime,
-            endTime,
-            objectId,
-            TraCIConstants.CMD_SUBSCRIBE_JUNCTION_VARIABLE,
-            ListOfVariablesToSubsribeTo
-        );
+        _helper.ExecuteSubscribeCommand(beginTime, endTime, objectId, TraCIConstants.CMD_SUBSCRIBE_JUNCTION_VARIABLE, ListOfVariablesToSubsribeTo);
         }
     #endregion // Public Methods
     }
-
