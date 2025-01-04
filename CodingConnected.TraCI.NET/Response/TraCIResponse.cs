@@ -2,10 +2,23 @@
 using static CodingConnected.TraCI.NET.Helpers.TraCIDataConverter;
 namespace CodingConnected.TraCI.NET.Response;
 
+
+/// <summary>
+/// The status code of a TraCI command.
+/// </summary>
 public enum ResultCode : byte
     {
+    /// <summary>
+    /// success
+    /// </summary>
     Success = 0x00,
+    /// <summary>
+    /// failed
+    /// </summary>
     Failed = 0xff,
+    /// <summary>
+    /// command not implemented
+    /// </summary>
     NotImplemented = 0x01
     }
 
@@ -14,8 +27,9 @@ public enum ResultCode : byte
 
 public class TraCISubscriptionResponse
     {
-    public TraCIString ObjectID { get; set; }
     public byte Identifier { get; set; }
+    public TraCIString ObjectId { get; set; }
+
     public virtual TraCIByte VariableCount { get; set; }
     public List<TraciSubscriptionResponseUnit> Responses { get; set; }
     /// <summary>
@@ -25,12 +39,7 @@ public class TraCISubscriptionResponse
     /// <returns></returns>
     public static Tuple<TraCISubscriptionResponse, IEnumerable<byte>> FromBytes(IEnumerable<byte> bytes)
         {
-        (var id, bytes) = TraCIString.FromBytes(bytes);
-        TraCISubscriptionResponse result = new()
-            {
-            ObjectID = id,
-            };
-        return new(result, bytes);
+        throw new NotImplementedException();
         }
 
     }
@@ -38,17 +47,22 @@ public class TraCISubscriptionResponse
 public class VariableSubscriptionResponse : TraCISubscriptionResponse
     {
 
-    new public static Tuple<VariableSubscriptionResponse, IEnumerable<byte>> FromBytes(IEnumerable<byte> bytes)
+    public static new Tuple<VariableSubscriptionResponse, IEnumerable<byte>> FromBytes(IEnumerable<byte> bytes)
         {
-        (TraCIByte variableCount, bytes) = TraCIByte.FromBytes(bytes);
-        (var result, bytes) = TraCISubscriptionResponse.FromBytes(bytes);
-        result.VariableCount = variableCount;
+        (var objectId, bytes) = TraCIString.FromBytes(bytes);
+        (var variableCount, bytes) = TraCIByte.FromBytes(bytes);
+        VariableSubscriptionResponse result = new()
+            {
+            ObjectId = objectId,
+            VariableCount = variableCount,
+            Responses = []
+            };
         for (var i = 0; i < result.VariableCount.Value; i++)
             {
             (var response, bytes) = TraciSubscriptionResponseUnit.FromBytes(bytes);
-            (result as VariableSubscriptionResponse).Responses.Add(response);
+            result.Responses.Add(response);
             }
-        return new((VariableSubscriptionResponse)result, bytes);
+        return new(result, bytes);
         }
     }
 
@@ -57,30 +71,37 @@ public class VariableSubscriptionResponse : TraCISubscriptionResponse
 public class ContextSubscriptionResponse : TraCISubscriptionResponse
     {
     public TraCIByte ContextDomain { get; set; }
-    public TraCIByte ObjectCount { get; set; }
+    public TraCIInteger ObjectCount { get; set; }
 
-    public List<TraCIString> ObjectIds { get; set; }
-    new public static Tuple<ContextSubscriptionResponse, IEnumerable<byte>> FromBytes(IEnumerable<byte> bytes)
+    public List<TraCIString> ObjectVariableIds { get; set; }
+    public static new Tuple<ContextSubscriptionResponse, IEnumerable<byte>> FromBytes(IEnumerable<byte> bytes)
         {
-        (TraCIByte contextDomain, bytes) = TraCIByte.FromBytes(bytes);
-        (TraCIByte variableCount, bytes) = TraCIByte.FromBytes(bytes);
-        (TraCIByte objectCount, bytes) = TraCIByte.FromBytes(bytes);
-        (var result, bytes) = TraCISubscriptionResponse.FromBytes(bytes);
-        ((ContextSubscriptionResponse)result).ContextDomain = contextDomain;
-        result.VariableCount = variableCount;
-        ((ContextSubscriptionResponse)result).ObjectCount = objectCount;
 
-        for (var n = 0; n < (result as ContextSubscriptionResponse).ObjectCount.Value; n++)
+        (var objectId, bytes) = TraCIString.FromBytes(bytes);
+        (var contextDomain, bytes) = TraCIByte.FromBytes(bytes);
+        (var variableCount, bytes) = TraCIByte.FromBytes(bytes);
+        (var objectCount, bytes) = TraCIInteger.FromBytes(bytes);
+
+        ContextSubscriptionResponse result = new()
             {
-            (var objectId, bytes) = TraCIString.FromBytes(bytes);
-            (result as ContextSubscriptionResponse).ObjectIds.Add(objectId);
-            for (var m = 0; m < result.VariableCount.Value; m++)
+            ObjectId = objectId,
+            ContextDomain = contextDomain,
+            VariableCount = variableCount,
+            ObjectCount = objectCount,
+            ObjectVariableIds = [],
+            Responses = []
+            };
+        for (var m = 0; m < result.ObjectCount.Value; m++)
+            {
+            (var objectVariableId, bytes) = TraCIString.FromBytes(bytes);
+            result.ObjectVariableIds.Add(objectVariableId);
+            for (var n = 0; n < result.VariableCount.Value; n++)
                 {
                 (var response, bytes) = TraciSubscriptionResponseUnit.FromBytes(bytes);
-                (result as ContextSubscriptionResponse).Responses.Add(response);
+                result.Responses.Add(response);
                 }
             }
-        return new((ContextSubscriptionResponse)result, bytes);
+        return new(result, bytes);
         }
     }
 

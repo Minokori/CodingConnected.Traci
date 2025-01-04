@@ -25,7 +25,7 @@ internal class UsageExample
             var args = " -c " + sumoCfgFile +
                 " --remote-port " + remotePort.ToString() +
                 (useSumoGui ? " --start " : " ") + // this arguments only makes sense if using gui
-                (quitOnEnd ? " --quit-on-end  " : " ");
+                (quitOnEnd ? " --quit-on-end  " : " ") + "--num-clients 1";
 
             // Assumes that bin is in PATHs
             var sumoExecutable = useSumoGui ? @"sumo-gui" : "sumo";
@@ -357,15 +357,15 @@ internal class UsageExample
 
         /* Create a new sumo process so the client can connect to it. 
          * This step is optional if a sumo server is already running. */
-        var sumoProcess = await ServeSumo(sumoCfgPath, 4321, useSumoGui: true, redirectOutputToConsole: false);
-        if (sumoProcess == null)
+        var task1 = ServeSumo(sumoCfgPath, 4321, useSumoGui: true, redirectOutputToConsole: false);
+        var sumoProcess = await task1;
+        if (sumoProcess != null)
             {
-            Console.WriteLine("Something went wrong launching SUMO server. Maybe .sumocfg path is wrong" +
-                "or sumo executables not defined in PATH.\n Sumo Configuration Path provided " + sumoCfgPath);
+            var (versionId, versionString) = await client.ConnectAsync("127.0.0.1", 4321);
+            Console.WriteLine($"Connected to SUMO version: {versionId}, Version String:{versionString}");
             }
 
         /* Connecting to Sumo Server is async but we wait for the task to complete for simplicity */
-        await client.ConnectAsync("127.0.0.1", 4321);
 
         //while (!task.IsCompleted) { /*  Wait for task to be completed before using traci commands */ }
 

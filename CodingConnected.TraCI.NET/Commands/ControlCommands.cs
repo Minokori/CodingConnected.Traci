@@ -63,14 +63,14 @@ public class ControlCommands(ITcpService tcpService, ICommandHelperService helpe
                     {
                     case 0x0e:
                             {
-                            eventArgs = new VariableSubscriptionEventArgs(item.ObjectID.Value, item.VariableCount.Value);
+                            eventArgs = new VariableSubscriptionEventArgs(item.ObjectId.Value, item.VariableCount.Value);
                             break;
                             }
                     case 0x09:
                             {
                             var c = item as ContextSubscriptionResponse;
                             eventArgs = new ContextSubscriptionEventArgs(
-                                c.ObjectID.Value,
+                                c.ObjectId.Value,
                                 c.ContextDomain.Value,
                                 c.VariableCount.Value,
                                 c.ObjectCount.Value);

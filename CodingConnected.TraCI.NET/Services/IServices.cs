@@ -1,6 +1,5 @@
 ﻿using System.Diagnostics;
 using System.Net.Sockets;
-using CodingConnected.TraCI.NET.Response;
 using CodingConnected.TraCI.NET.Types;
 
 namespace CodingConnected.TraCI.NET.Services;

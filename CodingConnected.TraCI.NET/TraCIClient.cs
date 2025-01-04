@@ -26,9 +26,11 @@ public partial class TraCIClient : IDisposable
     /// </summary>
     /// <param name="hostname">Hostname or ip address where SUMO is running</param>
     /// <param name="port">Port at which SUMO exposes the API</param>
-    public async Task ConnectAsync(string hostname, int port)
+    public async Task<Tuple<int, string>> ConnectAsync(string hostname, int port)
         {
-        await TcpSerivce.ConnectAsync(hostname, port);
+        return await TcpSerivce.ConnectAsync(hostname, port)
+            .ContinueWith(_ => Control.GetVersion())
+            .ContinueWith(versionTask => versionTask.Result);
         }
 
 

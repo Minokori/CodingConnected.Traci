@@ -28,8 +28,8 @@ internal class TCPConnectService : ITcpService
                 }
             catch (Exception)
                 {
-                Console.WriteLine("Failed to connect to SUMO server. Retrying in 0.1 second");
-                await Task.Delay(100);
+                Console.WriteLine("Failed to connect to SUMO server. Retrying in 0.05 second");
+                await Task.Delay(50);
                 }
             }
 
