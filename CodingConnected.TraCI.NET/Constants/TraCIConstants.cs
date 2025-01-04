@@ -47,6 +47,8 @@ public static class TraCIConstants
     // command: change target
     public const byte CMD_CHANGETARGET = 0x31;
 
+    public const byte CMD_EXECUTE_MOVE = 0x7d;
+
     // command: close sumo
     public const byte CMD_CLOSE = 0x7F;
 

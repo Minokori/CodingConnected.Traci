@@ -45,15 +45,14 @@ internal static partial class TraCIDataConverter
     /// </summary>
     /// <param name="results"></param>
     /// <returns></returns>
-    internal static List<TraCISubscriptionResponse> ExtractDataFromSimStepResults(TraCIResult[] results)
+    internal static List<TraCISubscriptionResponse> ExtractDataFromSimStepResults(List<TraCIResult> results)
         {
         List<TraCISubscriptionResponse> responses = [];
         // check if results is null
         if (results == null) { return null; }
 
         // find results of specific command type, statusResponse is status results ,result is result
-        var statusResponse = results.FirstOrDefault(x => x.Identifier == CMD_SIMSTEP);
-        var i = Array.IndexOf(results, statusResponse);
+        (var statusResponse, var i) = results.Select((result, index) => (result, index)).FirstOrDefault(x => x.result.Identifier == CMD_SIMSTEP);
         if (statusResponse is null) { return null; }
 
         switch (((IStatusResponse)statusResponse).Result)

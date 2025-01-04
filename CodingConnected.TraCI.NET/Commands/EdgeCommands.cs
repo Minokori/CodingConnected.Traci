@@ -4,11 +4,10 @@ using CodingConnected.TraCI.NET.Types;
 
 namespace CodingConnected.TraCI.NET.Commands;
 
-public class EdgeCommands(ITcpService tcpService, ICommandHelperService helper) : TraCIContextSubscribableCommands(tcpService, helper)
+public partial class EdgeCommands(ITcpService tcpService, ICommandHelperService helper) : TraCIContextSubscribableCommands(tcpService, helper)
     {
     protected override byte ContextSubscribeCommand => TraCIConstants.CMD_SUBSCRIBE_EDGE_CONTEXT;
 
-    #region Public Methods
 
     /// <summary>
     /// Returns a list of ids of all edges within the scenario
@@ -242,65 +241,10 @@ public class EdgeCommands(ITcpService tcpService, ICommandHelperService helper) 
     // TODO: 'extended retrieval', see: http://sumo.dlr.de/wiki/TraCI/Edge_Value_Retrieval
 
 
-    /// <summary>
-    /// Inserts the information about the travel time of the named edge valid from begin time to end time into the global edge weights times container.
-    /// </summary>
-    /// <param name="id"></param>
-    /// <param name="beginTime"></param>
-    /// <param name="endTime"></param>
-    /// <param name="travelTimeValue"></param>
-    /// <returns></returns>
-    public bool AdaptTraveltime(string id, int beginTime, int endTime, double travelTimeValue)
-        {
-        TraCICompoundObject tmp =
-        [
-            new TraCIInteger() { Value = beginTime },
-            new TraCIInteger() { Value = endTime },
-            new TraCIDouble() { Value = travelTimeValue },
-        ];
 
-        return _helper.ExecuteSetCommand<double, TraCICompoundObject>(
-            id,
-            TraCIConstants.CMD_SET_EDGE_VARIABLE,
-            TraCIConstants.VAR_EDGE_TRAVELTIME,
-            tmp
-        );
-        }
-
-    /// <summary>
-    /// Inserts the information about the effort of the named edge valid from begin time to end time into the global edge weights container.
-    /// </summary>
-    /// <param name="id"></param>
-    /// <param name="beginTime"></param>
-    /// <param name="endTime"></param>
-    /// <param name="effortValue"></param>
-    /// <returns></returns>
-    public bool SetEffort(string id, double beginTime, double endTime, double effortValue)
-        {
-        TraCICompoundObject tmp =
-        [
-            new TraCIDouble() { Value = beginTime },
-            new TraCIDouble() { Value = endTime },
-            new TraCIDouble() { Value = effortValue },
-        ];
-
-        return _helper.ExecuteSetCommand<object, TraCICompoundObject>(id, TraCIConstants.CMD_SET_EDGE_VARIABLE, TraCIConstants.VAR_EDGE_EFFORT, tmp);
-        }
-
-    /// <summary>
-    /// Set a new maximum speed (in m/s) for all lanes of the edge.
-    /// </summary>
-    /// <param name="id"></param>
-    /// <param name="speed"></param>
-    /// <returns></returns>
-    public bool SetMaxSpeed(string id, double speed)
-        {
-        return _helper.ExecuteSetCommand<object, double>(id, TraCIConstants.CMD_SET_EDGE_VARIABLE, TraCIConstants.VAR_MAXSPEED, speed);
-        }
 
     public void Subscribe(string objectId, int beginTime, int endTime, List<byte> ListOfVariablesToSubsribeTo)
         {
         _helper.ExecuteSubscribeCommand(beginTime, endTime, objectId, TraCIConstants.CMD_SUBSCRIBE_EDGE_VARIABLE, ListOfVariablesToSubsribeTo);
         }
-    #endregion // Public Methods
     }
