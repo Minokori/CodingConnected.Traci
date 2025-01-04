@@ -3,13 +3,13 @@
 /// <summary>
 /// Based on TraCIConst
 /// </summary>
-static public class TraCIConstants
+public static class TraCIConstants
     {
 
     /// <summary>
     /// VERSION
     /// </summary>
-    public static int TRACI_VERSION => 20;
+    public static int TRACI_VERSION => 18;
 
     // ****************************************
     // COMMANDS

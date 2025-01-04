@@ -38,7 +38,7 @@ internal static class TraCITypeExtensions
         {
         TrafficCompleteLightProgram result = new()
             {
-            NumberOfLogics = (content[0] as TraCIInteger),
+            NumberOfLogics = content[0] as TraCIInteger,
             };
 
         var len = 0; //offset for number of logics

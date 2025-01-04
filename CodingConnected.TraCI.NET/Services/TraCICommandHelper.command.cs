@@ -18,7 +18,7 @@ internal partial class TraCICommandHelper
         {
         List<byte> bytes =
             [messageType, .. id.ToTraCIBytes(), TraCIConstants.TYPE_COMPOUND, .. co.Count.ToTraCIBytes(),];
-        foreach (ITraCIType item in co)
+        foreach (var item in co)
             {
             switch (item)
                 {
@@ -95,7 +95,7 @@ internal partial class TraCICommandHelper
                 TraCIConstants.TYPE_POLYGON,
                 (byte)polygon.Points.Count,
                 ];
-        foreach (Position2D point in polygon.Points)
+        foreach (var point in polygon.Points)
             {
             bytes.AddRange(point.X.ToTraCIBytes());
             bytes.AddRange(point.Y.ToTraCIBytes());
@@ -157,7 +157,7 @@ internal partial class TraCICommandHelper
             {
             bytes.Add(TraCIConstants.TYPE_STRINGLIST);
             bytes.AddRange(values.Count.ToTraCIBytes());
-            foreach (string parameter in values)
+            foreach (var parameter in values)
                 {
                 bytes.AddRange(parameter.ToTraCIBytes());
                 }

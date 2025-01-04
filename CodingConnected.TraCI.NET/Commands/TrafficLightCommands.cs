@@ -1,7 +1,6 @@
 ﻿using CodingConnected.TraCI.NET.Constants;
 using CodingConnected.TraCI.NET.Extensions;
 using CodingConnected.TraCI.NET.Helpers;
-using CodingConnected.TraCI.NET.Response;
 using CodingConnected.TraCI.NET.Services;
 using CodingConnected.TraCI.NET.Types;
 
@@ -79,7 +78,7 @@ public class TrafficLightCommands(ITcpService tcpService, ICommandHelperService 
         {
         var result = _helper.ExecuteGetCommand(id, TraCIConstants.CMD_GET_TL_VARIABLE, TraCIConstants.TL_CONTROLLED_LINKS);
 
-        return ((result.Value) as TraCICompoundObject).ToControlledLinks();
+        return (result.Value as TraCICompoundObject).ToControlledLinks();
         }
 
     /// <summary>
@@ -113,7 +112,7 @@ public class TrafficLightCommands(ITcpService tcpService, ICommandHelperService 
         {
         var result = _helper.ExecuteGetCommand(id, TraCIConstants.CMD_GET_TL_VARIABLE, TraCIConstants.TL_COMPLETE_DEFINITION_RYG);
 
-        return ((result.Value) as TraCICompoundObject).ToTrafficLightCompleteProgram();
+        return (result.Value as TraCICompoundObject).ToTrafficLightCompleteProgram();
         }
 
     /// <summary>

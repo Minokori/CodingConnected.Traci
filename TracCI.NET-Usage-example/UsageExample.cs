@@ -5,7 +5,6 @@ using System.IO;
 using System.Threading.Tasks;
 using CodingConnected.TraCI.NET;
 using CodingConnected.TraCI.NET.Constants;
-using CodingConnected.TraCI.NET.Response;
 using CodingConnected.TraCI.NET.Types;
 
 namespace CodingConnected.TraCI.UsageExample;
@@ -115,7 +114,7 @@ internal class UsageExample
         TraCIConstants.ID_COUNT
     ];
 
-    private static int NumberOfVehcicles;
+    private static readonly int NumberOfVehcicles;
     private static List<string> vehicleIds;
 
     #endregion

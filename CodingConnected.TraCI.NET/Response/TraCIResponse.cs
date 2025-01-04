@@ -1,7 +1,7 @@
 ﻿using CodingConnected.TraCI.NET.Types;
 using static CodingConnected.TraCI.NET.Helpers.TraCIDataConverter;
-namespace CodingConnected.TraCI.NET.Response;
 
+namespace CodingConnected.TraCI.NET.Response;
 
 /// <summary>
 /// The status code of a TraCI command.
@@ -12,28 +12,27 @@ public enum ResultCode : byte
     /// success
     /// </summary>
     Success = 0x00,
+
     /// <summary>
     /// failed
     /// </summary>
     Failed = 0xff,
+
     /// <summary>
     /// command not implemented
     /// </summary>
-    NotImplemented = 0x01
+    NotImplemented = 0x01,
     }
 
-
-
-
-public class TraCISubscriptionResponse
+public abstract class TraCISubscriptionResponse
     {
     public byte Identifier { get; set; }
     public TraCIString ObjectId { get; set; }
 
     public virtual TraCIByte VariableCount { get; set; }
     public List<TraciSubscriptionResponseUnit> Responses { get; set; }
+
     /// <summary>
-    /// TODO bytes 必须正好是一个完整的订阅响应，不能有多余的字节
     /// </summary>
     /// <param name="bytes"></param>
     /// <returns></returns>
@@ -42,20 +41,20 @@ public class TraCISubscriptionResponse
         throw new NotImplementedException();
         }
 
+    public abstract TraciSubscriptionResponseUnit this[int index] { get; }
     }
 
-public class VariableSubscriptionResponse : TraCISubscriptionResponse
+public class TraCIVariableSubscriptionResponse : TraCISubscriptionResponse
     {
-
-    public static new Tuple<VariableSubscriptionResponse, IEnumerable<byte>> FromBytes(IEnumerable<byte> bytes)
+    public static new Tuple<TraCIVariableSubscriptionResponse, IEnumerable<byte>> FromBytes(IEnumerable<byte> bytes)
         {
         (var objectId, bytes) = TraCIString.FromBytes(bytes);
         (var variableCount, bytes) = TraCIByte.FromBytes(bytes);
-        VariableSubscriptionResponse result = new()
+        TraCIVariableSubscriptionResponse result = new()
             {
             ObjectId = objectId,
             VariableCount = variableCount,
-            Responses = []
+            Responses = [],
             };
         for (var i = 0; i < result.VariableCount.Value; i++)
             {
@@ -64,32 +63,31 @@ public class VariableSubscriptionResponse : TraCISubscriptionResponse
             }
         return new(result, bytes);
         }
+
+    public override TraciSubscriptionResponseUnit this[int index] => Responses[index];
     }
 
-
-
-public class ContextSubscriptionResponse : TraCISubscriptionResponse
+public class TraCIContextSubscriptionResponse : TraCISubscriptionResponse
     {
     public TraCIByte ContextDomain { get; set; }
     public TraCIInteger ObjectCount { get; set; }
-
     public List<TraCIString> ObjectVariableIds { get; set; }
-    public static new Tuple<ContextSubscriptionResponse, IEnumerable<byte>> FromBytes(IEnumerable<byte> bytes)
-        {
 
+    public static new Tuple<TraCIContextSubscriptionResponse, IEnumerable<byte>> FromBytes(IEnumerable<byte> bytes)
+        {
         (var objectId, bytes) = TraCIString.FromBytes(bytes);
         (var contextDomain, bytes) = TraCIByte.FromBytes(bytes);
         (var variableCount, bytes) = TraCIByte.FromBytes(bytes);
         (var objectCount, bytes) = TraCIInteger.FromBytes(bytes);
 
-        ContextSubscriptionResponse result = new()
+        TraCIContextSubscriptionResponse result = new()
             {
             ObjectId = objectId,
             ContextDomain = contextDomain,
             VariableCount = variableCount,
             ObjectCount = objectCount,
             ObjectVariableIds = [],
-            Responses = []
+            Responses = [],
             };
         for (var m = 0; m < result.ObjectCount.Value; m++)
             {
@@ -103,11 +101,16 @@ public class ContextSubscriptionResponse : TraCISubscriptionResponse
             }
         return new(result, bytes);
         }
+
+    public override TraciSubscriptionResponseUnit this[int index] => index >= Responses.Count ? null : Responses[index];
+
+    public TraciSubscriptionResponseUnit this[int objectIndex, int variableIndex] =>
+        (objectIndex, variableIndex) switch
+            {
+                _ when objectIndex >= ObjectCount.Value || variableIndex >= VariableCount.Value => null,
+                _ => Responses[(objectIndex * VariableCount.Value) + variableIndex],
+                };
     }
-
-
-
-
 
 public class TraciSubscriptionResponseUnit
     {
@@ -130,10 +133,8 @@ public class TraciSubscriptionResponseUnit
             VariableId = Id,
             VariableStatus = Status,
             VariableIdentifier = Identifier,
-            Value = Value
+            Value = Value,
             };
-
         return new(result, bytes);
         }
     }
-

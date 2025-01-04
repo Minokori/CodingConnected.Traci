@@ -1,6 +1,4 @@
-﻿using System.Data.Common;
-
-namespace CodingConnected.TraCI.NET.Types;
+﻿namespace CodingConnected.TraCI.NET.Types;
 
 
 /// <summary>

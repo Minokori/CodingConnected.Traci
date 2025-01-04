@@ -1,8 +1,8 @@
 ﻿using System.Text;
-using static CodingConnected.TraCI.NET.Constants.TraCIConstants;
 using CodingConnected.TraCI.NET.Response;
 using CodingConnected.TraCI.NET.Types;
 using static System.BitConverter;
+using static CodingConnected.TraCI.NET.Constants.TraCIConstants;
 
 namespace CodingConnected.TraCI.NET.Helpers;
 
@@ -25,31 +25,17 @@ internal static partial class TraCIDataConverter
         var (statusResponse, i) = results.Select((item, index) => (item, index)).FirstOrDefault(x => x.item.Identifier == commandType);
         if (statusResponse is null) { return null; }
 
-        switch (((IStatusResponse)statusResponse).Result)
+        switch ((statusResponse as IStatusResponse).Result)
             {
             case ResultCode.Success:
                     {
-                    // check if first byte is as requested (it gives the type of data requested)
                     // https://sumo.dlr.de/docs/TraCI/SUMO_ID_Commands_Structure.html#answer_from_sumo
                     var result = results.Skip(i + 1).FirstOrDefault(x => x.Identifier == commandType + 0x10 /*results's identifier is GET command's identifire +0x10*/);
 
-                    if (result?.Content[0] == variableType)
-                        {
-                        return (IAnswerFromSumo)result;
-                        }
-                    else
-                        {
-                        // for state changing methods without results content
-                        return null;
-                        }
+                    return result?.Content[0] == variableType ? result : null;
                     }
-            case ResultCode.Failed:
-            case ResultCode.NotImplemented:
-                    {
-                    return null;
-                    }
+            default: { return null; }
             }
-        return null;
         }
 
 
@@ -229,7 +215,7 @@ internal static partial class TraCIDataConverter
                     }
             default:
                     {
-                    throw new ArgumentOutOfRangeException();
+                    throw new Exception();
                     }
             }
         }
@@ -257,8 +243,7 @@ internal static partial class TraCIDataConverter
             (var result, leftBytes) = GetTraCIResult(leftBytes);
             results.Add(result);
             }
-        if (firstResult.Identifier == CMD_SIMSTEP && count.Value + 1 != results.Count) { throw new Exception(); }
-        return results;
+        return firstResult.Identifier == CMD_SIMSTEP && count.Value + 1 != results.Count ? throw new Exception() : results;
         }
 
     internal static Tuple<TraCIResult, IEnumerable<byte>> GetTraCIResult(IEnumerable<byte> bytes)

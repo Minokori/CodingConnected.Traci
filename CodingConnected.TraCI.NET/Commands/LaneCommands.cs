@@ -1,5 +1,4 @@
 ﻿using CodingConnected.TraCI.NET.Constants;
-using CodingConnected.TraCI.NET.Response;
 using CodingConnected.TraCI.NET.Services;
 using CodingConnected.TraCI.NET.Types;
 

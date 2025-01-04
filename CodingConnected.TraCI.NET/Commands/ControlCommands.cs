@@ -1,9 +1,10 @@
-﻿using CodingConnected.TraCI.NET.Constants;
+﻿using System.Diagnostics;
+using CodingConnected.TraCI.NET.Constants;
 using CodingConnected.TraCI.NET.Helpers;
 using CodingConnected.TraCI.NET.Response;
 using CodingConnected.TraCI.NET.Services;
 using CodingConnected.TraCI.NET.Types;
-
+using static CodingConnected.TraCI.NET.Constants.TraCIConstants;
 namespace CodingConnected.TraCI.NET.Commands;
 
 public class ControlCommands(ITcpService tcpService, ICommandHelperService helper, IEventService eventService) : TraCICommandsBase(tcpService, helper)
@@ -11,23 +12,41 @@ public class ControlCommands(ITcpService tcpService, ICommandHelperService helpe
     private readonly IEventService _events = eventService;
 
     /// <summary>
-    /// Gets an identifying version number as described here: <see href="http://sumo.dlr.de/wiki/TraCI/Control-related_commands"/>
+    /// Returns a tuple containing the TraCI API Version number (integer) and a string identifying the SUMO apiVersion running on the TraCI server in human-readable form.
     /// </summary>
+    /// <returns>
+    /// <list type="bullet">
+    /// <item>
+    /// an <see cref="int"/> API Version number identifying the current state of the TraCI API. <para/>
+    /// </item>
+    /// <item>
+    /// an identifier <see cref="string"/> identifies the software apiVersion running on the TraCI server in human-readable form. <para/>
+    /// </item>
+    /// </list>
+    /// </returns>
+    /// <remarks>
+    /// see <see href="https://sumo.dlr.de/docs/TraCI/Control-related_commands.html#command_0x00_get_version"/>
+    /// </remarks>
     public Tuple<int, string> GetVersion()
         {
-        TraCICommand command = new()
-            {
-            Identifier = TraCIConstants.CMD_GETVERSION,
-            Contents = null,
-            };
+        TraCICommand command = new() { Identifier = CMD_GETVERSION, Contents = null };
 
         var results = _tcpService.SendMessage(command);
-        return ((IStatusResponse)results[0]).Result == ResultCode.Success
-            ? new(
-                BitConverter.ToInt32(results[1].Content.Take(4).Reverse().ToArray()),
-                ((IStatusResponse)results[1]).Description
-            )
-            : new(-1, "");
+        switch ((results[0] as IStatusResponse).Result)
+            {
+            case ResultCode.Success:
+                    {
+                    (var apiVersion, var leftBytes) = TraCIInteger.FromBytes(results[1].Content);
+                    (var versionString, leftBytes) = TraCIString.FromBytes(leftBytes);
+                    if (apiVersion.Value != TRACI_VERSION) { Console.WriteLine($"Warning: TraCI API version mismatch. SUMO installed with API version is {apiVersion.Value}. this library is using API version {TRACI_VERSION}"); }
+                    if (leftBytes.Any()) { Debug.WriteLine("not all bytes are consumed"); }
+                    return new(apiVersion.Value, versionString.Value);
+                    }
+            default:
+                    {
+                    return new(-1, "");
+                    }
+            }
         }
 
     /// <summary>
@@ -38,11 +57,7 @@ public class ControlCommands(ITcpService tcpService, ICommandHelperService helpe
     public void SimStep(double targetTime = 0)
         {
         // 执行一个模拟步骤
-        TraCICommand command = new()
-            {
-            Identifier = TraCIConstants.CMD_SIMSTEP,
-            Contents = targetTime.ToTraCIBytes(),
-            };
+        TraCICommand command = new() { Identifier = TraCIConstants.CMD_SIMSTEP, Contents = targetTime.ToTraCIBytes() };
 
         //TODO
         //获得返回值
@@ -54,33 +69,36 @@ public class ControlCommands(ITcpService tcpService, ICommandHelperService helpe
                 {
                 return;
                 }
-            // 0xeX => VariableType Subscription Content
-            // 0x9X => Object Context Subscription Content
+
             foreach (var item in responses)
                 {
                 SubscriptionEventArgs eventArgs = null;
                 switch (item.Identifier >> 4)
                     {
-                    case 0x0e:
+                    case 0x0e: // 0xeX => VariableType Subscription Content
                             {
                             eventArgs = new VariableSubscriptionEventArgs(item.ObjectId.Value, item.VariableCount.Value);
                             break;
                             }
-                    case 0x09:
+                    case 0x09: // 0x9X => Object Context Subscription Content
                             {
-                            var c = item as ContextSubscriptionResponse;
+                            var c = item as TraCIContextSubscriptionResponse;
                             eventArgs = new ContextSubscriptionEventArgs(
                                 c.ObjectId.Value,
                                 c.ContextDomain.Value,
                                 c.VariableCount.Value,
-                                c.ObjectCount.Value);
+                                c.ObjectCount.Value
+                            );
                             break;
                             }
                     default:
                         break;
                     }
                 eventArgs.Responses = item.Responses;
-                if (eventArgs is null) { return; }
+                if (eventArgs is null)
+                    {
+                    return;
+                    }
 
                 switch (item.Identifier)
                     {
@@ -130,44 +148,30 @@ public class ControlCommands(ITcpService tcpService, ICommandHelperService helpe
                         _events.OnPersonSubscription(eventArgs);
                         break;
                     case TraCIConstants.RESPONSE_SUBSCRIBE_INDUCTIONLOOP_CONTEXT:
-                        _events.OnInductionLoopContextSubscription(
-                            eventArgs as ContextSubscriptionEventArgs
-                        );
+                        _events.OnInductionLoopContextSubscription(eventArgs as ContextSubscriptionEventArgs);
                         break;
                     case TraCIConstants.RESPONSE_SUBSCRIBE_LANE_CONTEXT:
-                        _events.OnLaneContextSubscription(
-                            eventArgs as ContextSubscriptionEventArgs
-                        );
+                        _events.OnLaneContextSubscription(eventArgs as ContextSubscriptionEventArgs);
                         break;
                     case TraCIConstants.RESPONSE_SUBSCRIBE_VEHICLE_CONTEXT:
-                        _events.OnVehicleContextSubscription(
-                            eventArgs as ContextSubscriptionEventArgs
-                        );
+                        _events.OnVehicleContextSubscription(eventArgs as ContextSubscriptionEventArgs);
                         break;
                     case TraCIConstants.RESPONSE_SUBSCRIBE_POI_CONTEXT:
                         _events.OnPOIContextSubscription(eventArgs as ContextSubscriptionEventArgs);
                         break;
                     case TraCIConstants.RESPONSE_SUBSCRIBE_POLYGON_CONTEXT:
-                        _events.OnPolygonContextSubscription(
-                            eventArgs as ContextSubscriptionEventArgs
-                        );
+                        _events.OnPolygonContextSubscription(eventArgs as ContextSubscriptionEventArgs);
                         break;
                     case TraCIConstants.RESPONSE_SUBSCRIBE_JUNCTION_CONTEXT:
-                        _events.OnJunctionContextSubscription(
-                            eventArgs as ContextSubscriptionEventArgs
-                        );
+                        _events.OnJunctionContextSubscription(eventArgs as ContextSubscriptionEventArgs);
                         break;
                     case TraCIConstants.RESPONSE_SUBSCRIBE_EDGE_CONTEXT:
-                        _events.OnEdgeContextSubscription(
-                            eventArgs as ContextSubscriptionEventArgs
-                        );
+                        _events.OnEdgeContextSubscription(eventArgs as ContextSubscriptionEventArgs);
                         break;
                     default:
-                        throw new ArgumentOutOfRangeException();
+                        throw new Exception();
                     }
                 }
-
-
             }
         }
 
@@ -204,11 +208,7 @@ public class ControlCommands(ITcpService tcpService, ICommandHelperService helpe
     /// <param name="options">List of options to pass to SUMO</param>
     public void SetOrder(int index)
         {
-        TraCICommand command = new()
-            {
-            Identifier = TraCIConstants.CMD_SETORDER,
-            Contents = BitConverter.GetBytes(index).Reverse().ToArray(),
-            };
+        TraCICommand command = new() { Identifier = TraCIConstants.CMD_SETORDER, Contents = BitConverter.GetBytes(index).Reverse().ToArray() };
         _ = _tcpService.SendMessage(command);
         }
     }

@@ -25,7 +25,7 @@ public struct Polygon : ITraCIType
         int count = bytes.First();
         bytes = bytes.Skip(1).ToArray();
         List<Position2D> points = [];
-        for (int i = 0; i < count; i++)
+        for (var i = 0; i < count; i++)
             {
             (var result, bytes) = Position2D.FromBytes([.. bytes]);
             points.Add(result);
