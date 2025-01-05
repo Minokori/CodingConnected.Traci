@@ -6,8 +6,6 @@ namespace CodingConnected.TraCI.NET.Commands;
 
 public class GuiCommands(ITcpService tcpService, ICommandHelperService helper) : TraCICommandsBase(tcpService, helper)
     {
-    #region Public Methods
-
     /// <summary>
     /// determines whether graphical capabilities exist
     /// </summary>
@@ -73,7 +71,8 @@ public class GuiCommands(ITcpService tcpService, ICommandHelperService helper) :
     /// <returns></returns>
     public bool SetZoom(string id, double zoom)
         {
-        return _helper.ExecuteSetCommand<object, double>(id, TraCIConstants.CMD_SET_GUI_VARIABLE, TraCIConstants.VAR_VIEW_ZOOM, zoom);
+        var tmp = new TraCIDouble { Value = zoom };
+        return _helper.ExecuteSetCommand(id, TraCIConstants.CMD_SET_GUI_VARIABLE, TraCIConstants.VAR_VIEW_ZOOM, tmp);
         }
 
     /// <summary>
@@ -84,7 +83,7 @@ public class GuiCommands(ITcpService tcpService, ICommandHelperService helper) :
     /// <returns></returns>
     public bool SetOffset(string id, Position2D position)
         {
-        return _helper.ExecuteSetCommand<object, Position2D>(id, TraCIConstants.CMD_SET_GUI_VARIABLE, TraCIConstants.VAR_VIEW_OFFSET, position);
+        return _helper.ExecuteSetCommand(id, TraCIConstants.CMD_SET_GUI_VARIABLE, TraCIConstants.VAR_VIEW_OFFSET, position);
         }
 
     /// <summary>
@@ -95,7 +94,8 @@ public class GuiCommands(ITcpService tcpService, ICommandHelperService helper) :
     /// <returns></returns>
     public bool SetSchema(string id, string schema)
         {
-        return _helper.ExecuteSetCommand<object, string>(id, TraCIConstants.CMD_SET_GUI_VARIABLE, TraCIConstants.VAR_VIEW_SCHEMA, schema);
+        var tmp = new TraCIString { Value = schema };
+        return _helper.ExecuteSetCommand(id, TraCIConstants.CMD_SET_GUI_VARIABLE, TraCIConstants.VAR_VIEW_SCHEMA, tmp);
         }
 
     /// <summary>
@@ -106,7 +106,7 @@ public class GuiCommands(ITcpService tcpService, ICommandHelperService helper) :
     /// <returns></returns>
     public bool SetBoundary(string id, Polygon boundaryBox)
         {
-        return _helper.ExecuteSetCommand<object, Polygon>(id, TraCIConstants.CMD_SET_GUI_VARIABLE, TraCIConstants.VAR_VIEW_BOUNDARY, boundaryBox);
+        return _helper.ExecuteSetCommand(id, TraCIConstants.CMD_SET_GUI_VARIABLE, TraCIConstants.VAR_VIEW_BOUNDARY, boundaryBox);
         }
 
     /// <summary>
@@ -117,7 +117,8 @@ public class GuiCommands(ITcpService tcpService, ICommandHelperService helper) :
     /// <returns></returns>
     public bool Screenshot(string id, string filename)
         {
-        return _helper.ExecuteSetCommand<object, string>(id, TraCIConstants.CMD_SET_GUI_VARIABLE, TraCIConstants.VAR_SCREENSHOT, filename);
+        var tmp = new TraCIString { Value = filename };
+        return _helper.ExecuteSetCommand(id, TraCIConstants.CMD_SET_GUI_VARIABLE, TraCIConstants.VAR_SCREENSHOT, tmp);
         }
 
     /// <summary>
@@ -128,13 +129,12 @@ public class GuiCommands(ITcpService tcpService, ICommandHelperService helper) :
     /// <returns></returns>
     public bool TrackVehicle(string id, string vehicleId)
         {
-        return _helper.ExecuteSetCommand<object, string>(id, TraCIConstants.CMD_SET_GUI_VARIABLE, TraCIConstants.VAR_TRACK_VEHICLE, vehicleId);
+        var tmp = new TraCIString { Value = vehicleId };
+        return _helper.ExecuteSetCommand(id, TraCIConstants.CMD_SET_GUI_VARIABLE, TraCIConstants.VAR_TRACK_VEHICLE, tmp);
         }
 
     public void Subscribe(string objectId, int beginTime, int endTime, List<byte> ListOfVariablesToSubsribeTo)
         {
         _helper.ExecuteSubscribeCommand(beginTime, endTime, objectId, TraCIConstants.CMD_SUBSCRIBE_GUI_VARIABLE, ListOfVariablesToSubsribeTo);
         }
-
-    #endregion // Public Methods
     }

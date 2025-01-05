@@ -728,7 +728,7 @@ public class VehicleCommands(ITcpService tcpService, ICommandHelperService helpe
             new TraCIDouble() { Value = until },
         ];
 
-        return _helper.ExecuteSetCommand<object, TraCICompoundObject>(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.CMD_STOP, tmp);
+        return _helper.ExecuteSetCommand(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.CMD_STOP, tmp);
         }
 
     /// <summary>
@@ -742,12 +742,7 @@ public class VehicleCommands(ITcpService tcpService, ICommandHelperService helpe
         {
         TraCICompoundObject tmp = [new TraCIByte() { Value = laneIndex }, new TraCIDouble() { Value = duration }];
 
-        return _helper.ExecuteSetCommand<object, TraCICompoundObject>(
-            id,
-            TraCIConstants.CMD_SET_VEHICLE_VARIABLE,
-            TraCIConstants.CMD_CHANGELANE,
-            tmp
-        );
+        return _helper.ExecuteSetCommand(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.CMD_CHANGELANE, tmp);
         }
 
     /// <summary>
@@ -758,12 +753,8 @@ public class VehicleCommands(ITcpService tcpService, ICommandHelperService helpe
     /// <returns></returns>
     public bool ChangeSublane(string id, double lateralDistance)
         {
-        return _helper.ExecuteSetCommand<object, double>(
-            id,
-            TraCIConstants.CMD_SET_VEHICLE_VARIABLE,
-            TraCIConstants.CMD_CHANGESUBLANE,
-            lateralDistance
-        );
+        var tmp = new TraCIDouble() { Value = lateralDistance };
+        return _helper.ExecuteSetCommand(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.CMD_CHANGESUBLANE, tmp);
         }
 
     /// <summary>
@@ -779,12 +770,7 @@ public class VehicleCommands(ITcpService tcpService, ICommandHelperService helpe
 
         // TODO: fill compound object with data
 
-        return _helper.ExecuteSetCommand<object, TraCICompoundObject>(
-            id,
-            TraCIConstants.CMD_SET_VEHICLE_VARIABLE,
-            TraCIConstants.VAR_UPDATE_BESTLANES,
-            tmp
-        );
+        return _helper.ExecuteSetCommand(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_UPDATE_BESTLANES, tmp);
         }
 
     /// <summary>
@@ -798,12 +784,7 @@ public class VehicleCommands(ITcpService tcpService, ICommandHelperService helpe
         {
         TraCICompoundObject tmp = [new TraCIDouble() { Value = speed }, new TraCIDouble() { Value = duration }];
 
-        return _helper.ExecuteSetCommand<object, TraCICompoundObject>(
-            id,
-            TraCIConstants.CMD_SET_VEHICLE_VARIABLE,
-            TraCIConstants.CMD_SLOWDOWN,
-            tmp
-        );
+        return _helper.ExecuteSetCommand(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.CMD_SLOWDOWN, tmp);
         }
 
     /// <summary>
@@ -815,12 +796,7 @@ public class VehicleCommands(ITcpService tcpService, ICommandHelperService helpe
         {
         TraCICompoundObject tmp = [];
 
-        return _helper.ExecuteSetCommand<object, TraCICompoundObject>(
-            id,
-            TraCIConstants.CMD_SET_VEHICLE_VARIABLE,
-            TraCIConstants.CMD_RESUME,
-            tmp
-        );
+        return _helper.ExecuteSetCommand(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.CMD_RESUME, tmp);
         }
 
     /// <summary>
@@ -831,12 +807,8 @@ public class VehicleCommands(ITcpService tcpService, ICommandHelperService helpe
     /// <returns></returns>
     public bool ChangeTarget(string id, string desitinationEdgeId)
         {
-        return _helper.ExecuteSetCommand<object, string>(
-            id,
-            TraCIConstants.CMD_SET_VEHICLE_VARIABLE,
-            TraCIConstants.CMD_CHANGETARGET,
-            desitinationEdgeId
-        );
+        var tmp = new TraCIString() { Value = desitinationEdgeId };
+        return _helper.ExecuteSetCommand(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.CMD_CHANGETARGET, tmp);
         }
 
     /// <summary>
@@ -847,7 +819,8 @@ public class VehicleCommands(ITcpService tcpService, ICommandHelperService helpe
     /// <returns></returns>
     public bool SetSpeed(string id, double speed)
         {
-        return _helper.ExecuteSetCommand<object, double>(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_SPEED, speed);
+        var tmp = new TraCIDouble() { Value = speed };
+        return _helper.ExecuteSetCommand(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_SPEED, tmp);
         }
 
     /// <summary>
@@ -858,7 +831,7 @@ public class VehicleCommands(ITcpService tcpService, ICommandHelperService helpe
     /// <returns></returns>
     public bool SetColor(string id, Color color)
         {
-        return _helper.ExecuteSetCommand<object, Color>(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_COLOR, color);
+        return _helper.ExecuteSetCommand(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_COLOR, color);
         }
 
     /// <summary>
@@ -869,7 +842,9 @@ public class VehicleCommands(ITcpService tcpService, ICommandHelperService helpe
     /// <returns></returns>
     public bool SetRoutID(string id, string routeId)
         {
-        return _helper.ExecuteSetCommand<object, string>(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_ROUTE_ID, routeId);
+        var tmp = new TraCIString() { Value = routeId };
+
+        return _helper.ExecuteSetCommand(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_ROUTE_ID, tmp);
         }
 
     /// <summary>
@@ -880,7 +855,8 @@ public class VehicleCommands(ITcpService tcpService, ICommandHelperService helpe
     /// <returns></returns>
     public bool SetRoute(string id, List<string> edges)
         {
-        return _helper.ExecuteSetCommand<object, List<string>>(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_ROUTE, edges);
+        var tmp = new TraCIStringList() { Value = edges };
+        return _helper.ExecuteSetCommand(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_ROUTE, tmp);
         }
 
     /// <summary>
@@ -906,14 +882,9 @@ public class VehicleCommands(ITcpService tcpService, ICommandHelperService helpe
             ],
                 2 => [new TraCIString() { Value = edgeId }, new TraCIDouble() { Value = effortValue }],
                 1 => [new TraCIString() { Value = edgeId }],
-                _ => throw new ArgumentOutOfRangeException("numberOfElements", "Only 1, 2 or 4, is allowed as value for numberOfElements"),
+                _ => throw new ArgumentOutOfRangeException(nameof(numberOfElements), "Only 1, 2 or 4, is allowed as value for numberOfElements"),
                 };
-        return _helper.ExecuteSetCommand<object, TraCICompoundObject>(
-            id,
-            TraCIConstants.CMD_SET_VEHICLE_VARIABLE,
-            TraCIConstants.VAR_EDGE_EFFORT,
-            co
-        );
+        return _helper.ExecuteSetCommand(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_EDGE_EFFORT, co);
         }
 
     /// <summary>
@@ -949,14 +920,9 @@ public class VehicleCommands(ITcpService tcpService, ICommandHelperService helpe
                 co.Add(new TraCIString() { Value = edgeId });
                 break;
             default:
-                throw new ArgumentOutOfRangeException("numberOfElements", "Only 1, 2 or 4, is allowed as value for numberOfElements");
+                throw new ArgumentOutOfRangeException(nameof(numberOfElements), "Only 1, 2 or 4, is allowed as value for numberOfElements");
             }
-        return _helper.ExecuteSetCommand<object, TraCICompoundObject>(
-            id,
-            TraCIConstants.CMD_SET_VEHICLE_VARIABLE,
-            TraCIConstants.VAR_EDGE_TRAVELTIME,
-            co
-        );
+        return _helper.ExecuteSetCommand(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_EDGE_TRAVELTIME, co);
         }
 
     /// <summary>
@@ -967,7 +933,8 @@ public class VehicleCommands(ITcpService tcpService, ICommandHelperService helpe
     /// <returns></returns>
     public bool SetSignals(string id, VehicleSignalling signal)
         {
-        return _helper.ExecuteSetCommand<object, int>(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_ROUTE, (int)signal);
+        var tmp = new TraCIInteger() { Value = (int)signal };
+        return _helper.ExecuteSetCommand(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_ROUTE, tmp);
         }
 
     /// <summary>
@@ -978,12 +945,8 @@ public class VehicleCommands(ITcpService tcpService, ICommandHelperService helpe
     /// <returns></returns>
     public bool SetRoutingMode(string id, RoutingMode routingMode)
         {
-        return _helper.ExecuteSetCommand<object, int>(
-            id,
-            TraCIConstants.CMD_SET_VEHICLE_VARIABLE,
-            TraCIConstants.VAR_ROUTING_MODE,
-            (int)routingMode
-        );
+        var tmp = new TraCIInteger() { Value = (int)routingMode };
+        return _helper.ExecuteSetCommand(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_ROUTING_MODE, tmp);
         }
 
     /// <summary>
@@ -997,12 +960,7 @@ public class VehicleCommands(ITcpService tcpService, ICommandHelperService helpe
         {
         TraCICompoundObject tmp = [new TraCIString() { Value = laneId }, new TraCIDouble() { Value = position }];
 
-        return _helper.ExecuteSetCommand<object, TraCICompoundObject>(
-            id,
-            TraCIConstants.CMD_SET_VEHICLE_VARIABLE,
-            TraCIConstants.VAR_MOVE_TO,
-            tmp
-        );
+        return _helper.ExecuteSetCommand(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_MOVE_TO, tmp);
         }
 
     /// <summary>
@@ -1031,12 +989,7 @@ public class VehicleCommands(ITcpService tcpService, ICommandHelperService helpe
             tmp.Add(new TraCIByte() { Value = (byte)keepRoute });
             }
 
-        return _helper.ExecuteSetCommand<object, TraCICompoundObject>(
-            id,
-            TraCIConstants.CMD_SET_VEHICLE_VARIABLE,
-            TraCIConstants.MOVE_TO_XY,
-            tmp
-        );
+        return _helper.ExecuteSetCommand(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.MOVE_TO_XY, tmp);
         }
 
     /// <summary>
@@ -1047,12 +1000,7 @@ public class VehicleCommands(ITcpService tcpService, ICommandHelperService helpe
     public bool RerouteTraveltime(string id)
         {
         TraCICompoundObject tmp = [];
-        return _helper.ExecuteSetCommand<object, TraCICompoundObject>(
-            id,
-            TraCIConstants.CMD_SET_VEHICLE_VARIABLE,
-            TraCIConstants.CMD_REROUTE_TRAVELTIME,
-            tmp
-        );
+        return _helper.ExecuteSetCommand(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.CMD_REROUTE_TRAVELTIME, tmp);
         }
 
     /// <summary>
@@ -1063,12 +1011,7 @@ public class VehicleCommands(ITcpService tcpService, ICommandHelperService helpe
     public bool RerouteEffort(string id)
         {
         TraCICompoundObject tmp = [];
-        return _helper.ExecuteSetCommand<object, TraCICompoundObject>(
-            id,
-            TraCIConstants.CMD_SET_VEHICLE_VARIABLE,
-            TraCIConstants.CMD_REROUTE_EFFORT,
-            tmp
-        );
+        return _helper.ExecuteSetCommand(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.CMD_REROUTE_EFFORT, tmp);
         }
 
     /// <summary>
@@ -1079,7 +1022,8 @@ public class VehicleCommands(ITcpService tcpService, ICommandHelperService helpe
     /// <returns></returns>
     public bool SetSpeedMode(string id, SpeedMode mode)
         {
-        return _helper.ExecuteSetCommand<object, int>(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_SPEEDSETMODE, (int)mode);
+        var tmp = new TraCIInteger() { Value = (int)mode };
+        return _helper.ExecuteSetCommand(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_SPEEDSETMODE, tmp);
         }
 
     /// <summary>
@@ -1090,12 +1034,8 @@ public class VehicleCommands(ITcpService tcpService, ICommandHelperService helpe
     /// <returns></returns>
     public bool SetSpeedFactor(string id, double speedFactor)
         {
-        return _helper.ExecuteSetCommand<object, double>(
-            id,
-            TraCIConstants.CMD_SET_VEHICLE_VARIABLE,
-            TraCIConstants.VAR_SPEED_FACTOR,
-            speedFactor
-        );
+        var tmp = new TraCIDouble() { Value = speedFactor };
+        return _helper.ExecuteSetCommand(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_SPEED_FACTOR, tmp);
         }
 
     /// <summary>
@@ -1106,7 +1046,8 @@ public class VehicleCommands(ITcpService tcpService, ICommandHelperService helpe
     /// <returns></returns>
     public bool SetMaxSpeed(string id, double maxSpeed)
         {
-        return _helper.ExecuteSetCommand<object, double>(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_MAXSPEED, maxSpeed);
+        var tmp = new TraCIDouble() { Value = maxSpeed };
+        return _helper.ExecuteSetCommand(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_MAXSPEED, tmp);
         }
 
     /// <summary>
@@ -1130,10 +1071,13 @@ public class VehicleCommands(ITcpService tcpService, ICommandHelperService helpe
         LaneChangeSublaneMode sublane
     )
         {
-        int tmp;
-
-        tmp = ((int)stragic * 1) + ((int)cooperative * 4) + ((int)speed * 16) + ((int)right * 32) + ((int)respect * 64) + ((int)sublane * 128);
-        return _helper.ExecuteSetCommand<object, int>(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_LANECHANGE_MODE, tmp);
+        var tmp = ((int)stragic * 1) + ((int)cooperative * 4) + ((int)speed * 16) + ((int)right * 32) + ((int)respect * 64) + ((int)sublane * 128);
+        return _helper.ExecuteSetCommand(
+            id,
+            TraCIConstants.CMD_SET_VEHICLE_VARIABLE,
+            TraCIConstants.VAR_LANECHANGE_MODE,
+            new TraCIInteger() { Value = tmp }
+        );
         }
 
     /// <summary>
@@ -1159,7 +1103,7 @@ public class VehicleCommands(ITcpService tcpService, ICommandHelperService helpe
             new TraCIByte() { Value = departLane },
         ];
 
-        return _helper.ExecuteSetCommand<object, TraCICompoundObject>(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.ADD, tmp);
+        return _helper.ExecuteSetCommand(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.ADD, tmp);
         }
 
     /// <summary>
@@ -1216,7 +1160,7 @@ public class VehicleCommands(ITcpService tcpService, ICommandHelperService helpe
             new TraCIInteger() { Value = personNumber },
         ];
 
-        return _helper.ExecuteSetCommand<object, TraCICompoundObject>(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.ADD_FULL, tmp);
+        return _helper.ExecuteSetCommand(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.ADD_FULL, tmp);
         }
 
     /// <summary>
@@ -1227,7 +1171,8 @@ public class VehicleCommands(ITcpService tcpService, ICommandHelperService helpe
     /// <returns></returns>
     public bool Remove(string id, byte reason)
         {
-        return _helper.ExecuteSetCommand<object, byte>(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.REMOVE, reason);
+        var tmp = new TraCIByte() { Value = reason };
+        return _helper.ExecuteSetCommand(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.REMOVE, tmp);
         }
 
     /// <summary>
@@ -1238,7 +1183,8 @@ public class VehicleCommands(ITcpService tcpService, ICommandHelperService helpe
     /// <returns></returns>
     public bool SetLength(string id, double length)
         {
-        return _helper.ExecuteSetCommand<object, double>(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_LENGTH, length);
+        var tmp = new TraCIDouble() { Value = length };
+        return _helper.ExecuteSetCommand(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_LENGTH, tmp);
         }
 
     /// <summary>
@@ -1249,12 +1195,8 @@ public class VehicleCommands(ITcpService tcpService, ICommandHelperService helpe
     /// <returns></returns>
     public bool SetVehicleClass(string id, string vehicleClass)
         {
-        return _helper.ExecuteSetCommand<object, string>(
-            id,
-            TraCIConstants.CMD_SET_VEHICLE_VARIABLE,
-            TraCIConstants.VAR_VEHICLECLASS,
-            vehicleClass
-        );
+        var tmp = new TraCIString() { Value = vehicleClass };
+        return _helper.ExecuteSetCommand(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_VEHICLECLASS, tmp);
         }
 
     /// <summary>
@@ -1265,11 +1207,12 @@ public class VehicleCommands(ITcpService tcpService, ICommandHelperService helpe
     /// <returns></returns>
     public bool SetEmissionClass(string id, string emissionClass)
         {
-        return _helper.ExecuteSetCommand<object, string>(
+        var tmp = new TraCIString() { Value = emissionClass };
+        return _helper.ExecuteSetCommand(
             id,
             TraCIConstants.CMD_SET_VEHICLE_VARIABLE,
             TraCIConstants.VAR_EMISSIONCLASS,
-            emissionClass
+            tmp
         );
         }
 
@@ -1281,7 +1224,8 @@ public class VehicleCommands(ITcpService tcpService, ICommandHelperService helpe
     /// <returns></returns>
     public bool SetWidth(string id, double width)
         {
-        return _helper.ExecuteSetCommand<object, double>(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_WIDTH, width);
+        var tmp = new TraCIDouble() { Value = width };
+        return _helper.ExecuteSetCommand(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_WIDTH, tmp);
         }
 
     /// <summary>
@@ -1292,7 +1236,8 @@ public class VehicleCommands(ITcpService tcpService, ICommandHelperService helpe
     /// <returns></returns>
     public bool SetHeight(string id, double height)
         {
-        return _helper.ExecuteSetCommand<object, double>(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_HEIGHT, height);
+        var tmp = new TraCIDouble() { Value = height };
+        return _helper.ExecuteSetCommand(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_HEIGHT, tmp);
         }
 
     /// <summary>
@@ -1303,7 +1248,8 @@ public class VehicleCommands(ITcpService tcpService, ICommandHelperService helpe
     /// <returns></returns>
     public bool SetMinGap(string id, double minGap)
         {
-        return _helper.ExecuteSetCommand<object, double>(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_MINGAP, minGap);
+        var tmp = new TraCIDouble() { Value = minGap };
+        return _helper.ExecuteSetCommand(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_MINGAP, tmp);
         }
 
     /// <summary>
@@ -1314,7 +1260,8 @@ public class VehicleCommands(ITcpService tcpService, ICommandHelperService helpe
     /// <returns></returns>
     public bool SetShapeClass(string id, string shapeClass)
         {
-        return _helper.ExecuteSetCommand<object, string>(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_SHAPECLASS, shapeClass);
+        var tmp = new TraCIString() { Value = shapeClass };
+        return _helper.ExecuteSetCommand(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_SHAPECLASS, tmp);
         }
 
     /// <summary>
@@ -1325,7 +1272,8 @@ public class VehicleCommands(ITcpService tcpService, ICommandHelperService helpe
     /// <returns></returns>
     public bool SetAccel(string id, double acceleration)
         {
-        return _helper.ExecuteSetCommand<object, double>(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_ACCEL, acceleration);
+        var tmp = new TraCIDouble() { Value = acceleration };
+        return _helper.ExecuteSetCommand(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_ACCEL, tmp);
         }
 
     /// <summary>
@@ -1336,7 +1284,8 @@ public class VehicleCommands(ITcpService tcpService, ICommandHelperService helpe
     /// <returns></returns>
     public bool SetDecel(string id, double deceleration)
         {
-        return _helper.ExecuteSetCommand<object, double>(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_DECEL, deceleration);
+        var tmp = new TraCIDouble() { Value = deceleration };
+        return _helper.ExecuteSetCommand(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_DECEL, tmp);
         }
 
     /// <summary>
@@ -1347,12 +1296,8 @@ public class VehicleCommands(ITcpService tcpService, ICommandHelperService helpe
     /// <returns></returns>
     public bool SetImperfection(string id, double imperfection)
         {
-        return _helper.ExecuteSetCommand<object, double>(
-            id,
-            TraCIConstants.CMD_SET_VEHICLE_VARIABLE,
-            TraCIConstants.VAR_IMPERFECTION,
-            imperfection
-        );
+        var tmp = new TraCIDouble() { Value = imperfection };
+        return _helper.ExecuteSetCommand(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_IMPERFECTION, tmp);
         }
 
     /// <summary>
@@ -1363,7 +1308,8 @@ public class VehicleCommands(ITcpService tcpService, ICommandHelperService helpe
     /// <returns></returns>
     public bool SetTau(string id, double tau)
         {
-        return _helper.ExecuteSetCommand<object, double>(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_TAU, tau);
+        var tmp = new TraCIDouble() { Value = tau };
+        return _helper.ExecuteSetCommand(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_TAU, tmp);
         }
 
     /// <summary>
@@ -1374,7 +1320,8 @@ public class VehicleCommands(ITcpService tcpService, ICommandHelperService helpe
     /// <returns></returns>
     public bool SetType(string id, string type)
         {
-        return _helper.ExecuteSetCommand<object, string>(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_IMPERFECTION, type);
+        var tmp = new TraCIString() { Value = type };
+        return _helper.ExecuteSetCommand(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_IMPERFECTION, tmp);
         }
 
     /// <summary>
@@ -1385,7 +1332,8 @@ public class VehicleCommands(ITcpService tcpService, ICommandHelperService helpe
     /// <returns></returns>
     public bool SetVia(string id, List<string> via)
         {
-        return _helper.ExecuteSetCommand<object, List<string>>(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_VIA, via);
+        var tmp = new TraCIStringList() { Value = via };
+        return _helper.ExecuteSetCommand(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_VIA, tmp);
         }
 
     /// <summary>
@@ -1396,7 +1344,8 @@ public class VehicleCommands(ITcpService tcpService, ICommandHelperService helpe
     /// <returns></returns>
     public bool SetMaxSpeedLat(string id, double maxSpeed)
         {
-        return _helper.ExecuteSetCommand<object, double>(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_MAXSPEED_LAT, maxSpeed);
+        var tmp = new TraCIDouble() { Value = maxSpeed };
+        return _helper.ExecuteSetCommand(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_MAXSPEED_LAT, tmp);
         }
 
     /// <summary>
@@ -1407,7 +1356,8 @@ public class VehicleCommands(ITcpService tcpService, ICommandHelperService helpe
     /// <returns></returns>
     public bool SetMinGapLat(string id, double gap)
         {
-        return _helper.ExecuteSetCommand<object, double>(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_MINGAP_LAT, gap);
+        var tmp = new TraCIDouble() { Value = gap };
+        return _helper.ExecuteSetCommand(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_MINGAP_LAT, tmp);
         }
 
     /// <summary>
@@ -1418,7 +1368,8 @@ public class VehicleCommands(ITcpService tcpService, ICommandHelperService helpe
     /// <returns></returns>
     public bool SetLateralAlignment(string id, string alignment)
         {
-        return _helper.ExecuteSetCommand<object, string>(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_LATALIGNMENT, alignment);
+        var tmp = new TraCIString() { Value = alignment };
+        return _helper.ExecuteSetCommand(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_LATALIGNMENT, tmp);
         }
 
     /// <summary>
@@ -1540,4 +1491,3 @@ public enum LaneChangeSublaneMode
     DoSublaneChangesIfNotInConflict = 1,
     DoSublaneChangeEvenIfOverriding = 2,
     }
-

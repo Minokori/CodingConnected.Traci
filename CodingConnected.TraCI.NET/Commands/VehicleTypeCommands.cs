@@ -247,7 +247,8 @@ public class VehicleTypeCommands(ITcpService tcpService, ICommandHelperService h
     /// <returns></returns>
     public bool SetLength(string id, double length)
         {
-        return _helper.ExecuteSetCommand<object, double>(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_LENGTH, length);
+        var tmp = new TraCIDouble { Value = length };
+        return _helper.ExecuteSetCommand(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_LENGTH, tmp);
         }
 
     /// <summary>
@@ -258,7 +259,8 @@ public class VehicleTypeCommands(ITcpService tcpService, ICommandHelperService h
     /// <returns></returns>
     public bool SetMaxSpeed(string id, double speed)
         {
-        return _helper.ExecuteSetCommand<object, double>(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_MAXSPEED, speed);
+        var tmp = new TraCIDouble { Value = speed };
+        return _helper.ExecuteSetCommand(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_MAXSPEED, tmp);
         }
 
     /// <summary>
@@ -269,12 +271,8 @@ public class VehicleTypeCommands(ITcpService tcpService, ICommandHelperService h
     /// <returns></returns>
     public bool SetVehicleClass(string id, string vehicleClass)
         {
-        return _helper.ExecuteSetCommand<object, string>(
-            id,
-            TraCIConstants.CMD_SET_VEHICLE_VARIABLE,
-            TraCIConstants.VAR_VEHICLECLASS,
-            vehicleClass
-        );
+        var tmp = new TraCIString { Value = vehicleClass };
+        return _helper.ExecuteSetCommand(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_VEHICLECLASS, tmp);
         }
 
     /// <summary>
@@ -285,12 +283,8 @@ public class VehicleTypeCommands(ITcpService tcpService, ICommandHelperService h
     /// <returns></returns>
     public bool SetSpeedFactor(string id, double speedFactor)
         {
-        return _helper.ExecuteSetCommand<object, double>(
-            id,
-            TraCIConstants.CMD_SET_VEHICLE_VARIABLE,
-            TraCIConstants.VAR_SPEED_FACTOR,
-            speedFactor
-        );
+        var tmp = new TraCIDouble { Value = speedFactor };
+        return _helper.ExecuteSetCommand(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_SPEED_FACTOR, tmp);
         }
 
     /// <summary>
@@ -301,12 +295,9 @@ public class VehicleTypeCommands(ITcpService tcpService, ICommandHelperService h
     /// <returns></returns>
     public bool SetSpeedDeviation(string id, double speedDeviation)
         {
-        return _helper.ExecuteSetCommand<object, double>(
-            id,
-            TraCIConstants.CMD_SET_VEHICLE_VARIABLE,
-            TraCIConstants.VAR_SPEED_DEVIATION,
-            speedDeviation
-        );
+        var tmp = new TraCIDouble { Value = speedDeviation };
+
+        return _helper.ExecuteSetCommand(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_SPEED_DEVIATION, tmp);
         }
 
     /// <summary>
@@ -317,12 +308,9 @@ public class VehicleTypeCommands(ITcpService tcpService, ICommandHelperService h
     /// <returns></returns>
     public bool SetEmissionClass(string id, string emissionClass)
         {
-        return _helper.ExecuteSetCommand<object, string>(
-            id,
-            TraCIConstants.CMD_SET_VEHICLE_VARIABLE,
-            TraCIConstants.VAR_EMISSIONCLASS,
-            emissionClass
-        );
+        var tmp = new TraCIString { Value = emissionClass };
+
+        return _helper.ExecuteSetCommand(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_EMISSIONCLASS, tmp);
         }
 
     /// <summary>
@@ -333,7 +321,9 @@ public class VehicleTypeCommands(ITcpService tcpService, ICommandHelperService h
     /// <returns></returns>
     public bool SetWidth(string id, double width)
         {
-        return _helper.ExecuteSetCommand<object, double>(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_WIDTH, width);
+        var tmp = new TraCIDouble { Value = width };
+
+        return _helper.ExecuteSetCommand(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_WIDTH, tmp);
         }
 
     /// <summary>
@@ -344,7 +334,8 @@ public class VehicleTypeCommands(ITcpService tcpService, ICommandHelperService h
     /// <returns></returns>
     public bool SetHeight(string id, double height)
         {
-        return _helper.ExecuteSetCommand<object, double>(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_HEIGHT, height);
+        var tmp = new TraCIDouble { Value = height };
+        return _helper.ExecuteSetCommand(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_HEIGHT, tmp);
         }
 
     /// <summary>
@@ -355,7 +346,8 @@ public class VehicleTypeCommands(ITcpService tcpService, ICommandHelperService h
     /// <returns></returns>
     public bool SetMinGap(string id, double minGap)
         {
-        return _helper.ExecuteSetCommand<object, double>(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_MINGAP, minGap);
+        var tmp = new TraCIDouble { Value = minGap };
+        return _helper.ExecuteSetCommand(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_MINGAP, tmp);
         }
 
     /// <summary>
@@ -366,7 +358,8 @@ public class VehicleTypeCommands(ITcpService tcpService, ICommandHelperService h
     /// <returns></returns>
     public bool SetShapeClass(string id, string shapeClass)
         {
-        return _helper.ExecuteSetCommand<object, string>(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_SHAPECLASS, shapeClass);
+        var tmp = new TraCIString { Value = shapeClass };
+        return _helper.ExecuteSetCommand(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_SHAPECLASS, tmp);
         }
 
     /// <summary>
@@ -377,7 +370,8 @@ public class VehicleTypeCommands(ITcpService tcpService, ICommandHelperService h
     /// <returns></returns>
     public bool SetAccel(string id, double acceleration)
         {
-        return _helper.ExecuteSetCommand<object, double>(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_ACCEL, acceleration);
+        var tmp = new TraCIDouble { Value = acceleration };
+        return _helper.ExecuteSetCommand(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_ACCEL, tmp);
         }
 
     /// <summary>
@@ -388,7 +382,9 @@ public class VehicleTypeCommands(ITcpService tcpService, ICommandHelperService h
     /// <returns></returns>
     public bool SetDecel(string id, double decceleration)
         {
-        return _helper.ExecuteSetCommand<object, double>(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_DECEL, decceleration);
+        var tmp = new TraCIDouble { Value = decceleration };
+
+        return _helper.ExecuteSetCommand(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_DECEL, tmp);
         }
 
     /// <summary>
@@ -399,12 +395,8 @@ public class VehicleTypeCommands(ITcpService tcpService, ICommandHelperService h
     /// <returns></returns>
     public bool SetImperfection(string id, double imperfection)
         {
-        return _helper.ExecuteSetCommand<object, double>(
-            id,
-            TraCIConstants.CMD_SET_VEHICLE_VARIABLE,
-            TraCIConstants.VAR_IMPERFECTION,
-            imperfection
-        );
+        var tmp = new TraCIDouble { Value = imperfection };
+        return _helper.ExecuteSetCommand(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_IMPERFECTION, tmp);
         }
 
     /// <summary>
@@ -415,7 +407,9 @@ public class VehicleTypeCommands(ITcpService tcpService, ICommandHelperService h
     /// <returns></returns>
     public bool SetTau(string id, double tau)
         {
-        return _helper.ExecuteSetCommand<object, double>(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_TAU, tau);
+        var tmp = new TraCIDouble { Value = tau };
+
+        return _helper.ExecuteSetCommand(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_TAU, tmp);
         }
 
     /// <summary>
@@ -426,7 +420,7 @@ public class VehicleTypeCommands(ITcpService tcpService, ICommandHelperService h
     /// <returns></returns>
     public bool SetColor(string id, Color color)
         {
-        return _helper.ExecuteSetCommand<object, Color>(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_COLOR, color);
+        return _helper.ExecuteSetCommand(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_COLOR, color);
         }
 
     /// <summary>
@@ -437,7 +431,9 @@ public class VehicleTypeCommands(ITcpService tcpService, ICommandHelperService h
     /// <returns></returns>
     public bool SetMaxSpeedLat(string id, double maxSpeed)
         {
-        return _helper.ExecuteSetCommand<object, double>(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_MAXSPEED_LAT, maxSpeed);
+        var tmp = new TraCIDouble { Value = maxSpeed };
+
+        return _helper.ExecuteSetCommand(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_MAXSPEED_LAT, tmp);
         }
 
     /// <summary>
@@ -448,7 +444,9 @@ public class VehicleTypeCommands(ITcpService tcpService, ICommandHelperService h
     /// <returns></returns>
     public bool SetMinGapLat(string id, double minGap)
         {
-        return _helper.ExecuteSetCommand<object, double>(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_MINGAP_LAT, minGap);
+        var tmp = new TraCIDouble { Value = minGap };
+
+        return _helper.ExecuteSetCommand(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_MINGAP_LAT, tmp);
         }
 
     /// <summary>
@@ -459,7 +457,8 @@ public class VehicleTypeCommands(ITcpService tcpService, ICommandHelperService h
     /// <returns></returns>
     public bool SetLateralAlignment(string id, string alignment)
         {
-        return _helper.ExecuteSetCommand<object, string>(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_LATALIGNMENT, alignment);
+        var tmp = new TraCIString { Value = alignment };
+        return _helper.ExecuteSetCommand(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_LATALIGNMENT, tmp);
         }
 
     /// <summary>
@@ -470,7 +469,8 @@ public class VehicleTypeCommands(ITcpService tcpService, ICommandHelperService h
     /// <returns></returns>
     public bool Copy(string id, string newId)
         {
-        return _helper.ExecuteSetCommand<object, string>(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.COPY, newId);
+        var tmp = new TraCIString { Value = newId };
+        return _helper.ExecuteSetCommand(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.COPY, tmp);
         }
 
     /// <summary>
@@ -485,15 +485,8 @@ public class VehicleTypeCommands(ITcpService tcpService, ICommandHelperService h
 
     public void Subscribe(string objectId, int beginTime, int endTime, List<byte> ListOfVariablesToSubsribeTo)
         {
-        _helper.ExecuteSubscribeCommand(
-            beginTime,
-            endTime,
-            objectId,
-            TraCIConstants.CMD_SUBSCRIBE_VEHICLETYPE_VARIABLE,
-            ListOfVariablesToSubsribeTo
-        );
+        _helper.ExecuteSubscribeCommand(beginTime, endTime, objectId, TraCIConstants.CMD_SUBSCRIBE_VEHICLETYPE_VARIABLE, ListOfVariablesToSubsribeTo);
         }
 
     #endregion // Public Methods
     }
-

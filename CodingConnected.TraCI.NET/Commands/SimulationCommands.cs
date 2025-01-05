@@ -6,7 +6,6 @@ namespace CodingConnected.TraCI.NET.Commands;
 
 public class SimulationCommands(ITcpService tcpService, ICommandHelperService helper) : TraCICommandsBase(tcpService, helper)
     {
-
     /// <summary>
     /// Returns the current simulation time (in s)
     /// </summary>
@@ -91,11 +90,7 @@ public class SimulationCommands(ITcpService tcpService, ICommandHelperService he
     /// <returns></returns>
     public List<string> GetStartingTeleportIDList(string id)
         {
-        var result = _helper.ExecuteGetCommand(
-            id,
-            TraCIConstants.CMD_GET_SIM_VARIABLE,
-            TraCIConstants.VAR_TELEPORT_STARTING_VEHICLES_IDS
-        );
+        var result = _helper.ExecuteGetCommand(id, TraCIConstants.CMD_GET_SIM_VARIABLE, TraCIConstants.VAR_TELEPORT_STARTING_VEHICLES_IDS);
         return ((TraCIStringList)result.Value).Value;
         }
 
@@ -249,11 +244,7 @@ public class SimulationCommands(ITcpService tcpService, ICommandHelperService he
     /// <returns></returns>
     public List<string> GetEmergencyStoppingVehiclesIDList(string id)
         {
-        var result = _helper.ExecuteGetCommand(
-            id,
-            TraCIConstants.CMD_GET_SIM_VARIABLE,
-            TraCIConstants.VAR_EMERGENCYSTOPPING_VEHICLES_IDS
-        );
+        var result = _helper.ExecuteGetCommand(id, TraCIConstants.CMD_GET_SIM_VARIABLE, TraCIConstants.VAR_EMERGENCYSTOPPING_VEHICLES_IDS);
         return ((TraCIStringList)result.Value).Value;
         }
 
@@ -278,7 +269,6 @@ public class SimulationCommands(ITcpService tcpService, ICommandHelperService he
         var result = _helper.ExecuteGetCommand(id, TraCIConstants.CMD_GET_SIM_VARIABLE, TraCIConstants.VAR_PARKING_STARTING_VEHICLES_IDS);
         return ((TraCIStringList)result.Value).Value;
         }
-
 
     /// <summary>
     /// 	The number of vehicles that begin to continue their journey, leaving a scheduled parking in this time step.
@@ -345,12 +335,8 @@ public class SimulationCommands(ITcpService tcpService, ICommandHelperService he
     /// <returns></returns>
     public bool ClearPending(string id, string routeId)
         {
-        return _helper.ExecuteSetCommand<object, string>(
-            id,
-            TraCIConstants.CMD_SET_SIM_VARIABLE,
-            TraCIConstants.CMD_CLEAR_PENDING_VEHICLES,
-            routeId
-        );
+        var tmp = new TraCIString() { Value = routeId };
+        return _helper.ExecuteSetCommand(id, TraCIConstants.CMD_SET_SIM_VARIABLE, TraCIConstants.CMD_CLEAR_PENDING_VEHICLES, tmp);
         }
 
     /// <summary>
@@ -361,7 +347,9 @@ public class SimulationCommands(ITcpService tcpService, ICommandHelperService he
     /// <returns></returns>
     public bool SaveState(string id, string filename)
         {
-        return _helper.ExecuteSetCommand<object, string>(id, TraCIConstants.CMD_SET_SIM_VARIABLE, TraCIConstants.CMD_SAVE_SIMSTATE, filename);
+        var tmp = new TraCIString() { Value = filename };
+
+        return _helper.ExecuteSetCommand(id, TraCIConstants.CMD_SET_SIM_VARIABLE, TraCIConstants.CMD_SAVE_SIMSTATE, tmp);
         }
 
     public void Subscribe(string objectId, int beginTime, int endTime, List<byte> ListOfVariablesToSubsribeTo)
@@ -369,4 +357,3 @@ public class SimulationCommands(ITcpService tcpService, ICommandHelperService he
         _helper.ExecuteSubscribeCommand(beginTime, endTime, objectId, TraCIConstants.CMD_SUBSCRIBE_SIM_VARIABLE, ListOfVariablesToSubsribeTo);
         }
     }
-

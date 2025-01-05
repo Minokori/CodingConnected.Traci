@@ -74,7 +74,8 @@ public class POICommands(ITcpService tcpService, ICommandHelperService helper) :
     /// <returns></returns>
     public bool SetType(string id, string type)
         {
-        return _helper.ExecuteSetCommand<object, string>(id, TraCIConstants.CMD_SET_POI_VARIABLE, TraCIConstants.VAR_TYPE, type);
+        var tmp = new TraCIString() { Value = type };
+        return _helper.ExecuteSetCommand(id, TraCIConstants.CMD_SET_POI_VARIABLE, TraCIConstants.VAR_TYPE, tmp);
         }
 
     /// <summary>
@@ -85,7 +86,7 @@ public class POICommands(ITcpService tcpService, ICommandHelperService helper) :
     /// <returns></returns>
     public bool SetColor(string id, Color color)
         {
-        return _helper.ExecuteSetCommand<object, Color>(id, TraCIConstants.CMD_SET_POI_VARIABLE, TraCIConstants.VAR_COLOR, color);
+        return _helper.ExecuteSetCommand(id, TraCIConstants.CMD_SET_POI_VARIABLE, TraCIConstants.VAR_COLOR, color);
         }
 
     /// <summary>
@@ -96,7 +97,7 @@ public class POICommands(ITcpService tcpService, ICommandHelperService helper) :
     /// <returns></returns>
     public bool SetPosition(string id, Position2D position2D)
         {
-        return _helper.ExecuteSetCommand<object, Position2D>(id, TraCIConstants.CMD_SET_POI_VARIABLE, TraCIConstants.VAR_POSITION, position2D);
+        return _helper.ExecuteSetCommand(id, TraCIConstants.CMD_SET_POI_VARIABLE, TraCIConstants.VAR_POSITION, position2D);
         }
 
     /// <summary>
@@ -111,7 +112,7 @@ public class POICommands(ITcpService tcpService, ICommandHelperService helper) :
     public bool Add(string id, string name, Color color, int layer, Position2D position2D)
         {
         TraCICompoundObject tmp = [new TraCIString() { Value = name }, color, new TraCIInteger() { Value = layer }, position2D];
-        return _helper.ExecuteSetCommand<object, TraCICompoundObject>(id, TraCIConstants.CMD_SET_POI_VARIABLE, TraCIConstants.ADD, tmp);
+        return _helper.ExecuteSetCommand(id, TraCIConstants.CMD_SET_POI_VARIABLE, TraCIConstants.ADD, tmp);
         }
 
     /// <summary>
@@ -122,7 +123,8 @@ public class POICommands(ITcpService tcpService, ICommandHelperService helper) :
     /// <returns></returns>
     public bool Remove(string id, int layer)
         {
-        return _helper.ExecuteSetCommand<object, int>(id, TraCIConstants.CMD_SET_POI_VARIABLE, TraCIConstants.REMOVE, layer);
+        var tmp = new TraCIInteger() { Value = layer };
+        return _helper.ExecuteSetCommand(id, TraCIConstants.CMD_SET_POI_VARIABLE, TraCIConstants.REMOVE, tmp);
         }
 
     public void Subscribe(string objectId, int beginTime, int endTime, List<byte> ListOfVariablesToSubsribeTo)

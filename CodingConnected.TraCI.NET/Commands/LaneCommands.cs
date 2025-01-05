@@ -330,11 +330,11 @@ public class LaneCommands(ITcpService tcpService, ICommandHelperService helper) 
     /// </summary>
     public bool SetAllowed(string laneId, List<string> allowedVehicleClasses)
         {
-        return _helper.ExecuteSetCommand<object, List<string>>(
+        return _helper.ExecuteSetCommand(
             laneId,
             TraCIConstants.CMD_SET_LANE_VARIABLE,
             TraCIConstants.LANE_ALLOWED,
-            allowedVehicleClasses
+            new TraCIStringList() { Value = allowedVehicleClasses }
         );
         }
 
@@ -343,11 +343,11 @@ public class LaneCommands(ITcpService tcpService, ICommandHelperService helper) 
     /// </summary>
     public bool SetDisallowed(string laneId, List<string> disallowedVehicleClasses)
         {
-        return _helper.ExecuteSetCommand<object, List<string>>(
+        return _helper.ExecuteSetCommand(
             laneId,
             TraCIConstants.CMD_SET_LANE_VARIABLE,
             TraCIConstants.LANE_DISALLOWED,
-            disallowedVehicleClasses
+            new TraCIStringList() { Value = disallowedVehicleClasses }
         );
         }
 
@@ -356,7 +356,8 @@ public class LaneCommands(ITcpService tcpService, ICommandHelperService helper) 
     /// </summary>
     public bool SetLength(string laneId, double length)
         {
-        return _helper.ExecuteSetCommand<object, double>(laneId, TraCIConstants.CMD_SET_LANE_VARIABLE, TraCIConstants.VAR_LENGTH, length);
+        var tmp = new TraCIDouble() { Value = length };
+        return _helper.ExecuteSetCommand(laneId, TraCIConstants.CMD_SET_LANE_VARIABLE, TraCIConstants.VAR_LENGTH, tmp);
         }
 
     /// <summary>
@@ -364,7 +365,8 @@ public class LaneCommands(ITcpService tcpService, ICommandHelperService helper) 
     /// </summary>
     public bool SetMaxSpeed(string laneId, double maxSpeed)
         {
-        return _helper.ExecuteSetCommand<object, double>(laneId, TraCIConstants.CMD_SET_LANE_VARIABLE, TraCIConstants.VAR_MAXSPEED, maxSpeed);
+        var tmp = new TraCIDouble() { Value = maxSpeed };
+        return _helper.ExecuteSetCommand(laneId, TraCIConstants.CMD_SET_LANE_VARIABLE, TraCIConstants.VAR_MAXSPEED, tmp);
         }
 
     public void Subscribe(string objectId, int beginTime, int endTime, List<byte> ListOfVariablesToSubsribeTo)

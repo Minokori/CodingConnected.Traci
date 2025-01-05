@@ -27,4 +27,9 @@ public struct Color : ITraCIType
             };
         return new Tuple<Color, IEnumerable<byte>>(result, bytes);
         }
+    public byte[] ToBytes()
+        {
+        return [.. R.ToBytes(), .. G.ToBytes(), .. B.ToBytes(), .. A.ToBytes()];
+
+        }
     }

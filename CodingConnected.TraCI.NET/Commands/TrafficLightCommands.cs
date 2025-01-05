@@ -142,7 +142,9 @@ public class TrafficLightCommands(ITcpService tcpService, ICommandHelperService 
     /// <returns></returns>
     public bool SetRedYellowGreenState(string id, string state)
         {
-        return _helper.ExecuteSetCommand<object, string>(id, TraCIConstants.CMD_SET_TL_VARIABLE, TraCIConstants.TL_RED_YELLOW_GREEN_STATE, state);
+        var tmp = new TraCIString() { Value = state };
+
+        return _helper.ExecuteSetCommand(id, TraCIConstants.CMD_SET_TL_VARIABLE, TraCIConstants.TL_RED_YELLOW_GREEN_STATE, tmp);
         }
 
     /// <summary>
@@ -155,7 +157,8 @@ public class TrafficLightCommands(ITcpService tcpService, ICommandHelperService 
     /// <returns></returns>
     public bool SetPhase(string id, int phaseIndex)
         {
-        return _helper.ExecuteSetCommand<object, int>(id, TraCIConstants.CMD_SET_TL_VARIABLE, TraCIConstants.TL_PHASE_INDEX, phaseIndex);
+        var tmp = new TraCIInteger() { Value = phaseIndex };
+        return _helper.ExecuteSetCommand(id, TraCIConstants.CMD_SET_TL_VARIABLE, TraCIConstants.TL_PHASE_INDEX, tmp);
         }
 
     /// <summary>
@@ -167,7 +170,8 @@ public class TrafficLightCommands(ITcpService tcpService, ICommandHelperService 
     /// <returns></returns>
     public bool SetProgram(string id, string program)
         {
-        return _helper.ExecuteSetCommand<object, string>(id, TraCIConstants.CMD_SET_TL_VARIABLE, TraCIConstants.TL_PROGRAM, program);
+        var tmp = new TraCIString() { Value = program };
+        return _helper.ExecuteSetCommand(id, TraCIConstants.CMD_SET_TL_VARIABLE, TraCIConstants.TL_PROGRAM, tmp);
         }
 
     /// <summary>
@@ -178,7 +182,8 @@ public class TrafficLightCommands(ITcpService tcpService, ICommandHelperService 
     /// <returns></returns>
     public bool SetPhaseDuration(string id, double phaseDuration)
         {
-        return _helper.ExecuteSetCommand<object, double>(id, TraCIConstants.CMD_SET_TL_VARIABLE, TraCIConstants.TL_PHASE_DURATION, phaseDuration);
+        var tmp = new TraCIDouble() { Value = phaseDuration };
+        return _helper.ExecuteSetCommand(id, TraCIConstants.CMD_SET_TL_VARIABLE, TraCIConstants.TL_PHASE_DURATION, tmp);
         }
 
     /// <summary>

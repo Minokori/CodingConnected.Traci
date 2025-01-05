@@ -85,7 +85,8 @@ public class PolygonCommands(ITcpService tcpService, ICommandHelperService helpe
     /// <returns></returns>
     public bool SetType(string id, string typeId)
         {
-        return _helper.ExecuteSetCommand<object, string>(id, TraCIConstants.CMD_SET_POLYGON_VARIABLE, TraCIConstants.VAR_TYPE, typeId);
+        var tmp = new TraCIString() { Value = typeId };
+        return _helper.ExecuteSetCommand(id, TraCIConstants.CMD_SET_POLYGON_VARIABLE, TraCIConstants.VAR_TYPE, tmp);
         }
 
     /// <summary>
@@ -96,7 +97,7 @@ public class PolygonCommands(ITcpService tcpService, ICommandHelperService helpe
     /// <returns></returns>
     public bool SetColor(string id, Color color)
         {
-        return _helper.ExecuteSetCommand<object, Color>(id, TraCIConstants.CMD_SET_POLYGON_VARIABLE, TraCIConstants.VAR_COLOR, color);
+        return _helper.ExecuteSetCommand(id, TraCIConstants.CMD_SET_POLYGON_VARIABLE, TraCIConstants.VAR_COLOR, color);
         }
 
     /// <summary>
@@ -107,7 +108,7 @@ public class PolygonCommands(ITcpService tcpService, ICommandHelperService helpe
     /// <returns></returns>
     public bool SetShape(string id, Polygon polygon)
         {
-        return _helper.ExecuteSetCommand<object, Polygon>(id, TraCIConstants.CMD_SET_POLYGON_VARIABLE, TraCIConstants.VAR_SHAPE, polygon);
+        return _helper.ExecuteSetCommand(id, TraCIConstants.CMD_SET_POLYGON_VARIABLE, TraCIConstants.VAR_SHAPE, polygon);
         }
 
     /// <summary>
@@ -118,7 +119,8 @@ public class PolygonCommands(ITcpService tcpService, ICommandHelperService helpe
     /// <returns></returns>
     public bool SetFilled(string id, byte filled)
         {
-        return _helper.ExecuteSetCommand<object, byte>(id, TraCIConstants.CMD_SET_POLYGON_VARIABLE, TraCIConstants.VAR_FILL, filled);
+        var tmp = new TraCIByte() { Value = filled };
+        return _helper.ExecuteSetCommand(id, TraCIConstants.CMD_SET_POLYGON_VARIABLE, TraCIConstants.VAR_FILL, tmp);
         }
 
     /// <summary>
@@ -142,7 +144,7 @@ public class PolygonCommands(ITcpService tcpService, ICommandHelperService helpe
             shape,
         };
 
-        return _helper.ExecuteSetCommand<object, TraCICompoundObject>(id, TraCIConstants.CMD_SET_POLYGON_VARIABLE, TraCIConstants.ADD, tmp);
+        return _helper.ExecuteSetCommand(id, TraCIConstants.CMD_SET_POLYGON_VARIABLE, TraCIConstants.ADD, tmp);
         }
 
     /// <summary>
@@ -153,7 +155,8 @@ public class PolygonCommands(ITcpService tcpService, ICommandHelperService helpe
     /// <returns></returns>
     public bool Remove(string id, int layer)
         {
-        return _helper.ExecuteSetCommand<object, int>(id, TraCIConstants.CMD_SET_POLYGON_VARIABLE, TraCIConstants.REMOVE, layer);
+        var tmp = new TraCIInteger() { Value = layer };
+        return _helper.ExecuteSetCommand(id, TraCIConstants.CMD_SET_POLYGON_VARIABLE, TraCIConstants.REMOVE, tmp);
         }
 
     public void Subscribe(string objectId, int beginTime, int endTime, List<byte> ListOfVariablesToSubsribeTo)

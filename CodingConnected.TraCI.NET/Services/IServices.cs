@@ -20,7 +20,9 @@ public interface ICommandHelperService
     IAnswerFromSumo ExecuteGetCommand(string id, byte commandType, byte messageType);
 
 
-    bool ExecuteSetCommand<Tresponse, Tvalue>(string id, byte commandType, byte messageType, Tvalue value);
+
+
+    bool ExecuteSetCommand(string id, byte commandType, byte messageType, ITraCIType value = null);
 
     //TraCIResponse<Tresponse> ExecuteSetCommand<Tresponse, Tvalue>(string id, byte commandType, byte messageType, Tvalue value);
     void ExecuteSubscribeCommand(double beginTime, double endTime, string objectId, byte commandType, List<byte> variables);

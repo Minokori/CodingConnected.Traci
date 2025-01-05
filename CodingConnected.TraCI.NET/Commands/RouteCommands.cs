@@ -47,7 +47,8 @@ public class RouteCommands(ITcpService tcpService, ICommandHelperService helper)
     /// <returns></returns>
     public bool Add(string id, List<string> edges)
         {
-        return _helper.ExecuteSetCommand<object, List<string>>(id, TraCIConstants.CMD_SET_ROUTE_VARIABLE, TraCIConstants.ADD, edges);
+        var tmp = new TraCIStringList { Value = edges };
+        return _helper.ExecuteSetCommand(id, TraCIConstants.CMD_SET_ROUTE_VARIABLE, TraCIConstants.ADD, tmp);
         }
 
     public void Subscribe(string objectId, int beginTime, int endTime, List<byte> ListOfVariablesToSubsribeTo)

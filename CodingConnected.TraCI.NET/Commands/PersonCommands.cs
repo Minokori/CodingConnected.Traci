@@ -214,7 +214,7 @@ public class PersonCommands(ITcpService tcpService, ICommandHelperService helper
             new TraCIDouble() { Value = departPosition },
         };
 
-        return _helper.ExecuteSetCommand<object, TraCICompoundObject>(id, TraCIConstants.CMD_SET_PERSON_VARIABLE, TraCIConstants.ADD, tmp);
+        return _helper.ExecuteSetCommand(id, TraCIConstants.CMD_SET_PERSON_VARIABLE, TraCIConstants.ADD, tmp);
         }
 
     /// <summary>
@@ -234,7 +234,7 @@ public class PersonCommands(ITcpService tcpService, ICommandHelperService helper
             new TraCIString() { Value = lines },
             new TraCIString() { Value = stopId },
         };
-        return _helper.ExecuteSetCommand<object, TraCICompoundObject>(id, TraCIConstants.CMD_SET_PERSON_VARIABLE, TraCIConstants.APPEND_STAGE, tmp);
+        return _helper.ExecuteSetCommand(id, TraCIConstants.CMD_SET_PERSON_VARIABLE, TraCIConstants.APPEND_STAGE, tmp);
         }
 
     /// <summary>
@@ -254,7 +254,7 @@ public class PersonCommands(ITcpService tcpService, ICommandHelperService helper
             new TraCIString() { Value = description },
             new TraCIString() { Value = stopId },
         };
-        return _helper.ExecuteSetCommand<object, TraCICompoundObject>(id, TraCIConstants.CMD_SET_PERSON_VARIABLE, TraCIConstants.APPEND_STAGE, tmp);
+        return _helper.ExecuteSetCommand(id, TraCIConstants.CMD_SET_PERSON_VARIABLE, TraCIConstants.APPEND_STAGE, tmp);
         }
 
     /// <summary>
@@ -276,7 +276,7 @@ public class PersonCommands(ITcpService tcpService, ICommandHelperService helper
             new TraCIDouble() { Value = arrivalPosition },
             new TraCIString() { Value = stopId },
         };
-        return _helper.ExecuteSetCommand<object, TraCICompoundObject>(id, TraCIConstants.CMD_SET_PERSON_VARIABLE, TraCIConstants.APPEND_STAGE, tmp);
+        return _helper.ExecuteSetCommand(id, TraCIConstants.CMD_SET_PERSON_VARIABLE, TraCIConstants.APPEND_STAGE, tmp);
         }
 
     /// <summary>
@@ -287,7 +287,8 @@ public class PersonCommands(ITcpService tcpService, ICommandHelperService helper
     /// <returns></returns>
     public bool RemoveStage(string id, int stageIndex)
         {
-        return _helper.ExecuteSetCommand<object, int>(id, TraCIConstants.CMD_SET_PERSON_VARIABLE, TraCIConstants.ADD, stageIndex);
+        var tmp = new TraCIInteger() { Value = stageIndex };
+        return _helper.ExecuteSetCommand(id, TraCIConstants.CMD_SET_PERSON_VARIABLE, TraCIConstants.ADD, tmp);
         }
 
     /// <summary>
@@ -297,12 +298,7 @@ public class PersonCommands(ITcpService tcpService, ICommandHelperService helper
     /// <returns></returns>
     public bool RerouteTraveltime(string id)
         {
-        return _helper.ExecuteSetCommand<object, TraCICompoundObject>(
-            id,
-            TraCIConstants.CMD_SET_PERSON_VARIABLE,
-            TraCIConstants.CMD_REROUTE_TRAVELTIME,
-            []
-        );
+        return _helper.ExecuteSetCommand(id, TraCIConstants.CMD_SET_PERSON_VARIABLE, TraCIConstants.CMD_REROUTE_TRAVELTIME);
         }
 
     /// <summary>
@@ -313,7 +309,7 @@ public class PersonCommands(ITcpService tcpService, ICommandHelperService helper
     /// <returns></returns>
     public bool SetColor(string id, Color color)
         {
-        return _helper.ExecuteSetCommand<object, Color>(id, TraCIConstants.CMD_SET_PERSON_VARIABLE, TraCIConstants.VAR_COLOR, color);
+        return _helper.ExecuteSetCommand(id, TraCIConstants.CMD_SET_PERSON_VARIABLE, TraCIConstants.VAR_COLOR, color);
         }
 
     /// <summary>
@@ -324,7 +320,8 @@ public class PersonCommands(ITcpService tcpService, ICommandHelperService helper
     /// <returns></returns>
     public bool SetHeight(string id, double height)
         {
-        return _helper.ExecuteSetCommand<object, double>(id, TraCIConstants.CMD_SET_PERSON_VARIABLE, TraCIConstants.VAR_HEIGHT, height);
+        var tmp = new TraCIDouble() { Value = height };
+        return _helper.ExecuteSetCommand(id, TraCIConstants.CMD_SET_PERSON_VARIABLE, TraCIConstants.VAR_HEIGHT, tmp);
         }
 
     /// <summary>
@@ -335,7 +332,8 @@ public class PersonCommands(ITcpService tcpService, ICommandHelperService helper
     /// <returns></returns>
     public bool SetLength(string id, double length)
         {
-        return _helper.ExecuteSetCommand<object, double>(id, TraCIConstants.CMD_SET_PERSON_VARIABLE, TraCIConstants.ADD, length);
+        var tmp = new TraCIDouble() { Value = length };
+        return _helper.ExecuteSetCommand(id, TraCIConstants.CMD_SET_PERSON_VARIABLE, TraCIConstants.ADD, tmp);
         }
 
     /// <summary>
@@ -346,7 +344,8 @@ public class PersonCommands(ITcpService tcpService, ICommandHelperService helper
     /// <returns></returns>
     public bool SetMinGap(string id, double minGap)
         {
-        return _helper.ExecuteSetCommand<object, double>(id, TraCIConstants.CMD_SET_PERSON_VARIABLE, TraCIConstants.VAR_MINGAP, minGap);
+        var tmp = new TraCIDouble() { Value = minGap };
+        return _helper.ExecuteSetCommand(id, TraCIConstants.CMD_SET_PERSON_VARIABLE, TraCIConstants.VAR_MINGAP, tmp);
         }
 
     /// <summary>
@@ -357,7 +356,8 @@ public class PersonCommands(ITcpService tcpService, ICommandHelperService helper
     /// <returns></returns>
     public bool SetSpeed(string id, double speed)
         {
-        return _helper.ExecuteSetCommand<object, double>(id, TraCIConstants.CMD_SET_PERSON_VARIABLE, TraCIConstants.VAR_SPEED_FACTOR, speed);
+        var tmp = new TraCIDouble() { Value = speed };
+        return _helper.ExecuteSetCommand(id, TraCIConstants.CMD_SET_PERSON_VARIABLE, TraCIConstants.VAR_SPEED_FACTOR, tmp);
         }
 
     /// <summary>
@@ -368,7 +368,8 @@ public class PersonCommands(ITcpService tcpService, ICommandHelperService helper
     /// <returns></returns>
     public bool SetType(string id, string typeId)
         {
-        return _helper.ExecuteSetCommand<object, string>(id, TraCIConstants.CMD_SET_PERSON_VARIABLE, TraCIConstants.VAR_TYPE, typeId);
+        var tmp = new TraCIString() { Value = typeId };
+        return _helper.ExecuteSetCommand(id, TraCIConstants.CMD_SET_PERSON_VARIABLE, TraCIConstants.VAR_TYPE, tmp);
         }
 
     /// <summary>
@@ -379,7 +380,8 @@ public class PersonCommands(ITcpService tcpService, ICommandHelperService helper
     /// <returns></returns>
     public bool SetWidth(string id, double width)
         {
-        return _helper.ExecuteSetCommand<object, double>(id, TraCIConstants.CMD_SET_PERSON_VARIABLE, TraCIConstants.VAR_WIDTH, width);
+        var tmp = new TraCIDouble() { Value = width };
+        return _helper.ExecuteSetCommand(id, TraCIConstants.CMD_SET_PERSON_VARIABLE, TraCIConstants.VAR_WIDTH, tmp);
         }
 
     public void Subscribe(string objectId, int beginTime, int endTime, List<byte> ListOfVariablesToSubsribeTo)
