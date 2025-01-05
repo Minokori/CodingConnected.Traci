@@ -2,9 +2,9 @@
 
 namespace CodingConnected.TraCI.NET.Types;
 
-public struct Color : ITraCIType
+public class Color : ITraCIType
     {
-    public readonly byte TYPE => TYPE_COLOR;
+    public byte TYPE => TYPE_COLOR;
 
     public TraCIByte R { get; set; }
     public TraCIByte G { get; set; }

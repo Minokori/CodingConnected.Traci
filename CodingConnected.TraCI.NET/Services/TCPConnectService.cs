@@ -32,7 +32,6 @@ internal class TCPConnectService : ITcpService
                 await Task.Delay(50);
                 }
             }
-
         _stream = _client.GetStream();
         }
 

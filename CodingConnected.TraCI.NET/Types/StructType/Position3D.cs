@@ -1,14 +1,14 @@
 ﻿using static CodingConnected.TraCI.NET.Constants.TraCIConstants;
 namespace CodingConnected.TraCI.NET.Types;
 
-public struct Position3D : ITraCIType
+public class Position3D : ITraCIType
     {
-    public readonly byte TYPE => POSITION_3D;
+    public byte TYPE => POSITION_3D;
     public TraCIDouble X { get; set; }
     public TraCIDouble Y { get; set; }
     public TraCIDouble Z { get; set; }
 
-    public readonly byte[] ToBytes() => [.. X.ToBytes(), .. Y.ToBytes(), .. Z.ToBytes()];
+    public byte[] ToBytes() => [.. X.ToBytes(), .. Y.ToBytes(), .. Z.ToBytes()];
 
 
     public static Tuple<Position3D, IEnumerable<byte>> FromBytes(IEnumerable<byte> bytes)

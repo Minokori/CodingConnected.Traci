@@ -1,14 +1,14 @@
 ﻿using static CodingConnected.TraCI.NET.Constants.TraCIConstants;
 namespace CodingConnected.TraCI.NET.Types;
 
-public struct RoadMapPosition : ITraCIType
+public class RoadMapPosition : ITraCIType
     {
-    public readonly byte TYPE => POSITION_ROADMAP;
+    public byte TYPE => POSITION_ROADMAP;
     public TraCIString RoadId { get; set; }
     public TraCIDouble Pos { get; set; }
     public TraCIByte LaneId { get; set; }
 
-    public readonly byte[] ToBytes() => [.. RoadId.ToBytes(), .. Pos.ToBytes(), .. LaneId.ToBytes()];
+    public byte[] ToBytes() => [.. RoadId.ToBytes(), .. Pos.ToBytes(), .. LaneId.ToBytes()];
 
     public static Tuple<RoadMapPosition, IEnumerable<byte>> FromBytes(IEnumerable<byte> bytes)
         {

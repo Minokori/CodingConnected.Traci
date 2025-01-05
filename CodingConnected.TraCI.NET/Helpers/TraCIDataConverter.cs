@@ -205,7 +205,7 @@ internal static partial class TraCIDataConverter
 
     internal static List<TraCIResult> AsTraCIResults(this List<byte> response)
         {
-        var (totalLength, leftBytes) = TraCIInteger.FromBytes(response); // ToInt32(response.Take(4).Reverse().ToArray());
+        var (totalLength, leftBytes) = TraCIInteger.FromBytes(response);
         var count = new TraCIInteger();
         if (totalLength.Value != response.Count)
             {
@@ -217,7 +217,7 @@ internal static partial class TraCIDataConverter
 
         if (firstResult.Identifier == CMD_SIMSTEP)
             {
-            (count, leftBytes) = TraCIInteger.FromBytes(leftBytes); //ToInt32(leftBytes.Take(4).Reverse().ToArray());
+            (count, leftBytes) = TraCIInteger.FromBytes(leftBytes);
             }
 
         while (leftBytes.Any())

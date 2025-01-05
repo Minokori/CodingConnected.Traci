@@ -2,13 +2,13 @@
 
 namespace CodingConnected.TraCI.NET.Types;
 
-public struct Position2D : ITraCIType
+public class Position2D : ITraCIType
     {
-    public readonly byte TYPE => POSITION_2D;
+    public byte TYPE => POSITION_2D;
     public TraCIDouble X { get; set; }
     public TraCIDouble Y { get; set; }
 
-    public readonly byte[] ToBytes() => [.. X.ToBytes(), .. Y.ToBytes()];
+    public byte[] ToBytes() => [.. X.ToBytes(), .. Y.ToBytes()];
 
     public static Tuple<Position2D, IEnumerable<byte>> FromBytes(IEnumerable<byte> bytes)
         {

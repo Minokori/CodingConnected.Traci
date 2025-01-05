@@ -29,4 +29,5 @@ public class TraCICompoundObject : List<ITraCIType>, ITraCIType
             }
         return [.. bytes];
         }
+
     }

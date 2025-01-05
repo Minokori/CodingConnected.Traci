@@ -1,13 +1,13 @@
 ﻿using static CodingConnected.TraCI.NET.Constants.TraCIConstants;
 namespace CodingConnected.TraCI.NET.Types;
 
-public struct LonLatPosition : ITraCIType
+public class LonLatPosition : ITraCIType
     {
-    public readonly byte TYPE => POSITION_LON_LAT;
+    public byte TYPE => POSITION_LON_LAT;
     public TraCIDouble Longitude { get; set; }
     public TraCIDouble Latitude { get; set; }
 
-    public readonly byte[] ToBytes() => [.. Longitude.ToBytes(), .. Latitude.ToBytes()];
+    public byte[] ToBytes() => [.. Longitude.ToBytes(), .. Latitude.ToBytes()];
 
     public static Tuple<LonLatPosition, IEnumerable<byte>> FromBytes(IEnumerable<byte> bytes)
         {
