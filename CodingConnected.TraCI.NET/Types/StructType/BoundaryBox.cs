@@ -2,16 +2,16 @@
 
 namespace CodingConnected.TraCI.NET.Types;
 
-public struct BoundaryBox : ITraCIType
+public class BoundaryBox : ITraCIType
     {
-    public readonly byte TYPE => TYPE_BOUNDINGBOX;
+    public byte TYPE => TYPE_BOUNDINGBOX;
     public TraCIDouble LowerLeftX { get; set; }
     public TraCIDouble LowerLeftY { get; set; }
     public TraCIDouble UpperRightX { get; set; }
     public TraCIDouble UpperRightY { get; set; }
 
 
-    public readonly byte[] ToBytes() =>
+    public byte[] ToBytes() =>
         [
             .. LowerLeftX.ToBytes(),
             .. LowerLeftY.ToBytes(),

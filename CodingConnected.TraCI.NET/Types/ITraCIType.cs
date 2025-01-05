@@ -1,5 +1,4 @@
 ﻿using CodingConnected.TraCI.NET.Constants;
-using CodingConnected.TraCI.NET.Helpers;
 
 namespace CodingConnected.TraCI.NET.Types;
 
@@ -22,7 +21,7 @@ public class TraCICompoundObject : List<ITraCIType>, ITraCIType
     public byte[] ToBytes()
         {
         List<byte> bytes = [];
-        bytes.AddRange(Count.ToTraCIBytes());
+        bytes.AddRange(new TraCIInteger() { Value = Count }.ToBytes());
         foreach (var item in this)
             {
             bytes.Add(item.TYPE);

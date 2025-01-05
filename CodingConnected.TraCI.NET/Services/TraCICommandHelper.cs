@@ -88,9 +88,12 @@ internal partial class TraCICommandHelper(ITcpService tcpService) : ICommandHelp
         double? contextRange = null
     )
         {
-        List<byte> commandPart1 = [.. beginTime.ToTraCIBytes(), .. endTime.ToTraCIBytes(), .. objectId.ToTraCIBytes()];
+        List<byte> commandPart1 = [
+            .. TraCIDouble.AsBytes(beginTime),
+            .. TraCIDouble.AsBytes(endTime),
+            .. TraCIString.AsBytes(objectId)];
         List<byte> commandPart2 = contextDomain.HasValue ? [contextDomain.Value] : [];
-        List<byte> commandPart3 = contextRange.HasValue ? [.. contextRange.Value.ToTraCIBytes()] : [];
+        List<byte> commandPart3 = contextRange.HasValue ? [.. TraCIDouble.AsBytes(contextRange.Value)] : [];
         List<byte> commandPart4 = [(byte)variables.Count, .. variables];
         TraCICommand command = new() { Identifier = commandType, Contents = [.. commandPart1, .. commandPart2, .. commandPart3, .. commandPart4] };
         return command;

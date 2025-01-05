@@ -4,7 +4,7 @@
 /// <summary>
 /// see http://sumo.dlr.de/wiki/Simulation/Traffic_Lights#Defining_New_TLS-Programs
 /// </summary>
-public struct TrafficLightProgram : ITraCIType
+public class TrafficLightProgram : List<TrafficLightProgramPhase>, ITraCIType
     {
     public byte TYPE => throw new NotImplementedException();
     /// <summary>
@@ -16,10 +16,6 @@ public struct TrafficLightProgram : ITraCIType
     /// Number of phase to start with
     /// </summary>
     public int PhaseIndex { get; init; }
-    /// <summary>
-    /// List of phases
-    /// </summary>
-    public List<TrafficLightProgramPhase> Phases { get; init; }
     }
 
 public class TrafficCompleteLightProgram : ITraCIType
@@ -60,5 +56,18 @@ public class TrafficLightProgramPhase : TraCICompoundObject, ITraCIType
     public TraCIDouble MaxDuration => this[2] as TraCIDouble;
 
     public TraCIString Definition => this[3] as TraCIString;
+
+
+
+    // TODO uncheck if it‘s correct
+    public new byte[] ToBytes()
+        {
+        byte[] bytes = [Duration.TYPE, .. Duration.ToBytes(),
+        MinDuration.TYPE, .. TraCIDouble.AsBytes(0),
+        MaxDuration.TYPE, .. TraCIDouble.AsBytes(0),
+        Definition.TYPE, .. Definition.ToBytes()
+        ];
+        return bytes;
+        }
     }
 

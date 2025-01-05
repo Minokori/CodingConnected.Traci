@@ -1,5 +1,4 @@
 ﻿using System.Text;
-using CodingConnected.TraCI.NET.Helpers;
 using static System.BitConverter;
 using static CodingConnected.TraCI.NET.Constants.TraCIConstants;
 
@@ -15,6 +14,8 @@ public class TraCIByte : ITraCIType
         {
         return new(new TraCIByte { Value = bytes.First() }, bytes.Skip(1));
         }
+
+    public static byte[] AsBytes(byte value) => [value];
     }
 public class TraCIUByte : ITraCIType
     {
@@ -25,6 +26,8 @@ public class TraCIUByte : ITraCIType
         {
         return new(new TraCIUByte { Value = bytes.First() }, bytes.Skip(1));
         }
+
+    public static byte[] AsBytes(byte value) => [value];
     }
 public class TraCIDouble : ITraCIType
     {
@@ -37,6 +40,8 @@ public class TraCIDouble : ITraCIType
         {
         return new(new TraCIDouble { Value = ToDouble(bytes.Take(DOUBLE_SIZE).Reverse().ToArray()) }, bytes.Skip(DOUBLE_SIZE));
         }
+
+    public static byte[] AsBytes(double value) => GetBytes(value).Reverse().ToArray();
     }
 public class TraCIFloat : ITraCIType
     {
@@ -48,6 +53,8 @@ public class TraCIFloat : ITraCIType
         {
         return new(new TraCIFloat { Value = ToSingle(bytes.Take(FLOAT_SIZE).Reverse().ToArray()) }, bytes.Skip(FLOAT_SIZE));
         }
+
+    public static byte[] AsBytes(float value) => GetBytes(value).Reverse().ToArray();
     }
 
 public class TraCIInteger : ITraCIType
@@ -60,6 +67,7 @@ public class TraCIInteger : ITraCIType
         {
         return new(new TraCIInteger { Value = ToInt32(bytes.Take(INTEGER_SIZE).Reverse().ToArray()) }, bytes.Skip(INTEGER_SIZE));
         }
+    public static byte[] AsBytes(int value) => GetBytes(value).Reverse().ToArray();
     }
 public class TraCIString : ITraCIType
     {
@@ -72,17 +80,30 @@ public class TraCIString : ITraCIType
         var length = ToInt32(bytes.Take(INTEGER_SIZE).Reverse().ToArray());
         return new(new TraCIString { Value = Encoding.ASCII.GetString(bytes.Skip(INTEGER_SIZE).Take(length).ToArray()) }, bytes.Skip(INTEGER_SIZE + length));
         }
+
+    public static byte[] AsBytes(string value) => [.. GetBytes(value.Length).Reverse(), .. Encoding.ASCII.GetBytes(value)];
     }
-public class TraCIStringList : ITraCIType
+public class TraCIStringList : List<TraCIString>, ITraCIType
     {
     public byte TYPE { get; } = TYPE_STRINGLIST;
-    public List<string> Value { get; set; } = [];
+    public List<string> Value
+        {
+        get => this.Select(i => i.Value).ToList();
+        set
+            {
+            this.Clear();
+            foreach (var str in value)
+                {
+                this.Add(new TraCIString { Value = str });
+                }
+            }
+        }
     public byte[] ToBytes()
         {
-        List<byte> bytes = [.. GetBytes(Value.Count).Reverse()];
-        foreach (var str in Value)
+        List<byte> bytes = [.. GetBytes(this.Count).Reverse()];
+        foreach (var str in this)
             {
-            bytes.AddRange(str.ToTraCIBytes());
+            bytes.AddRange(str.ToBytes());
             }
         return [.. bytes];
         }
@@ -91,12 +112,21 @@ public class TraCIStringList : ITraCIType
         {
         var count = ToInt32(bytes.Take(INTEGER_SIZE).Reverse().ToArray());
         bytes = bytes.Skip(INTEGER_SIZE);
-        List<string> strings = [];
+        List<TraCIString> strings = [];
         for (var i = 0; i < count; i++)
             {
             (var result, bytes) = TraCIString.FromBytes(bytes);
-            strings.Add(result.Value);
+            strings.Add(result);
             }
-        return new(new TraCIStringList { Value = strings }, bytes);
+        return new(strings as TraCIStringList, bytes);
+        }
+    public static byte[] AsBytes(List<string> value)
+        {
+        List<byte> bytes = [.. TraCIInteger.AsBytes(value.Count)];
+        foreach (var str in value)
+            {
+            bytes.AddRange(TraCIString.AsBytes(str));
+            }
+        return [.. bytes];
         }
     }

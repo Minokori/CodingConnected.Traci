@@ -198,32 +198,18 @@ public class TrafficLightCommands(ITcpService tcpService, ICommandHelperService 
 
         List<byte> bytes =
         [
-            TraCIConstants.TL_COMPLETE_PROGRAM_RYG,
-            .. id.ToTraCIBytes(),
-            TraCIConstants.TYPE_COMPOUND, //value type compound
-            .. (5 + (program.Phases.Count * 4)).ToTraCIBytes(), //item number
-            TraCIConstants.TYPE_STRING, //value type string
-            .. program.ProgramId.ToTraCIBytes(), //program ID
-            TraCIConstants.TYPE_INTEGER, //value type integer
-            .. 0.ToTraCIBytes(), //Type (always 0)
-            TraCIConstants.TYPE_COMPOUND, //value type compound
-            .. 0.ToTraCIBytes(), //Compound ContentLength (always 0!)
-            TraCIConstants.TYPE_INTEGER, //value type integer
-            .. program.PhaseIndex.ToTraCIBytes(), //Phase Index
-            TraCIConstants.TYPE_INTEGER, //value type integer
-            .. program.Phases.Count.ToTraCIBytes(),
+            TraCIConstants.TL_COMPLETE_PROGRAM_RYG,.. TraCIString.AsBytes(id),
+            TraCIConstants.TYPE_COMPOUND, /*value type compound*/.. TraCIInteger.AsBytes(5 + (program.Count * 4)), //item number
+            TraCIConstants.TYPE_STRING, /*value type string*/..TraCIString.AsBytes(program.ProgramId), //program ID
+            TraCIConstants.TYPE_INTEGER, /*value type integer*/..TraCIInteger.AsBytes(0), //Type (always 0)
+            TraCIConstants.TYPE_COMPOUND, ..TraCIInteger.AsBytes(0),//Compound ContentLength (always 0!)
+            TraCIConstants.TYPE_INTEGER, /*value type integer*/..TraCIInteger.AsBytes(program.PhaseIndex),//Phase Index
+            TraCIConstants.TYPE_INTEGER, /*value type integer*/..TraCIInteger.AsBytes(program.Count), //Phase Count
         ]; //messageType (0x2c)
 
-        foreach (var p in program.Phases) //Phases
+        foreach (var p in program) //Phases
             {
-            bytes.Add(TraCIConstants.TYPE_DOUBLE); //value type integer
-            bytes.AddRange(p.Duration.ToTraCIBytes()); //Duration[ms]
-            bytes.Add(TraCIConstants.TYPE_DOUBLE); //value type integer
-            bytes.AddRange(0.ToTraCIBytes()); //unused
-            bytes.Add(TraCIConstants.TYPE_DOUBLE); //value type integer
-            bytes.AddRange(0.ToTraCIBytes()); //unused
-            bytes.Add(TraCIConstants.TYPE_STRING); //value type string
-            bytes.AddRange(p.Definition.ToTraCIBytes()); //State (light/priority-tuple)
+            bytes.AddRange(p.ToBytes());
             }
 
         TraCICommand command = new() { Identifier = TraCIConstants.CMD_SET_TL_VARIABLE, Contents = [.. bytes] };

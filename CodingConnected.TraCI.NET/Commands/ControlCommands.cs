@@ -3,6 +3,7 @@ using CodingConnected.TraCI.NET.Helpers;
 using CodingConnected.TraCI.NET.Response;
 using CodingConnected.TraCI.NET.Services;
 using CodingConnected.TraCI.NET.Types;
+using Microsoft.VisualBasic;
 using static CodingConnected.TraCI.NET.Constants.TraCIConstants;
 
 namespace CodingConnected.TraCI.NET.Commands;
@@ -75,7 +76,7 @@ public class ControlCommands(ITcpService tcpService, ICommandHelperService helpe
     public void SimStep(double targetTime = 0)
         {
         // make a simulation step
-        TraCICommand command = new() { Identifier = CMD_SIMSTEP, Contents = targetTime.ToTraCIBytes() };
+        TraCICommand command = new() { Identifier = CMD_SIMSTEP, Contents = TraCIDouble.AsBytes(targetTime) };
 
         // get the results
         var results = _tcpService.SendMessage(command);
@@ -227,15 +228,9 @@ public class ControlCommands(ITcpService tcpService, ICommandHelperService helpe
     /// see <see href="https://sumo.dlr.de/docs/TraCI/Control-related_commands.html#command_0x01_load"/>
     /// </remarks>
 
-    public void Load(IEnumerable<string> options)
+    public void Load(List<string> options)
         {
-        TraCICommand command = new() { Identifier = CMD_LOAD };
-        List<byte> n = [.. options.Count().ToTraCIBytes()];
-        foreach (var option in options)
-            {
-            n = [.. n, .. option.Length.ToTraCIBytes(), .. option.ToTraCIBytes()];
-            }
-        command.Contents = [.. n];
+        TraCICommand command = new() { Identifier = CMD_LOAD, Contents = TraCIStringList.AsBytes(options) };
         _ = _tcpService.SendMessage(command);
         }
 
@@ -250,7 +245,7 @@ public class ControlCommands(ITcpService tcpService, ICommandHelperService helpe
     /// </remarks>
     public void SetOrder(int index)
         {
-        TraCICommand command = new() { Identifier = CMD_SETORDER, Contents = index.ToTraCIBytes() };
+        TraCICommand command = new() { Identifier = CMD_SETORDER, Contents = TraCIInteger.AsBytes(index) };
         _ = _tcpService.SendMessage(command);
         }
     }

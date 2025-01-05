@@ -2,6 +2,7 @@
 using CodingConnected.TraCI.NET.Constants;
 using CodingConnected.TraCI.NET.Helpers;
 using CodingConnected.TraCI.NET.Services;
+using CodingConnected.TraCI.NET.Types;
 using Microsoft.Extensions.DependencyInjection;
 
 
@@ -55,10 +56,9 @@ public partial class TraCIClient : IDisposable
         List<byte> bytes =
             [
             TraCIConstants.TL_RED_YELLOW_GREEN_STATE,
-            .. trafficLightId.ToTraCIBytes(),
+            .. new TraCIString() {Value = trafficLightId }.ToBytes(),
             TraCIConstants.TYPE_STRING,
-            .. BitConverter.GetBytes(state.Length).Reverse(),
-            .. Encoding.ASCII.GetBytes(state),
+            .. new TraCIString() {Value = state }.ToBytes()
             ];
 
         command.Contents = [.. bytes];

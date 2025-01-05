@@ -1,5 +1,4 @@
-﻿using System.Text;
-using CodingConnected.TraCI.NET.Response;
+﻿using CodingConnected.TraCI.NET.Response;
 using CodingConnected.TraCI.NET.Types;
 using static System.BitConverter;
 using static CodingConnected.TraCI.NET.Constants.TraCIConstants;
@@ -11,7 +10,6 @@ internal static partial class TraCIDataConverter
     /// <summary>
     /// 从response中提取数据
     /// </summary>
-    /// <typeparam name="T"></typeparam>
     /// <param name="results"></param>
     /// <param name="commandType"></param>
     /// <param name="variableType"></param>
@@ -19,26 +17,36 @@ internal static partial class TraCIDataConverter
     internal static IAnswerFromSumo ExtractDataFromResults(IEnumerable<TraCIResult> results, byte commandType, byte variableType = 0)
         {
         // check if results is null
-        if (results == null) { return null; }
+        if (results == null)
+            {
+            return null;
+            }
 
         // find results of specific command type, statusResponse is status results ,result is result
         var (statusResponse, i) = results.Select((item, index) => (item, index)).FirstOrDefault(x => x.item.Identifier == commandType);
-        if (statusResponse is null) { return null; }
+        if (statusResponse is null)
+            {
+            return null;
+            }
 
         switch ((statusResponse as IStatusResponse).Result)
             {
             case ResultCode.Success:
                     {
                     // https://sumo.dlr.de/docs/TraCI/SUMO_ID_Commands_Structure.html#answer_from_sumo
-                    var result = results.Skip(i + 1).FirstOrDefault(x => x.Identifier == commandType + 0x10 /*results's identifier is GET command's identifire +0x10*/);
-
+                    var result = results
+                        .Skip(i + 1)
+                        .FirstOrDefault(x =>
+                            x.Identifier == commandType + 0x10 /*results's identifier is GET command's identifire +0x10*/
+                        );
                     return result?.Content[0] == variableType ? result : null;
                     }
-            default: { return null; }
+            default:
+                    {
+                    return null;
+                    }
             }
         }
-
-
 
     /// <summary>
     /// 从response中提取数据
@@ -49,11 +57,17 @@ internal static partial class TraCIDataConverter
         {
         List<TraCISubscriptionResponse> responses = [];
         // check if results is null
-        if (results == null) { return null; }
+        if (results == null)
+            {
+            return null;
+            }
 
         // find results of specific command type, statusResponse is status results ,result is result
         (var statusResponse, var i) = results.Select((result, index) => (result, index)).FirstOrDefault(x => x.result.Identifier == CMD_SIMSTEP);
-        if (statusResponse is null) { return null; }
+        if (statusResponse is null)
+            {
+            return null;
+            }
 
         switch (((IStatusResponse)statusResponse).Result)
             {
@@ -74,35 +88,6 @@ internal static partial class TraCIDataConverter
                     }
             }
         return null;
-        }
-
-    internal static byte[] ToTraCIBytes(this object value)
-        {
-        if (value is null) { return []; }
-        switch (value)
-            {
-            case float:
-                return GetBytes((float)value).Reverse().ToArray();
-            // TODO byte 是不是直接返回Value？short对不对
-            case byte:
-                return GetBytes((short)value).Reverse().ToArray();
-            case int:
-                return GetBytes((int)value).Reverse().ToArray();
-            case double:
-                return GetBytes((double)value).Reverse().ToArray();
-            case string:
-                return [.. GetBytes(((string)value).Length).Reverse(), .. Encoding.ASCII.GetBytes((string)value)];
-            case List<string>:
-                var los = (List<string>)value;
-                List<byte> bytes = [.. GetBytes(los.Count).Reverse()];
-                foreach (var str in los)
-                    {
-                    bytes.AddRange(str.ToTraCIBytes());
-                    }
-                return [.. bytes];
-            default:
-                return [];
-            }
         }
 
     /// <summary>
@@ -210,7 +195,6 @@ internal static partial class TraCIDataConverter
                         innerDataList.Add(result);
                         }
                     return new((TraCICompoundObject)innerDataList, bytes);
-
                     }
             default:
                     {
@@ -219,14 +203,14 @@ internal static partial class TraCIDataConverter
             }
         }
 
-
-
-
     internal static List<TraCIResult> AsTraCIResults(this List<byte> response)
         {
-        var (totalLength, leftBytes) = TraCIInteger.FromBytes(response);// ToInt32(response.Take(4).Reverse().ToArray());
+        var (totalLength, leftBytes) = TraCIInteger.FromBytes(response); // ToInt32(response.Take(4).Reverse().ToArray());
         var count = new TraCIInteger();
-        if (totalLength.Value != response.Count) { throw new Exception($"length(byte){totalLength} != length(count){response.Count}"); }
+        if (totalLength.Value != response.Count)
+            {
+            throw new Exception($"length(byte){totalLength} != length(count){response.Count}");
+            }
 
         (var firstResult, leftBytes) = GetTraCIResult(leftBytes);
         List<TraCIResult> results = [firstResult];
@@ -235,7 +219,6 @@ internal static partial class TraCIDataConverter
             {
             (count, leftBytes) = TraCIInteger.FromBytes(leftBytes); //ToInt32(leftBytes.Take(4).Reverse().ToArray());
             }
-
 
         while (leftBytes.Any())
             {
@@ -253,24 +236,24 @@ internal static partial class TraCIDataConverter
             {
             ContentLength = isLong ? resultLength - 6 : resultLength - 2,
             Identifier = bytes.Skip(isLong ? 5 : 1).First(),
-            Content = [.. bytes.Take(resultLength).Skip(isLong ? 6 : 2)]
+            Content = [.. bytes.Take(resultLength).Skip(isLong ? 6 : 2)],
             };
         return new(tr, bytes.Skip(resultLength));
         }
+
     private static TraCISubscriptionResponse ToSimStepResponse(this TraCIResult traciResult)
         {
         var commandType = traciResult.Identifier >> 4;
 
-
         switch (commandType)
             {
-            case 0x0e:// 0xeX => VariableType Subscription Content
+            case 0x0e: // 0xeX => VariableType Subscription Content
                     {
                     var (response, leftBytes) = TraCIVariableSubscriptionResponse.FromBytes(traciResult.Content);
                     response.Identifier = traciResult.Identifier;
                     return leftBytes.Any() ? throw new Exception("GetDataFromSimStepResponse not all consumed") : (TraCISubscriptionResponse)response;
                     }
-            case 0x09:// 0x9X => Object Context Subscription Content
+            case 0x09: // 0x9X => Object Context Subscription Content
                     {
                     var (response, leftBytes) = TraCIContextSubscriptionResponse.FromBytes(traciResult.Content);
                     response.Identifier = traciResult.Identifier;
@@ -281,4 +264,3 @@ internal static partial class TraCIDataConverter
             }
         }
     }
-
