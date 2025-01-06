@@ -1,28 +1,23 @@
-﻿using System.Diagnostics;
-using System.Net.Sockets;
-using CodingConnected.TraCI.NET.Types;
+﻿using System.Net.Sockets;
+using CodingConnected.TraCI.NET.DataTypes;
+using CodingConnected.TraCI.NET.ProtocolTypes;
 
 namespace CodingConnected.TraCI.NET.Services;
 
-public interface ITcpService
+public interface ITCPConnectService
     {
     public TcpClient Client { get; }
     public NetworkStream Stream { get; }
     public Task ConnectAsync(string hostname, int port);
-
     public bool Connect(string hostname, int port);
-
     public List<TraCIResult> SendMessage(TraCICommand command);
     }
 
-public interface ICommandHelperService
+public interface ICommandService
     {
-    IAnswerFromSumo ExecuteGetCommand(string id, byte commandType, byte messageType);
-
-
-
-
-    bool ExecuteSetCommand(string id, byte commandType, byte messageType, ITraCIType value = null);
+    IAnswerFromSumo ExecuteGetCommand(byte commandType, byte? messageType, string id);
+    public TraCICommand GetCommand(byte commandType, byte? messageType = null, string id = null, ITraciType contents = null);
+    bool ExecuteSetCommand(string id, byte commandType, byte messageType, ITraciType value = null);
 
     //TraCIResponse<Tresponse> ExecuteSetCommand<Tresponse, Tvalue>(string id, byte commandType, byte messageType, Tvalue value);
     void ExecuteSubscribeCommand(double beginTime, double endTime, string objectId, byte commandType, List<byte> variables);
@@ -99,10 +94,4 @@ public interface IEventService
     void OnJunctionContextSubscription(ContextSubscriptionEventArgs eventArgs);
 
     void OnEdgeContextSubscription(ContextSubscriptionEventArgs eventArgs);
-    }
-
-public interface IResponseService
-    {
-    Process GetProcess(string sumoCfgFile, int remotePort,
-        bool useSumoGui = true, bool quitOnEnd = true, bool redirectOutputToConsole = false);
     }

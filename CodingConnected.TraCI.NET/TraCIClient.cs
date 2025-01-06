@@ -1,8 +1,6 @@
-﻿using System.Text;
-using CodingConnected.TraCI.NET.Constants;
-using CodingConnected.TraCI.NET.Helpers;
+﻿using CodingConnected.TraCI.NET.DataTypes;
+using CodingConnected.TraCI.NET.ProtocolTypes;
 using CodingConnected.TraCI.NET.Services;
-using CodingConnected.TraCI.NET.Types;
 using Microsoft.Extensions.DependencyInjection;
 
 
@@ -14,7 +12,7 @@ namespace CodingConnected.TraCI.NET;
 /// </summary>
 public partial class TraCIClient : IDisposable
     {
-    private ITcpService TcpSerivce => services.GetRequiredService<ITcpService>();
+    private ITCPConnectService TcpSerivce => services.GetRequiredService<ITCPConnectService>();
     private readonly ServiceProvider services;
 
 

@@ -4,8 +4,8 @@ using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 using CodingConnected.TraCI.NET;
-using CodingConnected.TraCI.NET.Constants;
-using CodingConnected.TraCI.NET.Types;
+using CodingConnected.TraCI.NET.DataTypes;
+using CodingConnected.TraCI.NET.ProtocolTypes;
 
 namespace CodingConnected.TraCI.UsageExample;
 

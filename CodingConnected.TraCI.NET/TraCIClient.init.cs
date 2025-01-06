@@ -1,4 +1,4 @@
-﻿using CodingConnected.TraCI.NET.Commands;
+﻿using CodingConnected.TraCI.NET.Functions;
 using CodingConnected.TraCI.NET.Services;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -9,8 +9,8 @@ public partial class TraCIClient
     public TraCIClient()
         {
         ServiceCollection servicesbuilder = new();
-        servicesbuilder.AddSingleton<ITcpService, TCPConnectService>();
-        servicesbuilder.AddSingleton<ICommandHelperService, TraCICommandHelper>();
+        servicesbuilder.AddSingleton<ITCPConnectService, ConnectService>();
+        servicesbuilder.AddSingleton<ICommandService, CommandService>();
         servicesbuilder.AddSingleton<IEventService, EventService>();
         servicesbuilder.AddSingleton<ControlCommands>();
         servicesbuilder.AddSingleton<InductionLoopCommands>();

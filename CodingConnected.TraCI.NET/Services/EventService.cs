@@ -1,4 +1,4 @@
-﻿using CodingConnected.TraCI.NET.Types;
+﻿using CodingConnected.TraCI.NET.ProtocolTypes;
 
 namespace CodingConnected.TraCI.NET.Services;
 
@@ -27,6 +27,7 @@ public class EventService : IEventService
     public event EventHandler<SubscriptionEventArgs> VehicleTypeSubscription;
     public event EventHandler<SubscriptionEventArgs> MultiEntryMultiExitDetectorSubscription;
 
+    // TODO add default event handlers for debug (Debug.WriteLine)
     public void OnEdgeContextSubscription(ContextSubscriptionEventArgs eventArgs)
         {
         EdgeContextSubscription?.Invoke(this, eventArgs);
@@ -137,4 +138,3 @@ public class EventService : IEventService
         VehicleTypeSubscription?.Invoke(this, eventArgs);
         }
     }
-
