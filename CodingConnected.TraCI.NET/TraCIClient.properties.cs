@@ -23,7 +23,7 @@ public partial class TraCIClient
 
     public PersonCommands Person => services.GetRequiredService<PersonCommands>();
 
-    public VehicleTypeCommands VehicleType => services.GetRequiredService<VehicleTypeCommands>();
+    public VehicleType VehicleType => services.GetRequiredService<VehicleType>();
 
     public RouteCommands Route => services.GetRequiredService<RouteCommands>();
 

@@ -9,7 +9,23 @@
         <Title>Traci.NET</Title>
         <Version>$(VersionPrefix)</Version>
         <Description>Traci for .NET</Description>
+        <Copyright>Copyright (c) 2017-2018 CodingConnected e.U., Menno van der Woude</Copyright>
+        <PackageProjectUrl>https://github.com/Minokori/CodingConnected.Traci/tree/feature_updates</PackageProjectUrl>
+        <PackageTags>traci;sumo;</PackageTags>
+        <PackageReleaseNotes>still a preview version</PackageReleaseNotes>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+        <PackageIcon>sumo-logo.png</PackageIcon>
     </PropertyGroup>
+    <ItemGroup>
+      <None Include="..\README.md">
+        <Pack>True</Pack>
+        <PackagePath>\</PackagePath>
+      </None>
+      <None Include="..\sumo-logo.png">
+        <Pack>True</Pack>
+        <PackagePath>\</PackagePath>
+      </None>
+    </ItemGroup>
     <ItemGroup>
         <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
         <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.0" />

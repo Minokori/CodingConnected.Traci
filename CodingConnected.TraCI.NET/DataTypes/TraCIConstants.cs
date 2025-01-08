@@ -603,6 +603,12 @@ public static class TraCIConstants
     // current state, using external signal names (get: traffic lights)
     public const byte TL_EXTERNAL_STATE = 0x2e;
 
+    // get/set impatience
+    public const byte VAR_IMPATIENCE = 0x26;
+    //get/set boarding duration
+    public const byte VAR_BOARDING_DURATION = 0x2f;
+
+
     // outgoing link number (get: lanes)
     public const byte LANE_LINK_NUMBER = 0x30;
 
@@ -623,6 +629,10 @@ public static class TraCIConstants
 
     // slope (get: edge, lane, vehicle, person)
     public const byte VAR_SLOPE = 0x36;
+
+    // person capacity (get: vehicle)
+    public const byte VAR_PERSON_CAPACITY = 0x38;
+
 
     // speed (get: vehicle)
     public const byte VAR_SPEED = 0x40;
@@ -740,6 +750,9 @@ public static class TraCIConstants
 
     // routing mode (get/set: vehicle)
     public const byte VAR_ROUTING_MODE = 0x89;
+
+    // traffic scale factor (get/set: vehicle)
+    public const byte VAR_SCALE = 0x8e;
 
     // speed without TraCI influence (get: vehicle)
     public const byte VAR_SPEED_WITHOUT_TRACI = 0xb1;
@@ -980,6 +993,8 @@ public static class TraCIConstants
     // append a person stage (person)
     public const byte REMOVE_STAGE = 0xc5;
 
+    // the mass (vehicle)
+    public const byte VAR_MASS = 0xc8;
     // zoom
     public const byte VAR_VIEW_ZOOM = 0xa0;
 

@@ -1,4 +1,4 @@
-# README for `Traci.NET.Types`
+# README for `Traci.NET.DataTypes`
 
 ## Overview
 

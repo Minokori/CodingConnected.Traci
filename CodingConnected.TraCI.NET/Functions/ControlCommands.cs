@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using CodingConnected.TraCI.NET.DataTypes;
+﻿using CodingConnected.TraCI.NET.DataTypes;
 using CodingConnected.TraCI.NET.ProtocolTypes;
 using CodingConnected.TraCI.NET.Services;
 using static CodingConnected.TraCI.NET.DataTypes.TraCIConstants;
@@ -41,18 +40,14 @@ public class ControlCommands(ITCPConnectService tcpService, ICommandService help
             case ResultCode.Success:
                     {
                     (var apiVersion, var leftBytes) = TraCIInteger.FromBytes(results[1].Content);
-                    (var versionString, leftBytes) = TraCIString.FromBytes(leftBytes);
+                    (var version, _) = TraCIString.FromBytes(leftBytes);
                     if (apiVersion.Value != TRACI_VERSION)
                         {
-                        Console.WriteLine(
-                            $"Warning: TraCI API version mismatch. SUMO installed with API version is {apiVersion.Value}. this library is using API version {TRACI_VERSION}"
-                        );
+                        Console.WriteLine($"Warning: TraCI API version mismatch." +
+                            $" SUMO installed with API version : {apiVersion.Value}." +
+                            $" This library is using API version {TRACI_VERSION}.");
                         }
-                    if (leftBytes.Any())
-                        {
-                        Debug.WriteLine("not all bytes are consumed");
-                        }
-                    return new(apiVersion.Value, versionString.Value);
+                    return new(apiVersion.Value, version.Value);
                     }
             default:
                     {
@@ -79,10 +74,7 @@ public class ControlCommands(ITCPConnectService tcpService, ICommandService help
         if (results.Count != 1)
             {
             var responses = results.ExtractSimStepData();
-            if (responses != null)
-                {
-                return;
-                }
+            if (responses != null) { return; }
 
             foreach (var item in responses)
                 {

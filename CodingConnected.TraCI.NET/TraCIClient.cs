@@ -70,5 +70,7 @@ public partial class TraCIClient : IDisposable
     public List<TraCIResult> SendMessage(TraCICommand command) => TcpSerivce.SendMessage(command);
 
     #endregion // Public Methods
+
+
     }
 
