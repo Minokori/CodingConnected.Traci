@@ -1400,7 +1400,7 @@ id);
     #endregion // Public Methods
     }
 
-public enum StopFlag : Byte
+public enum StopFlag : byte
     {
     STOP_DEFAULT = 0x00,
     STOP_PARKING = 0x01,

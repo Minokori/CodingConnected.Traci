@@ -7,7 +7,7 @@ public static class TraCIConstants
     {
 
     /// <summary>
-    /// VERSION
+    /// Traci API version
     /// </summary>
     public static int TRACI_VERSION => 18;
 

@@ -27,7 +27,7 @@ public partial class TraCIClient
         servicesbuilder.AddSingleton<JunctionCommands>();
         servicesbuilder.AddSingleton<EdgeCommands>();
         servicesbuilder.AddSingleton<SimulationCommands>();
-        servicesbuilder.AddSingleton<GuiCommands>();
+        servicesbuilder.AddSingleton<Gui>();
         services = servicesbuilder.BuildServiceProvider();
         }
 

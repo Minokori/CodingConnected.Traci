@@ -37,6 +37,6 @@ public partial class TraCIClient
 
     public SimulationCommands Simulation => services.GetRequiredService<SimulationCommands>();
 
-    public GuiCommands Gui => services.GetRequiredService<GuiCommands>();
+    public Gui Gui => services.GetRequiredService<Gui>();
 
     }
