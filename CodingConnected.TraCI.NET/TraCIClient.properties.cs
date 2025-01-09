@@ -11,7 +11,7 @@ public partial class TraCIClient
 
     public InductionLoopCommands InductionLoop => services.GetRequiredService<InductionLoopCommands>();
 
-    public LaneAreaDetectorCommands LaneAreaDetector => services.GetRequiredService<LaneAreaDetectorCommands>();
+    public LaneAreaDetector LaneAreaDetector => services.GetRequiredService<LaneAreaDetector>();
 
     public MultiEntryExitDetectorCommands MultiEntryExitDetector => services.GetRequiredService<MultiEntryExitDetectorCommands>();
 

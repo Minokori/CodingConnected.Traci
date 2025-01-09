@@ -55,6 +55,9 @@ public static class TraCIConstants
     // command: reroute to parking area
     public const byte CMD_REROUTE_TO_PARKING = 0xc2;
 
+    //command: change lane area detector
+    public const byte CMD_CHANGE_LANE_AREA_DETECTOR = 0xcd;
+
     // command: Resume from parking
     public const byte CMD_RESUME = 0x19;
 
@@ -275,6 +278,12 @@ public static class TraCIConstants
     // response: subscribe areal detector (e2) context
     public const byte RESPONSE_SUBSCRIBE_LANEAREA_CONTEXT = 0x9d;
     // command: get areal detector (e2) variable
+    /// <summary>
+    /// Asks for the value of a certain variable of the named LaneArea (e2) detector.<para/>
+    /// The value returned is the state of the asked variable/value within the last simulation step.
+    /// Please note that for asking values from your detectors you have to define them within an additional-file and load them at the start of the simulation.
+    /// The <u><i>period</i></u> and <u><i>file</i></u> attributes do not matter for TraCI.
+    /// </summary>
     public const byte CMD_GET_LANEAREA_VARIABLE = 0xad;
     // response: get areal detector (e2) variable
     public const byte RESPONSE_GET_LANEAREA_VARIABLE = 0xbd;
@@ -569,6 +578,29 @@ public static class TraCIConstants
 
     // index of the phase (set: traffic lights)
     public const byte TL_PHASE_INDEX = 0x22;
+
+    // vehicle number (set: lane area detector)
+    public const byte VAR_VEHICLE_NUMBER = 0x22;
+
+
+    // occupancy (get: lane area detector)
+    public const byte INTERVAL_OCCUPANCY = 0x23;
+
+    // mean speed (get: lane area detector)
+    public const byte INTERVAL_SPEED = 0x24;
+
+    public const byte VAR_INTERVAL_NUMBER = 0x25;
+
+
+    public const byte VAR_INTERVAL_MAX_JAM_LENGTH_METERS = 0x32;
+
+    public const byte VAR_LAST_INTERVAL_OCCUPANCY = 0x27;
+
+    public const byte VAR_LAST_INTERVAL_SPEED = 0x28;
+
+    public const byte VAR_LAST_INTERVAL_NUMBER = 0x29;
+
+    public const byte VAR_LAST_INTERVAL_MAX_JAM_LENGTH_METERS = 0x33;
 
     // traffic light program (set: traffic lights)
     public const byte TL_PROGRAM = 0x23;
