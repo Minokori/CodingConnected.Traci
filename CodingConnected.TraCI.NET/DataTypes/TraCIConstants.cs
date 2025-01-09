@@ -100,6 +100,13 @@ public static class TraCIConstants
     // response: subscribe multi-entry/multi-exit detector (e3) context
     public const byte RESPONSE_SUBSCRIBE_MULTIENTRYEXIT_CONTEXT = 0x91;
     // command: get multi-entry/multi-exit detector (e3) variable
+    /// <summary>
+    /// Asks for the value of a certain variable of the named multi-entry/multi-exit (e3) detector.<para/>
+    /// The value returned is the state of the asked variable/value within the last simulation step.
+    /// Please note that for asking values from your multi-entry/multi-exit detectors with TraCI, 
+    /// you have to define them in an additional input file (see multi-entry/multi-exit (e3) detectors)
+    /// <u>and cannot add them via TraCI (yet)</u>.
+    /// </summary>
     public const byte CMD_GET_MULTIENTRYEXIT_VARIABLE = 0xa1;
     // response: get multi-entry/multi-exit detector (e3) variable
     public const byte RESPONSE_GET_MULTIENTRYEXIT_VARIABLE = 0xb1;
@@ -599,6 +606,41 @@ public static class TraCIConstants
     public const byte VAR_LAST_INTERVAL_SPEED = 0x28;
 
     public const byte VAR_LAST_INTERVAL_NUMBER = 0x29;
+
+    /// <summary>
+    /// lanes (get: variablespeedsign, multi-entry/multi-exit detector)
+    /// </summary>
+    public const byte VAR_LANES = 0x30;
+
+    /// <summary>
+    /// exit lanes (get: multi-entry/multi-exit detector)
+    /// </summary>
+    public const byte VAR_EXIT_LANES = 0x31;
+
+    /// <summary>
+    /// position (2D) (get: multi-entry/multi-exit detector)
+    /// </summary>
+    public const byte VAR_EXIT_POSITIONS = 0x43;
+
+    /// <summary>
+    /// last interval travel time (get: e3)
+    /// </summary>
+    public const byte VAR_LAST_INTERVAL_TRAVELTIME = 0x58;
+
+    /// <summary>
+    /// last step vehicle halting number (get: e3)
+    /// </summary>
+    public const byte VAR_LAST_INTERVAL_MEAN_HALTING_NUMBER = 0x20;
+
+    /// <summary>
+    /// collected timeLoss since departure (get: vehicle, e3)
+    /// </summary>
+    public const byte VAR_TIMELOSS = 0x8c;
+
+    /// <summary>
+    /// last interval vehicle count(get: e3)
+    /// </summary>
+    public const byte VAR_LAST_INTERVAL_VEHICLE_NUMBER = 0x21;
 
     public const byte VAR_LAST_INTERVAL_MAX_JAM_LENGTH_METERS = 0x33;
 

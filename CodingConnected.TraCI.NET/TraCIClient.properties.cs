@@ -13,7 +13,7 @@ public partial class TraCIClient
 
     public LaneAreaDetector LaneAreaDetector => services.GetRequiredService<LaneAreaDetector>();
 
-    public MultiEntryExitDetectorCommands MultiEntryExitDetector => services.GetRequiredService<MultiEntryExitDetectorCommands>();
+    public MultiEntryExitDetector MultiEntryExitDetector => services.GetRequiredService<MultiEntryExitDetector>();
 
     public LaneCommands Lane => services.GetRequiredService<LaneCommands>();
 
