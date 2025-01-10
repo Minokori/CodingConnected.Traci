@@ -25,7 +25,7 @@ public partial class TraCIClient
 
     public VehicleType VehicleType => services.GetRequiredService<VehicleType>();
 
-    public RouteCommands Route => services.GetRequiredService<RouteCommands>();
+    public Route Route => services.GetRequiredService<Route>();
 
     public POICommands POI => services.GetRequiredService<POICommands>();
 

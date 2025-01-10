@@ -21,7 +21,7 @@ public partial class TraCIClient
         servicesbuilder.AddSingleton<VehicleCommands>();
         servicesbuilder.AddSingleton<Person>();
         servicesbuilder.AddSingleton<VehicleType>();
-        servicesbuilder.AddSingleton<RouteCommands>();
+        servicesbuilder.AddSingleton<Route>();
         servicesbuilder.AddSingleton<POICommands>();
         servicesbuilder.AddSingleton<PolygonCommands>();
         servicesbuilder.AddSingleton<JunctionCommands>();
