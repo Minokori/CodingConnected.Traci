@@ -15,7 +15,7 @@ public interface ITCPConnectService
 
 public interface ICommandService
     {
-    IAnswerFromSumo ExecuteGetCommand(byte commandType, byte? messageType, string id);
+    IAnswerFromSumo ExecuteGetCommand(byte commandType, byte? messageType, string id, ITraciType extendVariable = null);
     public TraCICommand GetCommand(byte commandType, byte? messageType = null, string id = null, ITraciType contents = null);
     bool ExecuteSetCommand(string id, byte commandType, byte messageType, ITraciType value = null);
 

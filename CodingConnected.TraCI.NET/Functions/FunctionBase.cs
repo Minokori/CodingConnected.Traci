@@ -5,10 +5,11 @@ namespace CodingConnected.TraCI.NET.Functions;
 
 
 /// <summary>
-/// Base class for TraCI Command
+/// Base class for TraCI Functions
 /// </summary>
-/// <param name="client"> reference of a <see cref="TraCIClient"/> </param>
-public abstract class TraCICommandsBase(ITCPConnectService tcpService, ICommandService helper)
+/// <param name="tcpService">send/recieve data to/from traci host</param>
+/// <param name="helper">parse commands/convert contents from response</param>
+public abstract class FunctionBase(ITCPConnectService tcpService, ICommandService helper)
     {
     protected ICommandService _helper = helper;
     protected ITCPConnectService _tcpService = tcpService;
@@ -16,7 +17,7 @@ public abstract class TraCICommandsBase(ITCPConnectService tcpService, ICommandS
 
 
 
-public abstract class TraCIContextSubscribableCommands(ITCPConnectService tcpService, ICommandService helper) : TraCICommandsBase(tcpService, helper)
+public abstract class TraCIContextSubscribableCommands(ITCPConnectService tcpService, ICommandService helper) : FunctionBase(tcpService, helper)
     {
     /// <summary>
     /// Cache an empty list of bytes to unsubscribe. Prevents allocation when multiple unsubscribe occur.

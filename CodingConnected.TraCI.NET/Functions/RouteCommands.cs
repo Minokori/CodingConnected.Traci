@@ -3,7 +3,7 @@ using CodingConnected.TraCI.NET.DataTypes;
 
 namespace CodingConnected.TraCI.NET.Functions;
 
-public class RouteCommands(ITCPConnectService tcpService, ICommandService helper) : TraCICommandsBase(tcpService, helper)
+public class RouteCommands(ITCPConnectService tcpService, ICommandService helper) : FunctionBase(tcpService, helper)
     {
     #region Public Methods
 

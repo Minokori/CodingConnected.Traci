@@ -304,6 +304,15 @@ public static class TraCIConstants
     // response: subscribe person context
     public const byte RESPONSE_SUBSCRIBE_PERSON_CONTEXT = 0x9e;
     // command: get person variable
+    /// <summary>
+    /// Asks for the value of a certain variable of the named person.
+    /// </summary>
+    /// <remarks>
+    /// The value returned is the state of the asked variable/value within the last simulation step.<para/>
+    /// In the case the person is loaded, but outside the network 
+    /// - due not being yet inserted into the network or being teleported within the current time step 
+    /// - a default "error" value is returned. 
+    /// </remarks>
     public const byte CMD_GET_PERSON_VARIABLE = 0xae;
     // response: get person variable
     public const byte RESPONSE_GET_PERSON_VARIABLE = 0xbe;
@@ -626,6 +635,12 @@ public static class TraCIConstants
     /// last interval travel time (get: e3)
     /// </summary>
     public const byte VAR_LAST_INTERVAL_TRAVELTIME = 0x58;
+
+    /// <summary>
+    /// retrieve taxi reservation (person)
+    /// </summary>
+    public const byte VAR_TAXI_RESERVATIONS = 0xc6;
+
 
     /// <summary>
     /// last step vehicle halting number (get: e3)
@@ -1066,6 +1081,11 @@ public static class TraCIConstants
 
     // append a person stage (person)
     public const byte REMOVE_STAGE = 0xc5;
+
+    /// <summary>
+    /// replace a person stage (person)
+    /// </summary>
+    public const byte REPLACE_STAGE = 0xcd;
 
     // the mass (vehicle)
     public const byte VAR_MASS = 0xc8;

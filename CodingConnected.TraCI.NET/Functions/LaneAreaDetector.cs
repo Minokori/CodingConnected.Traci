@@ -23,7 +23,7 @@ namespace CodingConnected.TraCI.NET.Functions;
 /// </item>
 /// </list>
 /// </remarks>
-public partial class LaneAreaDetector(ITCPConnectService tcpService, ICommandService helper) : TraCICommandsBase(tcpService, helper)
+public partial class LaneAreaDetector(ITCPConnectService tcpService, ICommandService helper) : FunctionBase(tcpService, helper)
     {
     /// <summary>
     /// subscribe to a list of variables of a E2 detector

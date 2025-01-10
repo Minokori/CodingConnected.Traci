@@ -59,9 +59,9 @@ internal partial class CommandService(ITCPConnectService tcpService) : ICommandS
         _ = _tcpService.SendMessage(command);
         }
 
-    public IAnswerFromSumo ExecuteGetCommand(byte commandType, byte? messageType = null, string id = null)
+    public IAnswerFromSumo ExecuteGetCommand(byte commandType, byte? messageType = null, string id = null, ITraciType extendVariables = null)
         {
-        var command = GetCommand(commandType, messageType, id);
+        var command = GetCommand(commandType, messageType, id, extendVariables);
         var response = _tcpService.SendMessage(command);
         try
             {

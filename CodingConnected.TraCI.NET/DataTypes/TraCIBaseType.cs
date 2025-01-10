@@ -209,7 +209,7 @@ public class TraCIStringList : List<TraCIString>, ITraciType
 /// a <see cref="List{T}"/> of <see cref="ITraciType"/> values
 /// </summary>
 /// <remarks>
-/// Compound object, internal structure depends on concrete object.
+/// Compound object, internal structure depends on inner object.
 /// </remarks>
 public class TraCICompoundObject : List<ITraciType>, ITraciType
     {

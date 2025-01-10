@@ -3,7 +3,7 @@ using CodingConnected.TraCI.NET.DataTypes;
 
 namespace CodingConnected.TraCI.NET.Functions;
 
-public class SimulationCommands(ITCPConnectService tcpService, ICommandService helper) : TraCICommandsBase(tcpService, helper)
+public class SimulationCommands(ITCPConnectService tcpService, ICommandService helper) : FunctionBase(tcpService, helper)
     {
     /// <summary>
     /// Returns the current simulation time (in s)

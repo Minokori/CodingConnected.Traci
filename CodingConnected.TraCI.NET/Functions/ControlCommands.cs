@@ -11,7 +11,7 @@ namespace CodingConnected.TraCI.NET.Functions;
 /// <param name="tcpService"><see cref="ITCPConnectService"/></param>
 /// <param name="helper"><see cref="ICommandService"/></param>
 /// <param name="eventService"><see cref="IEventService"/> </param>
-public class ControlCommands(ITCPConnectService tcpService, ICommandService helper, IEventService eventService) : TraCICommandsBase(tcpService, helper)
+public class ControlCommands(ITCPConnectService tcpService, ICommandService helper, IEventService eventService) : FunctionBase(tcpService, helper)
     {
     private readonly IEventService _events = eventService;
 

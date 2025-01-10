@@ -21,7 +21,7 @@ public partial class TraCIClient
 
     public VehicleCommands Vehicle => services.GetRequiredService<VehicleCommands>();
 
-    public PersonCommands Person => services.GetRequiredService<PersonCommands>();
+    public Person Person => services.GetRequiredService<Person>();
 
     public VehicleType VehicleType => services.GetRequiredService<VehicleType>();
 
