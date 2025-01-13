@@ -1,7 +1,8 @@
-﻿using CodingConnected.TraCI.NET.Services;
-using CodingConnected.TraCI.NET.DataTypes;
+﻿using CodingConnected.TraCI.NET.DataTypes;
+using CodingConnected.TraCI.NET.Services;
 
 namespace CodingConnected.TraCI.NET.Functions;
+
 /// <summary>
 /// Route related Commands
 /// </summary>
@@ -22,8 +23,6 @@ namespace CodingConnected.TraCI.NET.Functions;
 /// </remarks>
 public partial class Route(ITCPConnectService tcpService, ICommandService helper) : FunctionBase(tcpService, helper)
     {
-
-
     /// <summary>
     /// subscribe to a list of variables of a vehicle type
     /// </summary>

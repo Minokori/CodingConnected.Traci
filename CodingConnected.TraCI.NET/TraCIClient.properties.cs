@@ -35,7 +35,7 @@ public partial class TraCIClient
 
     public EdgeCommands Edge => services.GetRequiredService<EdgeCommands>();
 
-    public SimulationCommands Simulation => services.GetRequiredService<SimulationCommands>();
+    public Simulation Simulation => services.GetRequiredService<Simulation>();
 
     public Gui Gui => services.GetRequiredService<Gui>();
 

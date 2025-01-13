@@ -913,6 +913,16 @@ public static class TraCIConstants
     // number of persons waiting at a defined bus stop (get: simulation)
     public const byte VAR_BUS_STOP_WAITING = 0x67;
 
+    /// <summary>
+    /// ids of persons waiting at a defined bus stop (get: simulation)
+    /// </summary>
+    public const byte VAR_BUS_STOP_WAITING_IDS = 0xef;
+
+    /// <summary>
+    /// retrieve global option value (get: simulation)
+    /// </summary>
+    public const byte VAR_OPTION = 0x32;
+
     // current leader together with gap (get: vehicle)
     public const byte VAR_LEADER = 0x68;
 
@@ -1006,6 +1016,12 @@ public static class TraCIConstants
     // ids of vehicles ending to park (get: simulation)
     public const byte VAR_PARKING_ENDING_VEHICLES_IDS = 0x6f;
 
+
+    /// <summary>
+    /// retrieve detail data for each collision
+    /// </summary>
+    public const byte VAR_COLLISIONS = 0x23;
+
     // number of vehicles involved in a collision (get: simulation)
     public const byte VAR_COLLIDING_VEHICLES_NUMBER = 0x80;
 
@@ -1023,6 +1039,11 @@ public static class TraCIConstants
 
     // triggers saving simulation state (set: simulation)
     public const byte CMD_SAVE_SIMSTATE = 0x95;
+
+    /// <summary>
+    /// triggers saving simulation state (set: simulation)
+    /// </summary>
+    public const byte CMD_LOAD_SIMSTATE = 0x96;
 
     // sets/retrieves abstract parameter
     public const byte VAR_PARAMETER = 0x7e;

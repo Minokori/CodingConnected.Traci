@@ -302,7 +302,7 @@ internal class UsageExample
 
     private static void PrintArrivedVehicles(TraCIClient client)
         {
-        vehicleIds = client.Simulation.GetArrivedIDList("ignored");
+        vehicleIds = client.Simulation.GetArrivedIDList();
         Console.Write("Arrived Vehicles: [");
         foreach (var id in vehicleIds)
             {
@@ -313,7 +313,7 @@ internal class UsageExample
 
     private static void PrintLoadedVehicles(TraCIClient client)
         {
-        vehicleIds = client.Simulation.GetLoadedIDList("ignored");
+        vehicleIds = client.Simulation.GetLoadedIDList();
         Console.Write("Loaded Vehicles: [");
         foreach (var id in vehicleIds)
             {
@@ -324,7 +324,7 @@ internal class UsageExample
 
     private static void PrintDepartedVehicles(TraCIClient client)
         {
-        vehicleIds = client.Simulation.GetDepartedIDList("ignored");
+        vehicleIds = client.Simulation.GetDepartedIDList();
         Console.Write("Departed Vehicles: [");
         foreach (var id in vehicleIds)
             {
@@ -404,7 +404,7 @@ internal class UsageExample
             {
             Console.Write("\n>");
 
-            var curTime = client.Simulation.GetCurrentTime("ignored");
+            var curTime = client.Simulation.GetTime();
 
             var keyPressed = Console.ReadKey(false).Key;
             switch (keyPressed)
