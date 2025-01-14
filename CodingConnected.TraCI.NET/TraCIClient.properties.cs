@@ -7,7 +7,7 @@ namespace CodingConnected.TraCI.NET;
 public partial class TraCIClient
     {
     public IEventService EventService => services.GetRequiredService<IEventService>();
-    public ControlCommands Control => services.GetRequiredService<ControlCommands>();
+    public Control Control => services.GetRequiredService<Control>();
 
     public InductionLoopCommands InductionLoop => services.GetRequiredService<InductionLoopCommands>();
 
@@ -33,7 +33,7 @@ public partial class TraCIClient
 
     public JunctionCommands Junction => services.GetRequiredService<JunctionCommands>();
 
-    public EdgeCommands Edge => services.GetRequiredService<EdgeCommands>();
+    public Edge Edge => services.GetRequiredService<Edge>();
 
     public Simulation Simulation => services.GetRequiredService<Simulation>();
 

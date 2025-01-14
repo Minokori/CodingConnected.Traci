@@ -2,55 +2,52 @@
 
 namespace CodingConnected.TraCI.NET.Functions;
 
-public partial class EdgeCommands
+public partial class Edge
 // https://sumo.dlr.de/docs/TraCI/Change_Edge_State.html
     {
     /// <summary>
-    /// Adapt the travel time value (in s) used for (re-)routing for the given edge.<para/>
-    /// When setting begin time and end time(in seconds),
-    /// the changes only apply to that time range.Otherwise they apply all the time
+    /// Inserts the information about the travel time of the named edge valid
+    /// from begin time to end time into the global edge weights times container.
     /// </summary>
     /// <param name="edgeId"></param>
+    /// <param name="travelTime"></param>
     /// <param name="beginTime"></param>
     /// <param name="endTime"></param>
-    /// <param name="travelTimeValue"></param>
     /// <returns>success or not</returns>
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/pydoc/traci._edge.html#EdgeDomain-adaptTraveltime"/>
     /// </remarks>
-    public bool AdaptTraveltime(string edgeId, int beginTime, int endTime, double travelTimeValue)
+    public bool AdaptTraveltime(string edgeId, double travelTime, double? beginTime = null, double? endTime = null)
         {
-        TraCICompoundObject tmp =
-        [
-            new TraCIInteger() { Value = beginTime },
-            new TraCIInteger() { Value = endTime },
-            new TraCIDouble() { Value = travelTimeValue },
-        ];
-
+        TraCICompoundObject tmp = (beginTime, endTime) switch
+            {
+                (null, null) => [new TraCIDouble { Value = travelTime }],
+                (null, _) or (_, null) => throw new ArgumentException($"Both {nameof(beginTime)} and {nameof(endTime)} must be specified"),
+                _ => [new TraCIDouble { Value = beginTime.Value }, new TraCIDouble { Value = endTime.Value }, new TraCIDouble { Value = travelTime }],
+                };
         return _helper.ExecuteSetCommand(edgeId, TraCIConstants.CMD_SET_EDGE_VARIABLE, TraCIConstants.VAR_EDGE_TRAVELTIME, tmp);
         }
 
     /// <summary>
-    /// Adapt the effort value used for (re-)routing for the given edge.<para/>
-    /// When setting begin time and end time (in seconds),
-    /// the changes only apply to that time range.Otherwise they apply all the time.
+    /// Inserts the information about the effort of the named edge valid
+    /// from begin travelTime to end travelTime into the global edge weights container.
     /// </summary>
     /// <param name="edgeId"></param>
     /// <param name="beginTime"></param>
     /// <param name="endTime"></param>
-    /// <param name="effortValue"></param>
+    /// <param name="effort"></param>
     /// <returns>success or not</returns>
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/pydoc/traci._edge.html#EdgeDomain-setEffort"/>
     /// </remarks>
-    public bool SetEffort(string edgeId, double effortValue, double beginTime, double endTime)
+    public bool SetEffort(string edgeId, double effort, double? beginTime = null, double? endTime = null)
         {
-        TraCICompoundObject tmp =
-        [
-            new TraCIDouble() { Value = beginTime },
-            new TraCIDouble() { Value = endTime },
-            new TraCIDouble() { Value = effortValue },
-        ];
+        TraCICompoundObject tmp = (beginTime, endTime) switch
+            {
+                (null, null) => [new TraCIDouble { Value = effort }],
+                (null, _) or (_, null) => throw new ArgumentException($"Both {nameof(beginTime)} and {nameof(endTime)} must be specified"),
+                _ => [new TraCIDouble { Value = beginTime.Value }, new TraCIDouble { Value = endTime.Value }, new TraCIDouble { Value = effort }],
+                };
 
         return _helper.ExecuteSetCommand(edgeId, TraCIConstants.CMD_SET_EDGE_VARIABLE, TraCIConstants.VAR_EDGE_EFFORT, tmp);
         }

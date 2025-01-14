@@ -169,7 +169,7 @@ public partial class Person
 
     /// <summary>
     /// Removes all stages of the person.<para/>
-    /// If no new phases are appended, the person will be removed from the simulation in the next <see cref="ControlCommands.SimStep(double)"/>.
+    /// If no new phases are appended, the person will be removed from the simulation in the next <see cref="Control.SimStep(double)"/>.
     /// </summary>
     /// <param name="personId">person ID</param>
     /// <returns>success or not</returns>

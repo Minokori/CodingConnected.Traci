@@ -5,7 +5,6 @@
 /// </summary>
 public static class TraCIConstants
     {
-
     /// <summary>
     /// Traci API version
     /// </summary>
@@ -31,8 +30,6 @@ public static class TraCIConstants
         /// </summary>
         NotImplemented = 0x01,
         }
-
-
 
     // ****************************************
     // COMMANDS
@@ -81,212 +78,289 @@ public static class TraCIConstants
     // command: add subscription filter
     public const byte CMD_ADD_SUBSCRIPTION_FILTER = 0x7e;
 
-
     // command: subscribe induction loop (e1) context
     public const byte CMD_SUBSCRIBE_INDUCTIONLOOP_CONTEXT = 0x80;
+
     // response: subscribe induction loop (e1) context
     public const byte RESPONSE_SUBSCRIBE_INDUCTIONLOOP_CONTEXT = 0x90;
+
     // command: get induction loop (e1) variable
     public const byte CMD_GET_INDUCTIONLOOP_VARIABLE = 0xa0;
+
     // response: get induction loop (e1) variable
     public const byte RESPONSE_GET_INDUCTIONLOOP_VARIABLE = 0xb0;
+
     // command: subscribe induction loop (e1) variable
     public const byte CMD_SUBSCRIBE_INDUCTIONLOOP_VARIABLE = 0xd0;
+
     // response: subscribe induction loop (e1) variable
     public const byte RESPONSE_SUBSCRIBE_INDUCTIONLOOP_VARIABLE = 0xe0;
 
     // command: subscribe multi-entry/multi-exit detector (e3) context
     public const byte CMD_SUBSCRIBE_MULTIENTRYEXIT_CONTEXT = 0x81;
+
     // response: subscribe multi-entry/multi-exit detector (e3) context
     public const byte RESPONSE_SUBSCRIBE_MULTIENTRYEXIT_CONTEXT = 0x91;
+
     // command: get multi-entry/multi-exit detector (e3) variable
     /// <summary>
     /// Asks for the value of a certain variable of the named multi-entry/multi-exit (e3) detector.<para/>
     /// The value returned is the state of the asked variable/value within the last simulation step.
-    /// Please note that for asking values from your multi-entry/multi-exit detectors with TraCI, 
+    /// Please note that for asking values from your multi-entry/multi-exit detectors with TraCI,
     /// you have to define them in an additional input file (see multi-entry/multi-exit (e3) detectors)
     /// <u>and cannot add them via TraCI (yet)</u>.
     /// </summary>
     public const byte CMD_GET_MULTIENTRYEXIT_VARIABLE = 0xa1;
+
     // response: get multi-entry/multi-exit detector (e3) variable
     public const byte RESPONSE_GET_MULTIENTRYEXIT_VARIABLE = 0xb1;
+
     // command: subscribe multi-entry/multi-exit detector (e3) variable
     public const byte CMD_SUBSCRIBE_MULTIENTRYEXIT_VARIABLE = 0xd1;
+
     // response: subscribe multi-entry/multi-exit detector (e3) variable
     public const byte RESPONSE_SUBSCRIBE_MULTIENTRYEXIT_VARIABLE = 0xe1;
 
     // command: subscribe traffic lights context
     public const byte CMD_SUBSCRIBE_TL_CONTEXT = 0x82;
+
     // response: subscribe traffic lights context
     public const byte RESPONSE_SUBSCRIBE_TL_CONTEXT = 0x92;
+
     // command: get traffic lights variable
     public const byte CMD_GET_TL_VARIABLE = 0xa2;
+
     // response: get traffic lights variable
     public const byte RESPONSE_GET_TL_VARIABLE = 0xb2;
+
     // command: set traffic lights variable
     /// <summary>
     /// Changes the state of a traffic light. Because it is possible to change different values of a traffic light, the given value may have different types.
     /// </summary>
     public const byte CMD_SET_TL_VARIABLE = 0xc2;
+
     // command: subscribe traffic lights variable
     public const byte CMD_SUBSCRIBE_TL_VARIABLE = 0xd2;
+
     // response: subscribe traffic lights variable
     public const byte RESPONSE_SUBSCRIBE_TL_VARIABLE = 0xe2;
 
     // command: subscribe lane context
     public const byte CMD_SUBSCRIBE_LANE_CONTEXT = 0x83;
+
     // response: subscribe lane context
     public const byte RESPONSE_SUBSCRIBE_LANE_CONTEXT = 0x93;
+
     // command: get lane variable
     public const byte CMD_GET_LANE_VARIABLE = 0xa3;
+
     // response: get lane variable
     public const byte RESPONSE_GET_LANE_VARIABLE = 0xb3;
+
     // command: set lane variable
     public const byte CMD_SET_LANE_VARIABLE = 0xc3;
+
     // command: subscribe lane variable
     public const byte CMD_SUBSCRIBE_LANE_VARIABLE = 0xd3;
+
     // response: subscribe lane variable
     public const byte RESPONSE_SUBSCRIBE_LANE_VARIABLE = 0xe3;
 
     // command: subscribe vehicle context
     public const byte CMD_SUBSCRIBE_VEHICLE_CONTEXT = 0x84;
+
     // response: subscribe vehicle context
     public const byte RESPONSE_SUBSCRIBE_VEHICLE_CONTEXT = 0x94;
+
     // command: get vehicle variable
     public const byte CMD_GET_VEHICLE_VARIABLE = 0xa4;
+
     // response: get vehicle variable
     public const byte RESPONSE_GET_VEHICLE_VARIABLE = 0xb4;
+
     // command: set vehicle variable
     public const byte CMD_SET_VEHICLE_VARIABLE = 0xc4;
+
     // command: subscribe vehicle variable
     public const byte CMD_SUBSCRIBE_VEHICLE_VARIABLE = 0xd4;
+
     // response: subscribe vehicle variable
     public const byte RESPONSE_SUBSCRIBE_VEHICLE_VARIABLE = 0xe4;
 
     // command: subscribe vehicle type context
     public const byte CMD_SUBSCRIBE_VEHICLETYPE_CONTEXT = 0x85;
+
     // response: subscribe vehicle type context
     public const byte RESPONSE_SUBSCRIBE_VEHICLETYPE_CONTEXT = 0x95;
+
     // command: get vehicle type variable
     public const byte CMD_GET_VEHICLETYPE_VARIABLE = 0xa5;
+
     // response: get vehicle type variable
     public const byte RESPONSE_GET_VEHICLETYPE_VARIABLE = 0xb5;
+
     // command: set vehicle type variable
     public const byte CMD_SET_VEHICLETYPE_VARIABLE = 0xc5;
+
     // command: subscribe vehicle type variable
     public const byte CMD_SUBSCRIBE_VEHICLETYPE_VARIABLE = 0xd5;
+
     // response: subscribe vehicle type variable
     public const byte RESPONSE_SUBSCRIBE_VEHICLETYPE_VARIABLE = 0xe5;
 
     // command: subscribe route context
     public const byte CMD_SUBSCRIBE_ROUTE_CONTEXT = 0x86;
+
     // response: subscribe route context
     public const byte RESPONSE_SUBSCRIBE_ROUTE_CONTEXT = 0x96;
+
     // command: get route variable
     public const byte CMD_GET_ROUTE_VARIABLE = 0xa6;
+
     // response: get route variable
     public const byte RESPONSE_GET_ROUTE_VARIABLE = 0xb6;
+
     // command: set route variable
     public const byte CMD_SET_ROUTE_VARIABLE = 0xc6;
+
     // command: subscribe route variable
     public const byte CMD_SUBSCRIBE_ROUTE_VARIABLE = 0xd6;
+
     // response: subscribe route variable
     public const byte RESPONSE_SUBSCRIBE_ROUTE_VARIABLE = 0xe6;
 
     // command: subscribe poi context
     public const byte CMD_SUBSCRIBE_POI_CONTEXT = 0x87;
+
     // response: subscribe poi context
     public const byte RESPONSE_SUBSCRIBE_POI_CONTEXT = 0x97;
+
     // command: get poi variable
     public const byte CMD_GET_POI_VARIABLE = 0xa7;
+
     // response: get poi variable
     public const byte RESPONSE_GET_POI_VARIABLE = 0xb7;
+
     // command: set poi variable
     public const byte CMD_SET_POI_VARIABLE = 0xc7;
+
     // command: subscribe poi variable
     public const byte CMD_SUBSCRIBE_POI_VARIABLE = 0xd7;
+
     // response: subscribe poi variable
     public const byte RESPONSE_SUBSCRIBE_POI_VARIABLE = 0xe7;
 
     // command: subscribe polygon context
     public const byte CMD_SUBSCRIBE_POLYGON_CONTEXT = 0x88;
+
     // response: subscribe polygon context
     public const byte RESPONSE_SUBSCRIBE_POLYGON_CONTEXT = 0x98;
+
     // command: get polygon variable
     public const byte CMD_GET_POLYGON_VARIABLE = 0xa8;
+
     // response: get polygon variable
     public const byte RESPONSE_GET_POLYGON_VARIABLE = 0xb8;
+
     // command: set polygon variable
     public const byte CMD_SET_POLYGON_VARIABLE = 0xc8;
+
     // command: subscribe polygon variable
     public const byte CMD_SUBSCRIBE_POLYGON_VARIABLE = 0xd8;
+
     // response: subscribe polygon variable
     public const byte RESPONSE_SUBSCRIBE_POLYGON_VARIABLE = 0xe8;
 
     // command: subscribe junction context
     public const byte CMD_SUBSCRIBE_JUNCTION_CONTEXT = 0x89;
+
     // response: subscribe junction context
     public const byte RESPONSE_SUBSCRIBE_JUNCTION_CONTEXT = 0x99;
+
     // command: get junction variable
     public const byte CMD_GET_JUNCTION_VARIABLE = 0xa9;
+
     // response: get junction variable
     public const byte RESPONSE_GET_JUNCTION_VARIABLE = 0xb9;
+
     // command: set junction variable
     public const byte CMD_SET_JUNCTION_VARIABLE = 0xc9;
+
     // command: subscribe junction variable
     public const byte CMD_SUBSCRIBE_JUNCTION_VARIABLE = 0xd9;
+
     // response: subscribe junction variable
     public const byte RESPONSE_SUBSCRIBE_JUNCTION_VARIABLE = 0xe9;
 
     // command: subscribe edge context
     public const byte CMD_SUBSCRIBE_EDGE_CONTEXT = 0x8a;
+
     // response: subscribe edge context
     public const byte RESPONSE_SUBSCRIBE_EDGE_CONTEXT = 0x9a;
+
     // command: get edge variable
     public const byte CMD_GET_EDGE_VARIABLE = 0xaa;
+
     // response: get edge variable
     public const byte RESPONSE_GET_EDGE_VARIABLE = 0xba;
+
     // command: set edge variable
     public const byte CMD_SET_EDGE_VARIABLE = 0xca;
+
     // command: subscribe edge variable
     public const byte CMD_SUBSCRIBE_EDGE_VARIABLE = 0xda;
+
     // response: subscribe edge variable
     public const byte RESPONSE_SUBSCRIBE_EDGE_VARIABLE = 0xea;
 
     // command: subscribe simulation context
     public const byte CMD_SUBSCRIBE_SIM_CONTEXT = 0x8b;
+
     // response: subscribe simulation context
     public const byte RESPONSE_SUBSCRIBE_SIM_CONTEXT = 0x9b;
+
     // command: get simulation variable
     public const byte CMD_GET_SIM_VARIABLE = 0xab;
+
     // response: get simulation variable
     public const byte RESPONSE_GET_SIM_VARIABLE = 0xbb;
+
     // command: set simulation variable
     public const byte CMD_SET_SIM_VARIABLE = 0xcb;
+
     // command: subscribe simulation variable
     public const byte CMD_SUBSCRIBE_SIM_VARIABLE = 0xdb;
+
     // response: subscribe simulation variable
     public const byte RESPONSE_SUBSCRIBE_SIM_VARIABLE = 0xeb;
 
     // command: subscribe GUI context
     public const byte CMD_SUBSCRIBE_GUI_CONTEXT = 0x8c;
+
     // response: subscribe GUI context
     public const byte RESPONSE_SUBSCRIBE_GUI_CONTEXT = 0x9c;
+
     // command: get GUI variable
     public const byte CMD_GET_GUI_VARIABLE = 0xac;
+
     // response: get GUI variable
     public const byte RESPONSE_GET_GUI_VARIABLE = 0xbc;
+
     // command: set GUI variable
     public const byte CMD_SET_GUI_VARIABLE = 0xcc;
+
     // command: subscribe GUI variable
     public const byte CMD_SUBSCRIBE_GUI_VARIABLE = 0xdc;
+
     // response: subscribe GUI variable
     public const byte RESPONSE_SUBSCRIBE_GUI_VARIABLE = 0xec;
 
     // command: subscribe areal detector (e2) context
     public const byte CMD_SUBSCRIBE_LANEAREA_CONTEXT = 0x8d;
+
     // response: subscribe areal detector (e2) context
     public const byte RESPONSE_SUBSCRIBE_LANEAREA_CONTEXT = 0x9d;
+
     // command: get areal detector (e2) variable
     /// <summary>
     /// Asks for the value of a certain variable of the named LaneArea (e2) detector.<para/>
@@ -295,81 +369,102 @@ public static class TraCIConstants
     /// The <u><i>period</i></u> and <u><i>file</i></u> attributes do not matter for TraCI.
     /// </summary>
     public const byte CMD_GET_LANEAREA_VARIABLE = 0xad;
+
     // response: get areal detector (e2) variable
     public const byte RESPONSE_GET_LANEAREA_VARIABLE = 0xbd;
+
     // command: subscribe areal detector (e2) variable
     public const byte CMD_SUBSCRIBE_LANEAREA_VARIABLE = 0xdd;
+
     // response: subscribe areal detector (e2) variable
     public const byte RESPONSE_SUBSCRIBE_LANEAREA_VARIABLE = 0xed;
 
     // command: subscribe person context
     public const byte CMD_SUBSCRIBE_PERSON_CONTEXT = 0x8e;
+
     // response: subscribe person context
     public const byte RESPONSE_SUBSCRIBE_PERSON_CONTEXT = 0x9e;
+
     // command: get person variable
     /// <summary>
     /// Asks for the value of a certain variable of the named person.
     /// </summary>
     /// <remarks>
     /// The value returned is the state of the asked variable/value within the last simulation step.<para/>
-    /// In the case the person is loaded, but outside the network 
-    /// - due not being yet inserted into the network or being teleported within the current time step 
-    /// - a default "error" value is returned. 
+    /// In the case the person is loaded, but outside the network
+    /// - due not being yet inserted into the network or being teleported within the current time step
+    /// - a default "error" value is returned.
     /// </remarks>
     public const byte CMD_GET_PERSON_VARIABLE = 0xae;
+
     // response: get person variable
     public const byte RESPONSE_GET_PERSON_VARIABLE = 0xbe;
+
     // command: set person variable
     public const byte CMD_SET_PERSON_VARIABLE = 0xce;
+
     // command: subscribe person variable
     public const byte CMD_SUBSCRIBE_PERSON_VARIABLE = 0xde;
+
     // response: subscribe person variable
     public const byte RESPONSE_SUBSCRIBE_PERSON_VARIABLE = 0xee;
-
 
     // ****************************************
     // POSITION REPRESENTATIONS
     // ****************************************
     // Position in geo-coordinates
     public const byte POSITION_LON_LAT = 0x00;
+
     // 2D cartesian coordinates
     public const byte POSITION_2D = 0x01;
+
     // Position in geo-coordinates with altitude
     public const byte POSITION_LON_LAT_ALT = 0x02;
+
     // 3D cartesian coordinates
     public const byte POSITION_3D = 0x03;
+
     // Position on road map
     public const byte POSITION_ROADMAP = 0x04;
-
 
     // ****************************************
     // DATA TYPES
     // ****************************************
     // Boundary Box (4 doubles)
     public const byte TYPE_BOUNDINGBOX = 0x05;
+
     // Polygon (2*n doubles)
     public const byte TYPE_POLYGON = 0x06;
+
     // unsigned byte
     public const byte TYPE_UBYTE = 0x07;
+
     // signed byte
     public const byte TYPE_BYTE = 0x08;
+
     // 32 bit signed integer
     public const byte TYPE_INTEGER = 0x09;
+
     // float
     public const byte TYPE_FLOAT = 0x0A;
+
     // double
     public const byte TYPE_DOUBLE = 0x0B;
+
     // 8 bit ASCII string
     public const byte TYPE_STRING = 0x0C;
+
     // list of traffic light phases
     public const byte TYPE_TLPHASELIST = 0x0D;
+
     // list of strings
     public const byte TYPE_STRINGLIST = 0x0E;
+
     // compound object
     public const byte TYPE_COMPOUND = 0x0F;
+
     // color (four ubytes)
     public const byte TYPE_COLOR = 0x11;
-
 
     // ****************************************
     // DATA SIZE
@@ -386,15 +481,19 @@ public static class TraCIConstants
     // ****************************************
     // result type: Ok
     public const byte RTYPE_OK = 0x00;
+
     // result type: not implemented
     public const byte RTYPE_NOTIMPLEMENTED = 0x01;
+
     // result type: error
     public const byte RTYPE_ERR = 0xFF;
 
     // return value for invalid queries (especially vehicle is not on the road), see Position::INVALID
     public const double INVALID_DOUBLE_VALUE = -1073741824;
+
     // return value for invalid queries (especially vehicle is not on the road), see Position::INVALID
     public const double INVALID_INT_VALUE = -1073741824;
+
     // maximum value for client ordering (2 ^ 30)
     public const double MAX_ORDER = 1073741824;
 
@@ -403,36 +502,43 @@ public static class TraCIConstants
     // ****************************************
     // red phase
     public const byte TLPHASE_RED = 0x01;
+
     // yellow phase
     public const byte TLPHASE_YELLOW = 0x02;
+
     // green phase
     public const byte TLPHASE_GREEN = 0x03;
+
     // tl is blinking
     public const byte TLPHASE_BLINKING = 0x04;
+
     // tl is off and not blinking
     public const byte TLPHASE_NOSIGNAL = 0x05;
-
 
     // ****************************************
     // DIFFERENT DISTANCE REQUESTS
     // ****************************************
     // air distance
     public const byte REQUEST_AIRDIST = 0x00;
+
     // driving distance
     public const byte REQUEST_DRIVINGDIST = 0x01;
-
 
     // ****************************************
     // VEHICLE REMOVAL REASONS
     // ****************************************
     // vehicle started teleport
     public const byte REMOVE_TELEPORT = 0x00;
+
     // vehicle removed while parking
     public const byte REMOVE_PARKING = 0x01;
+
     // vehicle arrived
     public const byte REMOVE_ARRIVED = 0x02;
+
     // vehicle was vaporized
     public const byte REMOVE_VAPORIZED = 0x03;
+
     // vehicle finished route during teleport
     public const byte REMOVE_TELEPORT_ARRIVED = 0x04;
 
@@ -441,10 +547,13 @@ public static class TraCIConstants
     // ****************************************
     // person / container stopping
     public const byte STAGE_WAITING_FOR_DEPART = 0x00;
+
     // person / container stopping
     public const byte STAGE_WAITING = 0x01;
+
     // person walking / container transhiping
     public const byte STAGE_WALKING = 0x02;
+
     // person riding / container being transported
     public const byte STAGE_DRIVING = 0x03;
 
@@ -493,10 +602,13 @@ public static class TraCIConstants
     // ****************************************
     // use custom weights if available, fall back to loaded weights and then to free-flow speed
     public const byte ROUTING_MODE_DEFAULT = 0x00;
+
     // use aggregated travel times from device.rerouting
     public const byte ROUTING_MODE_AGGREGATED = 0x01;
+
     // use loaded efforts
     public const byte ROUTING_MODE_EFFORT = 0x02;
+
     // use combined costs
     public const byte ROUTING_MODE_COMBINED = 0x03;
 
@@ -533,10 +645,6 @@ public static class TraCIConstants
 
     // Only return vehicles of the given vType in context subscription result
     public const byte FILTER_TYPE_VTYPE = 0x09;
-
-
-
-
 
     // ****************************************
     // VARIABLE TYPES (for CMD_GET_*_VARIABLE)
@@ -601,7 +709,6 @@ public static class TraCIConstants
     // vehicle number (set: lane area detector)
     public const byte VAR_VEHICLE_NUMBER = 0x22;
 
-
     // occupancy (get: lane area detector)
     public const byte INTERVAL_OCCUPANCY = 0x23;
 
@@ -609,7 +716,6 @@ public static class TraCIConstants
     public const byte INTERVAL_SPEED = 0x24;
 
     public const byte VAR_INTERVAL_NUMBER = 0x25;
-
 
     public const byte VAR_INTERVAL_MAX_JAM_LENGTH_METERS = 0x32;
 
@@ -643,7 +749,6 @@ public static class TraCIConstants
     /// retrieve taxi reservation (person)
     /// </summary>
     public const byte VAR_TAXI_RESERVATIONS = 0xc6;
-
 
     /// <summary>
     /// last step vehicle halting number (get: e3)
@@ -685,7 +790,6 @@ public static class TraCIConstants
     // name of the current program (get: traffic lights)
     public const byte TL_CURRENT_PROGRAM = 0x29;
 
-
     // controlled junctions (get: traffic lights)
     public const byte TL_CONTROLLED_JUNCTIONS = 0x2a;
 
@@ -710,15 +814,17 @@ public static class TraCIConstants
     /// vehicles that also wish to pass the given signal and have higher priority (get: traffic lights)
     /// </summary>
     public const byte TL_PRIORITY_VEHICLES = 0x31;
+
     /// <summary>
     /// retrieve duration spent in the current phase (get: traffic lights)
     /// </summary>
     public const byte TL_SPENT_DURATION = 0x38;
+
     // get/set impatience
     public const byte VAR_IMPATIENCE = 0x26;
+
     //get/set boarding duration
     public const byte VAR_BOARDING_DURATION = 0x2f;
-
 
     // outgoing link number (get: lanes)
     public const byte LANE_LINK_NUMBER = 0x30;
@@ -741,11 +847,8 @@ public static class TraCIConstants
     // slope (get: edge, lane, vehicle, person)
     public const byte VAR_SLOPE = 0x36;
 
-
-
     // person capacity (get: vehicle)
     public const byte VAR_PERSON_CAPACITY = 0x38;
-
 
     // speed (get: vehicle)
     public const byte VAR_SPEED = 0x40;
@@ -773,6 +876,17 @@ public static class TraCIConstants
 
     // max. comfortable deceleration (get: vehicles, vehicle types)
     public const byte VAR_DECEL = 0x47;
+
+    /// <summary>
+    /// upstream junction (edges)
+    /// </summary>
+    public const byte FROM_JUNCTION = 0x7b;
+
+    /// <summary>
+    /// downstream junction (edges)
+    /// </summary>
+    public const byte TO_JUNCTION = 0x7c;
+
 
     // max. (physically possible) deceleration (get: vehicles, vehicle types)
     public const byte VAR_EMERGENCY_DECEL = 0x7b;
@@ -1040,7 +1154,6 @@ public static class TraCIConstants
     // ids of vehicles ending to park (get: simulation)
     public const byte VAR_PARKING_ENDING_VEHICLES_IDS = 0x6f;
 
-
     /// <summary>
     /// retrieve detail data for each collision
     /// </summary>
@@ -1071,7 +1184,6 @@ public static class TraCIConstants
 
     // sets/retrieves abstract parameter
     public const byte VAR_PARAMETER = 0x7e;
-
 
     // add an instance (poi, polygon, vehicle, person, route)
     public const byte ADD = 0x80;
@@ -1134,6 +1246,7 @@ public static class TraCIConstants
 
     // the mass (vehicle)
     public const byte VAR_MASS = 0xc8;
+
     // zoom
     public const byte VAR_VIEW_ZOOM = 0xa0;
 
@@ -1154,5 +1267,4 @@ public static class TraCIConstants
 
     // presence of view
     public const byte VAR_HAS_VIEW = 0xa7;
-
     }

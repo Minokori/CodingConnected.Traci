@@ -38,8 +38,8 @@ public partial class Simulation(ITCPConnectService tcpService, ICommandService h
     /// <summary>
     /// subscribe to a list of variables of simulation
     /// </summary>
-    /// <param name="beginTime">the subscription is executed only in time steps >= this value; in ms</param>
-    /// <param name="endTime">the subscription is executed in time steps <= this value; the subscription is removed if the simulation has reached a higher time step; in ms</param>
+    /// <param name="beginTime">the subscription is executed only in time steps &gt;= this value; in ms</param>
+    /// <param name="endTime">the subscription is executed in time steps &lt;= this value; the subscription is removed if the simulation has reached a higher time step; in ms</param>
     /// <param name="ListOfVariablesToSubsribeTo">The list of variables to return. please refer to <see cref="TraCIConstants"/></param>
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/docs/TraCI/Object_Variable_Subscription.html#command_0xdx_subscribe_variable"/>
