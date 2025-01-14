@@ -213,12 +213,27 @@ public class TraCIStringList : List<TraCIString>, ITraciType
 /// </remarks>
 public class TraCICompoundObject : List<ITraciType>, ITraciType
     {
+    /// <summary>
+    /// only in completed TLS define is true
+    /// </summary>
+    protected virtual bool IsCountEqualsZero => false;
+
+
+    /// <summary>
+    /// when <see cref="ToBytes"/>, add count or not
+    /// </summary>
+    /// <remarks>
+    /// If a class inherited from <see cref="TraCICompoundObject"/> is a subList of other class inherited from <see cref="TraCICompoundObject"/>,
+    /// may be the count shouldn't be added.
+    /// In theses cases, ovverride this property to false.
+    /// </remarks>
+    protected virtual bool ShouldAddCountToBytes => true;
     public byte TYPE { get; } = TYPE_COMPOUND;
 
     public byte[] ToBytes()
         {
         List<byte> bytes = [];
-        bytes.AddRange(new TraCIInteger() { Value = Count }.ToBytes());
+        bytes.AddRange(ShouldAddCountToBytes ? new TraCIInteger() { Value = IsCountEqualsZero ? 0 : Count }.ToBytes() : []);
         foreach (var item in this)
             {
             bytes.Add(item.TYPE);

@@ -34,6 +34,7 @@ public class TraCICommand
         cmessage = Contents is null ? cmessage : [.. cmessage, .. Contents];
         var totmessage = GetBytes(cmessage.Count + 4).Reverse();
         return [.. totmessage, .. cmessage];
-
+        // 0 0 0 7 3 171 102
+        // b'\x00\x00\x00\x0b\x07\xabf\x00\x00\x00\x00'
         }
     }

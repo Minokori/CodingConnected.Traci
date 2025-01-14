@@ -13,7 +13,7 @@ public partial class Simulation
     /// </remarks>
     public double GetTime()
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_SIM_VARIABLE, TraCIConstants.VAR_TIME);
+        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_SIM_VARIABLE, TraCIConstants.VAR_TIME, "ignored");
         return ((TraCIDouble)result.Value).Value;
         }
 

@@ -17,7 +17,7 @@ public partial class TraCIClient
 
     public LaneCommands Lane => services.GetRequiredService<LaneCommands>();
 
-    public TrafficLightCommands TrafficLight => services.GetRequiredService<TrafficLightCommands>();
+    public TrafficLight TrafficLight => services.GetRequiredService<TrafficLight>();
 
     public VehicleCommands Vehicle => services.GetRequiredService<VehicleCommands>();
 

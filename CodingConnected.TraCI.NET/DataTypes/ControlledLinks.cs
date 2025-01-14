@@ -1,9 +1,8 @@
 ﻿namespace CodingConnected.TraCI.NET.DataTypes;
-
-public struct ControlledLinks : ITraciType
+public class ControlledLinks : TraCICompoundObject, ITraciType
     {
-    public readonly byte TYPE => throw new NotImplementedException();
-    public TraCIInteger NumberOfSignals { get; set; }
-    public List<TraCIStringList> Links { get; set; }
+    protected override bool ShouldAddCountToBytes => false;
+    public new byte TYPE => throw new NotImplementedException();
+    public TraCIInteger NumberOfSignals => (TraCIInteger)this[0];
+    public List<TraCIStringList> Links => this.Skip(1).Select(i => (TraCIStringList)i).ToList();
     }
-

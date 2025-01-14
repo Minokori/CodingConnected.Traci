@@ -124,6 +124,9 @@ public static class TraCIConstants
     // response: get traffic lights variable
     public const byte RESPONSE_GET_TL_VARIABLE = 0xb2;
     // command: set traffic lights variable
+    /// <summary>
+    /// Changes the state of a traffic light. Because it is possible to change different values of a traffic light, the given value may have different types.
+    /// </summary>
     public const byte CMD_SET_TL_VARIABLE = 0xc2;
     // command: subscribe traffic lights variable
     public const byte CMD_SUBSCRIBE_TL_VARIABLE = 0xd2;
@@ -665,6 +668,11 @@ public static class TraCIConstants
     // phase duration (set: traffic lights)
     public const byte TL_PHASE_DURATION = 0x24;
 
+    /// <summary>
+    /// vehicles that block passing the given signal (get: traffic lights)
+    /// </summary>
+    public const byte TL_BLOCKING_VEHICLES = 0x25;
+
     // controlled lanes (get: traffic lights)
     public const byte TL_CONTROLLED_LANES = 0x26;
 
@@ -676,6 +684,7 @@ public static class TraCIConstants
 
     // name of the current program (get: traffic lights)
     public const byte TL_CURRENT_PROGRAM = 0x29;
+
 
     // controlled junctions (get: traffic lights)
     public const byte TL_CONTROLLED_JUNCTIONS = 0x2a;
@@ -692,6 +701,19 @@ public static class TraCIConstants
     // current state, using external signal names (get: traffic lights)
     public const byte TL_EXTERNAL_STATE = 0x2e;
 
+    /// <summary>
+    /// vehicles that also wish to pass the given signal (get: traffic lights)
+    /// </summary>
+    public const byte TL_RIVAL_VEHICLES = 0x30;
+
+    /// <summary>
+    /// vehicles that also wish to pass the given signal and have higher priority (get: traffic lights)
+    /// </summary>
+    public const byte TL_PRIORITY_VEHICLES = 0x31;
+    /// <summary>
+    /// retrieve duration spent in the current phase (get: traffic lights)
+    /// </summary>
+    public const byte TL_SPENT_DURATION = 0x38;
     // get/set impatience
     public const byte VAR_IMPATIENCE = 0x26;
     //get/set boarding duration
@@ -718,6 +740,8 @@ public static class TraCIConstants
 
     // slope (get: edge, lane, vehicle, person)
     public const byte VAR_SLOPE = 0x36;
+
+
 
     // person capacity (get: vehicle)
     public const byte VAR_PERSON_CAPACITY = 0x38;

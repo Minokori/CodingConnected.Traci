@@ -32,35 +32,33 @@ internal static class TraCITypeExtensions
 
         return systems;
         }
-    internal static TrafficCompleteLightProgram ToTrafficLightCompleteProgram(this TraCICompoundObject content)
+    internal static List<TrafficLightLogic> ToTrafficLightLogics(this TraCICompoundObject content)
         {
-        TrafficCompleteLightProgram result = new()
+        List<TrafficLightLogic> result = [];
+        var numberOfLogics = (content[0] as TraCIInteger).Value;
+        content = (TraCICompoundObject)content.Skip(1);
+        while (content.Count > 0)
             {
-            NumberOfLogics = content[0] as TraCIInteger,
-            };
-
-        var len = 0; //offset for number of logics
-                     // for 1 logic  = 5 + (4 * number of phases)
-
-        for (var i = 0; i < result.NumberOfLogics.Value; i++)
-            {
-            var numberOfPhases = ((TraCIInteger)content.Skip(1 + len + 4).Take(1)).Value;
-            var tmp = content.Skip(1 + len).Take(5 + numberOfPhases) as TrafficLightLogics;
-            len += 5 + numberOfPhases;
-            result.TrafficLightLogics.Add(tmp);
+            var totalLengthOfLogic = 5 + ((TraCIInteger)content.Skip(4).First()).Value * 4;
+            var logic = (TrafficLightLogic)content.Take(totalLengthOfLogic);
+            content = (TraCICompoundObject)content.Skip(totalLengthOfLogic);
+            result.Add(logic);
             }
         return result;
         }
-    internal static ControlledLinks ToControlledLinks(this TraCICompoundObject content)
+
+    internal static List<ControlledLinks> ToControlledLinks(this TraCICompoundObject content)
         {
-        ControlledLinks links = new() { NumberOfSignals = content[0] as TraCIInteger };
-
-        for (var i = 2; i < content.Count; i += 2)
+        List<ControlledLinks> result = [];
+        while (content.Count > 0)
             {
-            links.Links.Add(content[i] as TraCIStringList);
+            var totalLengthOfLinks = 1 + ((TraCIInteger)content.First()).Value;
+            var links = (ControlledLinks)content.Take(totalLengthOfLinks);
+            content = (TraCICompoundObject)content.Skip(totalLengthOfLinks);
+            result.Add(links);
             }
-
-        return links;
+        return result;
         }
+
     }
 
