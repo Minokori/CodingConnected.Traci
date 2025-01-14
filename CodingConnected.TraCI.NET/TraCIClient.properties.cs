@@ -31,7 +31,7 @@ public partial class TraCIClient
 
     public PolygonCommands Polygon => services.GetRequiredService<PolygonCommands>();
 
-    public JunctionCommands Junction => services.GetRequiredService<JunctionCommands>();
+    public Junction Junction => services.GetRequiredService<Junction>();
 
     public Edge Edge => services.GetRequiredService<Edge>();
 
