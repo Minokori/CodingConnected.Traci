@@ -13,7 +13,7 @@ public partial class TraCIClient
         servicesbuilder.AddSingleton<ICommandService, CommandService>();
         servicesbuilder.AddSingleton<IEventService, EventService>();
         servicesbuilder.AddSingleton<Control>();
-        servicesbuilder.AddSingleton<InductionLoopCommands>();
+        servicesbuilder.AddSingleton<InductionLoop>();
         servicesbuilder.AddSingleton<LaneAreaDetector>();
         servicesbuilder.AddSingleton<MultiEntryExitDetector>();
         servicesbuilder.AddSingleton<LaneCommands>();

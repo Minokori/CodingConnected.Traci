@@ -9,7 +9,7 @@ public partial class TraCIClient
     public IEventService EventService => services.GetRequiredService<IEventService>();
     public Control Control => services.GetRequiredService<Control>();
 
-    public InductionLoopCommands InductionLoop => services.GetRequiredService<InductionLoopCommands>();
+    public InductionLoop InductionLoop => services.GetRequiredService<InductionLoop>();
 
     public LaneAreaDetector LaneAreaDetector => services.GetRequiredService<LaneAreaDetector>();
 

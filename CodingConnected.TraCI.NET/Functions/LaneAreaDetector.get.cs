@@ -190,7 +190,7 @@ public partial class LaneAreaDetector
     /// </remarks>
     public double GetIntervalOccupancy(string detectorId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_LANEAREA_VARIABLE, TraCIConstants.INTERVAL_OCCUPANCY, detectorId);
+        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_LANEAREA_VARIABLE, TraCIConstants.VAR_INTERVAL_OCCUPANCY, detectorId);
         return ((TraCIDouble)result.Value).Value;
         }
 
@@ -204,7 +204,7 @@ public partial class LaneAreaDetector
     /// </remarks>
     public double GetIntervalMeanSpeed(string detectorId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_LANEAREA_VARIABLE, TraCIConstants.INTERVAL_SPEED, detectorId);
+        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_LANEAREA_VARIABLE, TraCIConstants.VAR_INTERVAL_SPEED, detectorId);
         return ((TraCIDouble)result.Value).Value;
         }
 

@@ -133,6 +133,12 @@ public static class TraCIConstants
     // response: get traffic lights variable
     public const byte RESPONSE_GET_TL_VARIABLE = 0xb2;
 
+    /// <summary>
+    /// command: set induction loop (e1) variable, not used yet
+    /// </summary>
+    public const byte CMD_SET_INDUCTIONLOOP_VARIABLE = 0xc0;
+
+
     // command: set traffic lights variable
     /// <summary>
     /// Changes the state of a traffic light. Because it is possible to change different values of a traffic light, the given value may have different types.
@@ -709,21 +715,48 @@ public static class TraCIConstants
     // vehicle number (set: lane area detector)
     public const byte VAR_VEHICLE_NUMBER = 0x22;
 
-    // occupancy (get: lane area detector)
-    public const byte INTERVAL_OCCUPANCY = 0x23;
+    /// <summary>
+    /// get aggregated occupancy (get: inductionloop, e2)
+    /// </summary>
+    public const byte VAR_INTERVAL_OCCUPANCY = 0x23;
+    /// <summary>
+    /// get aggregated speed (get: inductionloop, e2)
+    /// </summary>
+    public const byte VAR_INTERVAL_SPEED = 0x24;
 
-    // mean speed (get: lane area detector)
-    public const byte INTERVAL_SPEED = 0x24;
-
+    /// <summary>
+    /// get aggregated vehicle count (get: inductionloop, e2)
+    /// </summary>
     public const byte VAR_INTERVAL_NUMBER = 0x25;
+
+    /// <summary>
+    /// get aggregated vehicle ids (get: inductionloop)
+    /// </summary>
+    public const byte VAR_INTERVAL_IDS = 0x26;
+
 
     public const byte VAR_INTERVAL_MAX_JAM_LENGTH_METERS = 0x32;
 
+    /// <summary>
+    /// get aggregated speed of last written interval (get: inductionloop, e2)
+    /// </summary>
     public const byte VAR_LAST_INTERVAL_OCCUPANCY = 0x27;
 
+    /// <summary>
+    /// get aggregated occupancy of last written interval (get: inductionloop, e2)
+    /// </summary>
     public const byte VAR_LAST_INTERVAL_SPEED = 0x28;
 
+    /// <summary>
+    /// get aggregated vehicle count of last written interval (get: inductionloop, e2)
+    /// </summary>
     public const byte VAR_LAST_INTERVAL_NUMBER = 0x29;
+
+    /// <summary>
+    /// get aggregated vehicle ids of last written interval (get: inductionloop)
+    /// </summary>
+    public const byte VAR_LAST_INTERVAL_IDS = 0x2a;
+
 
     /// <summary>
     /// lanes (get: variablespeedsign, multi-entry/multi-exit detector)
@@ -764,6 +797,11 @@ public static class TraCIConstants
     /// last interval vehicle count(get: e3)
     /// </summary>
     public const byte VAR_LAST_INTERVAL_VEHICLE_NUMBER = 0x21;
+
+    /// <summary>
+    /// last interval vehicle count(set, get: e1, e2)
+    /// </summary>
+    public const byte VAR_VIRTUAL_DETECTION = 0x22;
 
     public const byte VAR_LAST_INTERVAL_MAX_JAM_LENGTH_METERS = 0x33;
 
