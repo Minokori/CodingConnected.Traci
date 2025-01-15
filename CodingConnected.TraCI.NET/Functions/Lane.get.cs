@@ -157,7 +157,7 @@ public partial class Lane
     public List<Tuple<double, double>> GetShape(string laneId)
         {
         var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_LANE_VARIABLE, TraCIConstants.VAR_SHAPE, laneId);
-        var polygon = (Polygon)result.Value;
+        var polygon = (DataTypes.Polygon)result.Value;
         return polygon.Select(i => new Tuple<double, double>(i.X.Value, i.Y.Value)).ToList();
         }
 

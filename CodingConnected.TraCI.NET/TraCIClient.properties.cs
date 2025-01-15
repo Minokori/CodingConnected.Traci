@@ -29,7 +29,7 @@ public partial class TraCIClient
 
     public POI POI => services.GetRequiredService<POI>();
 
-    public PolygonCommands Polygon => services.GetRequiredService<PolygonCommands>();
+    public Polygon Polygon => services.GetRequiredService<Polygon>();
 
     public Junction Junction => services.GetRequiredService<Junction>();
 

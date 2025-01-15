@@ -60,7 +60,7 @@ public partial class Gui
     public Tuple<Tuple<double, double>, Tuple<double, double>> GetBoundary(string viewId = "View #0")
         {
         var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_GUI_VARIABLE, TraCIConstants.VAR_VIEW_BOUNDARY, viewId);
-        var polygon = (Polygon)result.Value;
+        var polygon = (DataTypes.Polygon)result.Value;
         return new(new(polygon[0].X.Value, polygon[0].Y.Value), new(polygon[1].X.Value, polygon[1].Y.Value));
         }
 

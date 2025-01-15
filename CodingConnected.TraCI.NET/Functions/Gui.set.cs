@@ -80,7 +80,7 @@ public partial class Gui
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/pydoc/traci._gui.html#GuiDomain-setBoundary"/>
     /// </remarks>
-    public bool SetBoundary(string viewId, Polygon boundaryBox)
+    public bool SetBoundary(string viewId, DataTypes.Polygon boundaryBox)
         {
         return boundaryBox.Count != 2
             ? throw new ArgumentException("The boundary box must contain exactly 2 points")
@@ -103,7 +103,7 @@ public partial class Gui
     /// </remarks>
     public bool SetBoundary(string viewId, double xMin, double yMin, double xMax, double yMax)
         {
-        Polygon boundaryBox =
+        DataTypes.Polygon boundaryBox =
         [
             new()
             {

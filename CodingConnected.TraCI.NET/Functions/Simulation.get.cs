@@ -162,7 +162,7 @@ public partial class Simulation
     public Tuple<Tuple<double, double>, Tuple<double, double>> GetNetBoundary()
         {
         var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_SIM_VARIABLE, TraCIConstants.VAR_NET_BOUNDING_BOX);
-        var ploygon = (Polygon)result.Value;
+        var ploygon = (DataTypes.Polygon)result.Value;
         return new(new(ploygon[0].X.Value, ploygon[0].Y.Value), new(ploygon[1].X.Value, ploygon[1].Y.Value));
         }
 

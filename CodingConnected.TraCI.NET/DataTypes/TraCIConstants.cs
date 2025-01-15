@@ -466,6 +466,8 @@ public static class TraCIConstants
     // list of strings
     public const byte TYPE_STRINGLIST = 0x0E;
 
+    public const byte TYPE_DOUBLELIST = 0x10;
+
     // compound object
     public const byte TYPE_COMPOUND = 0x0F;
 
@@ -1022,6 +1024,11 @@ public static class TraCIConstants
 
     // signals state (get/set: vehicle)
     public const byte VAR_SIGNALS = 0x5b;
+
+    /// <summary>
+    /// polygon: add dynamics (set: polygon)
+    /// </summary>
+    public const byte VAR_ADD_DYNAMICS = 0x5c;
 
     // new lane/position along (set: vehicle)
     public const byte VAR_MOVE_TO = 0x5c;

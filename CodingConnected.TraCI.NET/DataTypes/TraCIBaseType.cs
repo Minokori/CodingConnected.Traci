@@ -204,6 +204,57 @@ public class TraCIStringList : List<TraCIString>, ITraciType
         }
     }
 
+public class TraCIDoubleList : List<TraCIDouble>, ITraciType
+    {
+    public byte TYPE => TYPE_DOUBLELIST;
+
+    public List<double> Value
+        {
+        get => this.Select(i => i.Value).ToList();
+        set
+            {
+            this.Clear();
+            foreach (var str in value)
+                {
+                this.Add(new TraCIDouble { Value = str });
+                }
+            }
+        }
+
+    public byte[] ToBytes()
+        {
+        List<byte> bytes = [.. GetBytes(this.Count).Reverse()];
+        foreach (var d in this)
+            {
+            bytes.AddRange(d.ToBytes());
+            }
+        return [.. bytes];
+        }
+
+    public static Tuple<TraCIDoubleList, IEnumerable<byte>> FromBytes(IEnumerable<byte> bytes)
+        {
+        var count = ToInt32(bytes.Take(INTEGER_SIZE).Reverse().ToArray());
+        bytes = bytes.Skip(INTEGER_SIZE);
+        TraCIDoubleList doubles = [];
+        for (var i = 0; i < count; i++)
+            {
+            (var result, bytes) = TraCIDouble.FromBytes(bytes);
+            doubles.Add(result);
+            }
+        return new(doubles, bytes);
+        }
+
+    public static byte[] AsBytes(List<double> value)
+        {
+        List<byte> bytes = [.. TraCIInteger.AsBytes(value.Count)];
+        foreach (var d in value)
+            {
+            bytes.AddRange(TraCIDouble.AsBytes(d));
+            }
+        return [.. bytes];
+        }
+
+    }
 
 /// <summary>
 /// a <see cref="List{T}"/> of <see cref="ITraciType"/> values

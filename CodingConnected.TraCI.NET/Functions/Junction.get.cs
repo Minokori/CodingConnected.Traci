@@ -74,7 +74,7 @@ public partial class Junction
     public List<Tuple<double, double>> GetShape(string junctionId)
         {
         var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_JUNCTION_VARIABLE, TraCIConstants.VAR_SHAPE, junctionId);
-        var polygon = (Polygon)result.Value;
+        var polygon = (DataTypes.Polygon)result.Value;
 
         return polygon.Select(i => new Tuple<double, double>(i.X.Value, i.Y.Value)).ToList();
         }
