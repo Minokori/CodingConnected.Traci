@@ -19,7 +19,7 @@ public partial class TraCIClient
 
     public TrafficLight TrafficLight => services.GetRequiredService<TrafficLight>();
 
-    public VehicleCommands Vehicle => services.GetRequiredService<VehicleCommands>();
+    public Vehicle Vehicle => services.GetRequiredService<Vehicle>();
 
     public Person Person => services.GetRequiredService<Person>();
 

@@ -18,7 +18,7 @@ public partial class TraCIClient
         servicesbuilder.AddSingleton<MultiEntryExitDetector>();
         servicesbuilder.AddSingleton<Lane>();
         servicesbuilder.AddSingleton<TrafficLight>();
-        servicesbuilder.AddSingleton<VehicleCommands>();
+        servicesbuilder.AddSingleton<Vehicle>();
         servicesbuilder.AddSingleton<Person>();
         servicesbuilder.AddSingleton<VehicleType>();
         servicesbuilder.AddSingleton<Route>();

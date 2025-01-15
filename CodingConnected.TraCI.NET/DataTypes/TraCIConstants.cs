@@ -67,6 +67,22 @@ public static class TraCIConstants
     // command: set sublane (vehicle)
     public const byte CMD_CHANGESUBLANE = 0x15;
 
+
+    /// <summary>
+    /// command: replace vehicle stop and update route
+    /// </summary>
+    public const byte CMD_REPLACE_STOP = 0x17;
+
+
+    /// <summary>
+    /// command: insert vehicle stop and update route
+    /// </summary>
+    public const byte CMD_INSERT_STOP = 0x18;
+
+    /// <summary>
+    /// command: send dispatch request for the given taxi
+    /// </summary>
+    public const byte CMD_TAXI_DISPATCH = 0x21;
     // command: change target
     public const byte CMD_CHANGETARGET = 0x31;
 
@@ -901,6 +917,12 @@ public static class TraCIConstants
     // person capacity (get: vehicle)
     public const byte VAR_PERSON_CAPACITY = 0x38;
 
+
+    /// <summary>
+    /// previous speed (set: vehicle)
+    /// </summary>
+    public const byte VAR_PREV_SPEED = 0x3c;
+
     // speed (get: vehicle)
     public const byte VAR_SPEED = 0x40;
 
@@ -1000,6 +1022,11 @@ public static class TraCIConstants
 
     // edges (get: routes, vehicles)
     public const byte VAR_EDGES = 0x54;
+
+    /// <summary>
+    /// filled? (set: vehicles)
+    /// </summary>
+    public const byte VAR_STOP_PARAMETER = 0x55;
 
     // update bestLanes (set: vehicle)
     public const byte VAR_UPDATE_BESTLANES = 0x6a;
