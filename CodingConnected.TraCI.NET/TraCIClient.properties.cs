@@ -15,7 +15,7 @@ public partial class TraCIClient
 
     public MultiEntryExitDetector MultiEntryExitDetector => services.GetRequiredService<MultiEntryExitDetector>();
 
-    public LaneCommands Lane => services.GetRequiredService<LaneCommands>();
+    public Lane Lane => services.GetRequiredService<Lane>();
 
     public TrafficLight TrafficLight => services.GetRequiredService<TrafficLight>();
 

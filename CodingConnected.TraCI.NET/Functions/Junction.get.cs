@@ -89,7 +89,7 @@ public partial class Junction
     /// </remarks>
     public List<string> GetIncomingEdges(string junctionId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_JUNCTION_VARIABLE, TraCIConstants.VAR_INCOMING_EDGES, junctionId);
+        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_JUNCTION_VARIABLE, TraCIConstants.INCOMING_EDGES, junctionId);
         return ((TraCIStringList)result).Value;
         }
 
@@ -103,7 +103,7 @@ public partial class Junction
     /// </remarks>
     public List<string> GetOutgoingEdges(string junctionId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_JUNCTION_VARIABLE, TraCIConstants.VAR_OUTGOING_EDGES, junctionId);
+        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_JUNCTION_VARIABLE, TraCIConstants.OUTGOING_EDGES, junctionId);
         return ((TraCIStringList)result).Value;
         }
     }

@@ -879,6 +879,11 @@ public static class TraCIConstants
     // list of not allowed vehicle classes (get&set: lanes)
     public const byte LANE_DISALLOWED = 0x35;
 
+    /// <summary>
+    /// list of allowed vehicle classes for lane changes (get/set: lanes)
+    /// </summary>
+    public const byte LANE_CHANGES = 0x3c;
+
     // list of foe lanes (get: lanes)
     public const byte VAR_FOES = 0x37;
 
@@ -924,6 +929,17 @@ public static class TraCIConstants
     /// downstream junction (edges)
     /// </summary>
     public const byte TO_JUNCTION = 0x7c;
+
+
+    /// <summary>
+    /// incoming edges (junction)
+    /// </summary>
+    public const byte INCOMING_EDGES = 0x7b;
+
+    /// <summary>
+    /// outgoing edges (junction)
+    /// </summary>
+    public const byte OUTGOING_EDGES = 0x7c;
 
 
     // max. (physically possible) deceleration (get: vehicles, vehicle types)

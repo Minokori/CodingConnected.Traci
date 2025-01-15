@@ -65,5 +65,10 @@ internal static class TraCITypeExtensions
         return content.Skip(1).Chunk(5).Select(i => (VehicleInformationPacket)i.ToList()).ToList();
         }
 
+
+    internal static List<Link> ToLinks(this TraCICompoundObject content)
+        {
+        return content.Skip(1).Chunk(8).Select(i => (Link)i.ToList()).ToList();
+        }
     }
 
