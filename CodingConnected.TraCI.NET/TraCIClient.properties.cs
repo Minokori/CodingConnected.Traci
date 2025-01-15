@@ -27,7 +27,7 @@ public partial class TraCIClient
 
     public Route Route => services.GetRequiredService<Route>();
 
-    public POICommands POI => services.GetRequiredService<POICommands>();
+    public POI POI => services.GetRequiredService<POI>();
 
     public PolygonCommands Polygon => services.GetRequiredService<PolygonCommands>();
 

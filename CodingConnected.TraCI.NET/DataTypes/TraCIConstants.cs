@@ -805,6 +805,12 @@ public static class TraCIConstants
 
     public const byte VAR_LAST_INTERVAL_MAX_JAM_LENGTH_METERS = 0x33;
 
+    /// <summary>
+    /// get/set image file (poi, poly, vehicle, person, simulation)
+    /// </summary>
+    public const byte VAR_IMAGEFILE = 0x93;
+
+
     // traffic light program (set: traffic lights)
     public const byte TL_PROGRAM = 0x23;
 
@@ -1104,6 +1110,11 @@ public static class TraCIConstants
 
     // number of persons waiting at a defined bus stop (get: simulation)
     public const byte VAR_BUS_STOP_WAITING = 0x67;
+
+    /// <summary>
+    /// vehicle: highlight (set: vehicle, poi)
+    /// </summary>
+    public const byte VAR_HIGHLIGHT = 0x6c;
 
     /// <summary>
     /// ids of persons waiting at a defined bus stop (get: simulation)
