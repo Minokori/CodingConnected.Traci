@@ -781,6 +781,13 @@ public static class TraCIConstants
     /// </summary>
     public const byte VAR_LANES = 0x30;
 
+
+    /// <summary>
+    /// lateral speed (get: vehicle)
+    /// </summary>
+    public const byte VAR_SPEED_LAT = 0x32;
+
+
     /// <summary>
     /// exit lanes (get: multi-entry/multi-exit detector)
     /// </summary>
@@ -795,6 +802,11 @@ public static class TraCIConstants
     /// last interval travel time (get: e3)
     /// </summary>
     public const byte VAR_LAST_INTERVAL_TRAVELTIME = 0x58;
+
+    /// <summary>
+    /// command: retrieve information about the current taxi fleet and their status
+    /// </summary>
+    public const byte VAR_TAXI_FLEET = 0x20;
 
     /// <summary>
     /// retrieve taxi reservation (person)
@@ -917,7 +929,15 @@ public static class TraCIConstants
     // person capacity (get: vehicle)
     public const byte VAR_PERSON_CAPACITY = 0x38;
 
+    /// <summary>
+    /// departure time (vehicle, person)
+    /// </summary>
+    public const byte VAR_DEPARTURE = 0x3a;
 
+    /// <summary>
+    /// departure delay (vehicle, person)
+    /// </summary>
+    public const byte VAR_DEPART_DELAY = 0x3b;
     /// <summary>
     /// previous speed (set: vehicle)
     /// </summary>
@@ -971,6 +991,22 @@ public static class TraCIConstants
     /// </summary>
     public const byte OUTGOING_EDGES = 0x7c;
 
+
+    /// <summary>
+    /// carFollowModel function followSpeed (get: vehicle)
+    /// </summary>
+    public const byte VAR_FOLLOW_SPEED = 0x1c;
+
+
+    /// <summary>
+    ///  carFollowModel function stopSpeed (get: vehicle)
+    /// </summary>
+    public const byte VAR_STOP_SPEED = 0x1d;
+
+    /// <summary>
+    /// carFollowModel function getSecureGap (get: vehicle)
+    /// </summary>
+    public const byte VAR_SECURE_GAP = 0x1e;
 
     // max. (physically possible) deceleration (get: vehicles, vehicle types)
     public const byte VAR_EMERGENCY_DECEL = 0x7b;
@@ -1118,6 +1154,12 @@ public static class TraCIConstants
     // get/set vehicle via
     public const byte VAR_VIA = 0xbe;
 
+
+    /// <summary>
+    ///  get (lane change relevant) neighboring vehicles (vehicles)
+    /// </summary>
+    public const byte VAR_NEIGHBORS = 0xbf;
+
     // current CO2 emission of a node (get: vehicle, lane, edge)
     public const byte VAR_CO2EMISSION = 0x60;
 
@@ -1177,6 +1219,11 @@ public static class TraCIConstants
 
     // upcoming stops (get: vehicle)
     public const byte VAR_NEXT_STOPS = 0x73;
+
+    /// <summary>
+    /// upcoming stops with selection (get: vehicle)
+    /// </summary>
+    public const byte VAR_NEXT_STOPS2 = 0x74;
 
     // current acceleration (get: vehicle)
     public const byte VAR_ACCELERATION = 0x72;
@@ -1257,6 +1304,23 @@ public static class TraCIConstants
     /// retrieve detail data for each collision
     /// </summary>
     public const byte VAR_COLLISIONS = 0x23;
+
+
+    /// <summary>
+    /// return loaded vehicles regardless of visibility (excluding arrived)
+    /// </summary>
+    public const byte VAR_LOADED_LIST = 0x24;
+
+
+    /// <summary>
+    /// return teleporting vehicles
+    /// </summary>
+    public const byte VAR_TELEPORTING_LIST = 0x25;
+
+    /// <summary>
+    /// upcoming links(get: vehicle)
+    /// </summary>
+    public const byte VAR_NEXT_LINKS = 0x33;
 
     // number of vehicles involved in a collision (get: simulation)
     public const byte VAR_COLLIDING_VEHICLES_NUMBER = 0x80;
@@ -1366,4 +1430,10 @@ public static class TraCIConstants
 
     // presence of view
     public const byte VAR_HAS_VIEW = 0xa7;
+
+    // TODO: LCA definitions should use flag
+    public const int LCA_RIGHT = 4;
+    public const int LCA_LEFT = 2;
+    public const int LCA_BLOCKED = 268459520;
+    public const int LCA_UNKNOWN = 1073741824;
     }

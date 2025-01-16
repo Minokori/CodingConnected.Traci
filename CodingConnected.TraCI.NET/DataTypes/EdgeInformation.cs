@@ -1,16 +1,17 @@
 ﻿namespace CodingConnected.TraCI.NET.DataTypes;
 
-public class EdgeInformation : TraCICompoundObject, ITraciType
+public sealed class EdgeInformation : TraCICompoundObject, ITraciType
     {
+    protected override bool ShouldAddCountToBytes => false;
     public new byte TYPE => throw new NotImplementedException();
-    public TraCIString LaneId => this[0] as TraCIString;
-    public TraCIDouble Length => this[1] as TraCIDouble;
-    public TraCIDouble Occupation => this[2] as TraCIDouble;
-    public TraCIByte OffsetToBestLane => this[3] as TraCIByte;
+    public TraCIString LaneId => (TraCIString)this[0];
+    public TraCIDouble Length => (TraCIDouble)this[1];
+    public TraCIDouble Occupation => (TraCIDouble)this[2];
+    public TraCIByte OffsetToBestLane => (TraCIByte)this[3];
     /// <summary>
     /// 0: lane may not be used for continuing drive, 1: it may be used
     /// </summary>
-    public TraCIUByte LaneInformation => this[4] as TraCIUByte;
-    public TraCIStringList BestSubsequentLanes => this[5] as TraCIStringList;
+    public TraCIUByte LaneInformation => (TraCIUByte)this[4];
+    public TraCIStringList BestSubsequentLanes => (TraCIStringList)this[5];
     }
 

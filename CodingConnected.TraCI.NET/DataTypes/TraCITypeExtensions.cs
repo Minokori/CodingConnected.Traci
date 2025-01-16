@@ -5,7 +5,6 @@
 /// </summary>
 internal static class TraCITypeExtensions
     {
-
     internal static List<EdgeInformation> ToEdgeInformations(this TraCICompoundObject content)
         {
         List<EdgeInformation> edges = [];
@@ -18,20 +17,11 @@ internal static class TraCITypeExtensions
         return edges;
         }
 
-    internal static List<TrafficLightSystem> ToTrafficLightSystems(this TraCICompoundObject content)
+    internal static List<UpcomingTrafficLights> ToUpcomingTrafficLights(this TraCICompoundObject content)
         {
-        List<TrafficLightSystem> systems = [];
-
-        var numberOfTLS = (content[0] as TraCIInteger).Value;
-
-        for (var i = 0; i < numberOfTLS; i++)
-            {
-            var tls = content.Skip(1 + 4 * i).Take(4) as TrafficLightSystem;
-            systems.Add(tls);
-            }
-
-        return systems;
+        return content.Skip(1).Chunk(4).Select(i => (UpcomingTrafficLights)i.ToList()).ToList();
         }
+
     internal static List<TrafficLightLogic> ToTrafficLightLogics(this TraCICompoundObject content)
         {
         List<TrafficLightLogic> result = [];
@@ -65,10 +55,18 @@ internal static class TraCITypeExtensions
         return content.Skip(1).Chunk(5).Select(i => (VehicleInformationPacket)i.ToList()).ToList();
         }
 
-
     internal static List<Link> ToLinks(this TraCICompoundObject content)
         {
         return content.Skip(1).Chunk(8).Select(i => (Link)i.ToList()).ToList();
         }
-    }
 
+    internal static List<StopData> ToStopDatas(this TraCICompoundObject content)
+        {
+        return content.Skip(1).Chunk(6).Select(i => (StopData)i.ToList()).ToList();
+        }
+
+    internal static List<Foe> ToJunctionFoes(this TraCICompoundObject content)
+        {
+        return content.Skip(1).Chunk(9).Select(i => (Foe)i.ToList()).ToList();
+        }
+    }
