@@ -1436,4 +1436,88 @@ public static class TraCIConstants
     public const int LCA_LEFT = 2;
     public const int LCA_BLOCKED = 268459520;
     public const int LCA_UNKNOWN = 1073741824;
+
+    /// <summary>
+    /// command: get busstop variable
+    /// </summary>
+    public const byte CMD_GET_BUSSTOP_VARIABLE = 0xaf;
+
+
+    /// <summary>
+    /// full name (get: edges, simulation, trafficlight)
+    /// </summary>
+    public const byte VAR_NAME = 0x1b;
+
+
+
+    /// <summary>
+    /// command: set calibrator variable
+    /// </summary>
+    public const byte CMD_SET_CALIBRATOR_VARIABLE = 0x47;
+    /// <summary>
+    /// command: get calibrator variable
+    /// </summary>
+    public const byte CMD_GET_CALIBRATOR_VARIABLE = 0x27;
+
+    /// <summary>
+    /// begin time(get: calibrator)
+    /// </summary>
+    public const byte VAR_BEGIN = 0x1c;
+
+    /// <summary>
+    /// end time(get: calibrator, simulation)
+    /// </summary>
+    public const byte VAR_END = 0x1d;
+    /// <summary>
+    /// inserted vehicle count (get: calibrator)
+    /// </summary>
+    public const byte VAR_INSERTED = 0x15;
+
+    /// <summary>
+    /// passed vehicle count (get: calibrator)
+    /// </summary>
+    public const byte VAR_PASSED = 0x14;
+
+
+    /// <summary>
+    /// removed vehicle count (get: calibrator)
+    /// </summary>
+    public const byte VAR_REMOVED = 0x16;
+
+
+    /// <summary>
+    /// routeProbe id (get: calibrator)
+    /// </summary>
+    public const byte VAR_ROUTE_PROBE = 0x17;
+
+
+    public const byte CMD_SET_FLOW = 0x18;
+    /// <summary>
+    /// vtype list (get: calibrator)
+    /// </summary>
+    public const byte VAR_VTYPES = 0x1e;
+
+    /// <summary>
+    /// vehicles per hour (get: calibrator)
+    /// </summary>
+    public const byte VAR_VEHSPERHOUR = 0x13;
+
+
+
+    /// <summary>
+    /// command: get chargingstation variable
+    /// </summary>
+    public const byte CMD_GET_CHARGINGSTATION_VARIABLE = 0x25;
+
+    /// <summary>
+    /// command: set chargingstation variable
+    /// </summary>
+    public const byte CMD_SET_CHARGINGSTATION_VARIABLE = 0x45;
+
+    // below not found in python source code,their name may not right
+
+    public const byte VAR_CHARGING_POWER = 0x97;
+    public const byte VAR_CHARGING_EFFICIENCY = 0x98;
+    public const byte VAR_CHARGING_TRANSIT = 0x99;
+    public const byte VAR_CHARGING_DELAY = 0x9a;
     }

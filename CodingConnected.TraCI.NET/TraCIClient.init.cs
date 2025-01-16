@@ -12,6 +12,7 @@ public partial class TraCIClient
         servicesbuilder.AddSingleton<ITCPConnectService, ConnectService>();
         servicesbuilder.AddSingleton<ICommandService, CommandService>();
         servicesbuilder.AddSingleton<IEventService, EventService>();
+        servicesbuilder.AddSingleton<Simulation>();
         servicesbuilder.AddSingleton<Control>();
         servicesbuilder.AddSingleton<InductionLoop>();
         servicesbuilder.AddSingleton<LaneAreaDetector>();
@@ -26,8 +27,10 @@ public partial class TraCIClient
         servicesbuilder.AddSingleton<Polygon>();
         servicesbuilder.AddSingleton<Junction>();
         servicesbuilder.AddSingleton<Edge>();
-        servicesbuilder.AddSingleton<Simulation>();
         servicesbuilder.AddSingleton<Gui>();
+        servicesbuilder.AddSingleton<BusStop>();
+        servicesbuilder.AddSingleton<Calibrator>();
+        servicesbuilder.AddSingleton<ChargingStation>();
         services = servicesbuilder.BuildServiceProvider();
         }
 
