@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using CodingConnected.TraCI.NET.DataTypes;
+﻿using CodingConnected.TraCI.NET.DataTypes;
 
 namespace CodingConnected.TraCI.NET.Functions;
 

@@ -67,12 +67,10 @@ public static class TraCIConstants
     // command: set sublane (vehicle)
     public const byte CMD_CHANGESUBLANE = 0x15;
 
-
     /// <summary>
     /// command: replace vehicle stop and update route
     /// </summary>
     public const byte CMD_REPLACE_STOP = 0x17;
-
 
     /// <summary>
     /// command: insert vehicle stop and update route
@@ -83,6 +81,7 @@ public static class TraCIConstants
     /// command: send dispatch request for the given taxi
     /// </summary>
     public const byte CMD_TAXI_DISPATCH = 0x21;
+
     // command: change target
     public const byte CMD_CHANGETARGET = 0x31;
 
@@ -153,7 +152,6 @@ public static class TraCIConstants
     /// command: set induction loop (e1) variable, not used yet
     /// </summary>
     public const byte CMD_SET_INDUCTIONLOOP_VARIABLE = 0xc0;
-
 
     // command: set traffic lights variable
     /// <summary>
@@ -737,6 +735,7 @@ public static class TraCIConstants
     /// get aggregated occupancy (get: inductionloop, e2)
     /// </summary>
     public const byte VAR_INTERVAL_OCCUPANCY = 0x23;
+
     /// <summary>
     /// get aggregated speed (get: inductionloop, e2)
     /// </summary>
@@ -751,7 +750,6 @@ public static class TraCIConstants
     /// get aggregated vehicle ids (get: inductionloop)
     /// </summary>
     public const byte VAR_INTERVAL_IDS = 0x26;
-
 
     public const byte VAR_INTERVAL_MAX_JAM_LENGTH_METERS = 0x32;
 
@@ -775,18 +773,15 @@ public static class TraCIConstants
     /// </summary>
     public const byte VAR_LAST_INTERVAL_IDS = 0x2a;
 
-
     /// <summary>
     /// lanes (get: variablespeedsign, multi-entry/multi-exit detector)
     /// </summary>
     public const byte VAR_LANES = 0x30;
 
-
     /// <summary>
     /// lateral speed (get: vehicle)
     /// </summary>
     public const byte VAR_SPEED_LAT = 0x32;
-
 
     /// <summary>
     /// exit lanes (get: multi-entry/multi-exit detector)
@@ -839,7 +834,6 @@ public static class TraCIConstants
     /// get/set image file (poi, poly, vehicle, person, simulation)
     /// </summary>
     public const byte VAR_IMAGEFILE = 0x93;
-
 
     // traffic light program (set: traffic lights)
     public const byte TL_PROGRAM = 0x23;
@@ -938,6 +932,7 @@ public static class TraCIConstants
     /// departure delay (vehicle, person)
     /// </summary>
     public const byte VAR_DEPART_DELAY = 0x3b;
+
     /// <summary>
     /// previous speed (set: vehicle)
     /// </summary>
@@ -980,7 +975,6 @@ public static class TraCIConstants
     /// </summary>
     public const byte TO_JUNCTION = 0x7c;
 
-
     /// <summary>
     /// incoming edges (junction)
     /// </summary>
@@ -991,12 +985,10 @@ public static class TraCIConstants
     /// </summary>
     public const byte OUTGOING_EDGES = 0x7c;
 
-
     /// <summary>
     /// carFollowModel function followSpeed (get: vehicle)
     /// </summary>
     public const byte VAR_FOLLOW_SPEED = 0x1c;
-
 
     /// <summary>
     ///  carFollowModel function stopSpeed (get: vehicle)
@@ -1154,7 +1146,6 @@ public static class TraCIConstants
     // get/set vehicle via
     public const byte VAR_VIA = 0xbe;
 
-
     /// <summary>
     ///  get (lane change relevant) neighboring vehicles (vehicles)
     /// </summary>
@@ -1305,12 +1296,10 @@ public static class TraCIConstants
     /// </summary>
     public const byte VAR_COLLISIONS = 0x23;
 
-
     /// <summary>
     /// return loaded vehicles regardless of visibility (excluding arrived)
     /// </summary>
     public const byte VAR_LOADED_LIST = 0x24;
-
 
     /// <summary>
     /// return teleporting vehicles
@@ -1442,18 +1431,16 @@ public static class TraCIConstants
     /// </summary>
     public const byte CMD_GET_BUSSTOP_VARIABLE = 0xaf;
 
-
     /// <summary>
     /// full name (get: edges, simulation, trafficlight)
     /// </summary>
     public const byte VAR_NAME = 0x1b;
 
-
-
     /// <summary>
     /// command: set calibrator variable
     /// </summary>
     public const byte CMD_SET_CALIBRATOR_VARIABLE = 0x47;
+
     /// <summary>
     /// command: get calibrator variable
     /// </summary>
@@ -1468,6 +1455,7 @@ public static class TraCIConstants
     /// end time(get: calibrator, simulation)
     /// </summary>
     public const byte VAR_END = 0x1d;
+
     /// <summary>
     /// inserted vehicle count (get: calibrator)
     /// </summary>
@@ -1478,20 +1466,18 @@ public static class TraCIConstants
     /// </summary>
     public const byte VAR_PASSED = 0x14;
 
-
     /// <summary>
     /// removed vehicle count (get: calibrator)
     /// </summary>
     public const byte VAR_REMOVED = 0x16;
-
 
     /// <summary>
     /// routeProbe id (get: calibrator)
     /// </summary>
     public const byte VAR_ROUTE_PROBE = 0x17;
 
-
     public const byte CMD_SET_FLOW = 0x18;
+
     /// <summary>
     /// vtype list (get: calibrator)
     /// </summary>
@@ -1501,8 +1487,6 @@ public static class TraCIConstants
     /// vehicles per hour (get: calibrator)
     /// </summary>
     public const byte VAR_VEHSPERHOUR = 0x13;
-
-
 
     /// <summary>
     /// command: get chargingstation variable
@@ -1514,10 +1498,34 @@ public static class TraCIConstants
     /// </summary>
     public const byte CMD_SET_CHARGINGSTATION_VARIABLE = 0x45;
 
-    // below not found in python source code,their name may not right
-
+    // below 4 not found in python source code,their name may not right
     public const byte VAR_CHARGING_POWER = 0x97;
     public const byte VAR_CHARGING_EFFICIENCY = 0x98;
     public const byte VAR_CHARGING_TRANSIT = 0x99;
     public const byte VAR_CHARGING_DELAY = 0x9a;
+
+    /// <summary>
+    /// command: get parkingarea variable
+    /// </summary>
+    public const byte CMD_GET_PARKINGAREA_VARIABLE = 0x24;
+
+    /// <summary>
+    /// command: set parkingarea variable
+    /// </summary>
+    public const byte CMD_SET_PARKINGAREA_VARIABLE = 0x44;
+
+    public const byte VAR_BADGES = 0x9b;
+
+    /// <summary>
+    /// command: get rerouter variable
+    /// </summary>
+    public const byte CMD_GET_REROUTER_VARIABLE = 0x28;
+
+
+    /// <summary>
+    /// command: get routeprobe variable
+    /// </summary>
+    public const byte CMD_GET_ROUTEPROBE_VARIABLE = 0x26;
+
+    public const byte CMD_GET_VARIABLESPEEDSIGN_VARIABLE = 0x29;
     }

@@ -1187,27 +1187,18 @@ public partial class Vehicle
             B = new TraCIByte() { Value = (byte)b },
             A = new TraCIByte() { Value = (byte)a },
             };
-        TraCICompoundObject tmp;
-        if (alphaMax > 0)
-            {
-            tmp =
-            [
+        var tmp = alphaMax > 0
+            ? ([
                 color,
                 new TraCIDouble() { Value = size },
                 new TraCIInteger() { Value = alphaMax },
                 new TraCIInteger() { Value = duration },
                 new TraCIUByte() { Value = type },
-            ];
-            }
-        else
-            {
-            tmp =
-            [
+            ])
+            : (TraCICompoundObject)([
                 color,
                 new TraCIDouble() { Value = size },
-            ];
-            }
-
+            ]);
         return _helper.ExecuteSetCommand(vehicleId, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_HIGHLIGHT, tmp);
         }
 

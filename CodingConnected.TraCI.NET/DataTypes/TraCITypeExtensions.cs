@@ -11,7 +11,7 @@ internal static class TraCITypeExtensions
         var numberOfEdges = (content[0] as TraCIInteger).Value;
         for (var i = 0; i < numberOfEdges; i++)
             {
-            var edge = content.Skip(1 + 6 * i).Take(6) as EdgeInformation;
+            var edge = content.Skip(1 + (6 * i)).Take(6) as EdgeInformation;
             edges.Add(edge);
             }
         return edges;
@@ -29,7 +29,7 @@ internal static class TraCITypeExtensions
         content = (TraCICompoundObject)content.Skip(1);
         while (content.Count > 0)
             {
-            var totalLengthOfLogic = 5 + ((TraCIInteger)content.Skip(4).First()).Value * 4;
+            var totalLengthOfLogic = 5 + (((TraCIInteger)content.Skip(4).First()).Value * 4);
             var logic = (TrafficLightLogic)content.Take(totalLengthOfLogic);
             content = (TraCICompoundObject)content.Skip(totalLengthOfLogic);
             result.Add(logic);

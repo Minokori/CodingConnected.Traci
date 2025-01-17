@@ -286,7 +286,7 @@ public partial class Person
         // TODO documents has a poor describe of this method. we should check it.
         var tmp = new TraCIInteger() { Value = onlyNew };
         var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_PERSON_VARIABLE, TraCIConstants.VAR_TAXI_RESERVATIONS, "", tmp);
-        var reservations = ((TraCICompoundObject)result.Value).Chunk(8).Select(i => (TaxiResevations)(i.ToList())).ToList();
+        var reservations = ((TraCICompoundObject)result.Value).Chunk(8).Select(i => (TaxiResevations)i.ToList()).ToList();
         return reservations;
         }
 
@@ -313,7 +313,7 @@ public partial class Person
         {
         var tmp = new TraCIInteger() { Value = nextStageIndex };
         var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_PERSON_VARIABLE, TraCIConstants.VAR_STAGE, personId, tmp);
-        return (Stage)((TraCICompoundObject)result.Value);
+        return (Stage)(TraCICompoundObject)result.Value;
         }
 
     /// <summary>

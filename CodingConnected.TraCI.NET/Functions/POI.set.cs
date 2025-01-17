@@ -248,27 +248,18 @@ public partial class POI
             B = new TraCIByte() { Value = (byte)b },
             A = new TraCIByte() { Value = (byte)a },
             };
-        TraCICompoundObject tmp;
-        if (alphaMax > 0)
-            {
-            tmp =
-            [
+        var tmp = alphaMax > 0
+            ? ([
                 color,
                 new TraCIDouble() { Value = size },
                 new TraCIInteger() { Value = alphaMax },
                 new TraCIInteger() { Value = duration },
-                new TraCIUByte() { Value = (byte)type },
-            ];
-            }
-        else
-            {
-            tmp =
-            [
+                new TraCIUByte() { Value = type },
+            ])
+            : (TraCICompoundObject)([
                 color,
                 new TraCIDouble() { Value = size },
-            ];
-            }
-
+            ]);
         return _helper.ExecuteSetCommand(poiId, TraCIConstants.CMD_SET_POI_VARIABLE, TraCIConstants.VAR_HIGHLIGHT, tmp);
         }
     }

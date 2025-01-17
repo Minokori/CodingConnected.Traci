@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CodingConnected.TraCI.NET.DataTypes;
+﻿namespace CodingConnected.TraCI.NET.DataTypes;
 public class Link : TraCICompoundObject, ITraciType
     {
     protected override bool ShouldAddCountToBytes => false;

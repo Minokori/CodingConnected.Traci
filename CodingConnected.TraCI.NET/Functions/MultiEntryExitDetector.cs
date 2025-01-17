@@ -1,5 +1,5 @@
-﻿using CodingConnected.TraCI.NET.Services;
-using CodingConnected.TraCI.NET.DataTypes;
+﻿using CodingConnected.TraCI.NET.DataTypes;
+using CodingConnected.TraCI.NET.Services;
 
 namespace CodingConnected.TraCI.NET.Functions;
 /// <summary>

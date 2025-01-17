@@ -54,7 +54,7 @@ public partial class ChargingStation
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/pydoc/traci._chargingstation.html#ChargingStationDomain-getStartPos"/>
     /// </remarks>
-    public double GetStratPosition(string stopId)
+    public double GetStartPosition(string stopId)
         {
         var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_CHARGINGSTATION_VARIABLE, TraCIConstants.VAR_POSITION, stopId);
         return ((TraCIDouble)result.Value).Value;

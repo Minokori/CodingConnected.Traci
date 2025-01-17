@@ -86,7 +86,7 @@ public class TraCIContextSubscriptionResponse : TraCISubscriptionResponse
         (objectIndex, variableIndex) switch
             {
                 _ when objectIndex >= ObjectCount.Value || variableIndex >= VariableCount.Value => null,
-                _ => Responses[objectIndex * VariableCount.Value + variableIndex],
+                _ => Responses[(objectIndex * VariableCount.Value) + variableIndex],
                 };
     }
 

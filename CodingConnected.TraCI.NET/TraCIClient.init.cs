@@ -31,6 +31,10 @@ public partial class TraCIClient
         servicesbuilder.AddSingleton<BusStop>();
         servicesbuilder.AddSingleton<Calibrator>();
         servicesbuilder.AddSingleton<ChargingStation>();
+        servicesbuilder.AddSingleton<ParkingArea>();
+        servicesbuilder.AddSingleton<Rerouter>();
+        servicesbuilder.AddSingleton<RouteProbe>();
+        servicesbuilder.AddSingleton<VariableSpeedSign>();
         services = servicesbuilder.BuildServiceProvider();
         }
 
