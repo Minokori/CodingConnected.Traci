@@ -1,5 +1,5 @@
-﻿using CodingConnected.TraCI.NET.DataTypes;
-
+using CodingConnected.TraCI.NET.DataTypes;
+using static CodingConnected.TraCI.NET.DataTypes.TraciConstants.Command.Set;
 namespace CodingConnected.TraCI.NET.Functions;
 
 public partial class ChargingStation
@@ -15,8 +15,8 @@ public partial class ChargingStation
     /// </remarks>
     public bool SetChargingPower(string stopId, double power)
         {
-        TraCIDouble tmp = new() { Value = power };
-        return _helper.ExecuteSetCommand(stopId, TraCIConstants.CMD_SET_CHARGINGSTATION_VARIABLE, TraCIConstants.VAR_CHARGING_POWER, tmp);
+        TraciDouble tmp = new(power);
+        return _helper.ExecuteSetCommand(stopId, CHARGINGSTATION_VARIABLE, TraciConstants.VAR_CHARGING_POWER, tmp);
         }
 
     /// <summary>
@@ -30,8 +30,8 @@ public partial class ChargingStation
     /// </remarks>
     public bool SetEfficiency(string stopId, double efficiency)
         {
-        TraCIDouble tmp = new() { Value = efficiency };
-        return _helper.ExecuteSetCommand(stopId, TraCIConstants.CMD_SET_CHARGINGSTATION_VARIABLE, TraCIConstants.VAR_CHARGING_EFFICIENCY, tmp);
+        TraciDouble tmp = new(efficiency);
+        return _helper.ExecuteSetCommand(stopId, CHARGINGSTATION_VARIABLE, TraciConstants.VAR_CHARGING_EFFICIENCY, tmp);
         }
 
     /// <summary>
@@ -45,8 +45,8 @@ public partial class ChargingStation
     /// </remarks>
     public bool SetChargeInTransit(string stopId, int inTransit)
         {
-        TraCIDouble tmp = new() { Value = inTransit };
-        return _helper.ExecuteSetCommand(stopId, TraCIConstants.CMD_SET_CHARGINGSTATION_VARIABLE, TraCIConstants.VAR_CHARGING_TRANSIT, tmp);
+        TraciDouble tmp = new(inTransit);
+        return _helper.ExecuteSetCommand(stopId, CHARGINGSTATION_VARIABLE, TraciConstants.VAR_CHARGING_TRANSIT, tmp);
         }
 
     /// <summary>
@@ -60,7 +60,7 @@ public partial class ChargingStation
     /// </remarks>
     public bool SetChargeDelay(string stopId, double delay)
         {
-        TraCIDouble tmp = new() { Value = delay };
-        return _helper.ExecuteSetCommand(stopId, TraCIConstants.CMD_SET_CHARGINGSTATION_VARIABLE, TraCIConstants.VAR_CHARGING_DELAY, tmp);
+        TraciDouble tmp = new(delay);
+        return _helper.ExecuteSetCommand(stopId, CHARGINGSTATION_VARIABLE, TraciConstants.VAR_CHARGING_DELAY, tmp);
         }
     }

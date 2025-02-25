@@ -1,5 +1,6 @@
-﻿using CodingConnected.TraCI.NET.DataTypes;
-
+using CodingConnected.TraCI.NET.DataTypes;
+using static CodingConnected.TraCI.NET.DataTypes.TraciConstants.Command;
+using static CodingConnected.TraCI.NET.DataTypes.TraciConstants.Command.Set;
 namespace CodingConnected.TraCI.NET.Functions;
 
 public partial class Person
@@ -14,25 +15,19 @@ public partial class Person
     /// </list>
     /// or the person will immediately vanish on departure.
     /// </summary>
-    /// <param name="personId"> peason ID to add</param>
+    /// <param name="personId"> person ID to add</param>
     /// <param name="edgeId">which edge to add </param>
     /// <param name="position">where to add (relative to the length of edge)</param>
     /// <param name="depart">depart time<para/>A depart time value of -3 is interpreted as immediate departure</param>
-    /// <param name="typeId">type of peason to add</param>
+    /// <param name="typeId">type of person to add</param>
     /// <returns>success or not</returns>
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/pydoc/traci._person.html#PersonDomain-add"/>
     /// </remarks>
     public bool Add(string personId, string edgeId, double position, double depart, string typeId)
         {
-        var tmp = new TraCICompoundObject
-        {
-            new TraCIString() { Value = typeId },
-            new TraCIString() { Value = edgeId },
-            new TraCIDouble() { Value = depart },
-            new TraCIDouble() { Value = position },
-        };
-        return _helper.ExecuteSetCommand(personId, TraCIConstants.CMD_SET_PERSON_VARIABLE, TraCIConstants.ADD, tmp);
+        var tmp = new TraciCompoundObject { new TraciString(typeId), new TraciString(edgeId), new TraciDouble(depart), new TraciDouble(position) };
+        return _helper.ExecuteSetCommand(personId, PERSON_VARIABLE, TraciConstants.ADD, tmp);
         }
 
     /// <summary>
@@ -45,10 +40,8 @@ public partial class Person
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/pydoc/traci._person.html#PersonDomain-appendStage"/>
     /// </remarks>
-    public bool AppendStage(string personId, Stage stage)
-        {
-        return _helper.ExecuteSetCommand(personId, TraCIConstants.CMD_SET_PERSON_VARIABLE, TraCIConstants.APPEND_STAGE, stage);
-        }
+    public bool AppendStage(string personId, Stage stage) =>
+        _helper.ExecuteSetCommand(personId, PERSON_VARIABLE, TraciConstants.APPEND_STAGE, stage);
 
     /// <summary>
     /// Appends a driving stage to the plan of the given person.<para/>
@@ -64,13 +57,8 @@ public partial class Person
     /// </remarks>
     public bool AppendDrivingStage(string personId, string toEdge, string lines, string stopId = "")
         {
-        var stage = new DrivingStage()
-            {
-            DestinationEdge = new TraCIString() { Value = toEdge },
-            Lines = new TraCIString() { Value = lines },
-            StopId = new TraCIString() { Value = stopId },
-            };
-        return _helper.ExecuteSetCommand(personId, TraCIConstants.CMD_SET_PERSON_VARIABLE, TraCIConstants.APPEND_STAGE, stage);
+        DrivingStage stage = new(toEdge, lines, stopId);
+        return _helper.ExecuteSetCommand(personId, PERSON_VARIABLE, TraciConstants.APPEND_STAGE, stage);
         }
 
     /// <summary>
@@ -86,21 +74,16 @@ public partial class Person
     /// </remarks>
     public bool AppendWaitingStage(string personId, int duration, string description = "waiting", string stopId = "")
         {
-        var stage = new WaitingStage()
-            {
-            // TODO: in document, duration is int, but in python document, it is float. we should check it.
-            Duration = new TraCIInteger() { Value = duration },
-            Description = new TraCIString() { Value = description },
-            StopId = new TraCIString() { Value = stopId },
-            };
-        return _helper.ExecuteSetCommand(personId, TraCIConstants.CMD_SET_PERSON_VARIABLE, TraCIConstants.APPEND_STAGE, stage);
+        // TODO: in document, duration is int, but in python document, it is float. we should check it.
+        WaitingStage stage = new(duration, description, stopId);
+        return _helper.ExecuteSetCommand(personId, PERSON_VARIABLE, TraciConstants.APPEND_STAGE, stage);
         }
 
     /// <summary>
-    /// 	Appends a walking stage to the plan of the given person.<para/>
+    /// Appends a walking stage to the plan of the given person.<para/>
     /// The walking speed can either be specified,
     /// computed from the duration parameter(in s),
-    /// or taken from thetype of the person
+    /// or taken from the type of the person
     /// </summary>
     /// <param name="personId">person ID</param>
     /// <param name="edges"></param>
@@ -118,16 +101,9 @@ public partial class Person
         string stopId = ""
     )
         {
-        var stage = new WalkingStage()
-            {
-            Edges = new TraCIStringList() { Value = edges },
-            ArrivalPosition = new TraCIDouble() { Value = arrivalPosition },
-            StopId = new TraCIString() { Value = stopId },
-            // optional parameters
-            Duration = new TraCIInteger() { Value = duration },
-            Speed = new TraCIDouble() { Value = speed },
-            };
-        return _helper.ExecuteSetCommand(personId, TraCIConstants.CMD_SET_PERSON_VARIABLE, TraCIConstants.APPEND_STAGE, stage);
+        // duration & speed are optional parameters
+        WalkingStage stage = new(edges, arrivalPosition, duration, speed, stopId);
+        return _helper.ExecuteSetCommand(personId, PERSON_VARIABLE, TraciConstants.APPEND_STAGE, stage);
         }
 
     /// <summary>
@@ -142,12 +118,8 @@ public partial class Person
     /// </remarks>
     public bool ReplaceStage(string personId, int stageIndex, Stage stage)
         {
-        var tmp = new TraCICompoundObject
-        {
-            new TraCIInteger() { Value = stageIndex },
-            stage,
-        };
-        return _helper.ExecuteSetCommand(personId, TraCIConstants.CMD_SET_PERSON_VARIABLE, TraCIConstants.REPLACE_STAGE, tmp);
+        var tmp = new TraciCompoundObject { new TraciInteger(stageIndex), stage };
+        return _helper.ExecuteSetCommand(personId, PERSON_VARIABLE, TraciConstants.REPLACE_STAGE, tmp);
         }
 
     /// <summary>
@@ -163,8 +135,8 @@ public partial class Person
     /// </remarks>
     public bool RemoveStage(string personId, int nextStageIndex)
         {
-        var tmp = new TraCIInteger() { Value = nextStageIndex };
-        return _helper.ExecuteSetCommand(personId, TraCIConstants.CMD_SET_PERSON_VARIABLE, TraCIConstants.REMOVE_STAGE, tmp);
+        TraciInteger tmp = new(nextStageIndex);
+        return _helper.ExecuteSetCommand(personId, PERSON_VARIABLE, TraciConstants.REMOVE_STAGE, tmp);
         }
 
     /// <summary>
@@ -178,13 +150,13 @@ public partial class Person
     /// </remarks>
     public bool RemoveStages(string personId)
         {
-        var tmp = new TraCIInteger() { Value = 1 };
+        var tmp = new TraciInteger(1);
         while (GetRemainingStages(personId) > 1)
             {
-            _helper.ExecuteSetCommand(personId, TraCIConstants.CMD_SET_PERSON_VARIABLE, TraCIConstants.REMOVE_STAGE, tmp);
+            _helper.ExecuteSetCommand(personId, PERSON_VARIABLE, TraciConstants.REMOVE_STAGE, tmp);
             }
-        tmp.Value = 0;
-        return _helper.ExecuteSetCommand(personId, TraCIConstants.CMD_SET_PERSON_VARIABLE, TraCIConstants.REMOVE_STAGE, tmp);
+        tmp = new TraciInteger(0);
+        return _helper.ExecuteSetCommand(personId, PERSON_VARIABLE, TraciConstants.REMOVE_STAGE, tmp);
         }
 
     /// <summary>
@@ -195,10 +167,8 @@ public partial class Person
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/pydoc/traci._person.html#PersonDomain-remove"/>
     /// </remarks>
-    public bool Remove(string personId)
-        {
-        return _helper.ExecuteSetCommand(personId, TraCIConstants.CMD_SET_PERSON_VARIABLE, TraCIConstants.REMOVE, new TraCICompoundObject());
-        }
+    public bool Remove(string personId) =>
+        _helper.ExecuteSetCommand(personId, PERSON_VARIABLE, TraciConstants.REMOVE, new TraciCompoundObject());
 
     /// <summary>
     /// Computes a new route to the current destination that minimizes travel time.<para/>
@@ -210,10 +180,8 @@ public partial class Person
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/pydoc/traci._person.html#PersonDomain-rerouteTraveltime"/>
     /// </remarks>
-    public bool RerouteTraveltime(string personId)
-        {
-        return _helper.ExecuteSetCommand(personId, TraCIConstants.CMD_SET_PERSON_VARIABLE, TraCIConstants.CMD_REROUTE_TRAVELTIME);
-        }
+    public bool RerouteTravelTime(string personId) =>
+        _helper.ExecuteSetCommand(personId, PERSON_VARIABLE, REROUTE_TRAVELTIME);
 
     /// <summary>
     /// Moves the person to a new position after normal movements have taken place.<para/>
@@ -236,22 +204,22 @@ public partial class Person
         string edgeId,
         double x,
         double y,
-        double angle = TraCIConstants.INVALID_DOUBLE_VALUE,
+        double angle = TraciConstants.INVALID_DOUBLE_VALUE,
         int keepRoute = 1,
         double matchThreshold = 100
     )
         {
         // TODO document description doesn't include matchThreshold, but python codes include. we should check it.
-        var tmp = new TraCICompoundObject
+        var tmp = new TraciCompoundObject
         {
-            new TraCIString() { Value = edgeId },
-            new TraCIDouble() { Value = x },
-            new TraCIDouble() { Value = y },
-            new TraCIDouble() { Value = angle },
-            new TraCIInteger() { Value = keepRoute },
-            new TraCIDouble() { Value = matchThreshold },
+            new TraciString(edgeId),
+            new TraciDouble(x),
+            new TraciDouble(y),
+            new TraciDouble(angle),
+            new TraciInteger(keepRoute),
+            new TraciDouble(matchThreshold),
         };
-        return _helper.ExecuteSetCommand(personId, TraCIConstants.CMD_SET_PERSON_VARIABLE, TraCIConstants.MOVE_TO_XY, tmp);
+        return _helper.ExecuteSetCommand(personId, PERSON_VARIABLE, TraciConstants.MOVE_TO_XY, tmp);
         }
 
     /// <summary>
@@ -268,14 +236,8 @@ public partial class Person
     /// </remarks>
     public bool SetColor(string personId, int r, int g, int b, int a)
         {
-        var color = new Color()
-            {
-            R = new TraCIByte() { Value = (byte)r },
-            G = new TraCIByte() { Value = (byte)g },
-            B = new TraCIByte() { Value = (byte)b },
-            A = new TraCIByte() { Value = (byte)a },
-            };
-        return _helper.ExecuteSetCommand(personId, TraCIConstants.CMD_SET_PERSON_VARIABLE, TraCIConstants.VAR_COLOR, color);
+        Color color = new(r, g, b, a);
+        return _helper.ExecuteSetCommand(personId, PERSON_VARIABLE, TraciConstants.VAR_COLOR, color);
         }
 
     /// <summary>
@@ -288,8 +250,8 @@ public partial class Person
     /// </remarks>
     public bool SetHeight(string personId, double height)
         {
-        var tmp = new TraCIDouble() { Value = height };
-        return _helper.ExecuteSetCommand(personId, TraCIConstants.CMD_SET_PERSON_VARIABLE, TraCIConstants.VAR_HEIGHT, tmp);
+        TraciDouble tmp = new(height);
+        return _helper.ExecuteSetCommand(personId, PERSON_VARIABLE, TraciConstants.VAR_HEIGHT, tmp);
         }
 
     /// <summary>
@@ -302,8 +264,8 @@ public partial class Person
     /// </remarks>
     public bool SetLength(string personId, double length)
         {
-        var tmp = new TraCIDouble() { Value = length };
-        return _helper.ExecuteSetCommand(personId, TraCIConstants.CMD_SET_PERSON_VARIABLE, TraCIConstants.VAR_LENGTH, tmp);
+        TraciDouble tmp = new(length);
+        return _helper.ExecuteSetCommand(personId, PERSON_VARIABLE, TraciConstants.VAR_LENGTH, tmp);
         }
 
     /// <summary>
@@ -316,8 +278,8 @@ public partial class Person
     /// </remarks>
     public bool SetMinGap(string personId, double minGap)
         {
-        var tmp = new TraCIDouble() { Value = minGap };
-        return _helper.ExecuteSetCommand(personId, TraCIConstants.CMD_SET_PERSON_VARIABLE, TraCIConstants.VAR_MINGAP, tmp);
+        TraciDouble tmp = new(minGap);
+        return _helper.ExecuteSetCommand(personId, PERSON_VARIABLE, TraciConstants.VAR_MINGAP, tmp);
         }
 
     /// <summary>
@@ -330,8 +292,8 @@ public partial class Person
     /// </remarks>
     public bool SetSpeed(string personId, double speed)
         {
-        var tmp = new TraCIDouble() { Value = speed };
-        return _helper.ExecuteSetCommand(personId, TraCIConstants.CMD_SET_PERSON_VARIABLE, TraCIConstants.VAR_SPEED_FACTOR, tmp);
+        TraciDouble tmp = new(speed);
+        return _helper.ExecuteSetCommand(personId, PERSON_VARIABLE, TraciConstants.VAR_SPEED_FACTOR, tmp);
         }
 
     /// <summary>
@@ -344,8 +306,8 @@ public partial class Person
     /// </remarks>
     public bool SetType(string personId, string typeId)
         {
-        var tmp = new TraCIString() { Value = typeId };
-        return _helper.ExecuteSetCommand(personId, TraCIConstants.CMD_SET_PERSON_VARIABLE, TraCIConstants.VAR_TYPE, tmp);
+        TraciString tmp = new(typeId);
+        return _helper.ExecuteSetCommand(personId, PERSON_VARIABLE, TraciConstants.VAR_TYPE, tmp);
         }
 
     /// <summary>
@@ -358,7 +320,7 @@ public partial class Person
     /// </remarks>
     public bool SetWidth(string personId, double width)
         {
-        var tmp = new TraCIDouble() { Value = width };
-        return _helper.ExecuteSetCommand(personId, TraCIConstants.CMD_SET_PERSON_VARIABLE, TraCIConstants.VAR_WIDTH, tmp);
+        TraciDouble tmp = new(width);
+        return _helper.ExecuteSetCommand(personId, PERSON_VARIABLE, TraciConstants.VAR_WIDTH, tmp);
         }
     }

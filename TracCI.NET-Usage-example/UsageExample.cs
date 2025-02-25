@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -80,18 +80,12 @@ internal class UsageExample
     /// <summary>
     /// Ignore if you don't care about redirecting output
     /// </summary>
-    private static void SumoProcess_OutputDataReceived(object sender, DataReceivedEventArgs e)
-        {
-        Console.WriteLine("SUMO stdout : " + e.Data);
-        }
+    private static void SumoProcess_OutputDataReceived(object sender, DataReceivedEventArgs e) => Console.WriteLine("SUMO stdout : " + e.Data);
 
     /// <summary>
     /// Ignore if you don't care about redirecting output
     /// </summary>
-    private static void SumoProcess_ErrorDataReceived(object sender, DataReceivedEventArgs e)
-        {
-        Console.WriteLine("SUMO stderr : " + e.Data);
-        }
+    private static void SumoProcess_ErrorDataReceived(object sender, DataReceivedEventArgs e) => Console.WriteLine("SUMO stderr : " + e.Data);
 
     #endregion
 
@@ -103,15 +97,15 @@ internal class UsageExample
     /* The Variables used for VariableType and Context Subscription for this example */
     private static readonly List<byte> variablesToSubscribeTo =
     [
-        TraCIConstants.VAR_SPEED,
-        TraCIConstants.VAR_ANGLE,
-        TraCIConstants.VAR_ACCEL,
-        TraCIConstants.VAR_ROUTE_ID
+        TraciConstants.VAR_SPEED,
+        TraciConstants.VAR_ANGLE,
+        TraciConstants.VAR_ACCEL,
+        TraciConstants.VAR_ROUTE_ID
     ];
 
     private static readonly List<byte> globlVariablesToSubscribeTo =
     [
-        TraCIConstants.ID_COUNT
+        TraciConstants.ID_COUNT
     ];
 
     private static readonly int NumberOfVehcicles;
@@ -119,10 +113,7 @@ internal class UsageExample
 
     #endregion
 
-    private static string ByteToHex(byte? b)
-        {
-        return $"0x{(byte)b:X2}";
-        }
+    private static string ByteToHex(byte? b) => $"0x{(byte)b:X2}";
 
     #region subscription listeners
 
@@ -145,16 +136,16 @@ internal class UsageExample
         //    // WARNING using TraCIResponse<> we must use the exact type (i.e for speed, accel, angle, is double and not float)
         //    switch (variableCode)
         //        {
-        //        case TraCIConstants.ID_COUNT:
+        //        case TraciConstants.ID_COUNT:
         //            NumberOfVehcicles = respInfo.GetContentAs<int>();
         //            break;
-        //        case TraCIConstants.VAR_SPEED:
+        //        case TraciConstants.VAR_SPEED:
         //            Console.WriteLine(" VAR_SPEED  " + (r as TraCIResponse<double>).Content);
         //            break;
-        //        case TraCIConstants.VAR_ANGLE:
+        //        case TraciConstants.VAR_ANGLE:
         //            Console.WriteLine(" VAR_ANGLE  " + respInfo.GetContentAs<float>());
         //            break;
-        //        case TraCIConstants.VAR_ROUTE_ID:
+        //        case TraciConstants.VAR_ROUTE_ID:
         //            Console.WriteLine(" VAR_ROUTE_ID  " + (r as TraCIResponse<string>).Content);
         //            break;
         //        default:
@@ -185,19 +176,19 @@ internal class UsageExample
         //Console.WriteLine("Subscription Object Id: " + objectID);
         //Console.WriteLine("Variable Count        : " + e.VariableCount);
 
-        //var responseInfo = eventArgsNew.ResponseByVariableCode[TraCIConstants.VAR_SPEED];
+        //var responseInfo = eventArgsNew.ResponseByVariableCode[TraciConstants.VAR_SPEED];
         //Console.WriteLine(" VAR_SPEED  " + responseInfo.GetContentAs<float>());
 
-        //responseInfo = eventArgsNew.ResponseByVariableCode[TraCIConstants.VAR_ACCEL];
+        //responseInfo = eventArgsNew.ResponseByVariableCode[TraciConstants.VAR_ACCEL];
         //Console.WriteLine(" VAR_SPEED  " + responseInfo.GetContentAs<float>());
 
         //// We can Can still retrieve using TraCIResult. 
         //// TraCIResult implements IResponseInfo. 
         //// WARNING using TraCIResponse<> we must use the exact type (i.e for angle is double)
-        //var traCIResponse = (TraCIResponse<double>)eventArgsNew.ResponseByVariableCode?[TraCIConstants.VAR_ANGLE];
+        //var traCIResponse = (TraCIResponse<double>)eventArgsNew.ResponseByVariableCode?[TraciConstants.VAR_ANGLE];
         //Console.WriteLine(" VAR_ANGLE  " + traCIResponse?.Content);
 
-        //Console.WriteLine(" VAR_ROUTE_ID " + eventArgsNew.ResponseByVariableCode?[TraCIConstants.VAR_ROUTE_ID].GetContentAs<string>());
+        //Console.WriteLine(" VAR_ROUTE_ID " + eventArgsNew.ResponseByVariableCode?[TraciConstants.VAR_ROUTE_ID].GetContentAs<string>());
 
         }
 
@@ -220,14 +211,14 @@ internal class UsageExample
         //    var vehicleID = variableSubscriptionResponse.ObjectId;
         //    Console.WriteLine(" Object id: " + vehicleID);
         //    Console.WriteLine("     VAR_SPEED  " +
-        //        variableSubscriptionResponse[TraCIConstants.VAR_SPEED].GetContentAs<float>());
+        //        variableSubscriptionResponse[TraciConstants.VAR_SPEED].GetContentAs<float>());
         //    Console.WriteLine("     VAR_ACCEL  " +
-        //        variableSubscriptionResponse[TraCIConstants.VAR_ACCEL].GetContentAs<float>());
+        //        variableSubscriptionResponse[TraciConstants.VAR_ACCEL].GetContentAs<float>());
         //    Console.WriteLine("     VAR_ANGLE  " +
         //        /* We can also use TraCIResult<> (). Warning using TraCIResponse<> we must use the exact type (i.e for angle is double) */
-        //        (variableSubscriptionResponse[TraCIConstants.VAR_ANGLE] as TraCIResponse<double>).Content);
+        //        (variableSubscriptionResponse[TraciConstants.VAR_ANGLE] as TraCIResponse<double>).Content);
         //    Console.WriteLine("     VAR_ROUTE  " +
-        //        variableSubscriptionResponse[TraCIConstants.VAR_ROUTE_ID].GetContentAs<string>());
+        //        variableSubscriptionResponse[TraciConstants.VAR_ROUTE_ID].GetContentAs<string>());
         //    }
 
         //We can also get TraCIVariableSubscriptionResponse by objectID
@@ -240,7 +231,7 @@ internal class UsageExample
         //    /* We can handle variable responses like before either iterating responses or
         //     by using value by variable type */
         //    //*Printing VAR_SPEED just for demostration 
-        //    Console.WriteLine("     VAR_SPEED" + varResp[TraCIConstants.VAR_SPEED].GetContentAs<float>());
+        //    Console.WriteLine("     VAR_SPEED" + varResp[TraciConstants.VAR_SPEED].GetContentAs<float>());
         //    }
         }
 
@@ -267,13 +258,13 @@ internal class UsageExample
 
         //        switch (variableCode)
         //            {
-        //            case TraCIConstants.VAR_SPEED: // Returns the speed of the named vehicle within the last step [m/s]; error value: -2^30
+        //            case TraciConstants.VAR_SPEED: // Returns the speed of the named vehicle within the last step [m/s]; error value: -2^30
         //                Console.WriteLine("     VAR_SPEED  " + ((TraCIResponse<double>)response).Content);
         //                break;
-        //            case TraCIConstants.VAR_ANGLE: // Returns the angle of the named vehicle within the last step [°]; error value: -2^30
+        //            case TraciConstants.VAR_ANGLE: // Returns the angle of the named vehicle within the last step [°]; error value: -2^30
         //                Console.WriteLine("     VAR_ANGLE  " + ((TraCIResponse<double>)variableResponse).Content);
         //                break;
-        //            case TraCIConstants.VAR_ROUTE_ID:
+        //            case TraciConstants.VAR_ROUTE_ID:
         //                Console.WriteLine("     VAR_ROUTE_ID " + ((TraCIResponse<string>)variableResponse).Content);
         //                break;
         //            default:
@@ -426,7 +417,7 @@ internal class UsageExample
                 case ConsoleKey.C:
                     Console.Write(" enter vehicle id for subscription: >");
                     id = Console.ReadLine();
-                    client.Vehicle.SubscribeContext(id, 0, 1000, TraCIConstants.CMD_GET_VEHICLE_VARIABLE, 1000f, variablesToSubscribeTo);
+                    client.Vehicle.SubscribeContext(id, 0, 1000, TraciConstants.Command.Get.VEHICLE_VARIABLE, 1000f, variablesToSubscribeTo);
                     Console.WriteLine("Attempted to subscribe to vehicle with id \"" + id + "\" (see SUMO output to know  if it failed) \n" +
                         "!Warning: Context subscription ends the simulation if it fails!");
                     break;
@@ -447,7 +438,7 @@ internal class UsageExample
                 case ConsoleKey.U:
                     Console.Write(" enter vehicle id to unsubscribe context");
                     id = Console.ReadLine();
-                    client.Vehicle.UnsubscribeContext(id, TraCIConstants.CMD_GET_VEHICLE_VARIABLE);
+                    client.Vehicle.UnsubscribeContext(id, TraciConstants.Command.Get.VEHICLE_VARIABLE);
                     Console.WriteLine("Attempted to unsubscribe context to vehicle with id \"" + id + "\" (see SUMO output to know if it failed)");
                     break;
                 default:

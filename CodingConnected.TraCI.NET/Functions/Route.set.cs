@@ -1,5 +1,5 @@
-﻿using CodingConnected.TraCI.NET.DataTypes;
-
+using CodingConnected.TraCI.NET.DataTypes;
+using static CodingConnected.TraCI.NET.DataTypes.TraciConstants.Command.Set;
 namespace CodingConnected.TraCI.NET.Functions;
 public partial class Route
     {
@@ -14,7 +14,7 @@ public partial class Route
     /// </remarks>
     public bool Add(string routeId, List<string> edges)
         {
-        var tmp = new TraCIStringList { Value = edges };
-        return _helper.ExecuteSetCommand(routeId, TraCIConstants.CMD_SET_ROUTE_VARIABLE, TraCIConstants.ADD, tmp);
+        TraciStringList tmp = new(edges);
+        return _helper.ExecuteSetCommand(routeId, ROUTE_VARIABLE, TraciConstants.ADD, tmp);
         }
     }

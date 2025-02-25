@@ -1,5 +1,5 @@
-﻿using CodingConnected.TraCI.NET.DataTypes;
-
+using CodingConnected.TraCI.NET.DataTypes;
+using static CodingConnected.TraCI.NET.DataTypes.TraciConstants.Command.Set;
 namespace CodingConnected.TraCI.NET.Functions;
 
 public partial class Edge
@@ -19,13 +19,13 @@ public partial class Edge
     /// </remarks>
     public bool AdaptTraveltime(string edgeId, double travelTime, double? beginTime = null, double? endTime = null)
         {
-        TraCICompoundObject tmp = (beginTime, endTime) switch
+        TraciCompoundObject tmp = (beginTime, endTime) switch
             {
-                (null, null) => [new TraCIDouble { Value = travelTime }],
+                (null, null) => [new TraciDouble(travelTime)],
                 (null, _) or (_, null) => throw new ArgumentException($"Both {nameof(beginTime)} and {nameof(endTime)} must be specified"),
-                _ => [new TraCIDouble { Value = beginTime.Value }, new TraCIDouble { Value = endTime.Value }, new TraCIDouble { Value = travelTime }],
+                _ => [new TraciDouble(beginTime.Value), new TraciDouble(endTime.Value), new TraciDouble(travelTime)],
                 };
-        return _helper.ExecuteSetCommand(edgeId, TraCIConstants.CMD_SET_EDGE_VARIABLE, TraCIConstants.VAR_EDGE_TRAVELTIME, tmp);
+        return _helper.ExecuteSetCommand(edgeId, EDGE_VARIABLE, TraciConstants.VAR_EDGE_TRAVELTIME, tmp);
         }
 
     /// <summary>
@@ -42,14 +42,14 @@ public partial class Edge
     /// </remarks>
     public bool SetEffort(string edgeId, double effort, double? beginTime = null, double? endTime = null)
         {
-        TraCICompoundObject tmp = (beginTime, endTime) switch
+        TraciCompoundObject tmp = (beginTime, endTime) switch
             {
-                (null, null) => [new TraCIDouble { Value = effort }],
+                (null, null) => [new TraciDouble(effort)],
                 (null, _) or (_, null) => throw new ArgumentException($"Both {nameof(beginTime)} and {nameof(endTime)} must be specified"),
-                _ => [new TraCIDouble { Value = beginTime.Value }, new TraCIDouble { Value = endTime.Value }, new TraCIDouble { Value = effort }],
+                _ => [new TraciDouble(beginTime.Value), new TraciDouble(endTime.Value), new TraciDouble(effort)],
                 };
 
-        return _helper.ExecuteSetCommand(edgeId, TraCIConstants.CMD_SET_EDGE_VARIABLE, TraCIConstants.VAR_EDGE_EFFORT, tmp);
+        return _helper.ExecuteSetCommand(edgeId, EDGE_VARIABLE, TraciConstants.VAR_EDGE_EFFORT, tmp);
         }
 
     /// <summary>
@@ -63,7 +63,7 @@ public partial class Edge
     /// </remarks>
     public bool SetMaxSpeed(string edgeId, double speed)
         {
-        var tmp = new TraCIDouble() { Value = speed };
-        return _helper.ExecuteSetCommand(edgeId, TraCIConstants.CMD_SET_EDGE_VARIABLE, TraCIConstants.VAR_MAXSPEED, tmp);
+        TraciDouble tmp = new(speed);
+        return _helper.ExecuteSetCommand(edgeId, EDGE_VARIABLE, TraciConstants.VAR_MAXSPEED, tmp);
         }
     }

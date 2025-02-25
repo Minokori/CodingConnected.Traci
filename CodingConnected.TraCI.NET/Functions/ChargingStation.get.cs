@@ -1,4 +1,5 @@
-﻿using CodingConnected.TraCI.NET.DataTypes;
+using CodingConnected.TraCI.NET.DataTypes;
+using static CodingConnected.TraCI.NET.DataTypes.TraciConstants.Command.Get;
 
 namespace CodingConnected.TraCI.NET.Functions;
 
@@ -14,8 +15,8 @@ public partial class ChargingStation
     /// </remarks>
     public double GetEndPosition(string stopId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_CHARGINGSTATION_VARIABLE, TraCIConstants.VAR_LANEPOSITION, stopId);
-        return ((TraCIDouble)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(CHARGINGSTATION_VARIABLE, TraciConstants.VAR_LANEPOSITION, stopId);
+        return ((TraciDouble)result.Data).Value;
         }
 
     /// <summary>
@@ -28,8 +29,8 @@ public partial class ChargingStation
     /// </remarks>
     public string GetLaneId(string stopId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_CHARGINGSTATION_VARIABLE, TraCIConstants.VAR_LANE_ID, stopId);
-        return ((TraCIString)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(CHARGINGSTATION_VARIABLE, TraciConstants.VAR_LANE_ID, stopId);
+        return ((TraciString)result.Data).Value;
         }
 
     /// <summary>
@@ -42,8 +43,8 @@ public partial class ChargingStation
     /// </remarks>
     public string GetName(string stopId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_CHARGINGSTATION_VARIABLE, TraCIConstants.VAR_NAME, stopId);
-        return ((TraCIString)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(CHARGINGSTATION_VARIABLE, TraciConstants.VAR_NAME, stopId);
+        return ((TraciString)result.Data).Value;
         }
 
     /// <summary>
@@ -56,8 +57,8 @@ public partial class ChargingStation
     /// </remarks>
     public double GetStartPosition(string stopId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_CHARGINGSTATION_VARIABLE, TraCIConstants.VAR_POSITION, stopId);
-        return ((TraCIDouble)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(CHARGINGSTATION_VARIABLE, TraciConstants.VAR_POSITION, stopId);
+        return ((TraciDouble)result.Data).Value;
         }
 
     /// <summary>
@@ -71,11 +72,11 @@ public partial class ChargingStation
     public int GetVehicleCount(string stopId)
         {
         var result = _helper.ExecuteGetCommand(
-            TraCIConstants.CMD_GET_CHARGINGSTATION_VARIABLE,
-            TraCIConstants.VAR_STOP_STARTING_VEHICLES_NUMBER,
+            CHARGINGSTATION_VARIABLE,
+            TraciConstants.VAR_STOP_STARTING_VEHICLES_NUMBER,
             stopId
         );
-        return ((TraCIInteger)result.Value).Value;
+        return ((TraciInteger)result.Data).Value;
         }
 
     /// <summary>
@@ -89,11 +90,11 @@ public partial class ChargingStation
     public List<string> GetVehicleIds(string stopId)
         {
         var result = _helper.ExecuteGetCommand(
-            TraCIConstants.CMD_GET_CHARGINGSTATION_VARIABLE,
-            TraCIConstants.VAR_STOP_STARTING_VEHICLES_IDS,
+            CHARGINGSTATION_VARIABLE,
+            TraciConstants.VAR_STOP_STARTING_VEHICLES_IDS,
             stopId
         );
-        return ((TraCIStringList)result.Value).Value;
+        return ((TraciStringList)result.Data).Value;
         }
 
     /// <summary>
@@ -106,8 +107,8 @@ public partial class ChargingStation
     /// </remarks>
     public double GetChargingPower(string stopId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_CHARGINGSTATION_VARIABLE, TraCIConstants.VAR_CHARGING_POWER, stopId);
-        return ((TraCIDouble)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(CHARGINGSTATION_VARIABLE, TraciConstants.VAR_CHARGING_POWER, stopId);
+        return ((TraciDouble)result.Data).Value;
         }
 
     /// <summary>
@@ -120,8 +121,8 @@ public partial class ChargingStation
     /// </remarks>
     public double GetEfficiency(string stopId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_CHARGINGSTATION_VARIABLE, TraCIConstants.VAR_CHARGING_EFFICIENCY, stopId);
-        return ((TraCIDouble)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(CHARGINGSTATION_VARIABLE, TraciConstants.VAR_CHARGING_EFFICIENCY, stopId);
+        return ((TraciDouble)result.Data).Value;
         }
 
     /// <summary>
@@ -134,8 +135,8 @@ public partial class ChargingStation
     /// </remarks>
     public int GetChargeInTransit(string stopId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_CHARGINGSTATION_VARIABLE, TraCIConstants.VAR_CHARGING_TRANSIT, stopId);
-        return ((TraCIInteger)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(CHARGINGSTATION_VARIABLE, TraciConstants.VAR_CHARGING_TRANSIT, stopId);
+        return ((TraciInteger)result.Data).Value;
         }
 
     /// <summary>
@@ -148,7 +149,7 @@ public partial class ChargingStation
     /// </remarks>
     public double GetChargeDelay(string stopId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_CHARGINGSTATION_VARIABLE, TraCIConstants.VAR_CHARGING_DELAY, stopId);
-        return ((TraCIDouble)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(CHARGINGSTATION_VARIABLE, TraciConstants.VAR_CHARGING_DELAY, stopId);
+        return ((TraciDouble)result.Data).Value;
         }
     }

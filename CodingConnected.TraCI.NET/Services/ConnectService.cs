@@ -1,16 +1,14 @@
-﻿using System.Net.Sockets;
+using System.Net.Sockets;
 using CodingConnected.TraCI.NET.ProtocolTypes;
 
 namespace CodingConnected.TraCI.NET.Services;
 
 internal class ConnectService : ITCPConnectService
     {
-    private TcpClient _client;
-    private NetworkStream _stream;
     private readonly byte[] _receiveBuffer = new byte[32768];
 
-    public TcpClient Client => _client;
-    public NetworkStream Stream => _stream;
+    public TcpClient Client { get; private set; }
+    public NetworkStream Stream { get; private set; }
 
     /// <summary>
     /// Connects to the SUMO server instance
@@ -19,12 +17,12 @@ internal class ConnectService : ITCPConnectService
     /// <param name="port">Port at which SUMO exposes the API</param>
     public async Task ConnectAsync(string hostname, int port)
         {
-        _client = new TcpClient { ReceiveBufferSize = 32768, SendBufferSize = 32768 };
-        while (!_client.Connected)
+        Client = new TcpClient { ReceiveBufferSize = 32768, SendBufferSize = 32768 };
+        while (!Client.Connected)
             {
             try
                 {
-                await _client.ConnectAsync(hostname, port);
+                await Client.ConnectAsync(hostname, port);
                 }
             catch (Exception)
                 {
@@ -32,25 +30,25 @@ internal class ConnectService : ITCPConnectService
                 await Task.Delay(50);
                 }
             }
-        _stream = _client.GetStream();
+        Stream = Client.GetStream();
         }
 
     public bool Connect(string hostname, int port)
         {
-        _client = new TcpClient { ReceiveBufferSize = 32768, SendBufferSize = 32768 };
+        Client = new TcpClient { ReceiveBufferSize = 32768, SendBufferSize = 32768 };
 
         try
             {
-            _client.Connect(hostname, port);
+            Client.Connect(hostname, port);
             }
         catch (Exception)
             {
             return false;
             }
 
-        if (_client.Connected)
+        if (Client.Connected)
             {
-            _stream = _client.GetStream();
+            Stream = Client.GetStream();
             return true;
             }
         else
@@ -61,18 +59,18 @@ internal class ConnectService : ITCPConnectService
 
     public List<TraCIResult> SendMessage(TraCICommand command)
         {
-        if (!_client.Connected)
+        if (!Client.Connected)
             {
             return null;
             }
 
         //send message
-        _client.Client.Send(command.ToMessageBytes());
+        Client.Client.Send(command.ToMessageBytes());
 
         //read response
         try
             {
-            var hasReadLength = _stream.Read(_receiveBuffer, 0, 32768);
+            var hasReadLength = Stream.Read(_receiveBuffer, 0, 32768);
             if (hasReadLength < 0)
                 {
                 // Read returns 0 if the client closes the connection
@@ -90,7 +88,7 @@ internal class ConnectService : ITCPConnectService
                 {
                 while (hasReadLength < totalLength)
                     {
-                    var innerLength = _stream.Read(_receiveBuffer, 0, 32768);
+                    var innerLength = Stream.Read(_receiveBuffer, 0, 32768);
                     response.AddRange(_receiveBuffer.Take(innerLength).ToArray());
                     hasReadLength += innerLength;
                     }

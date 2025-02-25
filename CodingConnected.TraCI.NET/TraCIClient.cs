@@ -1,4 +1,3 @@
-﻿using CodingConnected.TraCI.NET.DataTypes;
 using CodingConnected.TraCI.NET.ProtocolTypes;
 using CodingConnected.TraCI.NET.Services;
 using Microsoft.Extensions.DependencyInjection;
@@ -25,51 +24,19 @@ public partial class TraCIClient : IDisposable
     /// </summary>
     /// <param name="hostname">Hostname or ip address where SUMO is running</param>
     /// <param name="port">Port at which SUMO exposes the API</param>
-    public async Task<Tuple<int, string>> ConnectAsync(string hostname, int port)
-        {
-        return await TcpSerivce.ConnectAsync(hostname, port)
+    public async Task<Tuple<int, string>> ConnectAsync(string hostname, int port) => await TcpSerivce.ConnectAsync(hostname, port)
             .ContinueWith(_ => Control.GetVersion())
             .ContinueWith(versionTask => versionTask.Result);
-        }
 
 
-    public bool Connect(string hostname, int port)
-        {
-        return TcpSerivce.Connect(hostname, port);
-        }
+    public bool Connect(string hostname, int port) => TcpSerivce.Connect(hostname, port);
 
     #endregion // Public Methods
 
-    #region Set Variable Methods
 
-    /// <summary>
-    /// Sets the state of all lights of a controlled junction
-    /// </summary>
-    /// <param name="trafficLightId">The id of the traffic light as set in SUMO</param>
-    /// <param name="state">The state to set the traffic lights to, parsed as a string, as is 
-    /// described here: http://sumo.dlr.de/wiki/TraCI/Change_Traffic_Lights_State </param>
-    public void SetTrafficLightState(string trafficLightId, string state)
-        {
-        TraCICommand command = new() { Identifier = TraCIConstants.CMD_SET_TL_VARIABLE };
-        List<byte> bytes =
-            [
-            TraCIConstants.TL_RED_YELLOW_GREEN_STATE,
-            .. new TraCIString() {Value = trafficLightId }.ToBytes(),
-            TraCIConstants.TYPE_STRING,
-            .. new TraCIString() {Value = state }.ToBytes()
-            ];
-
-        command.Contents = [.. bytes];
-        _ = SendMessage(command);
-        }
-
-    #endregion // Set VariableType Methods
-
-    #region Public Methods
 
     public List<TraCIResult> SendMessage(TraCICommand command) => TcpSerivce.SendMessage(command);
 
-    #endregion // Public Methods
 
 
     }

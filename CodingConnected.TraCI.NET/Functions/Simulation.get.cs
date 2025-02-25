@@ -1,4 +1,5 @@
-﻿using CodingConnected.TraCI.NET.DataTypes;
+using CodingConnected.TraCI.NET.DataTypes;
+using static CodingConnected.TraCI.NET.DataTypes.TraciConstants.Command.Get;
 
 namespace CodingConnected.TraCI.NET.Functions;
 
@@ -13,8 +14,8 @@ public partial class Simulation
     /// </remarks>
     public double GetTime()
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_SIM_VARIABLE, TraCIConstants.VAR_TIME, "ignored");
-        return ((TraCIDouble)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(SIM_VARIABLE, TraciConstants.VAR_TIME, "ignored");
+        return ((TraciDouble)result.Data).Value;
         }
 
     /// <summary>
@@ -26,8 +27,8 @@ public partial class Simulation
     /// </remarks>
     public int GetLoadedNumber()
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_SIM_VARIABLE, TraCIConstants.VAR_LOADED_VEHICLES_NUMBER);
-        return ((TraCIInteger)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(SIM_VARIABLE, TraciConstants.VAR_LOADED_VEHICLES_NUMBER);
+        return ((TraciInteger)result.Data).Value;
         }
 
     /// <summary>
@@ -39,8 +40,8 @@ public partial class Simulation
     /// </remarks>
     public List<string> GetLoadedIDList()
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_SIM_VARIABLE, TraCIConstants.VAR_LOADED_VEHICLES_IDS);
-        return ((TraCIStringList)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(SIM_VARIABLE, TraciConstants.VAR_LOADED_VEHICLES_IDS);
+        return ((TraciStringList)result.Data).Value;
         }
 
     /// <summary>
@@ -52,8 +53,8 @@ public partial class Simulation
     /// </remarks>
     public int GetDepartedNumber()
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_SIM_VARIABLE, TraCIConstants.VAR_DEPARTED_VEHICLES_NUMBER);
-        return ((TraCIInteger)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(SIM_VARIABLE, TraciConstants.VAR_DEPARTED_VEHICLES_NUMBER);
+        return ((TraciInteger)result.Data).Value;
         }
 
     /// <summary>
@@ -65,8 +66,8 @@ public partial class Simulation
     /// </remarks>
     public List<string> GetDepartedIDList()
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_SIM_VARIABLE, TraCIConstants.VAR_DEPARTED_VEHICLES_IDS);
-        return ((TraCIStringList)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(SIM_VARIABLE, TraciConstants.VAR_DEPARTED_VEHICLES_IDS);
+        return ((TraciStringList)result.Data).Value;
         }
 
     /// <summary>
@@ -79,8 +80,8 @@ public partial class Simulation
 
     public int GetStartingTeleportNumber()
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_SIM_VARIABLE, TraCIConstants.VAR_TELEPORT_STARTING_VEHICLES_NUMBER);
-        return ((TraCIInteger)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(SIM_VARIABLE, TraciConstants.VAR_TELEPORT_STARTING_VEHICLES_NUMBER);
+        return ((TraciInteger)result.Data).Value;
         }
 
     /// <summary>
@@ -92,8 +93,8 @@ public partial class Simulation
     /// </remarks>
     public List<string> GetStartingTeleportIDList()
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_SIM_VARIABLE, TraCIConstants.VAR_TELEPORT_STARTING_VEHICLES_IDS);
-        return ((TraCIStringList)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(SIM_VARIABLE, TraciConstants.VAR_TELEPORT_STARTING_VEHICLES_IDS);
+        return ((TraciStringList)result.Data).Value;
         }
 
     /// <summary>
@@ -106,8 +107,8 @@ public partial class Simulation
     /// </remarks>
     public int GetEndingTeleportNumber()
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_SIM_VARIABLE, TraCIConstants.VAR_TELEPORT_ENDING_VEHICLES_NUMBER);
-        return ((TraCIInteger)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(SIM_VARIABLE, TraciConstants.VAR_TELEPORT_ENDING_VEHICLES_NUMBER);
+        return ((TraciInteger)result.Data).Value;
         }
 
     /// <summary>
@@ -120,8 +121,8 @@ public partial class Simulation
     /// </remarks>
     public List<string> GetEndingTeleportIDList()
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_SIM_VARIABLE, TraCIConstants.VAR_TELEPORT_ENDING_VEHICLES_IDS);
-        return ((TraCIStringList)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(SIM_VARIABLE, TraciConstants.VAR_TELEPORT_ENDING_VEHICLES_IDS);
+        return ((TraciStringList)result.Data).Value;
         }
 
     /// <summary>
@@ -134,8 +135,8 @@ public partial class Simulation
     /// </remarks>
     public int GetArrivedNumber()
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_SIM_VARIABLE, TraCIConstants.VAR_ARRIVED_VEHICLES_NUMBER);
-        return ((TraCIInteger)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(SIM_VARIABLE, TraciConstants.VAR_ARRIVED_VEHICLES_NUMBER);
+        return ((TraciInteger)result.Data).Value;
         }
 
     /// <summary>
@@ -148,8 +149,8 @@ public partial class Simulation
     /// </remarks>
     public List<string> GetArrivedIDList()
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_SIM_VARIABLE, TraCIConstants.VAR_ARRIVED_VEHICLES_IDS);
-        return ((TraCIStringList)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(SIM_VARIABLE, TraciConstants.VAR_ARRIVED_VEHICLES_IDS);
+        return ((TraciStringList)result.Data).Value;
         }
 
     /// <summary>
@@ -161,9 +162,9 @@ public partial class Simulation
     /// </remarks>
     public Tuple<Tuple<double, double>, Tuple<double, double>> GetNetBoundary()
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_SIM_VARIABLE, TraCIConstants.VAR_NET_BOUNDING_BOX);
-        var ploygon = (DataTypes.Polygon)result.Value;
-        return new(new(ploygon[0].X.Value, ploygon[0].Y.Value), new(ploygon[1].X.Value, ploygon[1].Y.Value));
+        var result = _helper.ExecuteGetCommand(SIM_VARIABLE, TraciConstants.VAR_NET_BOUNDING_BOX);
+        var ploygon = (DataTypes.Polygon)result.Data;
+        return new(new(ploygon[0].X, ploygon[0].Y), new(ploygon[1].X, ploygon[1].Y));
         }
 
     /// <summary>
@@ -176,8 +177,8 @@ public partial class Simulation
     /// </remarks>
     public int GetMinExpectedNumber()
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_SIM_VARIABLE, TraCIConstants.VAR_MIN_EXPECTED_VEHICLES);
-        return ((TraCIInteger)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(SIM_VARIABLE, TraciConstants.VAR_MIN_EXPECTED_VEHICLES);
+        return ((TraciInteger)result.Data).Value;
         }
 
     /// <summary>
@@ -189,8 +190,8 @@ public partial class Simulation
     /// </remarks>
     public int GetStopStartingVehiclesNumber()
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_SIM_VARIABLE, TraCIConstants.VAR_STOP_STARTING_VEHICLES_NUMBER);
-        return ((TraCIInteger)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(SIM_VARIABLE, TraciConstants.VAR_STOP_STARTING_VEHICLES_NUMBER);
+        return ((TraciInteger)result.Data).Value;
         }
 
     /// <summary>
@@ -203,8 +204,8 @@ public partial class Simulation
 
     public List<string> GetStopStartingVehiclesIDList()
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_SIM_VARIABLE, TraCIConstants.VAR_STOP_STARTING_VEHICLES_IDS);
-        return ((TraCIStringList)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(SIM_VARIABLE, TraciConstants.VAR_STOP_STARTING_VEHICLES_IDS);
+        return ((TraciStringList)result.Data).Value;
         }
 
     /// <summary>
@@ -216,8 +217,8 @@ public partial class Simulation
     /// </remarks>
     public int GetStopEndingVehiclesNumber()
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_SIM_VARIABLE, TraCIConstants.VAR_STOP_ENDING_VEHICLES_NUMBER);
-        return ((TraCIInteger)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(SIM_VARIABLE, TraciConstants.VAR_STOP_ENDING_VEHICLES_NUMBER);
+        return ((TraciInteger)result.Data).Value;
         }
 
     /// <summary>
@@ -230,8 +231,8 @@ public partial class Simulation
 
     public List<string> GetStopEndingVehiclesIDList()
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_SIM_VARIABLE, TraCIConstants.VAR_STOP_ENDING_VEHICLES_IDS);
-        return ((TraCIStringList)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(SIM_VARIABLE, TraciConstants.VAR_STOP_ENDING_VEHICLES_IDS);
+        return ((TraciStringList)result.Data).Value;
         }
 
     /// <summary>
@@ -243,8 +244,8 @@ public partial class Simulation
     /// </remarks>
     public int GetCollidingVehiclesNumber()
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_SIM_VARIABLE, TraCIConstants.VAR_COLLIDING_VEHICLES_NUMBER);
-        return ((TraCIInteger)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(SIM_VARIABLE, TraciConstants.VAR_COLLIDING_VEHICLES_NUMBER);
+        return ((TraciInteger)result.Data).Value;
         }
 
     /// <summary>
@@ -256,8 +257,8 @@ public partial class Simulation
     /// </remarks>
     public List<string> GetCollidingVehiclesIDList()
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_SIM_VARIABLE, TraCIConstants.VAR_COLLIDING_VEHICLES_IDS);
-        return ((TraCIStringList)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(SIM_VARIABLE, TraciConstants.VAR_COLLIDING_VEHICLES_IDS);
+        return ((TraciStringList)result.Data).Value;
         }
 
     /// <summary>
@@ -269,8 +270,8 @@ public partial class Simulation
     /// </remarks>
     public int GetParkingStartingVehiclesNumber()
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_SIM_VARIABLE, TraCIConstants.VAR_PARKING_STARTING_VEHICLES_NUMBER);
-        return ((TraCIInteger)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(SIM_VARIABLE, TraciConstants.VAR_PARKING_STARTING_VEHICLES_NUMBER);
+        return ((TraciInteger)result.Data).Value;
         }
 
     /// <summary>
@@ -282,8 +283,8 @@ public partial class Simulation
     /// </remarks>
     public List<string> GetParkingStartingVehiclesIDList()
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_SIM_VARIABLE, TraCIConstants.VAR_PARKING_STARTING_VEHICLES_IDS);
-        return ((TraCIStringList)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(SIM_VARIABLE, TraciConstants.VAR_PARKING_STARTING_VEHICLES_IDS);
+        return ((TraciStringList)result.Data).Value;
         }
 
     /// <summary>
@@ -295,8 +296,8 @@ public partial class Simulation
     /// </remarks>
     public int GetParkingEndingVehiclesNumber()
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_SIM_VARIABLE, TraCIConstants.VAR_PARKING_ENDING_VEHICLES_NUMBER);
-        return ((TraCIInteger)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(SIM_VARIABLE, TraciConstants.VAR_PARKING_ENDING_VEHICLES_NUMBER);
+        return ((TraciInteger)result.Data).Value;
         }
 
     /// <summary>
@@ -308,8 +309,8 @@ public partial class Simulation
     /// </remarks>
     public List<string> GetParkingEndingVehiclesIDList()
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_SIM_VARIABLE, TraCIConstants.VAR_PARKING_ENDING_VEHICLES_IDS);
-        return ((TraCIStringList)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(SIM_VARIABLE, TraciConstants.VAR_PARKING_ENDING_VEHICLES_IDS);
+        return ((TraciStringList)result.Data).Value;
         }
 
     /// <summary>
@@ -322,8 +323,8 @@ public partial class Simulation
     /// </remarks>
     public int GetBusStopWaiting(string stopId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_SIM_VARIABLE, TraCIConstants.VAR_BUS_STOP_WAITING, stopId);
-        return ((TraCIInteger)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(SIM_VARIABLE, TraciConstants.VAR_BUS_STOP_WAITING, stopId);
+        return ((TraciInteger)result.Data).Value;
         }
 
     /// <summary>
@@ -333,8 +334,8 @@ public partial class Simulation
     /// <returns></returns>
     public List<string> GetBusStopWaitingIdList(string stopId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_SIM_VARIABLE, TraCIConstants.VAR_BUS_STOP_WAITING_IDS, stopId);
-        return ((TraCIStringList)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(SIM_VARIABLE, TraciConstants.VAR_BUS_STOP_WAITING_IDS, stopId);
+        return ((TraciStringList)result.Data).Value;
         }
 
     /// <summary>
@@ -346,8 +347,8 @@ public partial class Simulation
     /// </remarks>
     public double GetDeltaT()
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_SIM_VARIABLE, TraCIConstants.VAR_DELTA_T);
-        return ((TraCIDouble)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(SIM_VARIABLE, TraciConstants.VAR_DELTA_T);
+        return ((TraciDouble)result.Data).Value;
         }
 
     /// <summary>
@@ -361,9 +362,9 @@ public partial class Simulation
     /// </remarks>
     public string GetParameter(string objectId, string key)
         {
-        var tmp = new TraCIString { Value = key };
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_SIM_VARIABLE, TraCIConstants.VAR_PARAMETER, objectId, tmp);
-        return ((TraCIString)result.Value).Value;
+        TraciString tmp = new(key);
+        var result = _helper.ExecuteGetCommand(SIM_VARIABLE, TraciConstants.VAR_PARAMETER, objectId, tmp);
+        return ((TraciString)result.Data).Value;
         }
 
     /// <summary>
@@ -375,8 +376,8 @@ public partial class Simulation
     /// </remarks>
     public double GetScale()
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_SIM_VARIABLE, TraCIConstants.VAR_SCALE);
-        return ((TraCIDouble)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(SIM_VARIABLE, TraciConstants.VAR_SCALE);
+        return ((TraciDouble)result.Data).Value;
         }
 
     /// <summary>
@@ -389,9 +390,9 @@ public partial class Simulation
     /// </remarks>
     public string GetOption(string option)
         {
-        var tmp = new TraCIString { Value = option };
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_SIM_VARIABLE, TraCIConstants.VAR_OPTION, null, tmp);
-        return ((TraCIString)result.Value).Value;
+        TraciString tmp = new(option);
+        var result = _helper.ExecuteGetCommand(SIM_VARIABLE, TraciConstants.VAR_OPTION, null, tmp);
+        return ((TraciString)result.Data).Value;
         }
 
     /// <summary>
@@ -407,30 +408,25 @@ public partial class Simulation
     /// </remarks>
     public Tuple<double, double> Convert2D(string edgeId, double position, int laneIndex = 0, bool toGeo = false)
         {
-        var positionType = toGeo ? TraCIConstants.POSITION_LON_LAT : TraCIConstants.POSITION_2D;
-        var tmp = new TraCICompoundObject()
+        var positionType = toGeo ? TraciConstants.PositionType.LON_LAT : TraciConstants.PositionType.X_Y;
+        var tmp = new TraciCompoundObject()
         {
-            new TraCICompoundObject()
-            {
-                new TraCIString { Value = edgeId },
-                new TraCIDouble { Value = position },
-                new TraCIUByte { Value = (byte)laneIndex },
-            },
-            new TraCIUByte { Value = positionType },
+            new TraciCompoundObject() { new TraciString(edgeId), new TraciDouble(position), new TraciUnsignedByte((byte)laneIndex) },
+            new TraciUnsignedByte(positionType),
         };
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_SIM_VARIABLE, TraCIConstants.POSITION_CONVERSION, null, tmp);
+        var result = _helper.ExecuteGetCommand(SIM_VARIABLE, TraciConstants.POSITION_CONVERSION, null, tmp);
 
         switch (toGeo)
             {
             case true:
                     {
-                    var position2D = (LonLatPosition)result.Value;
-                    return new(position2D.Longitude.Value, position2D.Latitude.Value);
+                    var position2D = (LonLatPosition)result.Data;
+                    return new(position2D.Longitude, position2D.Latitude);
                     }
             case false:
                     {
-                    var position2D = (Position2D)result.Value;
-                    return new(position2D.X.Value, position2D.Y.Value);
+                    var position2D = (Position2D)result.Data;
+                    return new(position2D.X, position2D.Y);
                     }
             }
         }
@@ -449,29 +445,24 @@ public partial class Simulation
 
     public Tuple<double, double, double> Convert3D(string edgeId, double position, int laneIndex = 0, bool toGeo = false)
         {
-        var positionType = toGeo ? TraCIConstants.POSITION_LON_LAT_ALT : TraCIConstants.POSITION_3D;
-        var tmp = new TraCICompoundObject()
+        var positionType = toGeo ? TraciConstants.PositionType.LON_LAT_ALT : TraciConstants.PositionType.X_Y_Z;
+        var tmp = new TraciCompoundObject()
         {
-            new TraCICompoundObject()
-            {
-                new TraCIString { Value = edgeId },
-                new TraCIDouble { Value = position },
-                new TraCIUByte { Value = (byte)laneIndex },
-            },
-            new TraCIUByte { Value = positionType },
+            new TraciCompoundObject() { new TraciString(edgeId), new TraciDouble(position), new TraciUnsignedByte((byte)laneIndex) },
+            new TraciUnsignedByte(positionType),
         };
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_SIM_VARIABLE, TraCIConstants.POSITION_CONVERSION, null, tmp);
+        var result = _helper.ExecuteGetCommand(SIM_VARIABLE, TraciConstants.POSITION_CONVERSION, null, tmp);
         switch (toGeo)
             {
             case true:
                     {
-                    var position3D = (LonLatAltPosition)result.Value;
-                    return new(position3D.Longitude.Value, position3D.Latitude.Value, position3D.Altitude.Value);
+                    var position3D = (LonLatAltPosition)result.Data;
+                    return new(position3D.Longitude, position3D.Latitude, position3D.Altitude);
                     }
             case false:
                     {
-                    var position3D = (Position3D)result.Value;
-                    return new(position3D.X.Value, position3D.Y.Value, position3D.Z.Value);
+                    var position3D = (Position3D)result.Data;
+                    return new(position3D.X, position3D.Y, position3D.Z);
                     }
             }
         }
@@ -495,45 +486,33 @@ public partial class Simulation
             {
             case true:
                     {
-                    positionType = TraCIConstants.POSITION_LON_LAT;
-                    position = new LonLatPosition()
-                        {
-                        Longitude = new TraCIDouble { Value = x },
-                        Latitude = new TraCIDouble { Value = y },
-                        };
+                    positionType = TraciConstants.PositionType.LON_LAT;
+                    position = new LonLatPosition(x, y);
                     break;
                     }
             case false:
                     {
-                    positionType = TraCIConstants.POSITION_2D;
-                    position = new Position2D()
-                        {
-                        X = new TraCIDouble { Value = x },
-                        Y = new TraCIDouble { Value = y },
-                        };
+                    positionType = TraciConstants.PositionType.X_Y;
+                    position = new Position2D(x, y);
                     break;
                     }
             }
 
-        var tmp = new TraCICompoundObject()
-        {
-            position,
-            new TraCIUByte { Value = positionType },
-        };
+        var tmp = new TraciCompoundObject() { position, new TraciUnsignedByte(positionType) };
 
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_SET_SIM_VARIABLE, TraCIConstants.POSITION_CONVERSION, null, tmp);
+        var result = _helper.ExecuteGetCommand(TraciConstants.Command.Set.SIM_VARIABLE, TraciConstants.POSITION_CONVERSION, null, tmp);
 
         switch (fromGeo)
             {
             case true:
                     {
-                    var position2D = (Position2D)result.Value;
-                    return new(position2D.X.Value, position2D.Y.Value);
+                    var position2D = (Position2D)result.Data;
+                    return new(position2D.X, position2D.Y);
                     }
             case false:
                     {
-                    var position2D = (LonLatPosition)result.Value;
-                    return new(position2D.Longitude.Value, position2D.Latitude.Value);
+                    var position2D = (LonLatPosition)result.Data;
+                    return new(position2D.Longitude, position2D.Latitude);
                     }
             }
         }
@@ -551,26 +530,11 @@ public partial class Simulation
     /// </remarks>
     public Tuple<string, int, double> ConvertRoad(double x, double y, bool isGeo = false, string vClass = "ignoring")
         {
-        ITraciType position = isGeo
-            ? new LonLatPosition()
-                {
-                Longitude = new TraCIDouble { Value = x },
-                Latitude = new TraCIDouble { Value = y },
-                }
-            : new Position2D()
-                {
-                X = new TraCIDouble { Value = x },
-                Y = new TraCIDouble { Value = y },
-                };
-        var tmp = new TraCICompoundObject()
-        {
-            position,
-            new TraCIUByte { Value = TraCIConstants.POSITION_ROADMAP },
-            new TraCIString { Value = vClass },
-        };
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_SIM_VARIABLE, TraCIConstants.POSITION_CONVERSION, null, tmp);
-        var roadMapPosition = (RoadMapPosition)result.Value;
-        return new(roadMapPosition.RoadId.Value, roadMapPosition.LaneId.Value, roadMapPosition.Pos.Value);
+        ITraciType position = isGeo ? new LonLatPosition(x, y) : new Position2D(x, y);
+        var tmp = new TraciCompoundObject() { position, new TraciUnsignedByte(TraciConstants.PositionType.ROADMAP), new TraciString(vClass) };
+        var result = _helper.ExecuteGetCommand(SIM_VARIABLE, TraciConstants.POSITION_CONVERSION, null, tmp);
+        var roadMapPosition = (RoadMapPosition)result.Data;
+        return new(roadMapPosition.RoadId, roadMapPosition.LaneId, roadMapPosition.Position);
         }
 
     /// <summary>
@@ -587,30 +551,15 @@ public partial class Simulation
     /// </remarks>
     public double GetDistanceRoad(string edgeId1, double position1, string edgeId2, double position2, bool isDriving = false)
         {
-        var distanceType = isDriving ? TraCIConstants.REQUEST_DRIVINGDIST : TraCIConstants.REQUEST_AIRDIST;
-        var roadMapPosition1 = new RoadMapPosition()
-            {
-            RoadId = new TraCIString { Value = edgeId1 },
-            Pos = new TraCIDouble { Value = position1 },
-            LaneId = new TraCIByte { Value = 0 },
-            };
-        var roadMapPosition2 = new RoadMapPosition()
-            {
-            RoadId = new TraCIString { Value = edgeId2 },
-            Pos = new TraCIDouble { Value = position2 },
-            LaneId = new TraCIByte { Value = 0 },
-            };
+        var distanceType = isDriving ? TraciConstants.DistanceType.DRIVINGDIST : TraciConstants.DistanceType.AIRDIST;
+        RoadMapPosition roadMapPosition1 = new(edgeId1, position1, 0);
+        RoadMapPosition roadMapPosition2 = new(edgeId2, position2, 0);
 
-        var tmp = new TraCICompoundObject()
-        {
-            roadMapPosition1,
-            roadMapPosition2,
-            new TraCIUByte { Value = distanceType },
-        };
+        var tmp = new TraciCompoundObject() { roadMapPosition1, roadMapPosition2, new TraciUnsignedByte(distanceType) };
 
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_SIM_VARIABLE, TraCIConstants.DISTANCE_REQUEST, null, tmp);
+        var result = _helper.ExecuteGetCommand(SIM_VARIABLE, TraciConstants.DISTANCE_REQUEST, null, tmp);
 
-        return ((TraCIDouble)result.Value).Value;
+        return ((TraciDouble)result.Data).Value;
         }
 
     /// <summary>
@@ -629,42 +578,17 @@ public partial class Simulation
 
     public double GetDistance2D(double x1, double y1, double x2, double y2, bool isGeo = false, bool isDriving = false)
         {
-        var distanceType = isDriving ? TraCIConstants.REQUEST_DRIVINGDIST : TraCIConstants.REQUEST_AIRDIST;
+        var distanceType = isDriving ? TraciConstants.DistanceType.DRIVINGDIST : TraciConstants.DistanceType.AIRDIST;
 
-        ITraciType position1 = isGeo
-            ? new LonLatPosition()
-                {
-                Longitude = new TraCIDouble { Value = x1 },
-                Latitude = new TraCIDouble { Value = y1 },
-                }
-            : new Position2D()
-                {
-                X = new TraCIDouble { Value = x1 },
-                Y = new TraCIDouble { Value = y1 },
-                };
+        ITraciType position1 = isGeo ? new LonLatPosition(x1, y1) : new Position2D(x1, y1);
 
-        ITraciType position2 = isGeo
-            ? new LonLatPosition()
-                {
-                Longitude = new TraCIDouble { Value = x2 },
-                Latitude = new TraCIDouble { Value = y2 },
-                }
-            : new Position2D()
-                {
-                X = new TraCIDouble { Value = x2 },
-                Y = new TraCIDouble { Value = y2 },
-                };
+        ITraciType position2 = isGeo ? new LonLatPosition(x2, y2) : new Position2D(x2, y2);
 
-        var tmp = new TraCICompoundObject()
-        {
-            position1,
-            position2,
-            new TraCIUByte { Value = distanceType },
-        };
+        var tmp = new TraciCompoundObject() { position1, position2, new TraciUnsignedByte(distanceType) };
 
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_SIM_VARIABLE, TraCIConstants.DISTANCE_REQUEST, null, tmp);
+        var result = _helper.ExecuteGetCommand(SIM_VARIABLE, TraciConstants.DISTANCE_REQUEST, null, tmp);
 
-        return ((TraCIDouble)result.Value).Value;
+        return ((TraciDouble)result.Data).Value;
         }
 
     /// <summary>
@@ -688,22 +612,22 @@ public partial class Simulation
         int routingMode = 0
     )
         {
-        var tmp = new TraCICompoundObject()
+        var tmp = new TraciCompoundObject()
         {
-            new TraCIString { Value = fromEdge },
-            new TraCIString { Value = toEdge },
-            new TraCIString { Value = vType },
-            new TraCIDouble { Value = depart },
-            new TraCIInteger { Value = routingMode },
+            new TraciString(fromEdge),
+            new TraciString(toEdge),
+            new TraciString(vType),
+            new TraciDouble(depart),
+            new TraciInteger(routingMode),
         };
-        var result = (TraCICompoundObject)_helper.ExecuteGetCommand(TraCIConstants.CMD_GET_SIM_VARIABLE, TraCIConstants.FIND_ROUTE, null, tmp);
+        var result = (TraciCompoundObject)_helper.ExecuteGetCommand(SIM_VARIABLE, TraciConstants.FIND_ROUTE, null, tmp);
 
         return new(
-            ((TraCIString)result[0]).Value,
-            ((TraCIString)result[1]).Value,
-            ((TraCIStringList)result[2]).Value,
-            ((TraCIDouble)result[3]).Value,
-            ((TraCIDouble)result[4]).Value
+            ((TraciString)result[0]).Value,
+            ((TraciString)result[1]).Value,
+            ((TraciStringList)result[2]).Value,
+            ((TraciDouble)result[3]).Value,
+            ((TraciDouble)result[4]).Value
         );
         }
 
@@ -741,45 +665,47 @@ public partial class Simulation
         double speed = -1.0,
         double walkFactor = -1.0,
         double departPos = 0.0,
-        double arrivalPos = TraCIConstants.INVALID_DOUBLE_VALUE,
+        double arrivalPos = TraciConstants.INVALID_DOUBLE_VALUE,
         double departPosLat = 0.0,
         string pType = "",
         string vType = "",
         string destStop = ""
     )
         {
-        var tmp = new TraCICompoundObject()
+        var tmp = new TraciCompoundObject()
         {
-            new TraCIString { Value = fromEdge },
-            new TraCIString { Value = toEdge },
-            new TraCIString { Value = modes },
-            new TraCIDouble { Value = depart },
-            new TraCIInteger { Value = routingMode},
-            new TraCIDouble { Value = speed },
-            new TraCIDouble { Value = walkFactor },
-            new TraCIDouble { Value = departPos },
-            new TraCIDouble { Value = arrivalPos },
-            new TraCIDouble { Value = departPosLat },
-            new TraCIString { Value = pType },
-            new TraCIString { Value = vType },
-            new TraCIDouble { Value = depart },
-            new TraCIString { Value = destStop },
+            new TraciString(fromEdge),
+            new TraciString(toEdge),
+            new TraciString(modes),
+            new TraciDouble(depart),
+            new TraciInteger(routingMode),
+            new TraciDouble(speed),
+            new TraciDouble(walkFactor),
+            new TraciDouble(departPos),
+            new TraciDouble(arrivalPos),
+            new TraciDouble(departPosLat),
+            new TraciString(pType),
+            new TraciString(vType),
+            new TraciDouble(depart),
+            new TraciString(destStop),
         };
-        var result = (TraCICompoundObject)_helper.ExecuteGetCommand(TraCIConstants.CMD_GET_SIM_VARIABLE, TraCIConstants.FIND_INTERMODAL_ROUTE, null, tmp);
+        var result = (TraciCompoundObject)
+            _helper.ExecuteGetCommand(SIM_VARIABLE, TraciConstants.FIND_INTERMODAL_ROUTE, null, tmp);
 
-        return result.Chunk(5).Select(x => new Tuple<string, string, List<string>, double, double>(
-            ((TraCIString)x[0]).Value,
-            ((TraCIString)x[1]).Value,
-            ((TraCIStringList)x[2]).Value,
-            ((TraCIDouble)x[3]).Value,
-            ((TraCIDouble)x[4]).Value
-        )).ToList();
-
+        return result
+            .Chunk(5)
+            .Select(x => new Tuple<string, string, List<string>, double, double>(
+                ((TraciString)x[0]).Value,
+                ((TraciString)x[1]).Value,
+                ((TraciStringList)x[2]).Value,
+                ((TraciDouble)x[3]).Value,
+                ((TraciDouble)x[4]).Value
+            ))
+            .ToList();
         }
 
-
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <returns></returns>
     /// <remarks>
@@ -787,11 +713,8 @@ public partial class Simulation
     /// </remarks>
     public List<Collision> GetCollisions()
         {
+        var result = _helper.ExecuteGetCommand(SIM_VARIABLE, TraciConstants.VAR_COLLISIONS);
 
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_SIM_VARIABLE, TraCIConstants.VAR_COLLISIONS);
-
-        return ((TraCICompoundObject)result.Value)
-            .Chunk(9).
-            Select(x => (Collision)x.ToList()).ToList();
+        return [.. ((TraciCompoundObject)result.Data).Chunk(9).Select(x => (Collision)x.ToList())];
         }
     }

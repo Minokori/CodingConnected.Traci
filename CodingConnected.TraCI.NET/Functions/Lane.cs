@@ -1,4 +1,4 @@
-﻿using CodingConnected.TraCI.NET.DataTypes;
+using CodingConnected.TraCI.NET.DataTypes;
 using CodingConnected.TraCI.NET.Services;
 
 namespace CodingConnected.TraCI.NET.Functions;
@@ -23,7 +23,7 @@ namespace CodingConnected.TraCI.NET.Functions;
 /// </remarks>
 public partial class Lane(ITCPConnectService tcpService, ICommandService helper) : TraCIContextSubscribableCommands(tcpService, helper)
     {
-    protected override byte ContextSubscribeCommand => TraCIConstants.CMD_SUBSCRIBE_LANE_CONTEXT;
+    protected override byte ContextSubscribeCommand => TraciConstants.Command.Subscribe.LANE_CONTEXT;
 
     /// <summary>
     /// subscribe to a list of variables of a lane
@@ -31,12 +31,9 @@ public partial class Lane(ITCPConnectService tcpService, ICommandService helper)
     /// <param name="laneId">lane ID</param>
     /// <param name="beginTime">the subscription is executed only in time steps >= this value; in ms</param>
     /// <param name="endTime">the subscription is executed in time steps <= this value; the subscription is removed if the simulation has reached a higher time step; in ms</param>
-    /// <param name="ListOfVariablesToSubsribeTo">The list of variables to return. please refer to <see cref="TraCIConstants"/></param>
+    /// <param name="ListOfVariablesToSubsribeTo">The list of variables to return. please refer to <see cref="TraciConstants"/></param>
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/docs/TraCI/Object_Variable_Subscription.html#command_0xdx_subscribe_variable"/>
     /// </remarks>
-    public void Subscribe(string laneId, double beginTime, double endTime, List<byte> ListOfVariablesToSubsribeTo)
-        {
-        _helper.ExecuteSubscribeCommand(beginTime, endTime, laneId, TraCIConstants.CMD_SUBSCRIBE_LANE_VARIABLE, ListOfVariablesToSubsribeTo);
-        }
+    public void Subscribe(string laneId, double beginTime, double endTime, List<byte> ListOfVariablesToSubsribeTo) => _helper.ExecuteSubscribeCommand(beginTime, endTime, laneId, TraciConstants.Command.Subscribe.LANE_VARIABLE, ListOfVariablesToSubsribeTo);
     }

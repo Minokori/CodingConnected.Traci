@@ -1,4 +1,4 @@
-﻿using CodingConnected.TraCI.NET.DataTypes;
+using CodingConnected.TraCI.NET.DataTypes;
 using CodingConnected.TraCI.NET.Services;
 
 namespace CodingConnected.TraCI.NET.Functions;
@@ -25,14 +25,14 @@ public abstract class TraCIContextSubscribableCommands(ITCPConnectService tcpSer
     private static readonly List<byte> EmptyVariableSubscriptionList = [];
 
     /// <summary>
-    /// Should be overriden and return TraCIConstants.CMD_SUBSCRIBE_&lt;Command Domain&gt;_CONTEXT
+    /// Should be overriden and return TraciConstants.CMD_SUBSCRIBE_&lt;Command Domain&gt;_CONTEXT
     /// for the corresponding domain.
     /// </summary>
     /// <remarks>
     /// For a list of supported  EGO-objects see <see href="https://sumo.dlr.de/wiki/TraCI/Object_Context_Subscription"/><para/>
     /// i.e VehicleCommands should override it like:<para/>
     /// <example>
-    /// protected override byte ContextSubscribeCommand => TraCIConstants.CMD_SUBSCRIBE_VEHICLE_CONTEXT;
+    /// protected override byte ContextSubscribeCommand => TraciConstants.CMD_SUBSCRIBE_VEHICLE_CONTEXT;
     /// </example>
     /// </remarks>
     protected abstract byte ContextSubscribeCommand { get; }
@@ -57,9 +57,7 @@ public abstract class TraCIContextSubscribableCommands(ITCPConnectService tcpSer
         byte contextDomain,
         double dist,
         List<byte> ListOfVariablesToSubsribeTo
-    )
-        {
-        _helper.ExecuteSubscribeContextCommand(
+    ) => _helper.ExecuteSubscribeContextCommand(
             beginTime,
             endTime,
             objectId,
@@ -68,18 +66,14 @@ public abstract class TraCIContextSubscribableCommands(ITCPConnectService tcpSer
             ContextSubscribeCommand,
             ListOfVariablesToSubsribeTo
         );
-        }
 
-    public void UnsubscribeContext(string objectId, byte contextDomain)
-        {
-        _helper.ExecuteSubscribeContextCommand(
-            TraCIConstants.INVALID_DOUBLE_VALUE,
-            TraCIConstants.INVALID_DOUBLE_VALUE,
+    public void UnsubscribeContext(string objectId, byte contextDomain) => _helper.ExecuteSubscribeContextCommand(
+            TraciConstants.INVALID_DOUBLE_VALUE,
+            TraciConstants.INVALID_DOUBLE_VALUE,
             objectId,
             contextDomain,
-            TraCIConstants.INVALID_DOUBLE_VALUE,
+            TraciConstants.INVALID_DOUBLE_VALUE,
             ContextSubscribeCommand,
             EmptyVariableSubscriptionList
         );
-        }
     }

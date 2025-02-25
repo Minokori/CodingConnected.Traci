@@ -1,5 +1,6 @@
-﻿using CodingConnected.TraCI.NET.DataTypes;
-
+using CodingConnected.TraCI.NET.DataTypes;
+using static CodingConnected.TraCI.NET.DataTypes.TraciConstants.Command;
+using static CodingConnected.TraCI.NET.DataTypes.TraciConstants.Command.Set;
 namespace CodingConnected.TraCI.NET.Functions;
 public partial class Simulation
     {
@@ -14,8 +15,8 @@ public partial class Simulation
     /// </remarks>
     public bool ClearPending(string routeId = "")
         {
-        var tmp = new TraCIString() { Value = routeId };
-        return _helper.ExecuteSetCommand("", TraCIConstants.CMD_SET_SIM_VARIABLE, TraCIConstants.CMD_CLEAR_PENDING_VEHICLES, tmp);
+        TraciString tmp = new(routeId);
+        return _helper.ExecuteSetCommand("", SIM_VARIABLE, CLEAR_PENDING_VEHICLES, tmp);
         }
 
     /// <summary>
@@ -28,9 +29,9 @@ public partial class Simulation
     /// </remarks>
     public bool SaveState(string fileName)
         {
-        var tmp = new TraCIString() { Value = fileName };
+        TraciString tmp = new(fileName);
 
-        return _helper.ExecuteSetCommand("", TraCIConstants.CMD_SET_SIM_VARIABLE, TraCIConstants.CMD_SAVE_SIMSTATE, tmp);
+        return _helper.ExecuteSetCommand("", SIM_VARIABLE, SAVE_SIMSTATE, tmp);
         }
 
 
@@ -47,8 +48,8 @@ public partial class Simulation
     /// </remarks>
     public bool LoadState(string fileName)
         {
-        var tmp = new TraCIString() { Value = fileName };
-        return _helper.ExecuteSetCommand("", TraCIConstants.CMD_SET_SIM_VARIABLE, TraCIConstants.CMD_LOAD_SIMSTATE, tmp);
+        TraciString tmp = new(fileName);
+        return _helper.ExecuteSetCommand("", SIM_VARIABLE, LOAD_SIMSTATE, tmp);
         }
 
     /// <summary>
@@ -61,7 +62,7 @@ public partial class Simulation
     /// </remarks>
     public bool SetScale(double value)
         {
-        var tmp = new TraCIDouble() { Value = value };
-        return _helper.ExecuteSetCommand("", TraCIConstants.CMD_SET_SIM_VARIABLE, TraCIConstants.VAR_SCALE, tmp);
+        TraciDouble tmp = new(value);
+        return _helper.ExecuteSetCommand("", SIM_VARIABLE, TraciConstants.VAR_SCALE, tmp);
         }
     }

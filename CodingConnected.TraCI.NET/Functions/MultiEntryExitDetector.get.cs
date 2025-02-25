@@ -1,5 +1,5 @@
-﻿using CodingConnected.TraCI.NET.DataTypes;
-
+using CodingConnected.TraCI.NET.DataTypes;
+using static CodingConnected.TraCI.NET.DataTypes.TraciConstants.Command.Get;
 namespace CodingConnected.TraCI.NET.Functions;
 
 public partial class MultiEntryExitDetector
@@ -14,8 +14,8 @@ public partial class MultiEntryExitDetector
     /// </remarks>
     public List<string> GetIdList()
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_MULTIENTRYEXIT_VARIABLE, TraCIConstants.ID_LIST, "ignored");
-        return ((TraCIStringList)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(MULTIENTRYEXIT_VARIABLE, TraciConstants.ID_LIST, "ignored");
+        return ((TraciStringList)result.Data).Value;
         }
 
     /// <summary>
@@ -28,8 +28,8 @@ public partial class MultiEntryExitDetector
     /// </remarks>
     public int GetIdCount()
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_MULTIENTRYEXIT_VARIABLE, TraCIConstants.ID_COUNT, "ignored");
-        return ((TraCIInteger)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(MULTIENTRYEXIT_VARIABLE, TraciConstants.ID_COUNT, "ignored");
+        return ((TraciInteger)result.Data).Value;
         }
 
     /// <summary>
@@ -43,8 +43,8 @@ public partial class MultiEntryExitDetector
     /// </remarks>
     public List<string> GetEntryLanes(string detectorId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_MULTIENTRYEXIT_VARIABLE, TraCIConstants.VAR_LANES, detectorId);
-        return ((TraCIStringList)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(MULTIENTRYEXIT_VARIABLE, TraciConstants.VAR_LANES, detectorId);
+        return ((TraciStringList)result.Data).Value;
         }
 
     /// <summary>
@@ -57,8 +57,8 @@ public partial class MultiEntryExitDetector
     /// </remarks>
     public List<string> GetExitLanes(string detectorId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_MULTIENTRYEXIT_VARIABLE, TraCIConstants.VAR_EXIT_LANES, detectorId);
-        return ((TraCIStringList)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(MULTIENTRYEXIT_VARIABLE, TraciConstants.VAR_EXIT_LANES, detectorId);
+        return ((TraciStringList)result.Data).Value;
         }
 
     /// <summary>
@@ -69,15 +69,15 @@ public partial class MultiEntryExitDetector
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/pydoc/traci._multientryexit.html#MultiEntryExitDomain-getEntryPositions"/>
     /// </remarks>
-    public List<Tuple<Double, Double>> GetEntryPositions(string detectorId)
+    public List<Tuple<double, double>> GetEntryPositions(string detectorId)
         {
         // TODO check if the return type is position2d or list of position2d
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_MULTIENTRYEXIT_VARIABLE, TraCIConstants.VAR_POSITION, detectorId);
-        var positions = (TraCICompoundObject)result.Value;
-        var list = positions.Select<ITraciType, Tuple<Double, Double>>(i =>
+        var result = _helper.ExecuteGetCommand(MULTIENTRYEXIT_VARIABLE, TraciConstants.VAR_POSITION, detectorId);
+        var positions = (TraciCompoundObject)result.Data;
+        var list = positions.Select<ITraciType, Tuple<double, double>>(i =>
         {
             var position = (Position2D)i;
-            return new(position.X.Value, position.Y.Value);
+            return new(position.X, position.Y);
         });
         return list.ToList();
         }
@@ -90,15 +90,15 @@ public partial class MultiEntryExitDetector
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/pydoc/traci._multientryexit.html#MultiEntryExitDomain-getExitPositions"/>
     /// </remarks>
-    public List<Tuple<Double, Double>> GetExitPositions(string detectorId)
+    public List<Tuple<double, double>> GetExitPositions(string detectorId)
         {
         // TODO check if the return type is position2d or list of position2d
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_MULTIENTRYEXIT_VARIABLE, TraCIConstants.VAR_EXIT_POSITIONS, detectorId);
-        var positions = (TraCICompoundObject)result.Value;
-        var list = positions.Select<ITraciType, Tuple<Double, Double>>(i =>
+        var result = _helper.ExecuteGetCommand(MULTIENTRYEXIT_VARIABLE, TraciConstants.VAR_EXIT_POSITIONS, detectorId);
+        var positions = (TraciCompoundObject)result.Data;
+        var list = positions.Select<ITraciType, Tuple<double, double>>(i =>
         {
             var position = (Position2D)i;
-            return new(position.X.Value, position.Y.Value);
+            return new(position.X, position.Y);
         });
         return list.ToList();
         }
@@ -116,8 +116,8 @@ public partial class MultiEntryExitDetector
     /// </remarks>
     public int GetLastStepVehicleNumber(string detectorId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_MULTIENTRYEXIT_VARIABLE, TraCIConstants.LAST_STEP_VEHICLE_NUMBER, detectorId);
-        return ((TraCIInteger)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(MULTIENTRYEXIT_VARIABLE, TraciConstants.LAST_STEP_VEHICLE_NUMBER, detectorId);
+        return ((TraciInteger)result.Data).Value;
         }
 
     /// <summary>
@@ -131,8 +131,8 @@ public partial class MultiEntryExitDetector
     /// </remarks>
     public double GetLastStepMeanSpeed(string detectorId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_MULTIENTRYEXIT_VARIABLE, TraCIConstants.LAST_STEP_MEAN_SPEED, detectorId);
-        return ((TraCIDouble)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(MULTIENTRYEXIT_VARIABLE, TraciConstants.LAST_STEP_MEAN_SPEED, detectorId);
+        return ((TraciDouble)result.Data).Value;
         }
 
     /// <summary>
@@ -145,8 +145,8 @@ public partial class MultiEntryExitDetector
     /// </remarks>
     public List<string> GetLastStepVehicleIds(string detectorId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_MULTIENTRYEXIT_VARIABLE, TraCIConstants.LAST_STEP_VEHICLE_ID_LIST, detectorId);
-        return ((TraCIStringList)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(MULTIENTRYEXIT_VARIABLE, TraciConstants.LAST_STEP_VEHICLE_ID_LIST, detectorId);
+        return ((TraciStringList)result.Data).Value;
         }
 
     /// <summary>
@@ -160,11 +160,11 @@ public partial class MultiEntryExitDetector
     public int GetLastStepHaltingNumber(string detectorId)
         {
         var result = _helper.ExecuteGetCommand(
-            TraCIConstants.CMD_GET_MULTIENTRYEXIT_VARIABLE,
-            TraCIConstants.LAST_STEP_VEHICLE_HALTING_NUMBER,
+            MULTIENTRYEXIT_VARIABLE,
+            TraciConstants.LAST_STEP_VEHICLE_HALTING_NUMBER,
             detectorId
         );
-        return ((TraCIInteger)result.Value).Value;
+        return ((TraciInteger)result.Data).Value;
         }
 
     /// <summary>
@@ -178,11 +178,11 @@ public partial class MultiEntryExitDetector
     public double GetLastIntervalMeanTravelTime(string detectorId)
         {
         var result = _helper.ExecuteGetCommand(
-            TraCIConstants.CMD_GET_MULTIENTRYEXIT_VARIABLE,
-            TraCIConstants.VAR_LAST_INTERVAL_TRAVELTIME,
+            MULTIENTRYEXIT_VARIABLE,
+            TraciConstants.VAR_LAST_INTERVAL_TRAVELTIME,
             detectorId
         );
-        return ((TraCIDouble)result.Value).Value;
+        return ((TraciDouble)result.Data).Value;
         }
 
     /// <summary>
@@ -196,11 +196,11 @@ public partial class MultiEntryExitDetector
     public double GetLastIntervalMeanHaltsPerVehicle(string detectorId)
         {
         var result = _helper.ExecuteGetCommand(
-            TraCIConstants.CMD_GET_MULTIENTRYEXIT_VARIABLE,
-            TraCIConstants.VAR_LAST_INTERVAL_MEAN_HALTING_NUMBER,
+            MULTIENTRYEXIT_VARIABLE,
+            TraciConstants.VAR_LAST_INTERVAL_MEAN_HALTING_NUMBER,
             detectorId
         );
-        return ((TraCIDouble)result.Value).Value;
+        return ((TraciDouble)result.Data).Value;
         }
 
     /// <summary>
@@ -213,8 +213,8 @@ public partial class MultiEntryExitDetector
     /// </remarks>
     public double GetLastIntervalMeanTimeLoss(string detectorId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_MULTIENTRYEXIT_VARIABLE, TraCIConstants.VAR_TIMELOSS, detectorId);
-        return ((TraCIDouble)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(MULTIENTRYEXIT_VARIABLE, TraciConstants.VAR_TIMELOSS, detectorId);
+        return ((TraciDouble)result.Data).Value;
         }
 
     /// <summary>
@@ -228,10 +228,10 @@ public partial class MultiEntryExitDetector
     public int GetLastIntervalVehicleSum(string detectorId)
         {
         var result = _helper.ExecuteGetCommand(
-            TraCIConstants.CMD_GET_MULTIENTRYEXIT_VARIABLE,
-            TraCIConstants.VAR_LAST_INTERVAL_VEHICLE_NUMBER,
+            MULTIENTRYEXIT_VARIABLE,
+            TraciConstants.VAR_LAST_INTERVAL_VEHICLE_NUMBER,
             detectorId
         );
-        return ((TraCIInteger)result.Value).Value;
+        return ((TraciInteger)result.Data).Value;
         }
     }

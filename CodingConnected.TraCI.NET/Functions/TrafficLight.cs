@@ -1,4 +1,4 @@
-﻿using CodingConnected.TraCI.NET.DataTypes;
+using CodingConnected.TraCI.NET.DataTypes;
 using CodingConnected.TraCI.NET.Services;
 
 namespace CodingConnected.TraCI.NET.Functions;
@@ -31,12 +31,9 @@ public partial class TrafficLight(ITCPConnectService tcpService, ICommandService
     /// <param name="tlsId">vehicle type ID</param>
     /// <param name="beginTime">the subscription is executed only in time steps >= this value; in ms</param>
     /// <param name="endTime">the subscription is executed in time steps <= this value; the subscription is removed if the simulation has reached a higher time step; in ms</param>
-    /// <param name="ListOfVariablesToSubsribeTo">The list of variables to return. please refer to <see cref="TraCIConstants"/></param>
+    /// <param name="ListOfVariablesToSubsribeTo">The list of variables to return. please refer to <see cref="TraciConstants"/></param>
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/docs/TraCI/Object_Variable_Subscription.html#command_0xdx_subscribe_variable"/>
     /// </remarks>
-    public void Subscribe(string tlsId, int beginTime, int endTime, List<byte> ListOfVariablesToSubsribeTo)
-        {
-        _helper.ExecuteSubscribeCommand(beginTime, endTime, tlsId, TraCIConstants.CMD_SUBSCRIBE_TL_VARIABLE, ListOfVariablesToSubsribeTo);
-        }
+    public void Subscribe(string tlsId, int beginTime, int endTime, List<byte> ListOfVariablesToSubsribeTo) => _helper.ExecuteSubscribeCommand(beginTime, endTime, tlsId, TraciConstants.Command.Subscribe.TL_VARIABLE, ListOfVariablesToSubsribeTo);
     }

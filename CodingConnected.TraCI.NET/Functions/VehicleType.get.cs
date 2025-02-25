@@ -1,5 +1,5 @@
-﻿using CodingConnected.TraCI.NET.DataTypes;
-
+using CodingConnected.TraCI.NET.DataTypes;
+using static CodingConnected.TraCI.NET.DataTypes.TraciConstants.Command.Get;
 namespace CodingConnected.TraCI.NET.Functions;
 
 public partial class VehicleType
@@ -13,8 +13,8 @@ public partial class VehicleType
     /// </remarks>
     public List<string> GetIdList()
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLETYPE_VARIABLE, TraCIConstants.ID_LIST, "ignored");
-        return ((TraCIStringList)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(VEHICLETYPE_VARIABLE, TraciConstants.ID_LIST, "ignored");
+        return ((TraciStringList)result.Data).Value;
         }
 
     /// <summary>
@@ -26,8 +26,8 @@ public partial class VehicleType
     /// </remarks>
     public int GetIdCount()
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLETYPE_VARIABLE, TraCIConstants.ID_COUNT, "ignored");
-        return ((TraCIInteger)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(VEHICLETYPE_VARIABLE, TraciConstants.ID_COUNT, "ignored");
+        return ((TraciInteger)result.Data).Value;
         }
 
     /// <summary>
@@ -40,8 +40,8 @@ public partial class VehicleType
     /// </remarks>
     public double GetLength(string typeId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLETYPE_VARIABLE, TraCIConstants.VAR_LENGTH, typeId);
-        return ((TraCIDouble)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(VEHICLETYPE_VARIABLE, TraciConstants.VAR_LENGTH, typeId);
+        return ((TraciDouble)result.Data).Value;
         }
 
     /// <summary>
@@ -54,8 +54,8 @@ public partial class VehicleType
     /// </remarks>
     public double GetMaxSpeed(string typeId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLETYPE_VARIABLE, TraCIConstants.VAR_MAXSPEED, typeId);
-        return ((TraCIDouble)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(VEHICLETYPE_VARIABLE, TraciConstants.VAR_MAXSPEED, typeId);
+        return ((TraciDouble)result.Data).Value;
         }
 
     /// <summary>
@@ -68,8 +68,8 @@ public partial class VehicleType
     /// </remarks>
     public double GetAccel(string typeId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLETYPE_VARIABLE, TraCIConstants.VAR_ACCEL, typeId);
-        return ((TraCIDouble)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(VEHICLETYPE_VARIABLE, TraciConstants.VAR_ACCEL, typeId);
+        return ((TraciDouble)result.Data).Value;
         }
 
     /// <summary>
@@ -82,8 +82,8 @@ public partial class VehicleType
     /// </remarks>
     public double GetDecel(string typeId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLETYPE_VARIABLE, TraCIConstants.VAR_DECEL, typeId);
-        return ((TraCIDouble)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(VEHICLETYPE_VARIABLE, TraciConstants.VAR_DECEL, typeId);
+        return ((TraciDouble)result.Data).Value;
         }
 
     /// <summary>
@@ -96,8 +96,8 @@ public partial class VehicleType
     /// </remarks>
     public double GetTau(string typeId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLETYPE_VARIABLE, TraCIConstants.VAR_TAU, typeId);
-        return ((TraCIDouble)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(VEHICLETYPE_VARIABLE, TraciConstants.VAR_TAU, typeId);
+        return ((TraciDouble)result.Data).Value;
         }
 
     /// <summary>
@@ -110,8 +110,8 @@ public partial class VehicleType
     /// </remarks>
     public double GetImperfection(string typeId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLETYPE_VARIABLE, TraCIConstants.VAR_IMPERFECTION, typeId);
-        return ((TraCIDouble)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(VEHICLETYPE_VARIABLE, TraciConstants.VAR_IMPERFECTION, typeId);
+        return ((TraciDouble)result.Data).Value;
         }
 
     /// <summary>
@@ -124,8 +124,8 @@ public partial class VehicleType
     /// </remarks>
     public double GetSpeedFactor(string typeId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLETYPE_VARIABLE, TraCIConstants.VAR_SPEED_FACTOR, typeId);
-        return ((TraCIDouble)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(VEHICLETYPE_VARIABLE, TraciConstants.VAR_SPEED_FACTOR, typeId);
+        return ((TraciDouble)result.Data).Value;
         }
 
     /// <summary>
@@ -138,8 +138,8 @@ public partial class VehicleType
     /// </remarks>
     public double GetSpeedDeviation(string id)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLETYPE_VARIABLE, TraCIConstants.VAR_SPEED_DEVIATION, id);
-        return ((TraCIDouble)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(VEHICLETYPE_VARIABLE, TraciConstants.VAR_SPEED_DEVIATION, id);
+        return ((TraciDouble)result.Data).Value;
         }
 
     /// <summary>
@@ -152,8 +152,8 @@ public partial class VehicleType
     /// </remarks>
     public string GetVehicleClass(string typeId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLETYPE_VARIABLE, TraCIConstants.VAR_VEHICLECLASS, typeId);
-        return ((TraCIString)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(VEHICLETYPE_VARIABLE, TraciConstants.VAR_VEHICLECLASS, typeId);
+        return ((TraciString)result.Data).Value;
         }
 
     /// <summary>
@@ -167,8 +167,8 @@ public partial class VehicleType
 
     public string GetEmissionClass(string typeId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLETYPE_VARIABLE, TraCIConstants.VAR_EMISSIONCLASS, typeId);
-        return ((TraCIString)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(VEHICLETYPE_VARIABLE, TraciConstants.VAR_EMISSIONCLASS, typeId);
+        return ((TraciString)result.Data).Value;
         }
 
     /// <summary>
@@ -182,8 +182,8 @@ public partial class VehicleType
 
     public string GetShapeClass(string typeId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLETYPE_VARIABLE, TraCIConstants.VAR_SHAPECLASS, typeId);
-        return ((TraCIString)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(VEHICLETYPE_VARIABLE, TraciConstants.VAR_SHAPECLASS, typeId);
+        return ((TraciString)result.Data).Value;
         }
 
     /// <summary>
@@ -196,8 +196,8 @@ public partial class VehicleType
     /// </remarks>
     public double GetMinGap(string typeId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLETYPE_VARIABLE, TraCIConstants.VAR_MINGAP, typeId);
-        return ((TraCIDouble)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(VEHICLETYPE_VARIABLE, TraciConstants.VAR_MINGAP, typeId);
+        return ((TraciDouble)result.Data).Value;
         }
 
     /// <summary>
@@ -211,8 +211,8 @@ public partial class VehicleType
 
     public double GetWidth(string typeId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLETYPE_VARIABLE, TraCIConstants.VAR_WIDTH, typeId);
-        return ((TraCIDouble)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(VEHICLETYPE_VARIABLE, TraciConstants.VAR_WIDTH, typeId);
+        return ((TraciDouble)result.Data).Value;
         }
 
     /// <summary>
@@ -225,8 +225,8 @@ public partial class VehicleType
     /// </remarks>
     public double GetHeight(string typeId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLETYPE_VARIABLE, TraCIConstants.VAR_HEIGHT, typeId);
-        return ((TraCIDouble)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(VEHICLETYPE_VARIABLE, TraciConstants.VAR_HEIGHT, typeId);
+        return ((TraciDouble)result.Data).Value;
         }
 
     /// <summary>
@@ -239,9 +239,9 @@ public partial class VehicleType
     /// </remarks>
     public Tuple<int, int, int, int> GetColor(string typeId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLETYPE_VARIABLE, TraCIConstants.VAR_COLOR, typeId);
-        var color = (Color)result.Value;
-        return new(color.R.Value, color.G.Value, color.B.Value, color.A.Value);
+        var result = _helper.ExecuteGetCommand(VEHICLETYPE_VARIABLE, TraciConstants.VAR_COLOR, typeId);
+        var color = (Color)result.Data;
+        return new(color.R, color.G, color.B, color.A);
         }
 
     /// <summary>
@@ -254,8 +254,8 @@ public partial class VehicleType
     /// </remarks>
     public double GetMaxSpeedLat(string typeId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLETYPE_VARIABLE, TraCIConstants.VAR_MAXSPEED_LAT, typeId);
-        return ((TraCIDouble)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(VEHICLETYPE_VARIABLE, TraciConstants.VAR_MAXSPEED_LAT, typeId);
+        return ((TraciDouble)result.Data).Value;
         }
 
 
@@ -270,8 +270,8 @@ public partial class VehicleType
     /// </remarks>
     public double GetMinGapLat(string typeId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLETYPE_VARIABLE, TraCIConstants.VAR_MINGAP_LAT, typeId);
-        return ((TraCIDouble)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(VEHICLETYPE_VARIABLE, TraciConstants.VAR_MINGAP_LAT, typeId);
+        return ((TraciDouble)result.Data).Value;
         }
 
     /// <summary>
@@ -284,8 +284,8 @@ public partial class VehicleType
     /// </remarks>
     public string GetLateralAlignment(string typeId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLETYPE_VARIABLE, TraCIConstants.VAR_LATALIGNMENT, typeId);
-        return ((TraCIString)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(VEHICLETYPE_VARIABLE, TraciConstants.VAR_LATALIGNMENT, typeId);
+        return ((TraciString)result.Data).Value;
         }
 
     /// <summary>
@@ -298,9 +298,9 @@ public partial class VehicleType
     /// </remarks>
     public double GetActionStepLength(string typeId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLETYPE_VARIABLE,
-            TraCIConstants.VAR_ACTIONSTEPLENGTH, typeId);
-        return ((TraCIDouble)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(VEHICLETYPE_VARIABLE,
+            TraciConstants.VAR_ACTIONSTEPLENGTH, typeId);
+        return ((TraciDouble)result.Data).Value;
         }
 
     /// <summary>
@@ -313,9 +313,9 @@ public partial class VehicleType
     /// </remarks>
     public int GetPersonCapacity(string typeId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLETYPE_VARIABLE,
-            TraCIConstants.VAR_PERSON_CAPACITY, typeId);
-        return ((TraCIInteger)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(VEHICLETYPE_VARIABLE,
+            TraciConstants.VAR_PERSON_CAPACITY, typeId);
+        return ((TraciInteger)result.Data).Value;
         }
 
     /// <summary>
@@ -328,9 +328,9 @@ public partial class VehicleType
     /// </remarks>
     public double GetScale(string typeId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLETYPE_VARIABLE,
-    TraCIConstants.VAR_SCALE, typeId);
-        return ((TraCIDouble)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(VEHICLETYPE_VARIABLE,
+    TraciConstants.VAR_SCALE, typeId);
+        return ((TraciDouble)result.Data).Value;
         }
 
     /// <summary>
@@ -343,8 +343,8 @@ public partial class VehicleType
     /// </remarks>
     public double GetBoardingDuration(string typeId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLETYPE_VARIABLE, TraCIConstants.VAR_BOARDING_DURATION, typeId);
-        return ((TraCIDouble)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(VEHICLETYPE_VARIABLE, TraciConstants.VAR_BOARDING_DURATION, typeId);
+        return ((TraciDouble)result.Data).Value;
         }
 
     /// <summary>
@@ -358,8 +358,8 @@ public partial class VehicleType
     /// </remarks>
     public string GetImpatience(string typeId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLETYPE_VARIABLE, TraCIConstants.VAR_IMPATIENCE, typeId);
-        return ((TraCIString)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(VEHICLETYPE_VARIABLE, TraciConstants.VAR_IMPATIENCE, typeId);
+        return ((TraciString)result.Data).Value;
         }
 
 
@@ -373,7 +373,7 @@ public partial class VehicleType
     /// </remarks>
     public double GetMass(string typeId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLETYPE_VARIABLE, TraCIConstants.VAR_MASS, typeId);
-        return ((TraCIDouble)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(VEHICLETYPE_VARIABLE, TraciConstants.VAR_MASS, typeId);
+        return ((TraciDouble)result.Data).Value;
         }
     }

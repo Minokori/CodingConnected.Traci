@@ -1,7 +1,7 @@
-﻿using CodingConnected.TraCI.NET.DataTypes;
+using CodingConnected.TraCI.NET.DataTypes;
 using static System.BitConverter;
-using static CodingConnected.TraCI.NET.DataTypes.TraCIConstants;
-
+using static CodingConnected.TraCI.NET.DataTypes.TraciConstants;
+using static CodingConnected.TraCI.NET.DataTypes.TraciConstants.Command;
 namespace CodingConnected.TraCI.NET.ProtocolTypes;
 
 internal static class TraCIResultExtension
@@ -62,7 +62,7 @@ internal static class TraCIResultExtension
             }
 
         // find results of specific command type, statusResponse is status results ,result is result
-        (var statusResponse, var i) = results.Select((result, index) => (result, index)).FirstOrDefault(x => x.result.Identifier == CMD_SIMSTEP);
+        (var statusResponse, var i) = results.Select((result, index) => (result, index)).FirstOrDefault(x => x.result.Identifier == Command.SIMSTEP);
         if (statusResponse is null)
             {
             return null;
@@ -100,90 +100,90 @@ internal static class TraCIResultExtension
         {
         switch (type)
             {
-            case POSITION_LON_LAT:
+            case PositionType.LON_LAT:
                     {
                     (var result, bytes) = LonLatPosition.FromBytes(bytes);
                     return new(result, bytes);
                     }
-            case POSITION_2D:
+            case PositionType.X_Y:
                     {
                     (var result, bytes) = Position2D.FromBytes(bytes);
                     return new(result, bytes);
                     }
-            case POSITION_LON_LAT_ALT:
+            case PositionType.LON_LAT_ALT:
                     {
                     (var result, bytes) = LonLatAltPosition.FromBytes(bytes);
                     return new(result, bytes);
                     }
-            case POSITION_3D:
+            case PositionType.X_Y_Z:
                     {
                     (var result, bytes) = Position3D.FromBytes(bytes);
                     return new(result, bytes);
                     }
-            case POSITION_ROADMAP:
+            case PositionType.ROADMAP:
                     {
                     (var result, bytes) = RoadMapPosition.FromBytes(bytes);
                     return new(result, bytes);
                     }
-            case TYPE_BOUNDINGBOX:
+            case DataType.BOUNDINGBOX:
                     {
                     (var result, bytes) = BoundaryBox.FromBytes(bytes);
                     return new(result, bytes);
                     }
-            case TYPE_POLYGON:
+            case DataType.POLYGON:
                     {
                     (var result, bytes) = Polygon.FromBytes(bytes);
                     return new(result, bytes);
                     }
-            case TYPE_UBYTE:
+            case DataType.UNSIGNEDBYTE:
                     {
-                    (var result, bytes) = TraCIUByte.FromBytes(bytes);
+                    (var result, bytes) = TraciUnsignedByte.FromBytes(bytes);
                     return new(result, bytes);
                     }
-            case TYPE_BYTE:
+            case DataType.BYTE:
                     {
-                    (var result, bytes) = TraCIByte.FromBytes(bytes);
+                    (var result, bytes) = TraciByte.FromBytes(bytes);
                     return new(result, bytes);
                     }
-            case TYPE_INTEGER:
+            case DataType.INTEGER:
                     {
-                    (var result, bytes) = TraCIInteger.FromBytes(bytes);
+                    (var result, bytes) = TraciInteger.FromBytes(bytes);
                     return new(result, bytes);
                     }
-            case TYPE_FLOAT:
+            case DataType.FLOAT:
                     {
-                    (var result, bytes) = TraCIFloat.FromBytes(bytes);
+                    (var result, bytes) = TraciFloat.FromBytes(bytes);
                     return new(result, bytes);
                     }
-            case TYPE_DOUBLE:
+            case DataType.DOUBLE:
                     {
-                    (var result, bytes) = TraCIDouble.FromBytes(bytes);
+                    (var result, bytes) = TraciDouble.FromBytes(bytes);
                     return new(result, bytes);
                     }
-            case TYPE_STRING:
+            case DataType.STRING:
                     {
-                    (var result, bytes) = TraCIString.FromBytes(bytes);
+                    (var result, bytes) = TraciString.FromBytes(bytes);
                     return new(result, bytes);
                     }
-            case TYPE_TLPHASELIST:
+            case DataType.TLPHASELIST:
                     {
                     (var result, bytes) = TrafficLightPhaseList.FromBytes(bytes);
                     return new(result, bytes);
                     }
-            case TYPE_COLOR:
+            case DataType.COLOR:
                     {
                     (var result, bytes) = Color.FromBytes(bytes);
                     return new(result, bytes);
                     }
-            case TYPE_STRINGLIST:
+            case DataType.STRINGLIST:
                     {
-                    (var result, bytes) = TraCIStringList.FromBytes(bytes);
+                    (var result, bytes) = TraciStringList.FromBytes(bytes);
                     return new(result, bytes);
                     }
-            case TYPE_COMPOUND:
+            case DataType.COMPOUND:
                     {
-                    var length = ToInt32(bytes.Take(INTEGER_SIZE).Reverse().ToArray());
-                    bytes = bytes.Skip(INTEGER_SIZE);
+                    var length = ToInt32(bytes.Take(DataSize.INTEGER_SIZE).Reverse().ToArray());
+                    bytes = bytes.Skip(DataSize.INTEGER_SIZE);
                     List<ITraciType> innerDataList = [];
                     for (var i = 0; i < length; i++)
                         {
@@ -192,7 +192,7 @@ internal static class TraCIResultExtension
                         (var result, bytes) = GetValueFromTypeAndArray(innerItemType, bytes);
                         innerDataList.Add(result);
                         }
-                    return new((TraCICompoundObject)innerDataList, bytes);
+                    return new((TraciCompoundObject)innerDataList, bytes);
                     }
             default:
                     {
@@ -203,8 +203,8 @@ internal static class TraCIResultExtension
 
     internal static List<TraCIResult> AsTraCIResults(this List<byte> response)
         {
-        var (totalLength, leftBytes) = TraCIInteger.FromBytes(response);
-        var count = new TraCIInteger();
+        var (totalLength, leftBytes) = TraciInteger.FromBytes(response);
+        TraciInteger count = new(0);
         if (totalLength.Value != response.Count)
             {
             throw new Exception($"length(byte){totalLength} != length(count){response.Count}");
@@ -213,9 +213,9 @@ internal static class TraCIResultExtension
         (var firstResult, leftBytes) = GetTraCIResult(leftBytes);
         List<TraCIResult> results = [firstResult];
 
-        if (firstResult.Identifier == CMD_SIMSTEP)
+        if (firstResult.Identifier == SIMSTEP)
             {
-            (count, leftBytes) = TraCIInteger.FromBytes(leftBytes);
+            (count, leftBytes) = TraciInteger.FromBytes(leftBytes);
             }
 
         while (leftBytes.Any())
@@ -223,7 +223,7 @@ internal static class TraCIResultExtension
             (var result, leftBytes) = GetTraCIResult(leftBytes);
             results.Add(result);
             }
-        return firstResult.Identifier == CMD_SIMSTEP && count.Value + 1 != results.Count ? throw new Exception() : results;
+        return firstResult.Identifier == SIMSTEP && count.Value + 1 != results.Count ? throw new Exception() : results;
         }
 
     private static Tuple<TraCIResult, IEnumerable<byte>> GetTraCIResult(IEnumerable<byte> bytes)

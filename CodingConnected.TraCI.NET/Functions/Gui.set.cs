@@ -1,5 +1,5 @@
-﻿using CodingConnected.TraCI.NET.DataTypes;
-
+using CodingConnected.TraCI.NET.DataTypes;
+using static CodingConnected.TraCI.NET.DataTypes.TraciConstants.Command.Set;
 namespace CodingConnected.TraCI.NET.Functions;
 
 public partial class Gui
@@ -13,11 +13,12 @@ public partial class Gui
     /// <returns>success or not</returns>
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/pydoc/traci._gui.html#GuiDomain-setZoom"/>
+    /// 
     /// </remarks>
     public bool SetZoom(string viewId, double zoom)
         {
-        var tmp = new TraCIDouble { Value = zoom };
-        return _helper.ExecuteSetCommand(viewId, TraCIConstants.CMD_SET_GUI_VARIABLE, TraCIConstants.VAR_VIEW_ZOOM, tmp);
+        TraciDouble tmp = new(zoom);
+        return _helper.ExecuteSetCommand(viewId, GUI_VARIABLE, TraciConstants.VAR_VIEW_ZOOM, tmp);
         }
 
     /// <summary>
@@ -29,10 +30,7 @@ public partial class Gui
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/pydoc/traci._gui.html#GuiDomain-setOffset"/>
     /// </remarks>
-    public bool SetOffset(string viewId, Position2D position)
-        {
-        return _helper.ExecuteSetCommand(viewId, TraCIConstants.CMD_SET_GUI_VARIABLE, TraCIConstants.VAR_VIEW_OFFSET, position);
-        }
+    public bool SetOffset(string viewId, Position2D position) => _helper.ExecuteSetCommand(viewId, GUI_VARIABLE, TraciConstants.VAR_VIEW_OFFSET, position);
 
     /// <summary>
     /// Moves the center of the visible network to the given position
@@ -46,12 +44,8 @@ public partial class Gui
     /// </remarks>
     public bool SetOffset(string viewId, double x, double y)
         {
-        Position2D position = new()
-            {
-            X = new() { Value = x },
-            Y = new() { Value = y },
-            };
-        return _helper.ExecuteSetCommand(viewId, TraCIConstants.CMD_SET_GUI_VARIABLE, TraCIConstants.VAR_VIEW_OFFSET, position);
+        Position2D position = new(x, y);
+        return _helper.ExecuteSetCommand(viewId, GUI_VARIABLE, TraciConstants.VAR_VIEW_OFFSET, position);
         }
 
     /// <summary>
@@ -65,8 +59,8 @@ public partial class Gui
     /// </remarks>
     public bool SetSchema(string viewId, string schemaName)
         {
-        var tmp = new TraCIString { Value = schemaName };
-        return _helper.ExecuteSetCommand(viewId, TraCIConstants.CMD_SET_GUI_VARIABLE, TraCIConstants.VAR_VIEW_SCHEMA, tmp);
+        TraciString tmp = new(schemaName);
+        return _helper.ExecuteSetCommand(viewId, GUI_VARIABLE, TraciConstants.VAR_VIEW_SCHEMA, tmp);
         }
 
     /// <summary>
@@ -80,12 +74,9 @@ public partial class Gui
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/pydoc/traci._gui.html#GuiDomain-setBoundary"/>
     /// </remarks>
-    public bool SetBoundary(string viewId, DataTypes.Polygon boundaryBox)
-        {
-        return boundaryBox.Count != 2
+    public bool SetBoundary(string viewId, DataTypes.Polygon boundaryBox) => boundaryBox.Count != 2
             ? throw new ArgumentException("The boundary box must contain exactly 2 points")
-            : _helper.ExecuteSetCommand(viewId, TraCIConstants.CMD_SET_GUI_VARIABLE, TraCIConstants.VAR_VIEW_BOUNDARY, boundaryBox);
-        }
+            : _helper.ExecuteSetCommand(viewId, GUI_VARIABLE, TraciConstants.VAR_VIEW_BOUNDARY, boundaryBox);
 
     /// <summary>
     /// Sets the boundary of the visible network. <para/>
@@ -103,20 +94,8 @@ public partial class Gui
     /// </remarks>
     public bool SetBoundary(string viewId, double xMin, double yMin, double xMax, double yMax)
         {
-        DataTypes.Polygon boundaryBox =
-        [
-            new()
-            {
-                X = new() { Value = xMin },
-                Y = new() { Value = yMin },
-            },
-            new()
-            {
-                X = new() { Value = xMax },
-                Y = new() { Value = yMax },
-            },
-        ];
-        return _helper.ExecuteSetCommand(viewId, TraCIConstants.CMD_SET_GUI_VARIABLE, TraCIConstants.VAR_VIEW_BOUNDARY, boundaryBox);
+        DataTypes.Polygon boundaryBox = [new(xMin, yMin), new(xMax, yMax)];
+        return _helper.ExecuteSetCommand(viewId, GUI_VARIABLE, TraciConstants.VAR_VIEW_BOUNDARY, boundaryBox);
         }
 
     /// <summary>
@@ -143,9 +122,9 @@ public partial class Gui
     public bool Screenshot(string viewId, string filename, int width = -1, int height = -1, bool useWidthHeight = true)
         {
         // TODO check if width and height works well
-        TraCICompoundObject tmp = [new TraCIString { Value = filename }, new TraCIInteger { Value = width }, new TraCIInteger { Value = height }];
-        var tmp2 = new TraCIString { Value = filename };
-        return _helper.ExecuteSetCommand(viewId, TraCIConstants.CMD_SET_GUI_VARIABLE, TraCIConstants.VAR_SCREENSHOT, useWidthHeight ? tmp : tmp2);
+        TraciCompoundObject tmp = [new TraciString(filename), new TraciInteger(width), new TraciInteger(height)];
+        TraciString tmp2 = new(filename);
+        return _helper.ExecuteSetCommand(viewId, GUI_VARIABLE, TraciConstants.VAR_SCREENSHOT, useWidthHeight ? tmp : tmp2);
         }
 
     /// <summary>
@@ -162,7 +141,7 @@ public partial class Gui
     public bool TrackVehicle(string viewId, string vehicleId)
         {
         viewId = viewId is null ? "View #0" : viewId;
-        var tmp = new TraCIString { Value = vehicleId };
-        return _helper.ExecuteSetCommand(viewId, TraCIConstants.CMD_SET_GUI_VARIABLE, TraCIConstants.VAR_TRACK_VEHICLE, tmp);
+        TraciString tmp = new(vehicleId);
+        return _helper.ExecuteSetCommand(viewId, GUI_VARIABLE, TraciConstants.VAR_TRACK_VEHICLE, tmp);
         }
     }

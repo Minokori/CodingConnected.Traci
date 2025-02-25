@@ -1,5 +1,5 @@
-﻿using CodingConnected.TraCI.NET.DataTypes;
-
+using CodingConnected.TraCI.NET.DataTypes;
+using static CodingConnected.TraCI.NET.DataTypes.TraciConstants.Command.Get;
 namespace CodingConnected.TraCI.NET.Functions;
 
 public partial class Polygon
@@ -13,8 +13,8 @@ public partial class Polygon
     /// </remarks>
     public List<string> GetIdList()
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_POLYGON_VARIABLE, TraCIConstants.ID_LIST, "ignored");
-        return ((TraCIStringList)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(POLYGON_VARIABLE, TraciConstants.ID_LIST, "ignored");
+        return ((TraciStringList)result.Data).Value;
         }
 
     /// <summary>
@@ -26,8 +26,8 @@ public partial class Polygon
     /// </remarks>
     public int GetIdCount()
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_POLYGON_VARIABLE, TraCIConstants.ID_COUNT, "ignored");
-        return ((TraCIInteger)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(POLYGON_VARIABLE, TraciConstants.ID_COUNT, "ignored");
+        return ((TraciInteger)result.Data).Value;
         }
 
     /// <summary>
@@ -40,8 +40,8 @@ public partial class Polygon
     /// </remarks>
     public string GetType(string polygonId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_POLYGON_VARIABLE, TraCIConstants.VAR_TYPE, polygonId);
-        return ((TraCIString)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(POLYGON_VARIABLE, TraciConstants.VAR_TYPE, polygonId);
+        return ((TraciString)result.Data).Value;
         }
 
     /// <summary>
@@ -54,9 +54,9 @@ public partial class Polygon
     /// </remarks>
     public Tuple<int, int, int, int> GetColor(string polygonId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_POLYGON_VARIABLE, TraCIConstants.VAR_COLOR, polygonId);
-        var color = (Color)result.Value;
-        return new(color.R.Value, color.G.Value, color.B.Value, color.A.Value);
+        var result = _helper.ExecuteGetCommand(POLYGON_VARIABLE, TraciConstants.VAR_COLOR, polygonId);
+        var color = (Color)result.Data;
+        return new(color.R, color.G, color.B, color.A);
         }
 
     /// <summary>
@@ -69,8 +69,8 @@ public partial class Polygon
     /// </remarks>
     public DataTypes.Polygon GetShape(string polygonId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_POLYGON_VARIABLE, TraCIConstants.VAR_SHAPE, polygonId);
-        return (DataTypes.Polygon)result.Value;
+        var result = _helper.ExecuteGetCommand(POLYGON_VARIABLE, TraciConstants.VAR_SHAPE, polygonId);
+        return (DataTypes.Polygon)result.Data;
         }
 
     /// <summary>
@@ -83,8 +83,8 @@ public partial class Polygon
     /// </remarks>
     public bool GetFilled(string polygonId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_POLYGON_VARIABLE, TraCIConstants.VAR_FILL, polygonId);
-        return ((TraCIUByte)result.Value).Value == 1;
+        var result = _helper.ExecuteGetCommand(POLYGON_VARIABLE, TraciConstants.VAR_FILL, polygonId);
+        return ((TraciUnsignedByte)result.Data).Value == 1;
         }
 
     /// <summary>
@@ -97,7 +97,7 @@ public partial class Polygon
     /// </remarks>
     public double GetLineWidth(string polygonId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_POLYGON_VARIABLE, TraCIConstants.VAR_WIDTH, polygonId);
-        return ((TraCIDouble)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(POLYGON_VARIABLE, TraciConstants.VAR_WIDTH, polygonId);
+        return ((TraciDouble)result.Data).Value;
         }
     }

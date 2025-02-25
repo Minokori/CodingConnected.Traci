@@ -7,7 +7,7 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
         <Title>Traci.NET</Title>
-        <Version>$(VersionPrefix)</Version>
+        <Version>1.1.0</Version>
         <Description>Traci for .NET</Description>
         <Copyright>Copyright (c) 2017-2018 CodingConnected e.U., Menno van der Woude</Copyright>
         <PackageProjectUrl>https://github.com/Minokori/CodingConnected.Traci/tree/feature_updates</PackageProjectUrl>
@@ -15,6 +15,7 @@
         <PackageReleaseNotes>still a preview version</PackageReleaseNotes>
         <PackageReadmeFile>README.md</PackageReadmeFile>
         <PackageIcon>sumo-logo.png</PackageIcon>
+        <Nullable>enable</Nullable>
     </PropertyGroup>
     <ItemGroup>
       <None Include="..\README.md">

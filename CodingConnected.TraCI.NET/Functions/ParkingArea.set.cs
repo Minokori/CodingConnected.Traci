@@ -1,4 +1,5 @@
-﻿using CodingConnected.TraCI.NET.DataTypes;
+using CodingConnected.TraCI.NET.DataTypes;
+using static CodingConnected.TraCI.NET.DataTypes.TraciConstants.Command.Get;
 
 namespace CodingConnected.TraCI.NET.Functions;
 
@@ -15,8 +16,8 @@ public partial class ParkingArea
     /// </remarks>
     public List<string> SetAcceptedBadges(string stopId, List<string> badges)
         {
-        TraCIStringList tmp = new() { Value = badges };
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_PARKINGAREA_VARIABLE, TraCIConstants.VAR_BADGES, stopId, tmp);
-        return ((TraCIStringList)result.Value).Value;
+        TraciStringList tmp = new(badges);
+        var result = _helper.ExecuteGetCommand(PARKINGAREA_VARIABLE, TraciConstants.VAR_BADGES, stopId, tmp);
+        return ((TraciStringList)result.Data).Value;
         }
     }

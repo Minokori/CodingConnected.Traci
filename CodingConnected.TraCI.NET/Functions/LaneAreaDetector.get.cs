@@ -1,5 +1,5 @@
-﻿using CodingConnected.TraCI.NET.DataTypes;
-
+using CodingConnected.TraCI.NET.DataTypes;
+using static CodingConnected.TraCI.NET.DataTypes.TraciConstants.Command.Get;
 namespace CodingConnected.TraCI.NET.Functions;
 
 public partial class LaneAreaDetector
@@ -14,8 +14,8 @@ public partial class LaneAreaDetector
     /// </remarks>
     public List<string> GetIdList()
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_LANEAREA_VARIABLE, TraCIConstants.ID_LIST, "ignored");
-        return ((TraCIStringList)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(LANEAREA_VARIABLE, TraciConstants.ID_LIST, "ignored");
+        return ((TraciStringList)result.Data).Value;
         }
 
     /// <summary>
@@ -28,8 +28,8 @@ public partial class LaneAreaDetector
     /// </remarks>
     public int GetIdCount()
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_LANEAREA_VARIABLE, TraCIConstants.ID_COUNT, "ignored");
-        return ((TraCIInteger)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(LANEAREA_VARIABLE, TraciConstants.ID_COUNT, "ignored");
+        return ((TraciInteger)result.Data).Value;
         }
 
     /// <summary>
@@ -44,8 +44,8 @@ public partial class LaneAreaDetector
     /// </remarks>
     public double GetPosition(string detectorId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_LANEAREA_VARIABLE, TraCIConstants.VAR_POSITION, detectorId);
-        return ((TraCIDouble)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(LANEAREA_VARIABLE, TraciConstants.VAR_POSITION, detectorId);
+        return ((TraciDouble)result.Data).Value;
         }
 
     /// <summary>
@@ -59,8 +59,8 @@ public partial class LaneAreaDetector
 
     public double GetLength(string detectorId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_LANEAREA_VARIABLE, TraCIConstants.VAR_LENGTH, detectorId);
-        return ((TraCIDouble)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(LANEAREA_VARIABLE, TraciConstants.VAR_LENGTH, detectorId);
+        return ((TraciDouble)result.Data).Value;
         }
 
     /// <summary>
@@ -73,8 +73,8 @@ public partial class LaneAreaDetector
     /// </remarks>
     public string GetLaneId(string detectorId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_LANEAREA_VARIABLE, TraCIConstants.VAR_LANE_ID, detectorId);
-        return ((TraCIString)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(LANEAREA_VARIABLE, TraciConstants.VAR_LANE_ID, detectorId);
+        return ((TraciString)result.Data).Value;
         }
 
     /// <summary>
@@ -89,8 +89,8 @@ public partial class LaneAreaDetector
     /// </remarks>
     public int GetLastStepVehicleNumber(string detectorId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_LANEAREA_VARIABLE, TraCIConstants.LAST_STEP_VEHICLE_NUMBER, detectorId);
-        return ((TraCIInteger)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(LANEAREA_VARIABLE, TraciConstants.LAST_STEP_VEHICLE_NUMBER, detectorId);
+        return ((TraciInteger)result.Data).Value;
         }
 
     /// <summary>
@@ -105,8 +105,8 @@ public partial class LaneAreaDetector
     /// </remarks>
     public double GetLastStepMeanSpeed(string detectorId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_LANEAREA_VARIABLE, TraCIConstants.LAST_STEP_MEAN_SPEED, detectorId);
-        return ((TraCIDouble)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(LANEAREA_VARIABLE, TraciConstants.LAST_STEP_MEAN_SPEED, detectorId);
+        return ((TraciDouble)result.Data).Value;
         }
 
     /// <summary>
@@ -119,8 +119,8 @@ public partial class LaneAreaDetector
     /// </remarks>
     public List<string> GetLastStepVehicleIds(string detectorId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_LANEAREA_VARIABLE, TraCIConstants.LAST_STEP_VEHICLE_ID_LIST, detectorId);
-        return ((TraCIStringList)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(LANEAREA_VARIABLE, TraciConstants.LAST_STEP_VEHICLE_ID_LIST, detectorId);
+        return ((TraciStringList)result.Data).Value;
         }
 
     /// <summary>
@@ -133,8 +133,8 @@ public partial class LaneAreaDetector
     /// </remarks>
     public double GetLastStepOccupancy(string detectorId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_LANEAREA_VARIABLE, TraCIConstants.LAST_STEP_OCCUPANCY, detectorId);
-        return ((TraCIDouble)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(LANEAREA_VARIABLE, TraciConstants.LAST_STEP_OCCUPANCY, detectorId);
+        return ((TraciDouble)result.Data).Value;
         }
 
     /// <summary>
@@ -147,8 +147,8 @@ public partial class LaneAreaDetector
     /// </remarks>
     public double GetLastStepHaltingNumber(string detectorId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_LANEAREA_VARIABLE, TraCIConstants.LAST_STEP_VEHICLE_HALTING_NUMBER, detectorId);
-        return ((TraCIDouble)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(LANEAREA_VARIABLE, TraciConstants.LAST_STEP_VEHICLE_HALTING_NUMBER, detectorId);
+        return ((TraciDouble)result.Data).Value;
         }
 
     /// <summary>
@@ -161,8 +161,8 @@ public partial class LaneAreaDetector
     /// </remarks>
     public int GetJamLengthVehicle(string detectorId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_LANEAREA_VARIABLE, TraCIConstants.JAM_LENGTH_VEHICLE, detectorId);
-        return ((TraCIInteger)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(LANEAREA_VARIABLE, TraciConstants.JAM_LENGTH_VEHICLE, detectorId);
+        return ((TraciInteger)result.Data).Value;
         }
 
     /// <summary>
@@ -175,8 +175,8 @@ public partial class LaneAreaDetector
     /// </remarks>
     public double GetJamLengthMeters(string detectorId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_LANEAREA_VARIABLE, TraCIConstants.JAM_LENGTH_METERS, detectorId);
-        return ((TraCIDouble)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(LANEAREA_VARIABLE, TraciConstants.JAM_LENGTH_METERS, detectorId);
+        return ((TraciDouble)result.Data).Value;
         }
 
     /// <summary>
@@ -190,8 +190,8 @@ public partial class LaneAreaDetector
     /// </remarks>
     public double GetIntervalOccupancy(string detectorId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_LANEAREA_VARIABLE, TraCIConstants.VAR_INTERVAL_OCCUPANCY, detectorId);
-        return ((TraCIDouble)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(LANEAREA_VARIABLE, TraciConstants.VAR_INTERVAL_OCCUPANCY, detectorId);
+        return ((TraciDouble)result.Data).Value;
         }
 
     /// <summary>
@@ -204,8 +204,8 @@ public partial class LaneAreaDetector
     /// </remarks>
     public double GetIntervalMeanSpeed(string detectorId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_LANEAREA_VARIABLE, TraCIConstants.VAR_INTERVAL_SPEED, detectorId);
-        return ((TraCIDouble)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(LANEAREA_VARIABLE, TraciConstants.VAR_INTERVAL_SPEED, detectorId);
+        return ((TraciDouble)result.Data).Value;
         }
 
     /// <summary>
@@ -219,8 +219,8 @@ public partial class LaneAreaDetector
     /// </remarks>
     public int GetIntervalVehicleNumber(string detectorId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_LANEAREA_VARIABLE, TraCIConstants.VAR_INTERVAL_NUMBER, detectorId);
-        return ((TraCIInteger)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(LANEAREA_VARIABLE, TraciConstants.VAR_INTERVAL_NUMBER, detectorId);
+        return ((TraciInteger)result.Data).Value;
         }
 
     /// <summary>
@@ -234,11 +234,11 @@ public partial class LaneAreaDetector
     public double GetIntervalMaxJamLengthInMeters(string detectorId)
         {
         var result = _helper.ExecuteGetCommand(
-            TraCIConstants.CMD_GET_LANEAREA_VARIABLE,
-            TraCIConstants.VAR_INTERVAL_MAX_JAM_LENGTH_METERS,
+            LANEAREA_VARIABLE,
+            TraciConstants.VAR_INTERVAL_MAX_JAM_LENGTH_METERS,
             detectorId
         );
-        return ((TraCIDouble)result.Value).Value;
+        return ((TraciDouble)result.Data).Value;
         }
 
     /// <summary>
@@ -251,8 +251,8 @@ public partial class LaneAreaDetector
     /// </remarks>
     public double GetLastIntetrvalOccupancy(string detectorId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_LANEAREA_VARIABLE, TraCIConstants.VAR_LAST_INTERVAL_OCCUPANCY, detectorId);
-        return ((TraCIDouble)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(LANEAREA_VARIABLE, TraciConstants.VAR_LAST_INTERVAL_OCCUPANCY, detectorId);
+        return ((TraciDouble)result.Data).Value;
         }
 
     /// <summary>
@@ -265,8 +265,8 @@ public partial class LaneAreaDetector
     /// </remarks>
     public double GetLastIntervalMeanSpeed(string detectorId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_LANEAREA_VARIABLE, TraCIConstants.VAR_LAST_INTERVAL_SPEED, detectorId);
-        return ((TraCIDouble)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(LANEAREA_VARIABLE, TraciConstants.VAR_LAST_INTERVAL_SPEED, detectorId);
+        return ((TraciDouble)result.Data).Value;
         }
 
     /// <summary>
@@ -280,8 +280,8 @@ public partial class LaneAreaDetector
     /// </remarks>
     public int GetLastIntervalVehicleNumber(string detectorId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_LANEAREA_VARIABLE, TraCIConstants.VAR_LAST_INTERVAL_NUMBER, detectorId);
-        return ((TraCIInteger)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(LANEAREA_VARIABLE, TraciConstants.VAR_LAST_INTERVAL_NUMBER, detectorId);
+        return ((TraciInteger)result.Data).Value;
         }
 
     /// <summary>
@@ -296,10 +296,10 @@ public partial class LaneAreaDetector
     public double GetLastIntervalMaxJamLengthInMeters(string detectorId)
         {
         var result = _helper.ExecuteGetCommand(
-            TraCIConstants.CMD_GET_LANEAREA_VARIABLE,
-            TraCIConstants.VAR_LAST_INTERVAL_MAX_JAM_LENGTH_METERS,
+            LANEAREA_VARIABLE,
+            TraciConstants.VAR_LAST_INTERVAL_MAX_JAM_LENGTH_METERS,
             detectorId
         );
-        return ((TraCIDouble)result.Value).Value;
+        return ((TraciDouble)result.Data).Value;
         }
     }

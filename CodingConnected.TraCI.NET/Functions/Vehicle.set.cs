@@ -1,5 +1,6 @@
-﻿using CodingConnected.TraCI.NET.DataTypes;
-
+using CodingConnected.TraCI.NET.DataTypes;
+using static CodingConnected.TraCI.NET.DataTypes.TraciConstants.Command;
+using static CodingConnected.TraCI.NET.DataTypes.TraciConstants.Command.Set;
 namespace CodingConnected.TraCI.NET.Functions;
 
 public partial class Vehicle
@@ -26,24 +27,24 @@ public partial class Vehicle
         string edgeId,
         double endPosition = 1.0,
         byte laneIndex = 0,
-        double duration = TraCIConstants.INVALID_DOUBLE_VALUE,
+        double duration = TraciConstants.INVALID_DOUBLE_VALUE,
         StopFlag flags = StopFlag.STOP_DEFAULT,
-        double startPosition = TraCIConstants.INVALID_DOUBLE_VALUE,
-        double until = TraCIConstants.INVALID_DOUBLE_VALUE
+        double startPosition = TraciConstants.INVALID_DOUBLE_VALUE,
+        double until = TraciConstants.INVALID_DOUBLE_VALUE
     )
         {
-        TraCICompoundObject tmp =
+        TraciCompoundObject tmp =
         [
-            new TraCIString() { Value = edgeId },
-            new TraCIDouble() { Value = endPosition },
-            new TraCIByte() { Value = laneIndex },
-            new TraCIDouble() { Value = duration },
-            new TraCIByte() { Value = (byte)flags },
-            new TraCIDouble() { Value = startPosition },
-            new TraCIDouble() { Value = until },
+            new TraciString(edgeId),
+            new TraciDouble(endPosition),
+            new TraciByte(laneIndex),
+            new TraciDouble(duration),
+            new TraciByte((byte)flags),
+            new TraciDouble(startPosition),
+            new TraciDouble(until),
         ];
 
-        return _helper.ExecuteSetCommand(vehicleId, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.CMD_STOP, tmp);
+        return _helper.ExecuteSetCommand(vehicleId, VEHICLE_VARIABLE, STOP, tmp);
         }
 
     /// <summary>
@@ -63,13 +64,10 @@ public partial class Vehicle
     public bool SetBusStop(
         string vehicleId,
         string stopId,
-        double duration = TraCIConstants.INVALID_DOUBLE_VALUE,
-        double until = TraCIConstants.INVALID_DOUBLE_VALUE,
+        double duration = TraciConstants.INVALID_DOUBLE_VALUE,
+        double until = TraciConstants.INVALID_DOUBLE_VALUE,
         StopFlag flags = StopFlag.STOP_DEFAULT
-    )
-        {
-        return SetStop(vehicleId, stopId, duration: duration, until: until, flags: flags | StopFlag.STOP_BUS_STOP);
-        }
+    ) => SetStop(vehicleId, stopId, duration: duration, until: until, flags: flags | StopFlag.STOP_BUS_STOP);
 
     /// <summary>
     /// Lets the vehicle stop at the given edge, at the given position and lane.<para/>
@@ -88,13 +86,10 @@ public partial class Vehicle
     public bool SetContainerStop(
         string vehicleId,
         string stopId,
-        double duration = TraCIConstants.INVALID_DOUBLE_VALUE,
-        double until = TraCIConstants.INVALID_DOUBLE_VALUE,
+        double duration = TraciConstants.INVALID_DOUBLE_VALUE,
+        double until = TraciConstants.INVALID_DOUBLE_VALUE,
         StopFlag flags = StopFlag.STOP_DEFAULT
-    )
-        {
-        return SetStop(vehicleId, stopId, duration: duration, until: until, flags: flags | StopFlag.STOP_CONTAINER_STOP);
-        }
+    ) => SetStop(vehicleId, stopId, duration: duration, until: until, flags: flags | StopFlag.STOP_CONTAINER_STOP);
 
     /// <summary>
     /// Lets the vehicle stop at the given edge, at the given position and lane.<para/>
@@ -113,13 +108,10 @@ public partial class Vehicle
     public bool SetChargingStationStop(
         string vehicleId,
         string stopId,
-        double duration = TraCIConstants.INVALID_DOUBLE_VALUE,
-        double until = TraCIConstants.INVALID_DOUBLE_VALUE,
+        double duration = TraciConstants.INVALID_DOUBLE_VALUE,
+        double until = TraciConstants.INVALID_DOUBLE_VALUE,
         StopFlag flags = StopFlag.STOP_DEFAULT
-    )
-        {
-        return SetStop(vehicleId, stopId, duration: duration, until: until, flags: flags | StopFlag.STOP_CHARGING_STATION);
-        }
+    ) => SetStop(vehicleId, stopId, duration: duration, until: until, flags: flags | StopFlag.STOP_CHARGING_STATION);
 
     /// <summary>
     /// Lets the vehicle stop at the given edge, at the given position and lane.<para/>
@@ -138,13 +130,10 @@ public partial class Vehicle
     public bool SetParkingAreaStop(
         string vehicleId,
         string stopId,
-        double duration = TraCIConstants.INVALID_DOUBLE_VALUE,
-        double until = TraCIConstants.INVALID_DOUBLE_VALUE,
+        double duration = TraciConstants.INVALID_DOUBLE_VALUE,
+        double until = TraciConstants.INVALID_DOUBLE_VALUE,
         StopFlag flags = StopFlag.STOP_PARKING
-    )
-        {
-        return SetStop(vehicleId, stopId, duration: duration, until: until, flags: flags | StopFlag.STOP_PARKING_AREA);
-        }
+    ) => SetStop(vehicleId, stopId, duration: duration, until: until, flags: flags | StopFlag.STOP_PARKING_AREA);
 
     /// <summary>
     /// Forces a lane change to the lane with the given index; if successful, the lane will be chosen for the given amount of time (in seconds).
@@ -158,8 +147,8 @@ public partial class Vehicle
     /// </remarks>
     public bool ChangeLane(string vehicleId, int laneIndex, double duration)
         {
-        TraCICompoundObject tmp = [new TraCIByte() { Value = (byte)laneIndex }, new TraCIDouble() { Value = duration }];
-        return _helper.ExecuteSetCommand(vehicleId, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.CMD_CHANGELANE, tmp);
+        TraciCompoundObject tmp = [new TraciByte((byte)laneIndex), new TraciDouble(duration)];
+        return _helper.ExecuteSetCommand(vehicleId, VEHICLE_VARIABLE, CHANGELANE, tmp);
         }
 
     /// <summary>
@@ -171,8 +160,8 @@ public partial class Vehicle
     /// <returns></returns>
     public bool ChangeSublane(string vehicleId, double lateralDistance)
         {
-        var tmp = new TraCIDouble() { Value = lateralDistance };
-        return _helper.ExecuteSetCommand(vehicleId, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.CMD_CHANGESUBLANE, tmp);
+        var tmp = new TraciDouble(lateralDistance);
+        return _helper.ExecuteSetCommand(vehicleId, VEHICLE_VARIABLE, CHANGESUBLANE, tmp);
         }
 
     /// <summary>
@@ -187,8 +176,8 @@ public partial class Vehicle
     /// </remarks>
     public bool SlowDown(string vehicleId, double speed, double duration)
         {
-        TraCICompoundObject tmp = [new TraCIDouble() { Value = speed }, new TraCIDouble() { Value = duration }];
-        return _helper.ExecuteSetCommand(vehicleId, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.CMD_SLOWDOWN, tmp);
+        TraciCompoundObject tmp = [new TraciDouble(speed), new TraciDouble(duration)];
+        return _helper.ExecuteSetCommand(vehicleId, VEHICLE_VARIABLE, SLOWDOWN, tmp);
         }
 
     /// <summary>
@@ -201,8 +190,8 @@ public partial class Vehicle
     /// </remarks>
     public bool Resume(string vehicleId)
         {
-        TraCICompoundObject tmp = [];
-        return _helper.ExecuteSetCommand(vehicleId, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.CMD_RESUME, tmp);
+        TraciCompoundObject tmp = [];
+        return _helper.ExecuteSetCommand(vehicleId, VEHICLE_VARIABLE, RESUME, tmp);
         }
 
     /// <summary>
@@ -214,8 +203,8 @@ public partial class Vehicle
     /// <see href="https://sumo.dlr.de/pydoc/traci._vehicle.html#VehicleDomain-changeTarget"/>
     public bool ChangeTarget(string vehicleId, string desitinationEdgeId)
         {
-        var tmp = new TraCIString() { Value = desitinationEdgeId };
-        return _helper.ExecuteSetCommand(vehicleId, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.CMD_CHANGETARGET, tmp);
+        TraciString tmp = new(desitinationEdgeId);
+        return _helper.ExecuteSetCommand(vehicleId, VEHICLE_VARIABLE, CHANGETARGET, tmp);
         }
 
     /// <summary>
@@ -229,8 +218,8 @@ public partial class Vehicle
     /// <returns></returns>
     public bool SetSpeed(string vehicleId, double speed)
         {
-        var tmp = new TraCIDouble() { Value = speed };
-        return _helper.ExecuteSetCommand(vehicleId, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_SPEED, tmp);
+        TraciDouble tmp = new(speed);
+        return _helper.ExecuteSetCommand(vehicleId, VEHICLE_VARIABLE, TraciConstants.VAR_SPEED, tmp);
         }
 
     /// <summary>
@@ -245,12 +234,8 @@ public partial class Vehicle
     /// </remarks>
     public bool SetAcceleration(string vehicleId, double acceleration, double duration)
         {
-        var tmp = new TraCICompoundObject()
-        {
-            new TraCIDouble() { Value = acceleration },
-            new TraCIDouble() { Value = duration },
-        };
-        return _helper.ExecuteSetCommand(vehicleId, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_ACCELERATION, tmp);
+        var tmp = new TraciCompoundObject() { new TraciDouble(acceleration), new TraciDouble(duration) };
+        return _helper.ExecuteSetCommand(vehicleId, VEHICLE_VARIABLE, TraciConstants.VAR_ACCELERATION, tmp);
         }
 
     /// <summary>
@@ -265,14 +250,10 @@ public partial class Vehicle
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/pydoc/traci._vehicle.html#VehicleDomain-setPreviousSpeed"/>
     /// </remarks>
-    public bool SetPreviousSpeed(string vehicleId, double speed, double acceleration = TraCIConstants.INVALID_DOUBLE_VALUE)
+    public bool SetPreviousSpeed(string vehicleId, double speed, double acceleration = TraciConstants.INVALID_DOUBLE_VALUE)
         {
-        var tmp = new TraCICompoundObject()
-        {
-            new TraCIDouble() { Value = speed },
-            new TraCIDouble() { Value = acceleration },
-        };
-        return _helper.ExecuteSetCommand(vehicleId, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_PREV_SPEED, tmp);
+        var tmp = new TraciCompoundObject() { new TraciDouble(speed), new TraciDouble(acceleration) };
+        return _helper.ExecuteSetCommand(vehicleId, VEHICLE_VARIABLE, TraciConstants.VAR_PREV_SPEED, tmp);
         }
 
     /// <summary>
@@ -289,14 +270,8 @@ public partial class Vehicle
     /// </remarks>
     public bool SetColor(string vehicleId, int r, int g, int b, int a)
         {
-        var color = new Color()
-            {
-            R = new() { Value = (byte)r },
-            G = new() { Value = (byte)g },
-            B = new() { Value = (byte)b },
-            A = new() { Value = (byte)a },
-            };
-        return _helper.ExecuteSetCommand(vehicleId, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_COLOR, color);
+        Color color = new(r, g, b, a);
+        return _helper.ExecuteSetCommand(vehicleId, VEHICLE_VARIABLE, TraciConstants.VAR_COLOR, color);
         }
 
     /// <summary>
@@ -310,8 +285,8 @@ public partial class Vehicle
     /// </remarks>
     public bool SetRoutID(string vehicleId, string routeId)
         {
-        var tmp = new TraCIString() { Value = routeId };
-        return _helper.ExecuteSetCommand(vehicleId, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_ROUTE_ID, tmp);
+        TraciString tmp = new(routeId);
+        return _helper.ExecuteSetCommand(vehicleId, VEHICLE_VARIABLE, TraciConstants.VAR_ROUTE_ID, tmp);
         }
 
     /// <summary>
@@ -325,8 +300,8 @@ public partial class Vehicle
     /// </remarks>
     public bool SetRoute(string vehicleId, List<string> edgeList)
         {
-        var tmp = new TraCIStringList() { Value = edgeList };
-        return _helper.ExecuteSetCommand(vehicleId, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_ROUTE, tmp);
+        TraciStringList tmp = new(edgeList);
+        return _helper.ExecuteSetCommand(vehicleId, VEHICLE_VARIABLE, TraciConstants.VAR_ROUTE, tmp);
         }
 
     /// <summary>
@@ -341,8 +316,8 @@ public partial class Vehicle
     public bool RerouteParkingArea(string vehicleId, string parkingAreaId)
         {
         // TODO: check if this is correct string or compound object
-        var tmp = new TraCICompoundObject { new TraCIString() { Value = parkingAreaId } };
-        return _helper.ExecuteSetCommand(vehicleId, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.CMD_REROUTE_TO_PARKING, tmp);
+        TraciCompoundObject tmp = [new TraciString(parkingAreaId)];
+        return _helper.ExecuteSetCommand(vehicleId, VEHICLE_VARIABLE, REROUTE_TO_PARKING, tmp);
         }
 
     /// <summary>
@@ -355,8 +330,8 @@ public partial class Vehicle
     /// <returns></returns>
     public bool DisPatchTaxi(string vehicleId, List<string> reservations)
         {
-        var tmp = new TraCIStringList() { Value = reservations };
-        return _helper.ExecuteSetCommand(vehicleId, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.CMD_TAXI_DISPATCH, tmp);
+        TraciStringList tmp = new(reservations);
+        return _helper.ExecuteSetCommand(vehicleId, VEHICLE_VARIABLE, TAXI_DISPATCH, tmp);
         }
 
     /// <summary>
@@ -373,20 +348,20 @@ public partial class Vehicle
     /// </remarks>
     public bool SetAdaptedTraveltime(string vehicleId, string edgeId, double? time = null, double? beginTime = null, double? endTime = null)
         {
-        TraCICompoundObject tmp = (time, beginTime) switch
+        TraciCompoundObject tmp = (time, beginTime) switch
         //switch (time, beginTime)
             {
-                (null, _) => [new TraCIString() { Value = edgeId }],
-                (not null, null) => [new TraCIString() { Value = edgeId }, new TraCIDouble() { Value = time.Value }],
+                (null, _) => [new TraciString(edgeId)],
+                (not null, null) => [new TraciString(edgeId), new TraciDouble(time.Value)],
                 (not null, not null) =>
                 [
-                    new TraCIDouble() { Value = beginTime.Value },
-                new TraCIDouble() { Value = endTime.Value },
-                new TraCIString() { Value = edgeId },
-                new TraCIDouble() { Value = time.Value },
+                    new TraciDouble(beginTime.Value),
+                new TraciDouble(endTime.Value),
+                new TraciString(edgeId),
+                new TraciDouble(time.Value),
             ],
                 };
-        return _helper.ExecuteSetCommand(vehicleId, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_EDGE_TRAVELTIME, tmp);
+        return _helper.ExecuteSetCommand(vehicleId, VEHICLE_VARIABLE, TraciConstants.VAR_EDGE_TRAVELTIME, tmp);
         }
 
     /// <summary>
@@ -401,19 +376,19 @@ public partial class Vehicle
     ///
     public bool SetEffort(string vehicleId, string edgeId, double? effort = null, double? beginTime = null, double? endTime = null)
         {
-        TraCICompoundObject tmp = (effort, beginTime) switch
+        TraciCompoundObject tmp = (effort, beginTime) switch
             {
-                (null, _) => [new TraCIString() { Value = edgeId }],
-                (not null, null) => [new TraCIString() { Value = edgeId }, new TraCIDouble() { Value = effort.Value }],
+                (null, _) => [new TraciString(edgeId)],
+                (not null, null) => [new TraciString(edgeId), new TraciDouble(effort.Value)],
                 (not null, not null) =>
                 [
-                    new TraCIDouble() { Value = beginTime.Value },
-                new TraCIDouble() { Value = endTime.Value },
-                new TraCIString() { Value = edgeId },
-                new TraCIDouble() { Value = effort.Value },
+                    new TraciDouble(beginTime.Value),
+                new TraciDouble(endTime.Value),
+                new TraciString(edgeId),
+                new TraciDouble(effort.Value),
             ],
                 };
-        return _helper.ExecuteSetCommand(vehicleId, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_EDGE_EFFORT, tmp);
+        return _helper.ExecuteSetCommand(vehicleId, VEHICLE_VARIABLE, TraciConstants.VAR_EDGE_EFFORT, tmp);
         }
 
     /// <summary>
@@ -427,8 +402,8 @@ public partial class Vehicle
     /// </remarks>
     public bool SetSignals(string vehicleId, VehicleSignalling signals)
         {
-        var tmp = new TraCIInteger() { Value = (int)signals };
-        return _helper.ExecuteSetCommand(vehicleId, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_ROUTE, tmp);
+        TraciInteger tmp = new((int)signals);
+        return _helper.ExecuteSetCommand(vehicleId, VEHICLE_VARIABLE, TraciConstants.VAR_ROUTE, tmp);
         }
 
     /// <summary>
@@ -439,8 +414,8 @@ public partial class Vehicle
     /// <returns></returns>
     public bool SetRoutingMode(string vehicleId, RoutingMode routingMode)
         {
-        var tmp = new TraCIInteger() { Value = (int)routingMode };
-        return _helper.ExecuteSetCommand(vehicleId, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_ROUTING_MODE, tmp);
+        TraciInteger tmp = new((int)routingMode);
+        return _helper.ExecuteSetCommand(vehicleId, VEHICLE_VARIABLE, TraciConstants.VAR_ROUTING_MODE, tmp);
         }
 
     /// <summary>
@@ -456,13 +431,8 @@ public partial class Vehicle
     /// </remarks>
     public bool MoveTo(string vehicleId, string laneId, double position, MoveReason reason = MoveReason.MoveAutomatic)
         {
-        TraCICompoundObject tmp =
-        [
-            new TraCIString() { Value = laneId },
-            new TraCIDouble() { Value = position },
-            new TraCIInteger() { Value = (int)reason },
-        ];
-        return _helper.ExecuteSetCommand(vehicleId, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_MOVE_TO, tmp);
+        TraciCompoundObject tmp = [new TraciString(laneId), new TraciDouble(position), new TraciInteger((int)reason)];
+        return _helper.ExecuteSetCommand(vehicleId, VEHICLE_VARIABLE, TraciConstants.VAR_MOVE_TO, tmp);
         }
 
     /// <summary>
@@ -486,22 +456,22 @@ public partial class Vehicle
         int lane,
         double xPosition,
         double yPosition,
-        double angle = TraCIConstants.INVALID_DOUBLE_VALUE,
+        double angle = TraciConstants.INVALID_DOUBLE_VALUE,
         int keepRoute = 1,
         double matchThreshould = 100.0
     )
         {
-        TraCICompoundObject tmp =
+        TraciCompoundObject tmp =
         [
-            new TraCIString() { Value = edgeId },
-            new TraCIInteger() { Value = lane },
-            new TraCIDouble() { Value = xPosition },
-            new TraCIDouble() { Value = yPosition },
-            new TraCIDouble() { Value = angle },
-            new TraCIByte() { Value = (byte)keepRoute },
-            new TraCIDouble() { Value = matchThreshould },
+            new TraciString(edgeId),
+            new TraciInteger(lane),
+            new TraciDouble(xPosition),
+            new TraciDouble(yPosition),
+            new TraciDouble(angle),
+            new TraciByte((byte)keepRoute),
+            new TraciDouble(matchThreshould),
         ];
-        return _helper.ExecuteSetCommand(id, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.MOVE_TO_XY, tmp);
+        return _helper.ExecuteSetCommand(id, VEHICLE_VARIABLE, TraciConstants.MOVE_TO_XY, tmp);
         }
 
     /// <summary>
@@ -528,26 +498,26 @@ public partial class Vehicle
         string edgeId,
         double position = 1.0,
         int laneIndex = 0,
-        double duration = TraCIConstants.INVALID_DOUBLE_VALUE,
+        double duration = TraciConstants.INVALID_DOUBLE_VALUE,
         StopFlag flags = StopFlag.STOP_DEFAULT,
-        double startPosition = TraCIConstants.INVALID_DOUBLE_VALUE,
-        double until = TraCIConstants.INVALID_DOUBLE_VALUE,
+        double startPosition = TraciConstants.INVALID_DOUBLE_VALUE,
+        double until = TraciConstants.INVALID_DOUBLE_VALUE,
         int teleport = 0
     )
         {
-        var tmp = new TraCICompoundObject()
+        var tmp = new TraciCompoundObject()
         {
-            new TraCIString() { Value = edgeId },
-            new TraCIDouble() { Value = position },
-            new TraCIInteger() { Value = laneIndex },
-            new TraCIDouble() { Value = duration },
-            new TraCIInteger() { Value = (int)flags },
-            new TraCIDouble() { Value = startPosition },
-            new TraCIDouble() { Value = until },
-            new TraCIInteger() { Value = nextStopIndex },
-            new TraCIByte() { Value = (byte)teleport },
+            new TraciString(edgeId),
+            new TraciDouble(position),
+            new TraciInteger(laneIndex),
+            new TraciDouble(duration),
+            new TraciInteger((int)flags),
+            new TraciDouble(startPosition),
+            new TraciDouble(until),
+            new TraciInteger(nextStopIndex),
+            new TraciByte((byte)teleport),
         };
-        return _helper.ExecuteSetCommand(vehicleId, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.CMD_REPLACE_STOP, tmp);
+        return _helper.ExecuteSetCommand(vehicleId, VEHICLE_VARIABLE, REPLACE_STOP, tmp);
         }
 
     /// <summary>
@@ -577,26 +547,26 @@ public partial class Vehicle
         string edgeId,
         double position = 1.0,
         int laneIndex = 0,
-        double duration = TraCIConstants.INVALID_DOUBLE_VALUE,
+        double duration = TraciConstants.INVALID_DOUBLE_VALUE,
         StopFlag flags = StopFlag.STOP_DEFAULT,
-        double startPosition = TraCIConstants.INVALID_DOUBLE_VALUE,
-        double until = TraCIConstants.INVALID_DOUBLE_VALUE,
+        double startPosition = TraciConstants.INVALID_DOUBLE_VALUE,
+        double until = TraciConstants.INVALID_DOUBLE_VALUE,
         int teleport = 0
     )
         {
-        var tmp = new TraCICompoundObject()
+        var tmp = new TraciCompoundObject()
         {
-            new TraCIString() { Value = edgeId },
-            new TraCIDouble() { Value = position },
-            new TraCIInteger() { Value = laneIndex },
-            new TraCIDouble() { Value = duration },
-            new TraCIInteger() { Value = (int)flags },
-            new TraCIDouble() { Value = startPosition },
-            new TraCIDouble() { Value = until },
-            new TraCIInteger() { Value = nextStopIndex },
-            new TraCIByte() { Value = (byte)teleport },
+            new TraciString(edgeId),
+            new TraciDouble(position),
+            new TraciInteger(laneIndex),
+            new TraciDouble(duration),
+            new TraciInteger((int)flags),
+            new TraciDouble(startPosition),
+            new TraciDouble(until),
+            new TraciInteger(nextStopIndex),
+            new TraciByte((byte)teleport),
         };
-        return _helper.ExecuteSetCommand(vehicleId, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.CMD_INSERT_STOP, tmp);
+        return _helper.ExecuteSetCommand(vehicleId, VEHICLE_VARIABLE, INSERT_STOP, tmp);
         }
 
     /// <summary>
@@ -613,14 +583,14 @@ public partial class Vehicle
     /// </remarks>
     public bool SetStopParameter(string vehicleId, int nextStopIndex, string param, string value, bool customParam = false)
         {
-        var tmp = new TraCICompoundObject()
+        var tmp = new TraciCompoundObject()
         {
-            new TraCIInteger() { Value = nextStopIndex },
-            new TraCIString() { Value = param },
-            new TraCIString() { Value = value },
-            new TraCIByte() { Value = customParam ? (byte)1 : (byte)0 },
+            new TraciInteger(nextStopIndex),
+            new TraciString(param),
+            new TraciString(value),
+            new TraciByte(customParam ? (byte)1 : (byte)0),
         };
-        return _helper.ExecuteSetCommand(vehicleId, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_STOP_PARAMETER, tmp);
+        return _helper.ExecuteSetCommand(vehicleId, VEHICLE_VARIABLE, TraciConstants.VAR_STOP_PARAMETER, tmp);
         }
 
     /// <summary>
@@ -639,8 +609,8 @@ public partial class Vehicle
             {
             SetRoutingMode(vehicleId, RoutingMode.AggregatedCustom);
             }
-        TraCICompoundObject tmp = [];
-        var result = _helper.ExecuteSetCommand(vehicleId, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.CMD_REROUTE_TRAVELTIME, tmp);
+        TraciCompoundObject tmp = [];
+        var result = _helper.ExecuteSetCommand(vehicleId, VEHICLE_VARIABLE, REROUTE_TRAVELTIME, tmp);
         if (currentTravelTimes && routingMode == (int)RoutingMode.Default)
             {
             SetRoutingMode(vehicleId, (RoutingMode)routingMode);
@@ -658,8 +628,8 @@ public partial class Vehicle
     /// </remarks>
     public bool RerouteEffort(string vehicleId)
         {
-        TraCICompoundObject tmp = [];
-        return _helper.ExecuteSetCommand(vehicleId, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.CMD_REROUTE_EFFORT, tmp);
+        TraciCompoundObject tmp = [];
+        return _helper.ExecuteSetCommand(vehicleId, VEHICLE_VARIABLE, REROUTE_EFFORT, tmp);
         }
 
     /// <summary>
@@ -673,8 +643,8 @@ public partial class Vehicle
     /// </remarks>
     public bool SetSpeedMode(string vehicleId, SpeedMode speedMode)
         {
-        var tmp = new TraCIInteger() { Value = (int)speedMode };
-        return _helper.ExecuteSetCommand(vehicleId, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_SPEEDSETMODE, tmp);
+        TraciInteger tmp = new((int)speedMode);
+        return _helper.ExecuteSetCommand(vehicleId, VEHICLE_VARIABLE, TraciConstants.VAR_SPEEDSETMODE, tmp);
         }
 
     /// <summary>
@@ -688,8 +658,8 @@ public partial class Vehicle
     /// </remarks>
     public bool SetSpeedFactor(string vehicleId, double factor)
         {
-        var tmp = new TraCIDouble() { Value = factor };
-        return _helper.ExecuteSetCommand(vehicleId, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_SPEED_FACTOR, tmp);
+        TraciDouble tmp = new(factor);
+        return _helper.ExecuteSetCommand(vehicleId, VEHICLE_VARIABLE, TraciConstants.VAR_SPEED_FACTOR, tmp);
         }
 
     /// <summary>
@@ -701,8 +671,8 @@ public partial class Vehicle
     /// <see href="https://sumo.dlr.de/pydoc/traci._vehicle.html#VehicleDomain-setMaxSpeed"/>
     public bool SetMaxSpeed(string vehicleId, double speed)
         {
-        var tmp = new TraCIDouble() { Value = speed };
-        return _helper.ExecuteSetCommand(vehicleId, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_MAXSPEED, tmp);
+        TraciDouble tmp = new(speed);
+        return _helper.ExecuteSetCommand(vehicleId, VEHICLE_VARIABLE, TraciConstants.VAR_MAXSPEED, tmp);
         }
 
     /// <summary>
@@ -731,12 +701,7 @@ public partial class Vehicle
     )
         {
         var tmp = ((int)stragic * 1) + ((int)cooperative * 4) + ((int)speed * 16) + ((int)right * 32) + ((int)respect * 64) + ((int)sublane * 128);
-        return _helper.ExecuteSetCommand(
-            id,
-            TraCIConstants.CMD_SET_VEHICLE_VARIABLE,
-            TraCIConstants.VAR_LANECHANGE_MODE,
-            new TraCIInteger() { Value = tmp }
-        );
+        return _helper.ExecuteSetCommand(id, VEHICLE_VARIABLE, TraciConstants.VAR_LANECHANGE_MODE, new TraciInteger(tmp));
         }
 
     /// <summary>
@@ -748,10 +713,7 @@ public partial class Vehicle
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/pydoc/traci._vehicle.html#VehicleDomain-updateBestLanes"/>
     /// </remarks>
-    public bool UpdateBestLanes(string vehicleId)
-        {
-        return _helper.ExecuteSetCommand(vehicleId, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_UPDATE_BESTLANES);
-        }
+    public bool UpdateBestLanes(string vehicleId) => _helper.ExecuteSetCommand(vehicleId, VEHICLE_VARIABLE, TraciConstants.VAR_UPDATE_BESTLANES);
 
     /// <summary>
     /// Adds the defined vehicle.<para/>
@@ -799,24 +761,24 @@ public partial class Vehicle
     )
         {
         depart = depart is null ? _simulation.GetTime().ToString() : depart;
-        var tmp = new TraCICompoundObject()
+        var tmp = new TraciCompoundObject()
         {
-            new TraCIString() { Value = routeId },
-            new TraCIString() { Value = vehicleTypeId },
-            new TraCIString() { Value = depart },
-            new TraCIString() { Value = departLane },
-            new TraCIString() { Value = departPosition },
-            new TraCIString() { Value = departSpeed },
-            new TraCIString() { Value = arrivalLane },
-            new TraCIString() { Value = arrivalPosition },
-            new TraCIString() { Value = arrivalSpeed },
-            new TraCIString() { Value = fromTaz },
-            new TraCIString() { Value = toTaz },
-            new TraCIString() { Value = line },
-            new TraCIInteger() { Value = personCapacity },
-            new TraCIInteger() { Value = personNumber },
+            new TraciString(routeId),
+            new TraciString(vehicleTypeId),
+            new TraciString(depart),
+            new TraciString(departLane),
+            new TraciString(departPosition),
+            new TraciString(departSpeed),
+            new TraciString(arrivalLane),
+            new TraciString(arrivalPosition),
+            new TraciString(arrivalSpeed),
+            new TraciString(fromTaz),
+            new TraciString(toTaz),
+            new TraciString(line),
+            new TraciInteger(personCapacity),
+            new TraciInteger(personNumber),
         };
-        return _helper.ExecuteSetCommand(vehicleId, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.ADD_FULL, tmp);
+        return _helper.ExecuteSetCommand(vehicleId, VEHICLE_VARIABLE, TraciConstants.ADD_FULL, tmp);
         }
 
     /// <summary>
@@ -830,8 +792,8 @@ public partial class Vehicle
     /// </remarks>
     public bool Remove(string vehicleId, RemoveReason reason)
         {
-        var tmp = new TraCIByte() { Value = (byte)reason };
-        return _helper.ExecuteSetCommand(vehicleId, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.REMOVE, tmp);
+        var tmp = new TraciByte((byte)reason);
+        return _helper.ExecuteSetCommand(vehicleId, VEHICLE_VARIABLE, TraciConstants.REMOVE, tmp);
         }
 
     /// <summary>
@@ -845,8 +807,8 @@ public partial class Vehicle
     /// </remarks>
     public bool SetLength(string vehicleId, double length)
         {
-        var tmp = new TraCIDouble() { Value = length };
-        return _helper.ExecuteSetCommand(vehicleId, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_LENGTH, tmp);
+        var tmp = new TraciDouble(length);
+        return _helper.ExecuteSetCommand(vehicleId, VEHICLE_VARIABLE, TraciConstants.VAR_LENGTH, tmp);
         }
 
     /// <summary>
@@ -861,8 +823,8 @@ public partial class Vehicle
 
     public bool SetVehicleClass(string vehicleId, string vehicleClass)
         {
-        var tmp = new TraCIString() { Value = vehicleClass };
-        return _helper.ExecuteSetCommand(vehicleId, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_VEHICLECLASS, tmp);
+        TraciString tmp = new(vehicleClass);
+        return _helper.ExecuteSetCommand(vehicleId, VEHICLE_VARIABLE, TraciConstants.VAR_VEHICLECLASS, tmp);
         }
 
     /// <summary>
@@ -876,8 +838,8 @@ public partial class Vehicle
     /// </remarks>
     public bool SetEmissionClass(string vehicleId, string emissionClass)
         {
-        var tmp = new TraCIString() { Value = emissionClass };
-        return _helper.ExecuteSetCommand(vehicleId, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_EMISSIONCLASS, tmp);
+        TraciString tmp = new(emissionClass);
+        return _helper.ExecuteSetCommand(vehicleId, VEHICLE_VARIABLE, TraciConstants.VAR_EMISSIONCLASS, tmp);
         }
 
     /// <summary>
@@ -891,8 +853,8 @@ public partial class Vehicle
     /// </remarks>
     public bool SetWidth(string vehicleId, double width)
         {
-        var tmp = new TraCIDouble() { Value = width };
-        return _helper.ExecuteSetCommand(vehicleId, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_WIDTH, tmp);
+        var tmp = new TraciDouble(width);
+        return _helper.ExecuteSetCommand(vehicleId, VEHICLE_VARIABLE, TraciConstants.VAR_WIDTH, tmp);
         }
 
     /// <summary>
@@ -906,8 +868,8 @@ public partial class Vehicle
     /// </remarks>
     public bool SetHeight(string vehicleId, double height)
         {
-        var tmp = new TraCIDouble() { Value = height };
-        return _helper.ExecuteSetCommand(vehicleId, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_HEIGHT, tmp);
+        var tmp = new TraciDouble(height);
+        return _helper.ExecuteSetCommand(vehicleId, VEHICLE_VARIABLE, TraciConstants.VAR_HEIGHT, tmp);
         }
 
     /// <summary>
@@ -921,8 +883,8 @@ public partial class Vehicle
     /// </remarks>
     public bool SetMinGap(string vehicleId, double minGap)
         {
-        var tmp = new TraCIDouble() { Value = minGap };
-        return _helper.ExecuteSetCommand(vehicleId, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_MINGAP, tmp);
+        var tmp = new TraciDouble(minGap);
+        return _helper.ExecuteSetCommand(vehicleId, VEHICLE_VARIABLE, TraciConstants.VAR_MINGAP, tmp);
         }
 
     /// <summary>
@@ -936,8 +898,8 @@ public partial class Vehicle
     /// </remarks>
     public bool SetShapeClass(string vehicleId, string shapeClass)
         {
-        var tmp = new TraCIString() { Value = shapeClass };
-        return _helper.ExecuteSetCommand(vehicleId, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_SHAPECLASS, tmp);
+        TraciString tmp = new(shapeClass);
+        return _helper.ExecuteSetCommand(vehicleId, VEHICLE_VARIABLE, TraciConstants.VAR_SHAPECLASS, tmp);
         }
 
     /// <summary>
@@ -951,8 +913,8 @@ public partial class Vehicle
     /// </remarks>
     public bool SetAccel(string vehicleId, double acceleration)
         {
-        var tmp = new TraCIDouble() { Value = acceleration };
-        return _helper.ExecuteSetCommand(vehicleId, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_ACCEL, tmp);
+        var tmp = new TraciDouble(acceleration);
+        return _helper.ExecuteSetCommand(vehicleId, VEHICLE_VARIABLE, TraciConstants.VAR_ACCEL, tmp);
         }
 
     /// <summary>
@@ -966,8 +928,8 @@ public partial class Vehicle
     /// </remarks>
     public bool SetDecel(string vehicleId, double deceleration)
         {
-        var tmp = new TraCIDouble() { Value = deceleration };
-        return _helper.ExecuteSetCommand(vehicleId, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_DECEL, tmp);
+        var tmp = new TraciDouble(deceleration);
+        return _helper.ExecuteSetCommand(vehicleId, VEHICLE_VARIABLE, TraciConstants.VAR_DECEL, tmp);
         }
 
     /// <summary>
@@ -981,8 +943,8 @@ public partial class Vehicle
     /// </remarks>
     public bool SetImperfection(string vehicleId, double imperfection)
         {
-        var tmp = new TraCIDouble() { Value = imperfection };
-        return _helper.ExecuteSetCommand(vehicleId, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_IMPERFECTION, tmp);
+        var tmp = new TraciDouble(imperfection);
+        return _helper.ExecuteSetCommand(vehicleId, VEHICLE_VARIABLE, TraciConstants.VAR_IMPERFECTION, tmp);
         }
 
     /// <summary>
@@ -996,8 +958,8 @@ public partial class Vehicle
     /// </remarks>
     public bool SetTau(string vehicleId, double tau)
         {
-        var tmp = new TraCIDouble() { Value = tau };
-        return _helper.ExecuteSetCommand(vehicleId, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_TAU, tmp);
+        var tmp = new TraciDouble(tau);
+        return _helper.ExecuteSetCommand(vehicleId, VEHICLE_VARIABLE, TraciConstants.VAR_TAU, tmp);
         }
 
     /// <summary>
@@ -1011,8 +973,8 @@ public partial class Vehicle
     /// </remarks>
     public bool SetType(string vehicleId, string type)
         {
-        var tmp = new TraCIString() { Value = type };
-        return _helper.ExecuteSetCommand(vehicleId, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_IMPERFECTION, tmp);
+        TraciString tmp = new(type);
+        return _helper.ExecuteSetCommand(vehicleId, VEHICLE_VARIABLE, TraciConstants.VAR_IMPERFECTION, tmp);
         }
 
     /// <summary>
@@ -1026,8 +988,8 @@ public partial class Vehicle
     /// </remarks>
     public bool SetVia(string vehicleId, List<string> via)
         {
-        var tmp = new TraCIStringList() { Value = via };
-        return _helper.ExecuteSetCommand(vehicleId, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_VIA, tmp);
+        TraciStringList tmp = new(via);
+        return _helper.ExecuteSetCommand(vehicleId, VEHICLE_VARIABLE, TraciConstants.VAR_VIA, tmp);
         }
 
     /// <summary>
@@ -1041,8 +1003,8 @@ public partial class Vehicle
     /// </remarks>
     public bool SetMaxSpeedLat(string vehicleId, double maxSpeed)
         {
-        var tmp = new TraCIDouble() { Value = maxSpeed };
-        return _helper.ExecuteSetCommand(vehicleId, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_MAXSPEED_LAT, tmp);
+        TraciDouble tmp = new(maxSpeed);
+        return _helper.ExecuteSetCommand(vehicleId, VEHICLE_VARIABLE, TraciConstants.VAR_MAXSPEED_LAT, tmp);
         }
 
     /// <summary>
@@ -1056,8 +1018,8 @@ public partial class Vehicle
     /// </remarks>
     public bool SetMinGapLat(string vehicleId, double gap)
         {
-        var tmp = new TraCIDouble() { Value = gap };
-        return _helper.ExecuteSetCommand(vehicleId, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_MINGAP_LAT, tmp);
+        TraciDouble tmp = new(gap);
+        return _helper.ExecuteSetCommand(vehicleId, VEHICLE_VARIABLE, TraciConstants.VAR_MINGAP_LAT, tmp);
         }
 
     /// <summary>
@@ -1071,8 +1033,8 @@ public partial class Vehicle
     /// </remarks>
     public bool SetLateralAlignment(string vehicleId, string alignment)
         {
-        var tmp = new TraCIString() { Value = alignment };
-        return _helper.ExecuteSetCommand(vehicleId, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_LATALIGNMENT, tmp);
+        TraciString tmp = new(alignment);
+        return _helper.ExecuteSetCommand(vehicleId, VEHICLE_VARIABLE, TraciConstants.VAR_LATALIGNMENT, tmp);
         }
 
     /// <summary>
@@ -1086,8 +1048,8 @@ public partial class Vehicle
     /// </remarks>
     public bool SetBoardingDuration(string vehicleId, double duration)
         {
-        var tmp = new TraCIDouble() { Value = duration };
-        return _helper.ExecuteSetCommand(vehicleId, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_BOARDING_DURATION, tmp);
+        TraciDouble tmp = new(duration);
+        return _helper.ExecuteSetCommand(vehicleId, VEHICLE_VARIABLE, TraciConstants.VAR_BOARDING_DURATION, tmp);
         }
 
     /// <summary>
@@ -1101,8 +1063,8 @@ public partial class Vehicle
     /// </remarks>
     public bool SetImpatience(string vehicleId, double impatience)
         {
-        var tmp = new TraCIDouble() { Value = impatience };
-        return _helper.ExecuteSetCommand(vehicleId, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_IMPATIENCE, tmp);
+        TraciDouble tmp = new(impatience);
+        return _helper.ExecuteSetCommand(vehicleId, VEHICLE_VARIABLE, TraciConstants.VAR_IMPATIENCE, tmp);
         }
 
     /// <summary>
@@ -1117,12 +1079,8 @@ public partial class Vehicle
     /// </remarks>
     public bool SetParamater(string vehicleId, string key, string value)
         {
-        var tmp = new TraCICompoundObject()
-        {
-            new TraCIString() { Value = key },
-            new TraCIString() { Value = value },
-        };
-        return _helper.ExecuteSetCommand(vehicleId, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_PARAMETER, tmp);
+        var tmp = new TraciCompoundObject() { new TraciString(key), new TraciString(value) };
+        return _helper.ExecuteSetCommand(vehicleId, VEHICLE_VARIABLE, TraciConstants.VAR_PARAMETER, tmp);
         }
 
     /// <summary>
@@ -1138,8 +1096,8 @@ public partial class Vehicle
     public bool SetActionStepLength(string vehicleId, double actionStepLength, bool resetActionOffset = true)
         {
         actionStepLength = resetActionOffset ? actionStepLength : actionStepLength * -1;
-        var tmp = new TraCIDouble { Value = actionStepLength };
-        return _helper.ExecuteSetCommand(vehicleId, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_ACTIONSTEPLENGTH, tmp);
+        TraciDouble tmp = new(actionStepLength);
+        return _helper.ExecuteSetCommand(vehicleId, VEHICLE_VARIABLE, TraciConstants.VAR_ACTIONSTEPLENGTH, tmp);
         }
 
     /// <summary>
@@ -1180,28 +1138,13 @@ public partial class Vehicle
         if (alphaMax > 0 && duration < 0)
             throw new ArgumentOutOfRangeException(nameof(duration), "vehicle.highlight(): alphaMax>0 requires duration>0");
 
-        var color = new Color
-            {
-            R = new TraCIByte() { Value = (byte)r },
-            G = new TraCIByte() { Value = (byte)g },
-            B = new TraCIByte() { Value = (byte)b },
-            A = new TraCIByte() { Value = (byte)a },
-            };
-        var tmp = alphaMax > 0
-            ? ([
-                color,
-                new TraCIDouble() { Value = size },
-                new TraCIInteger() { Value = alphaMax },
-                new TraCIInteger() { Value = duration },
-                new TraCIUByte() { Value = type },
-            ])
-            : (TraCICompoundObject)([
-                color,
-                new TraCIDouble() { Value = size },
-            ]);
-        return _helper.ExecuteSetCommand(vehicleId, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_HIGHLIGHT, tmp);
+        Color color = new(r, g, b, a);
+        TraciCompoundObject tmp =
+            alphaMax > 0
+                ? [color, new TraciDouble(size), new TraciInteger(alphaMax), new TraciInteger(duration), new TraciUnsignedByte(type)]
+                : [color, new TraciDouble(size)];
+        return _helper.ExecuteSetCommand(vehicleId, VEHICLE_VARIABLE, TraciConstants.VAR_HIGHLIGHT, tmp);
         }
-
 
     /// <summary>
     /// Sets the mass of the vehicle to the given value
@@ -1214,7 +1157,7 @@ public partial class Vehicle
     /// </remarks>
     public bool SetMass(string vehicleId, double mass)
         {
-        var tmp = new TraCIDouble { Value = mass };
-        return _helper.ExecuteSetCommand(vehicleId, TraCIConstants.CMD_SET_VEHICLE_VARIABLE, TraCIConstants.VAR_MASS, tmp);
+        TraciDouble tmp = new(mass);
+        return _helper.ExecuteSetCommand(vehicleId, VEHICLE_VARIABLE, TraciConstants.VAR_MASS, tmp);
         }
     }

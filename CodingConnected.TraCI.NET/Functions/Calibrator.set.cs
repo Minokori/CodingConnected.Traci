@@ -1,5 +1,5 @@
-﻿using CodingConnected.TraCI.NET.DataTypes;
-
+using CodingConnected.TraCI.NET.DataTypes;
+using static CodingConnected.TraCI.NET.DataTypes.TraciConstants.Command.Set;
 namespace CodingConnected.TraCI.NET.Functions;
 
 
@@ -33,17 +33,17 @@ public partial class Calibrator
         string departSpeed = "max"
     )
         {
-        TraCICompoundObject tmp = [
-            new TraCIDouble() { Value = begin },
-            new TraCIDouble() { Value = end },
-            new TraCIDouble() { Value = vehiclePerHour },
-            new TraCIDouble() { Value = speed },
-            new TraCIString() { Value = typeId },
-            new TraCIString() { Value = routeId },
-            new TraCIString() { Value = departLane },
-            new TraCIString() { Value = departSpeed }
+        TraciCompoundObject tmp = [
+            new TraciDouble(begin) ,
+            new TraciDouble(end),
+            new TraciDouble(vehiclePerHour),
+            new TraciDouble(speed),
+            new TraciString(typeId) ,
+            new TraciString(routeId),
+            new TraciString(departLane),
+            new TraciString(departSpeed)
             ];
-        return _helper.ExecuteSetCommand(calibrationId, TraCIConstants.CMD_SET_CALIBRATOR_VARIABLE,
-            TraCIConstants.CMD_SET_FLOW, tmp);
+        return _helper.ExecuteSetCommand(calibrationId, CALIBRATOR_VARIABLE,
+            FLOW, tmp);
         }
     }

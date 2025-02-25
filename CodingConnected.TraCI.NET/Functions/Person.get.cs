@@ -1,10 +1,11 @@
-﻿using CodingConnected.TraCI.NET.DataTypes;
-
+using CodingConnected.TraCI.NET.DataTypes;
+using static CodingConnected.TraCI.NET.DataTypes.TraciConstants.Command.Get;
 namespace CodingConnected.TraCI.NET.Functions;
+
 public partial class Person
     {
     /// <summary>
-    /// Returns a list of ids of all persons currently running within the scenario 
+    /// Returns a list of ids of all persons currently running within the scenario
     /// (the given person ID is ignored)
     /// </summary>
     /// <returns>a list of all objects in the network</returns>
@@ -13,8 +14,8 @@ public partial class Person
     /// </remarks>
     public List<string> GetIdList()
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_PERSON_VARIABLE, TraCIConstants.ID_LIST, "ignored");
-        return ((TraCIStringList)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(PERSON_VARIABLE, TraciConstants.ID_LIST, "ignored");
+        return ((TraciStringList)result.Data).Value;
         }
 
     /// <summary>
@@ -27,8 +28,8 @@ public partial class Person
     /// </remarks>
     public int GetIdCount()
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_PERSON_VARIABLE, TraCIConstants.ID_COUNT, "ignored");
-        return ((TraCIInteger)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(PERSON_VARIABLE, TraciConstants.ID_COUNT, "ignored");
+        return ((TraciInteger)result.Data).Value;
         }
 
     /// <summary>
@@ -42,8 +43,8 @@ public partial class Person
     /// </remarks>
     public double GetSpeed(string personId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_PERSON_VARIABLE, TraCIConstants.VAR_SPEED, personId);
-        return ((TraCIDouble)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(PERSON_VARIABLE, TraciConstants.VAR_SPEED, personId);
+        return ((TraciDouble)result.Data).Value;
         }
 
     /// <summary>
@@ -57,9 +58,9 @@ public partial class Person
     /// </remarks>
     public Tuple<double, double> GetPosition(string personId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_PERSON_VARIABLE, TraCIConstants.VAR_POSITION, personId);
-        var position = (Position2D)result.Value;
-        return new(position.X.Value, position.Y.Value);
+        var result = _helper.ExecuteGetCommand(PERSON_VARIABLE, TraciConstants.VAR_POSITION, personId);
+        var position = (Position2D)result.Data;
+        return new(position.X, position.Y);
         }
 
     /// <summary>
@@ -73,9 +74,9 @@ public partial class Person
     /// </remarks>
     public Tuple<double, double, double> GetPosition3D(string personId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_PERSON_VARIABLE, TraCIConstants.VAR_POSITION3D, personId);
-        var position = (Position3D)result.Value;
-        return new(position.X.Value, position.Y.Value, position.Z.Value);
+        var result = _helper.ExecuteGetCommand(PERSON_VARIABLE, TraciConstants.VAR_POSITION3D, personId);
+        var position = (Position3D)result.Data;
+        return new(position.X, position.Y, position.Z);
         }
 
     /// <summary>
@@ -89,8 +90,8 @@ public partial class Person
     /// </remarks>
     public double GetAngle(string personId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_PERSON_VARIABLE, TraCIConstants.VAR_ANGLE, personId);
-        return ((TraCIDouble)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(PERSON_VARIABLE, TraciConstants.VAR_ANGLE, personId);
+        return ((TraciDouble)result.Data).Value;
         }
 
     /// <summary>
@@ -103,8 +104,8 @@ public partial class Person
     /// </remarks>
     public double GetSlope(string personId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_PERSON_VARIABLE, TraCIConstants.VAR_SLOPE, personId);
-        return ((TraCIDouble)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(PERSON_VARIABLE, TraciConstants.VAR_SLOPE, personId);
+        return ((TraciDouble)result.Data).Value;
         }
 
     /// <summary>
@@ -118,8 +119,8 @@ public partial class Person
     /// </remarks>
     public string GetRoadID(string personId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_PERSON_VARIABLE, TraCIConstants.VAR_ROAD_ID, personId);
-        return ((TraCIString)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(PERSON_VARIABLE, TraciConstants.VAR_ROAD_ID, personId);
+        return ((TraciString)result.Data).Value;
         }
 
     /// <summary>
@@ -132,8 +133,8 @@ public partial class Person
     /// </remarks>
     public string GetTypeID(string personId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_PERSON_VARIABLE, TraCIConstants.VAR_TYPE, personId);
-        return ((TraCIString)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(PERSON_VARIABLE, TraciConstants.VAR_TYPE, personId);
+        return ((TraciString)result.Data).Value;
         }
 
     /// <summary>
@@ -146,9 +147,9 @@ public partial class Person
     /// </remarks>
     public Tuple<int, int, int, int> GetColor(string personId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_PERSON_VARIABLE, TraCIConstants.VAR_COLOR, personId);
-        var color = (Color)result.Value;
-        return new(color.R.Value, color.G.Value, color.B.Value, color.A.Value);
+        var result = _helper.ExecuteGetCommand(PERSON_VARIABLE, TraciConstants.VAR_COLOR, personId);
+        var color = (Color)result.Data;
+        return new(color.R, color.G, color.B, color.A);
         }
 
     /// <summary>
@@ -162,8 +163,8 @@ public partial class Person
     /// </remarks>
     public double GetLanePosition(string personId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_PERSON_VARIABLE, TraCIConstants.VAR_LANEPOSITION, personId);
-        return ((TraCIDouble)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(PERSON_VARIABLE, TraciConstants.VAR_LANEPOSITION, personId);
+        return ((TraciDouble)result.Data).Value;
         }
 
     /// <summary>
@@ -176,8 +177,8 @@ public partial class Person
     /// </remarks>
     public double GetLength(string personId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_PERSON_VARIABLE, TraCIConstants.VAR_LENGTH, personId);
-        return ((TraCIDouble)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(PERSON_VARIABLE, TraciConstants.VAR_LENGTH, personId);
+        return ((TraciDouble)result.Data).Value;
         }
 
     /// <summary>
@@ -190,8 +191,8 @@ public partial class Person
     /// </remarks>
     public double GetMinGap(string personId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_PERSON_VARIABLE, TraCIConstants.VAR_MINGAP, personId);
-        return ((TraCIDouble)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(PERSON_VARIABLE, TraciConstants.VAR_MINGAP, personId);
+        return ((TraciDouble)result.Data).Value;
         }
 
     /// <summary>
@@ -204,8 +205,8 @@ public partial class Person
     /// </remarks>
     public double GetWidth(string personId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_PERSON_VARIABLE, TraCIConstants.VAR_WIDTH, personId);
-        return ((TraCIDouble)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(PERSON_VARIABLE, TraciConstants.VAR_WIDTH, personId);
+        return ((TraciDouble)result.Data).Value;
         }
 
     /// <summary>
@@ -220,8 +221,8 @@ public partial class Person
     /// </remarks>
     public double GetWaitingTime(string personId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_PERSON_VARIABLE, TraCIConstants.VAR_WAITING_TIME, personId);
-        return ((TraCIDouble)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(PERSON_VARIABLE, TraciConstants.VAR_WAITING_TIME, personId);
+        return ((TraciDouble)result.Data).Value;
         }
 
     /// <summary>
@@ -229,7 +230,7 @@ public partial class Person
     /// If there is no further edge or the person is in another stage, returns the empty string.
     /// </summary>
     /// <param name="personId"></param>
-    /// <returns>If the person is walking, returns the next edge on the persons route(including crossing and walkingareas). 
+    /// <returns>If the person is walking, returns the next edge on the persons route(including crossing and walkingareas).
     /// If there is no further edge or the person is in another stage, returns the empty string.
     /// </returns>
     /// <param name="personId"></param>
@@ -239,8 +240,8 @@ public partial class Person
     /// </remarks>
     public string GetNextEdge(string personId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_PERSON_VARIABLE, TraCIConstants.VAR_NEXT_EDGE, personId);
-        return ((TraCIString)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(PERSON_VARIABLE, TraciConstants.VAR_NEXT_EDGE, personId);
+        return ((TraciString)result.Data).Value;
         }
 
     /// <summary>
@@ -253,8 +254,8 @@ public partial class Person
     /// </remarks>
     public int GetRemainingStages(string personId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_PERSON_VARIABLE, TraCIConstants.VAR_STAGES_REMAINING, personId);
-        return ((TraCIInteger)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(PERSON_VARIABLE, TraciConstants.VAR_STAGES_REMAINING, personId);
+        return ((TraciInteger)result.Data).Value;
         }
 
     /// <summary>
@@ -268,28 +269,26 @@ public partial class Person
     /// </remarks>
     public string GetVehicle(string personId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_PERSON_VARIABLE, TraCIConstants.VAR_VEHICLE, personId);
-        return ((TraCIString)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(PERSON_VARIABLE, TraciConstants.VAR_VEHICLE, personId);
+        return ((TraciString)result.Data).Value;
         }
 
-
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="personId"></param>
     /// <returns></returns>
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/pydoc/traci._person.html#PersonDomain-getTaxiReservations"/>
     /// </remarks>
-    public List<TaxiResevations> GetTaxiReservations(int onlyNew = 0)
+    public List<TaxiReservations> GetTaxiReservations(int onlyNew = 0)
         {
         // TODO documents has a poor describe of this method. we should check it.
-        var tmp = new TraCIInteger() { Value = onlyNew };
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_PERSON_VARIABLE, TraCIConstants.VAR_TAXI_RESERVATIONS, "", tmp);
-        var reservations = ((TraCICompoundObject)result.Value).Chunk(8).Select(i => (TaxiResevations)i.ToList()).ToList();
+        TraciInteger tmp = new(onlyNew);
+        var result = _helper.ExecuteGetCommand(PERSON_VARIABLE, TraciConstants.VAR_TAXI_RESERVATIONS, "", tmp);
+        var reservations = ((TraciCompoundObject)result.Data).Chunk(8).Select(i => (TaxiReservations)i.ToList()).ToList();
         return reservations;
         }
-
 
     /// <summary>
     /// Returns the a compound object that describes nth next stage.<para/>
@@ -311,9 +310,9 @@ public partial class Person
     /// </returns>
     public Stage GetStage(string personId, int nextStageIndex = 0)
         {
-        var tmp = new TraCIInteger() { Value = nextStageIndex };
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_PERSON_VARIABLE, TraCIConstants.VAR_STAGE, personId, tmp);
-        return (Stage)(TraCICompoundObject)result.Value;
+        TraciInteger tmp = new(nextStageIndex);
+        var result = _helper.ExecuteGetCommand(PERSON_VARIABLE, TraciConstants.VAR_STAGE, personId, tmp);
+        return (Stage)(TraciCompoundObject)result.Data;
         }
 
     /// <summary>
@@ -334,8 +333,8 @@ public partial class Person
     /// </returns>
     public List<string> GetEdges(string personId, int nextStageIndex = 0)
         {
-        var tmp = new TraCIInteger() { Value = nextStageIndex };
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_PERSON_VARIABLE, TraCIConstants.VAR_EDGES, personId, tmp);
-        return ((TraCIStringList)result.Value).Value;
+        TraciInteger tmp = new(nextStageIndex);
+        var result = _helper.ExecuteGetCommand(PERSON_VARIABLE, TraciConstants.VAR_EDGES, personId, tmp);
+        return ((TraciStringList)result.Data).Value;
         }
     }

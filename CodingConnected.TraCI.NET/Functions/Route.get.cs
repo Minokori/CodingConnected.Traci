@@ -1,5 +1,5 @@
-﻿using CodingConnected.TraCI.NET.DataTypes;
-
+using CodingConnected.TraCI.NET.DataTypes;
+using static CodingConnected.TraCI.NET.DataTypes.TraciConstants.Command.Get;
 namespace CodingConnected.TraCI.NET.Functions;
 public partial class Route
     {
@@ -12,8 +12,8 @@ public partial class Route
     /// </remarks>
     public List<string> GetIdList()
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_ROUTE_VARIABLE, TraCIConstants.ID_LIST, "ignored");
-        return ((TraCIStringList)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(ROUTE_VARIABLE, TraciConstants.ID_LIST, "ignored");
+        return ((TraciStringList)result.Data).Value;
         }
 
     /// <summary>
@@ -26,8 +26,8 @@ public partial class Route
 
     public int GetIdCount()
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_ROUTE_VARIABLE, TraCIConstants.ID_COUNT, "ignored");
-        return ((TraCIInteger)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(ROUTE_VARIABLE, TraciConstants.ID_COUNT, "ignored");
+        return ((TraciInteger)result.Data).Value;
         }
 
     /// <summary>
@@ -40,7 +40,7 @@ public partial class Route
     /// </remarks>
     public List<string> GetEdges(string routeId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_ROUTE_VARIABLE, TraCIConstants.VAR_EDGES, routeId);
-        return ((TraCIStringList)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(ROUTE_VARIABLE, TraciConstants.VAR_EDGES, routeId);
+        return ((TraciStringList)result.Data).Value;
         }
     }

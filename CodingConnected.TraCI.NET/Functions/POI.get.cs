@@ -1,5 +1,5 @@
-﻿using CodingConnected.TraCI.NET.DataTypes;
-
+using CodingConnected.TraCI.NET.DataTypes;
+using static CodingConnected.TraCI.NET.DataTypes.TraciConstants.Command.Get;
 namespace CodingConnected.TraCI.NET.Functions;
 
 public partial class POI
@@ -13,8 +13,8 @@ public partial class POI
     /// </remarks>
     public List<string> GetIdList()
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_POI_VARIABLE, TraCIConstants.ID_LIST, "ignored");
-        return ((TraCIStringList)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(POI_VARIABLE, TraciConstants.ID_LIST, "ignored");
+        return ((TraciStringList)result.Data).Value;
         }
 
     /// <summary>
@@ -26,8 +26,8 @@ public partial class POI
     /// </remarks>
     public int GetIdCount()
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_POI_VARIABLE, TraCIConstants.ID_COUNT, "ignored");
-        return ((TraCIInteger)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(POI_VARIABLE, TraciConstants.ID_COUNT, "ignored");
+        return ((TraciInteger)result.Data).Value;
         }
 
     /// <summary>
@@ -40,8 +40,8 @@ public partial class POI
     /// </remarks>
     public string GetType(string poiId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_POI_VARIABLE, TraCIConstants.VAR_TYPE, poiId);
-        return ((TraCIString)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(POI_VARIABLE, TraciConstants.VAR_TYPE, poiId);
+        return ((TraciString)result.Data).Value;
         }
 
     /// <summary>
@@ -52,11 +52,11 @@ public partial class POI
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/pydoc/traci._poi.html#PoiDomain-getColor"/>
     /// </remarks>
-    public Tuple<int, int, int, int> GetColor(string poiId)
+    public (int r, int g, int b, int a) GetColor(string poiId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_POI_VARIABLE, TraCIConstants.VAR_COLOR, poiId);
-        var color = (Color)result.Value;
-        return new(color.R.Value, color.G.Value, color.B.Value, color.A.Value);
+        var result = _helper.ExecuteGetCommand(POI_VARIABLE, TraciConstants.VAR_COLOR, poiId);
+        var color = (Color)result.Data;
+        return new(color.R, color.G, color.B, color.A);
         }
 
     /// <summary>
@@ -69,9 +69,9 @@ public partial class POI
     /// </remarks>
     public Tuple<double, double> GetPosition(string poiId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_POI_VARIABLE, TraCIConstants.VAR_POSITION, poiId);
-        var position = (Position2D)result.Value;
-        return new(position.X.Value, position.Y.Value);
+        var result = _helper.ExecuteGetCommand(POI_VARIABLE, TraciConstants.VAR_POSITION, poiId);
+        var position = (Position2D)result.Data;
+        return new(position.X, position.Y);
         }
 
     /// <summary>
@@ -84,8 +84,8 @@ public partial class POI
     /// </remarks>
     public string GetImageFile(string poiId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_POI_VARIABLE, TraCIConstants.VAR_IMAGEFILE, poiId);
-        return ((TraCIString)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(POI_VARIABLE, TraciConstants.VAR_IMAGEFILE, poiId);
+        return ((TraciString)result.Data).Value;
         }
 
     /// <summary>
@@ -98,8 +98,8 @@ public partial class POI
     /// </remarks>
     public double GetWidth(string poiId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_POI_VARIABLE, TraCIConstants.VAR_WIDTH, poiId);
-        return ((TraCIDouble)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(POI_VARIABLE, TraciConstants.VAR_WIDTH, poiId);
+        return ((TraciDouble)result.Data).Value;
         }
 
     /// <summary>
@@ -112,8 +112,8 @@ public partial class POI
     /// </remarks>
     public double GetHeight(string poiId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_POI_VARIABLE, TraCIConstants.VAR_HEIGHT, poiId);
-        return ((TraCIDouble)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(POI_VARIABLE, TraciConstants.VAR_HEIGHT, poiId);
+        return ((TraciDouble)result.Data).Value;
         }
 
     /// <summary>
@@ -126,7 +126,7 @@ public partial class POI
     /// </remarks>
     public double GetAngle(string poiId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_POI_VARIABLE, TraCIConstants.VAR_ANGLE, poiId);
-        return ((TraCIDouble)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(POI_VARIABLE, TraciConstants.VAR_ANGLE, poiId);
+        return ((TraciDouble)result.Data).Value;
         }
     }

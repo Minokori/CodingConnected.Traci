@@ -1,4 +1,4 @@
-﻿using System.Text;
+using System.Text;
 using CodingConnected.TraCI.NET.DataTypes;
 using static CodingConnected.TraCI.NET.ProtocolTypes.TraCIResultExtension;
 
@@ -12,11 +12,11 @@ public partial class TraCIResult
 
     string IAnswerFromSumo.SumoId =>
         Encoding.ASCII.GetString(
-            Content.Skip(1 + 4).Take(((IAnswerFromSumo)this).SumoIdLength).ToArray()
+            [.. Content.Skip(1 + 4).Take(((IAnswerFromSumo)this).SumoIdLength)]
         );
     byte IAnswerFromSumo.ReturnType =>
         Content.Skip(1 + 4 + ((IAnswerFromSumo)this).SumoIdLength).First();
-    ITraciType IAnswerFromSumo.Value
+    ITraciType IAnswerFromSumo.Data
         {
         get
             {
@@ -44,21 +44,21 @@ public interface IAnswerFromSumo
     /// <summary>
     /// Variable and SUMO ID repeat the values from the command.
     /// </summary>
-    public byte Variable { get; }
+    byte Variable { get; }
 
     /// <summary>
     /// Variable and SUMO ID repeat the values from the command.
     /// </summary>
-    public string SumoId { get; }
+    string SumoId { get; }
 
     /// <summary>
     /// traci data type of the value
     /// </summary>
-    public byte ReturnType { get; }
+    byte ReturnType { get; }
 
 
     /// <summary>
     /// value of the variable
     /// </summary>
-    public ITraciType Value { get; }
+    ITraciType Data { get; }
     }

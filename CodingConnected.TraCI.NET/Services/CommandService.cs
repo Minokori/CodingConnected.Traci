@@ -1,6 +1,6 @@
-﻿using CodingConnected.TraCI.NET.DataTypes;
+using CodingConnected.TraCI.NET.DataTypes;
 using CodingConnected.TraCI.NET.ProtocolTypes;
-using static CodingConnected.TraCI.NET.DataTypes.TraCIConstants;
+using static CodingConnected.TraCI.NET.DataTypes.TraciConstants;
 namespace CodingConnected.TraCI.NET.Services;
 
 internal partial class CommandService(ITCPConnectService tcpService) : ICommandService
@@ -88,11 +88,11 @@ internal partial class CommandService(ITCPConnectService tcpService) : ICommandS
     )
         {
         List<byte> commandPart1 = [
-            .. TraCIDouble.AsBytes(beginTime),
-            .. TraCIDouble.AsBytes(endTime),
-            .. TraCIString.AsBytes(objectId)];
+            .. TraciDouble.AsBytes(beginTime),
+            .. TraciDouble.AsBytes(endTime),
+            .. TraciString.AsBytes(objectId)];
         List<byte> commandPart2 = contextDomain.HasValue ? [contextDomain.Value] : [];
-        List<byte> commandPart3 = contextRange.HasValue ? [.. TraCIDouble.AsBytes(contextRange.Value)] : [];
+        List<byte> commandPart3 = contextRange.HasValue ? [.. TraciDouble.AsBytes(contextRange.Value)] : [];
         List<byte> commandPart4 = [(byte)variables.Count, .. variables];
         TraCICommand command = new() { Identifier = commandType, Contents = [.. commandPart1, .. commandPart2, .. commandPart3, .. commandPart4] };
         return command;
@@ -101,7 +101,7 @@ internal partial class CommandService(ITCPConnectService tcpService) : ICommandS
     public TraCICommand GetCommand(byte commandType, byte? messageType = null, string id = null, ITraciType contents = null)
         {
         byte[] commandPart1 = messageType.HasValue ? [messageType.Value] : [];
-        var commandPart2 = id is null ? [] : TraCIString.AsBytes(id);
+        var commandPart2 = id is null ? [] : TraciString.AsBytes(id);
         var commandPart3 = contents?.ToBytes() ?? [];
         TraCICommand command = new() { Identifier = commandType, Contents = [.. commandPart1, .. commandPart2, .. commandPart3] };
         return command;

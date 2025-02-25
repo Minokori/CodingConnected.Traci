@@ -1,5 +1,5 @@
-﻿using CodingConnected.TraCI.NET.DataTypes;
-
+using CodingConnected.TraCI.NET.DataTypes;
+using static CodingConnected.TraCI.NET.DataTypes.TraciConstants.Command.Get;
 namespace CodingConnected.TraCI.NET.Functions;
 
 public partial class Gui
@@ -14,8 +14,8 @@ public partial class Gui
     /// </remarks>
     public double GetZoom(string viewId = "View #0")
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_GUI_VARIABLE, TraCIConstants.VAR_VIEW_ZOOM, viewId);
-        return ((TraCIDouble)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(GUI_VARIABLE, TraciConstants.VAR_VIEW_ZOOM, viewId);
+        return ((TraciDouble)result.Data).Value;
         }
 
     /// <summary>
@@ -26,11 +26,11 @@ public partial class Gui
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/pydoc/traci._gui.html#GuiDomain-getOffset">
     /// </remarks>
-    public Tuple<double, double> GetOffset(string viewId = "View #0")
+    public (double x, double y) GetOffset(string viewId = "View #0")
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_GUI_VARIABLE, TraCIConstants.VAR_VIEW_OFFSET, viewId);
-        var p = (Position2D)result.Value;
-        return new(p.X.Value, p.Y.Value);
+        var result = _helper.ExecuteGetCommand(GUI_VARIABLE, TraciConstants.VAR_VIEW_OFFSET, viewId);
+        var p = (Position2D)result.Data;
+        return new(p.X, p.Y);
         }
 
     /// <summary>
@@ -44,8 +44,8 @@ public partial class Gui
 
     public string GetSchema(string viewId = "View #0")
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_GUI_VARIABLE, TraCIConstants.VAR_VIEW_SCHEMA, viewId);
-        return ((TraCIString)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(GUI_VARIABLE, TraciConstants.VAR_VIEW_SCHEMA, viewId);
+        return ((TraciString)result.Data).Value;
         }
 
     /// <summary>
@@ -59,9 +59,9 @@ public partial class Gui
 
     public Tuple<Tuple<double, double>, Tuple<double, double>> GetBoundary(string viewId = "View #0")
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_GUI_VARIABLE, TraCIConstants.VAR_VIEW_BOUNDARY, viewId);
-        var polygon = (DataTypes.Polygon)result.Value;
-        return new(new(polygon[0].X.Value, polygon[0].Y.Value), new(polygon[1].X.Value, polygon[1].Y.Value));
+        var result = _helper.ExecuteGetCommand(GUI_VARIABLE, TraciConstants.VAR_VIEW_BOUNDARY, viewId);
+        var polygon = (DataTypes.Polygon)result.Data;
+        return new(new(polygon[0].X, polygon[0].Y), new(polygon[1].X, polygon[1].Y));
         }
 
     /// <summary>
@@ -76,7 +76,7 @@ public partial class Gui
     public bool HasView(string viewId = "View #0")
         {
         // TODO: Check if this is the correct way to get the value
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_GUI_VARIABLE, TraCIConstants.VAR_HAS_VIEW, viewId);
-        return ((TraCIByte)result.Value).Value == 1;
+        var result = _helper.ExecuteGetCommand(GUI_VARIABLE, TraciConstants.VAR_HAS_VIEW, viewId);
+        return ((TraciByte)result.Data).Value == 1;
         }
     }

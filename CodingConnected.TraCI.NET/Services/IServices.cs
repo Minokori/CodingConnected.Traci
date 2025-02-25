@@ -1,4 +1,4 @@
-﻿using System.Net.Sockets;
+using System.Net.Sockets;
 using CodingConnected.TraCI.NET.DataTypes;
 using CodingConnected.TraCI.NET.ProtocolTypes;
 
@@ -6,17 +6,17 @@ namespace CodingConnected.TraCI.NET.Services;
 
 public interface ITCPConnectService
     {
-    public TcpClient Client { get; }
-    public NetworkStream Stream { get; }
-    public Task ConnectAsync(string hostname, int port);
-    public bool Connect(string hostname, int port);
-    public List<TraCIResult> SendMessage(TraCICommand command);
+    TcpClient Client { get; }
+    NetworkStream Stream { get; }
+    Task ConnectAsync(string hostname, int port);
+    bool Connect(string hostname, int port);
+    List<TraCIResult> SendMessage(TraCICommand command);
     }
 
 public interface ICommandService
     {
     IAnswerFromSumo ExecuteGetCommand(byte commandType, byte? messageType, string id = null, ITraciType extendVariable = null);
-    public TraCICommand GetCommand(byte commandType, byte? messageType = null, string id = null, ITraciType contents = null);
+    TraCICommand GetCommand(byte commandType, byte? messageType = null, string id = null, ITraciType contents = null);
     bool ExecuteSetCommand(string id, byte commandType, byte messageType, ITraciType value = null);
 
     //TraCIResponse<Tresponse> ExecuteSetCommand<Tresponse, Tvalue>(string id, byte commandType, byte messageType, Tvalue value);
@@ -40,7 +40,7 @@ public interface IEventService
     event EventHandler<SubscriptionEventArgs> LaneSubscription;
     event EventHandler<SubscriptionEventArgs> PersonSubscription;
     event EventHandler<ContextSubscriptionEventArgs> PointOfInterestContextSubscription;
-    event EventHandler<SubscriptionEventArgs> PointOfIntrestSubscription;
+    event EventHandler<SubscriptionEventArgs> PointOfInterestSubscription;
     event EventHandler<ContextSubscriptionEventArgs> PolygonContextSubscription;
     event EventHandler<SubscriptionEventArgs> PolygonSubscription;
     event EventHandler<SubscriptionEventArgs> RouteSubscription;

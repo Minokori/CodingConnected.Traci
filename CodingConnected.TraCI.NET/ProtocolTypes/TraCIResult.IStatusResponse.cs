@@ -1,5 +1,5 @@
-﻿using System.Text;
-using static CodingConnected.TraCI.NET.DataTypes.TraCIConstants;
+using System.Text;
+using static CodingConnected.TraCI.NET.DataTypes.TraciConstants;
 namespace CodingConnected.TraCI.NET.ProtocolTypes;
 
 public partial class TraCIResult
@@ -24,12 +24,12 @@ public interface IStatusResponse
     /// <summary>
     /// result of the command. success or failure.
     /// </summary>
-    public ResultCode Result { get; }
+    ResultCode Result { get; }
 
     /// <summary>
     /// description of the status response.
     /// </summary>
-    public string Description { get; }
+    string Description { get; }
 
     /// <summary>
     /// length of the description bytes.

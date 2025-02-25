@@ -1,6 +1,6 @@
-﻿using CodingConnected.TraCI.NET.DataTypes;
+using CodingConnected.TraCI.NET.DataTypes;
 using CodingConnected.TraCI.NET.Services;
-
+using static CodingConnected.TraCI.NET.DataTypes.TraciConstants.Command.Get;
 namespace CodingConnected.TraCI.NET.Functions;
 
 /// <summary>
@@ -25,14 +25,14 @@ public partial class Simulation(ITCPConnectService tcpService, ICommandService h
     {
     public int GetEmergencyStoppingVehiclesNumber(string id)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_SIM_VARIABLE, TraCIConstants.VAR_EMERGENCYSTOPPING_VEHICLES_NUMBER);
-        return ((TraCIInteger)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(SIM_VARIABLE, TraciConstants.VAR_EMERGENCYSTOPPING_VEHICLES_NUMBER);
+        return ((TraciInteger)result.Data).Value;
         }
 
     public List<string> GetEmergencyStoppingVehiclesIDList(string id)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_SIM_VARIABLE, TraCIConstants.VAR_EMERGENCYSTOPPING_VEHICLES_IDS);
-        return ((TraCIStringList)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(SIM_VARIABLE, TraciConstants.VAR_EMERGENCYSTOPPING_VEHICLES_IDS);
+        return ((TraciStringList)result.Data).Value;
         }
 
     /// <summary>
@@ -40,12 +40,9 @@ public partial class Simulation(ITCPConnectService tcpService, ICommandService h
     /// </summary>
     /// <param name="beginTime">the subscription is executed only in time steps &gt;= this value; in ms</param>
     /// <param name="endTime">the subscription is executed in time steps &lt;= this value; the subscription is removed if the simulation has reached a higher time step; in ms</param>
-    /// <param name="ListOfVariablesToSubsribeTo">The list of variables to return. please refer to <see cref="TraCIConstants"/></param>
+    /// <param name="ListOfVariablesToSubsribeTo">The list of variables to return. please refer to <see cref="TraciConstants"/></param>
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/docs/TraCI/Object_Variable_Subscription.html#command_0xdx_subscribe_variable"/>
     /// </remarks>
-    public void Subscribe(string objectId, int beginTime, int endTime, List<byte> ListOfVariablesToSubsribeTo)
-        {
-        _helper.ExecuteSubscribeCommand(beginTime, endTime, "", TraCIConstants.CMD_SUBSCRIBE_SIM_VARIABLE, ListOfVariablesToSubsribeTo);
-        }
+    public void Subscribe(string objectId, int beginTime, int endTime, List<byte> ListOfVariablesToSubsribeTo) => _helper.ExecuteSubscribeCommand(beginTime, endTime, "", TraciConstants.Command.Subscribe.SIM_VARIABLE, ListOfVariablesToSubsribeTo);
     }

@@ -1,5 +1,6 @@
-﻿using CodingConnected.TraCI.NET.DataTypes;
-
+using CodingConnected.TraCI.NET.DataTypes;
+using static CodingConnected.TraCI.NET.DataTypes.TraciConstants.Command;
+using static CodingConnected.TraCI.NET.DataTypes.TraciConstants.Command.Get;
 namespace CodingConnected.TraCI.NET.Functions;
 
 public partial class Vehicle
@@ -14,8 +15,8 @@ public partial class Vehicle
     /// </remarks>
     public List<string> GetIdList()
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLE_VARIABLE, TraCIConstants.ID_LIST, "ignored");
-        return ((TraCIStringList)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, TraciConstants.ID_LIST, "ignored");
+        return ((TraciStringList)result.Data).Value;
         }
 
     /// <summary>
@@ -28,8 +29,8 @@ public partial class Vehicle
     /// </remarks>
     public int GetIdCount()
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLE_VARIABLE, TraCIConstants.ID_COUNT, "ignored");
-        return ((TraCIInteger)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, TraciConstants.ID_COUNT, "ignored");
+        return ((TraciInteger)result.Data).Value;
         }
 
     /// <summary>
@@ -42,8 +43,8 @@ public partial class Vehicle
     /// </remarks>
     public double GetSpeed(string vehicleId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLE_VARIABLE, TraCIConstants.VAR_SPEED, vehicleId);
-        return ((TraCIDouble)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, TraciConstants.VAR_SPEED, vehicleId);
+        return ((TraciDouble)result.Data).Value;
         }
 
     /// <summary>
@@ -56,8 +57,8 @@ public partial class Vehicle
     /// </remarks>
     public double GetLateralSpeed(string vehicleId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLE_VARIABLE, TraCIConstants.VAR_SPEED_LAT, vehicleId);
-        return ((TraCIDouble)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, TraciConstants.VAR_SPEED_LAT, vehicleId);
+        return ((TraciDouble)result.Data).Value;
         }
 
     /// <summary>
@@ -70,8 +71,8 @@ public partial class Vehicle
     /// </remarks>
     public double GetAcceleration(string vehicleId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLE_VARIABLE, TraCIConstants.VAR_ACCELERATION, vehicleId);
-        return ((TraCIDouble)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, TraciConstants.VAR_ACCELERATION, vehicleId);
+        return ((TraciDouble)result.Data).Value;
         }
 
     /// <summary>
@@ -84,9 +85,9 @@ public partial class Vehicle
     /// </remarks>
     public (double X, double Y) GetPosition(string vehicleId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLE_VARIABLE, TraCIConstants.VAR_POSITION, vehicleId);
-        var position = (Position2D)result.Value;
-        return (position.X.Value, position.Y.Value);
+        var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, TraciConstants.VAR_POSITION, vehicleId);
+        var position = (Position2D)result.Data;
+        return (position.X, position.Y);
         }
 
     /// <summary>
@@ -99,9 +100,9 @@ public partial class Vehicle
     /// </remarks>
     public (double X, double Y, double Z) GetPosition3D(string vehicleId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLE_VARIABLE, TraCIConstants.VAR_POSITION3D, vehicleId);
-        var position = (Position3D)result.Value;
-        return (position.X.Value, position.Y.Value, position.Z.Value);
+        var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, TraciConstants.VAR_POSITION3D, vehicleId);
+        var position = (Position3D)result.Data;
+        return (position.X, position.Y, position.Z);
         }
 
     /// <summary>
@@ -114,8 +115,8 @@ public partial class Vehicle
     /// </remarks>
     public double GetAngle(string vehicleId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLE_VARIABLE, TraCIConstants.VAR_ANGLE, vehicleId);
-        return ((TraCIDouble)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, TraciConstants.VAR_ANGLE, vehicleId);
+        return ((TraciDouble)result.Data).Value;
         }
 
     /// <summary>
@@ -128,8 +129,8 @@ public partial class Vehicle
     /// </remarks>
     public string GetRoadID(string vehicleId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLE_VARIABLE, TraCIConstants.VAR_ROAD_ID, vehicleId);
-        return ((TraCIString)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, TraciConstants.VAR_ROAD_ID, vehicleId);
+        return ((TraciString)result.Data).Value;
         }
 
     /// <summary>
@@ -142,8 +143,8 @@ public partial class Vehicle
     /// </remarks>
     public string GetLaneID(string vehicleId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLE_VARIABLE, TraCIConstants.VAR_LANE_ID, vehicleId);
-        return ((TraCIString)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, TraciConstants.VAR_LANE_ID, vehicleId);
+        return ((TraciString)result.Data).Value;
         }
 
     /// <summary>
@@ -156,8 +157,8 @@ public partial class Vehicle
     /// </remarks>
     public int GetLaneIndex(string vehicleId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLE_VARIABLE, TraCIConstants.VAR_LANE_INDEX, vehicleId);
-        return ((TraCIInteger)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, TraciConstants.VAR_LANE_INDEX, vehicleId);
+        return ((TraciInteger)result.Data).Value;
         }
 
     /// <summary>
@@ -170,8 +171,8 @@ public partial class Vehicle
     /// </remarks>
     public string GetTypeID(string vehicleId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLE_VARIABLE, TraCIConstants.VAR_TYPE, vehicleId);
-        return ((TraCIString)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, TraciConstants.VAR_TYPE, vehicleId);
+        return ((TraciString)result.Data).Value;
         }
 
     /// <summary>
@@ -184,8 +185,8 @@ public partial class Vehicle
     /// </remarks>
     public string GetRouteID(string vehicleId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLE_VARIABLE, TraCIConstants.VAR_ROUTE_ID, vehicleId);
-        return ((TraCIString)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, TraciConstants.VAR_ROUTE_ID, vehicleId);
+        return ((TraciString)result.Data).Value;
         }
 
     /// <summary>
@@ -198,8 +199,8 @@ public partial class Vehicle
     /// </remarks>
     public int GetRouteIndex(string vehicleId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLE_VARIABLE, TraCIConstants.VAR_ROUTE_ID, vehicleId);
-        return ((TraCIInteger)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, TraciConstants.VAR_ROUTE_ID, vehicleId);
+        return ((TraciInteger)result.Data).Value;
         }
 
     /// <summary>
@@ -212,8 +213,8 @@ public partial class Vehicle
     /// </remarks>
     public List<string> GetRoute(string vehicleId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLE_VARIABLE, TraCIConstants.VAR_EDGES, vehicleId);
-        return ((TraCIStringList)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, TraciConstants.VAR_EDGES, vehicleId);
+        return ((TraciStringList)result.Data).Value;
         }
 
     /// <summary>
@@ -226,9 +227,9 @@ public partial class Vehicle
     /// </remarks>
     public (int r, int g, int b, int a) GetColor(string vehicleId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLE_VARIABLE, TraCIConstants.VAR_COLOR, vehicleId);
-        var color = (Color)result.Value;
-        return (color.R.Value, color.G.Value, color.B.Value, color.A.Value);
+        var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, TraciConstants.VAR_COLOR, vehicleId);
+        var color = (Color)result.Data;
+        return (color.R, color.G, color.B, color.A);
         }
 
     /// <summary>
@@ -241,8 +242,8 @@ public partial class Vehicle
     /// </remarks>
     public double GetLanePosition(string vehicleId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLE_VARIABLE, TraCIConstants.VAR_LANEPOSITION, vehicleId);
-        return ((TraCIDouble)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, TraciConstants.VAR_LANEPOSITION, vehicleId);
+        return ((TraciDouble)result.Data).Value;
         }
 
     /// <summary>
@@ -255,8 +256,8 @@ public partial class Vehicle
     /// </remarks>
     public double GetDistance(string vehicleId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLE_VARIABLE, TraCIConstants.VAR_DISTANCE, vehicleId);
-        return ((TraCIDouble)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, TraciConstants.VAR_DISTANCE, vehicleId);
+        return ((TraciDouble)result.Data).Value;
         }
 
     /// <summary>
@@ -269,8 +270,8 @@ public partial class Vehicle
     /// </remarks>
     public int GetSignals(string vehicleId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLE_VARIABLE, TraCIConstants.VAR_SIGNALS, vehicleId);
-        return ((TraCIInteger)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, TraciConstants.VAR_SIGNALS, vehicleId);
+        return ((TraciInteger)result.Data).Value;
         }
 
     /// <summary>
@@ -283,8 +284,8 @@ public partial class Vehicle
     /// </remarks>
     public int GetRoutingMode(string vehicleId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLE_VARIABLE, TraCIConstants.VAR_ROUTING_MODE, vehicleId);
-        return ((TraCIInteger)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, TraciConstants.VAR_ROUTING_MODE, vehicleId);
+        return ((TraciInteger)result.Data).Value;
         }
 
     /// <summary>
@@ -297,9 +298,9 @@ public partial class Vehicle
     /// </remarks>
     public List<string> GetTaxiFleet(int taxiState = 0)
         {
-        var tmp = new TraCIInteger { Value = taxiState };
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLE_VARIABLE, TraCIConstants.VAR_TAXI_FLEET, "", tmp);
-        return ((TraCIStringList)result.Value).Value;
+        TraciInteger tmp = new(taxiState);
+        var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, TraciConstants.VAR_TAXI_FLEET, "", tmp);
+        return ((TraciStringList)result.Data).Value;
         }
 
     /// <summary>
@@ -312,8 +313,8 @@ public partial class Vehicle
     /// </remarks>
     public double GetCO2Emission(string vehicleId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLE_VARIABLE, TraCIConstants.VAR_CO2EMISSION, vehicleId);
-        return ((TraCIDouble)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, TraciConstants.VAR_CO2EMISSION, vehicleId);
+        return ((TraciDouble)result.Data).Value;
         }
 
     /// <summary>
@@ -326,8 +327,8 @@ public partial class Vehicle
     /// </remarks>
     public double GetCOEmission(string vehicleId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLE_VARIABLE, TraCIConstants.VAR_COEMISSION, vehicleId);
-        return ((TraCIDouble)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, TraciConstants.VAR_COEMISSION, vehicleId);
+        return ((TraciDouble)result.Data).Value;
         }
 
     /// <summary>
@@ -340,8 +341,8 @@ public partial class Vehicle
     /// </remarks>
     public double GetHCEmission(string vehicleId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLE_VARIABLE, TraCIConstants.VAR_HCEMISSION, vehicleId);
-        return ((TraCIDouble)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, TraciConstants.VAR_HCEMISSION, vehicleId);
+        return ((TraciDouble)result.Data).Value;
         }
 
     /// <summary>
@@ -354,8 +355,8 @@ public partial class Vehicle
     /// </remarks>
     public double GetPMxEmission(string vehicleId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLE_VARIABLE, TraCIConstants.VAR_PMXEMISSION, vehicleId);
-        return ((TraCIDouble)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, TraciConstants.VAR_PMXEMISSION, vehicleId);
+        return ((TraciDouble)result.Data).Value;
         }
 
     /// <summary>
@@ -368,8 +369,8 @@ public partial class Vehicle
     /// </remarks>
     public double GetNOxEmission(string vehicleId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLE_VARIABLE, TraCIConstants.VAR_NOXEMISSION, vehicleId);
-        return ((TraCIDouble)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, TraciConstants.VAR_NOXEMISSION, vehicleId);
+        return ((TraciDouble)result.Data).Value;
         }
 
     /// <summary>
@@ -382,8 +383,8 @@ public partial class Vehicle
     /// </remarks>
     public double GetFuelConsumption(string vehicleId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLE_VARIABLE, TraCIConstants.VAR_FUELCONSUMPTION, vehicleId);
-        return ((TraCIDouble)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, TraciConstants.VAR_FUELCONSUMPTION, vehicleId);
+        return ((TraciDouble)result.Data).Value;
         }
 
     /// <summary>
@@ -396,8 +397,8 @@ public partial class Vehicle
     /// </remarks>
     public double GetNoiseEmission(string vehicleId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLE_VARIABLE, TraCIConstants.VAR_NOISEEMISSION, vehicleId);
-        return ((TraCIDouble)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, TraciConstants.VAR_NOISEEMISSION, vehicleId);
+        return ((TraciDouble)result.Data).Value;
         }
 
     /// <summary>
@@ -410,8 +411,8 @@ public partial class Vehicle
     /// </remarks>
     public double GetElectricityConsumption(string vehicleId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLE_VARIABLE, TraCIConstants.VAR_ELECTRICITYCONSUMPTION, vehicleId);
-        return ((TraCIDouble)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, TraciConstants.VAR_ELECTRICITYCONSUMPTION, vehicleId);
+        return ((TraciDouble)result.Data).Value;
         }
 
     /// <summary>
@@ -424,8 +425,8 @@ public partial class Vehicle
     /// </remarks>
     public List<EdgeInformation> GetBestLanes(string vehicleId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLE_VARIABLE, TraCIConstants.VAR_BEST_LANES, vehicleId);
-        return ((TraCICompoundObject)result.Value).ToEdgeInformations();
+        var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, TraciConstants.VAR_BEST_LANES, vehicleId);
+        return ((TraciCompoundObject)result.Data).ToEdgeInformations();
         }
 
     /// <summary>
@@ -438,8 +439,8 @@ public partial class Vehicle
     /// </remarks>
     public int GetStopState(string vehicleId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLE_VARIABLE, TraCIConstants.VAR_STOPSTATE, vehicleId);
-        return ((TraCIInteger)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, TraciConstants.VAR_STOPSTATE, vehicleId);
+        return ((TraciInteger)result.Data).Value;
         }
 
     /// <summary>
@@ -450,10 +451,7 @@ public partial class Vehicle
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/pydoc/traci._vehicle.html#VehicleDomain-isAtBusStop"/>
     /// </remarks>
-    public bool IsAtBusStop(string vehicleId)
-        {
-        return (GetStopState(vehicleId) & 16) == 16;
-        }
+    public bool IsAtBusStop(string vehicleId) => (GetStopState(vehicleId) & 16) == 16;
 
     /// <summary>
     /// Return whether the vehicle is stopped at a container stop
@@ -463,10 +461,7 @@ public partial class Vehicle
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/pydoc/traci._vehicle.html#VehicleDomain-isAtContainerStop"/>
     /// </remarks>
-    public bool IsAtContainerStop(string vehicleId)
-        {
-        return (GetStopState(vehicleId) & 32) == 32;
-        }
+    public bool IsAtContainerStop(string vehicleId) => (GetStopState(vehicleId) & 32) == 32;
 
     /// <summary>
     /// Return whether the vehicle is stopped
@@ -476,10 +471,7 @@ public partial class Vehicle
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/pydoc/traci._vehicle.html#VehicleDomain-isStopped"/>
     /// </remarks>
-    public bool IsStopped(string vehicleId)
-        {
-        return (GetStopState(vehicleId) & 1) == 1;
-        }
+    public bool IsStopped(string vehicleId) => (GetStopState(vehicleId) & 1) == 1;
 
     /// <summary>
     /// Return whether the vehicle is parking (implies stopped)
@@ -489,10 +481,7 @@ public partial class Vehicle
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/pydoc/traci._vehicle.html#VehicleDomain-isStoppedParking"/>
     /// </remarks>
-    public bool IsStoppedParking(string vehicleId)
-        {
-        return (GetStopState(vehicleId) & 2) == 2;
-        }
+    public bool IsStoppedParking(string vehicleId) => (GetStopState(vehicleId) & 2) == 2;
 
     /// <summary>
     /// Return whether the vehicle is stopped and waiting for a person or container
@@ -502,10 +491,7 @@ public partial class Vehicle
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/pydoc/traci._vehicle.html#VehicleDomain-isStoppedTriggered"/>
     /// </remarks>
-    public bool IsStoppedTriggered(string vehicleId)
-        {
-        return (GetStopState(vehicleId) & 12) > 0;
-        }
+    public bool IsStoppedTriggered(string vehicleId) => (GetStopState(vehicleId) & 12) > 0;
 
     /// <summary>
     /// Returns the length of the vehicles [m]
@@ -517,8 +503,8 @@ public partial class Vehicle
     /// </remarks>
     public double GetLength(string vehicleId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLE_VARIABLE, TraCIConstants.VAR_LENGTH, vehicleId);
-        return ((TraCIDouble)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, TraciConstants.VAR_LENGTH, vehicleId);
+        return ((TraciDouble)result.Data).Value;
         }
 
     /// <summary>
@@ -531,8 +517,8 @@ public partial class Vehicle
     /// </remarks>
     public double GetMaxSpeed(string vehicleId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLE_VARIABLE, TraCIConstants.VAR_MAXSPEED, vehicleId);
-        return ((TraCIDouble)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, TraciConstants.VAR_MAXSPEED, vehicleId);
+        return ((TraciDouble)result.Data).Value;
         }
 
     /// <summary>
@@ -545,8 +531,8 @@ public partial class Vehicle
     /// </remarks>
     public double GetAccel(string vehicleId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLE_VARIABLE, TraCIConstants.VAR_ACCEL, vehicleId);
-        return ((TraCIDouble)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, TraciConstants.VAR_ACCEL, vehicleId);
+        return ((TraciDouble)result.Data).Value;
         }
 
     /// <summary>
@@ -559,8 +545,8 @@ public partial class Vehicle
     /// </remarks>
     public double GetDecel(string vehicleId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLE_VARIABLE, TraCIConstants.VAR_DECEL, vehicleId);
-        return ((TraCIDouble)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, TraciConstants.VAR_DECEL, vehicleId);
+        return ((TraciDouble)result.Data).Value;
         }
 
     /// <summary>
@@ -573,8 +559,8 @@ public partial class Vehicle
     /// </remarks>
     public double GetTau(string vehicleId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLE_VARIABLE, TraCIConstants.VAR_TAU, vehicleId);
-        return ((TraCIDouble)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, TraciConstants.VAR_TAU, vehicleId);
+        return ((TraciDouble)result.Data).Value;
         }
 
     /// <summary>
@@ -587,8 +573,8 @@ public partial class Vehicle
     /// </remarks>
     public double GetImperfection(string vehicleId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLE_VARIABLE, TraCIConstants.VAR_IMPERFECTION, vehicleId);
-        return ((TraCIDouble)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, TraciConstants.VAR_IMPERFECTION, vehicleId);
+        return ((TraciDouble)result.Data).Value;
         }
 
     /// <summary>
@@ -601,8 +587,8 @@ public partial class Vehicle
     /// </remarks>
     public double GetSpeedFactor(string vehicleId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLE_VARIABLE, TraCIConstants.VAR_SPEED_FACTOR, vehicleId);
-        return ((TraCIDouble)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, TraciConstants.VAR_SPEED_FACTOR, vehicleId);
+        return ((TraciDouble)result.Data).Value;
         }
 
     /// <summary>
@@ -615,8 +601,8 @@ public partial class Vehicle
     /// </remarks>
     public double GetSpeedDeviation(string vehicleId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLE_VARIABLE, TraCIConstants.VAR_SPEED_DEVIATION, vehicleId);
-        return ((TraCIDouble)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, TraciConstants.VAR_SPEED_DEVIATION, vehicleId);
+        return ((TraciDouble)result.Data).Value;
         }
 
     /// <summary>
@@ -629,8 +615,8 @@ public partial class Vehicle
     /// </remarks>
     public string GetVehicleClass(string vehicleId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLE_VARIABLE, TraCIConstants.VAR_VEHICLECLASS, vehicleId);
-        return ((TraCIString)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, TraciConstants.VAR_VEHICLECLASS, vehicleId);
+        return ((TraciString)result.Data).Value;
         }
 
     /// <summary>
@@ -643,8 +629,8 @@ public partial class Vehicle
     /// </remarks>
     public string GetEmissionClass(string vehicleId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLE_VARIABLE, TraCIConstants.VAR_EMISSIONCLASS, vehicleId);
-        return ((TraCIString)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, TraciConstants.VAR_EMISSIONCLASS, vehicleId);
+        return ((TraciString)result.Data).Value;
         }
 
     /// <summary>
@@ -657,8 +643,8 @@ public partial class Vehicle
     /// </remarks>
     public string GetShapeClass(string vehicleId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLE_VARIABLE, TraCIConstants.VAR_SHAPECLASS, vehicleId);
-        return ((TraCIString)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, TraciConstants.VAR_SHAPECLASS, vehicleId);
+        return ((TraciString)result.Data).Value;
         }
 
     /// <summary>
@@ -671,8 +657,8 @@ public partial class Vehicle
     /// </remarks>
     public double GetMinGap(string vehicleId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLE_VARIABLE, TraCIConstants.VAR_MINGAP, vehicleId);
-        return ((TraCIDouble)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, TraciConstants.VAR_MINGAP, vehicleId);
+        return ((TraciDouble)result.Data).Value;
         }
 
     /// <summary>
@@ -685,8 +671,8 @@ public partial class Vehicle
     /// </remarks>
     public double GetWidth(string vehicleId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLE_VARIABLE, TraCIConstants.VAR_WIDTH, vehicleId);
-        return ((TraCIDouble)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, TraciConstants.VAR_WIDTH, vehicleId);
+        return ((TraciDouble)result.Data).Value;
         }
 
     /// <summary>
@@ -699,8 +685,8 @@ public partial class Vehicle
     /// </remarks>
     public double GetHeight(string vehicleId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLE_VARIABLE, TraCIConstants.VAR_HEIGHT, vehicleId);
-        return ((TraCIDouble)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, TraciConstants.VAR_HEIGHT, vehicleId);
+        return ((TraciDouble)result.Data).Value;
         }
 
     /// <summary>
@@ -713,8 +699,8 @@ public partial class Vehicle
     /// </remarks>
     public int GetPersonCapacity(string vehicleId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLE_VARIABLE, TraCIConstants.VAR_PERSON_CAPACITY, vehicleId);
-        return ((TraCIInteger)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, TraciConstants.VAR_PERSON_CAPACITY, vehicleId);
+        return ((TraciInteger)result.Data).Value;
         }
 
     /// <summary>
@@ -727,8 +713,8 @@ public partial class Vehicle
     /// </remarks>
     public double GetWaitingTime(string vehicleId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLE_VARIABLE, TraCIConstants.VAR_WAITING_TIME, vehicleId);
-        return ((TraCIDouble)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, TraciConstants.VAR_WAITING_TIME, vehicleId);
+        return ((TraciDouble)result.Data).Value;
         }
 
     /// <summary>
@@ -742,8 +728,8 @@ public partial class Vehicle
     /// </remarks>
     public double GetAccumulatedWaitingTime(string vehicleId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLE_VARIABLE, TraCIConstants.VAR_ACCUMULATED_WAITING_TIME, vehicleId);
-        return ((TraCIDouble)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, TraciConstants.VAR_ACCUMULATED_WAITING_TIME, vehicleId);
+        return ((TraciDouble)result.Data).Value;
         }
 
     /// <summary>
@@ -756,8 +742,8 @@ public partial class Vehicle
     /// </remarks>
     public List<UpcomingTrafficLights> GetNextTLS(string vehicleId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLE_VARIABLE, TraCIConstants.VAR_NEXT_TLS, vehicleId);
-        return (result.Value as TraCICompoundObject).ToUpcomingTrafficLights();
+        var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, TraciConstants.VAR_NEXT_TLS, vehicleId);
+        return (result.Data as TraciCompoundObject).ToUpcomingTrafficLights();
         }
 
     /// <summary>
@@ -770,8 +756,8 @@ public partial class Vehicle
     /// </remarks>
     public List<string> GetPersonIdList(string vehicleId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLE_VARIABLE, TraCIConstants.LAST_STEP_PERSON_ID_LIST, vehicleId);
-        return ((TraCIStringList)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, TraciConstants.LAST_STEP_PERSON_ID_LIST, vehicleId);
+        return ((TraciStringList)result.Data).Value;
         }
 
     /// <summary>
@@ -785,8 +771,8 @@ public partial class Vehicle
     /// </remarks>
     public int GetSpeedMode(string vehicleId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLE_VARIABLE, TraCIConstants.VAR_SPEEDSETMODE, vehicleId);
-        return ((TraCIInteger)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, TraciConstants.VAR_SPEEDSETMODE, vehicleId);
+        return ((TraciInteger)result.Data).Value;
         }
 
     /// <summary>
@@ -799,8 +785,8 @@ public partial class Vehicle
     /// </remarks>
     public int GetLaneChangeMode(string vehicleId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLE_VARIABLE, TraCIConstants.VAR_LANECHANGE_MODE, vehicleId);
-        return ((TraCIInteger)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, TraciConstants.VAR_LANECHANGE_MODE, vehicleId);
+        return ((TraciInteger)result.Data).Value;
         }
 
     /// <summary>
@@ -813,8 +799,8 @@ public partial class Vehicle
     /// </remarks>
     public double GetSlope(string vehicleId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLE_VARIABLE, TraCIConstants.VAR_SLOPE, vehicleId);
-        return ((TraCIDouble)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, TraciConstants.VAR_SLOPE, vehicleId);
+        return ((TraciDouble)result.Data).Value;
         }
 
     /// <summary>
@@ -827,8 +813,8 @@ public partial class Vehicle
     /// </remarks>
     public double GetAllowedSpeed(string vehicleId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLE_VARIABLE, TraCIConstants.VAR_ALLOWED_SPEED, vehicleId);
-        return ((TraCIDouble)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, TraciConstants.VAR_ALLOWED_SPEED, vehicleId);
+        return ((TraciDouble)result.Data).Value;
         }
 
     /// <summary>
@@ -841,8 +827,8 @@ public partial class Vehicle
     /// </remarks>
     public string GetLine(string vehicleId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLE_VARIABLE, TraCIConstants.VAR_LINE, vehicleId);
-        return ((TraCIString)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, TraciConstants.VAR_LINE, vehicleId);
+        return ((TraciString)result.Data).Value;
         }
 
     /// <summary>
@@ -855,8 +841,8 @@ public partial class Vehicle
     /// </remarks>
     public int GetPersonNumber(string vehicleId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLE_VARIABLE, TraCIConstants.VAR_PERSON_NUMBER, vehicleId);
-        return ((TraCIInteger)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, TraciConstants.VAR_PERSON_NUMBER, vehicleId);
+        return ((TraciInteger)result.Data).Value;
         }
 
     /// <summary>
@@ -869,8 +855,8 @@ public partial class Vehicle
     /// </remarks>
     public List<string> GetVia(string vehicleId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLE_VARIABLE, TraCIConstants.VAR_VIA, vehicleId);
-        return ((TraCIStringList)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, TraciConstants.VAR_VIA, vehicleId);
+        return ((TraciStringList)result.Data).Value;
         }
 
     /// <summary>
@@ -883,8 +869,8 @@ public partial class Vehicle
     /// </remarks>
     public double GetSpeedWithoutTraCI(string vehicleId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLE_VARIABLE, TraCIConstants.VAR_SPEED_WITHOUT_TRACI, vehicleId);
-        return ((TraCIDouble)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, TraciConstants.VAR_SPEED_WITHOUT_TRACI, vehicleId);
+        return ((TraciDouble)result.Data).Value;
         }
 
     // TODO this returns bool: how does that work?
@@ -898,8 +884,8 @@ public partial class Vehicle
     /// </remarks>
     public bool IsRouteValid(string vehicleId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLE_VARIABLE, TraCIConstants.VAR_ROUTE_VALID, vehicleId);
-        return ((TraCIInteger)result.Value).Value != 0;
+        var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, TraciConstants.VAR_ROUTE_VALID, vehicleId);
+        return ((TraciInteger)result.Data).Value != 0;
         }
 
     /// <summary>
@@ -912,8 +898,8 @@ public partial class Vehicle
     /// </remarks>
     public double GetLateralLanePosition(string vehicleId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLE_VARIABLE, TraCIConstants.VAR_LANEPOSITION_LAT, vehicleId);
-        return ((TraCIDouble)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, TraciConstants.VAR_LANEPOSITION_LAT, vehicleId);
+        return ((TraciDouble)result.Data).Value;
         }
 
     /// <summary>
@@ -926,8 +912,8 @@ public partial class Vehicle
     /// </remarks>
     public double GetMaxSpeedLat(string vehicleId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLE_VARIABLE, TraCIConstants.VAR_MAXSPEED_LAT, vehicleId);
-        return ((TraCIDouble)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, TraciConstants.VAR_MAXSPEED_LAT, vehicleId);
+        return ((TraciDouble)result.Data).Value;
         }
 
     /// <summary>
@@ -940,8 +926,8 @@ public partial class Vehicle
     /// </remarks>
     public double GetBoardingDuration(string vehicleId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLE_VARIABLE, TraCIConstants.VAR_BOARDING_DURATION, vehicleId);
-        return ((TraCIDouble)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, TraciConstants.VAR_BOARDING_DURATION, vehicleId);
+        return ((TraciDouble)result.Data).Value;
         }
 
     /// <summary>
@@ -954,8 +940,8 @@ public partial class Vehicle
     /// </remarks>
     public double GetImpatience(string vehicleId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLE_VARIABLE, TraCIConstants.VAR_IMPATIENCE, vehicleId);
-        return ((TraCIDouble)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, TraciConstants.VAR_IMPATIENCE, vehicleId);
+        return ((TraciDouble)result.Data).Value;
         }
 
     /// <summary>
@@ -968,8 +954,8 @@ public partial class Vehicle
     /// </remarks>
     public double GetMinGapLat(string vehicleId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLE_VARIABLE, TraCIConstants.VAR_MINGAP_LAT, vehicleId);
-        return ((TraCIDouble)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, TraciConstants.VAR_MINGAP_LAT, vehicleId);
+        return ((TraciDouble)result.Data).Value;
         }
 
     /// <summary>
@@ -982,8 +968,8 @@ public partial class Vehicle
     /// </remarks>
     public string GetLateralAlignment(string vehicleId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLE_VARIABLE, TraCIConstants.VAR_LATALIGNMENT, vehicleId);
-        return ((TraCIString)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, TraciConstants.VAR_LATALIGNMENT, vehicleId);
+        return ((TraciString)result.Data).Value;
         }
 
     /// <summary>
@@ -996,9 +982,9 @@ public partial class Vehicle
     /// </remarks>
     public string GetParameter(string vehicleId, string key)
         {
-        var tmp = new TraCIString { Value = key };
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_SIM_VARIABLE, TraCIConstants.VAR_PARAMETER, vehicleId, tmp);
-        return ((TraCIString)result.Value).Value;
+        TraciString tmp = new(key);
+        var result = _helper.ExecuteGetCommand(SIM_VARIABLE, TraciConstants.VAR_PARAMETER, vehicleId, tmp);
+        return ((TraciString)result.Data).Value;
         }
 
     /// <summary>
@@ -1011,8 +997,8 @@ public partial class Vehicle
     /// </remarks>
     public double GetActionStepLength(string vehicleId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLE_VARIABLE, TraCIConstants.VAR_ACTIONSTEPLENGTH, vehicleId);
-        return ((TraCIDouble)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, TraciConstants.VAR_ACTIONSTEPLENGTH, vehicleId);
+        return ((TraciDouble)result.Data).Value;
         }
 
     /// <summary>
@@ -1025,8 +1011,8 @@ public partial class Vehicle
     /// </remarks>
     public double GetLastActionTime(string vehicleId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLE_VARIABLE, TraCIConstants.VAR_LASTACTIONTIME, vehicleId);
-        return ((TraCIDouble)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, TraciConstants.VAR_LASTACTIONTIME, vehicleId);
+        return ((TraciDouble)result.Data).Value;
         }
 
     /// <summary>
@@ -1042,9 +1028,9 @@ public partial class Vehicle
         {
         // TODO cause there is no discribe fos stop data, we try parse it as StopInfomation
         // used in GetNextStops() command, which has been deprecated.
-        var tmp = new TraCIInteger { Value = limit };
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLE_VARIABLE, TraCIConstants.VAR_NEXT_STOPS2, vehicleId, tmp);
-        return ((TraCICompoundObject)result.Value).ToStopDatas();
+        var tmp = new TraciInteger(limit);
+        var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, TraciConstants.VAR_NEXT_STOPS2, vehicleId, tmp);
+        return ((TraciCompoundObject)result.Data).ToStopDatas();
         }
 
     /// <summary>
@@ -1057,8 +1043,8 @@ public partial class Vehicle
     /// </remarks>
     public double GetTimesLoss(string vehicleId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLE_VARIABLE, TraCIConstants.VAR_TIMELOSS, vehicleId);
-        return ((TraCIDouble)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, TraciConstants.VAR_TIMELOSS, vehicleId);
+        return ((TraciDouble)result.Data).Value;
         }
 
     /// <summary>
@@ -1071,8 +1057,8 @@ public partial class Vehicle
     /// </remarks>
     public List<string> GetLoadedIdList(string vehicleId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLE_VARIABLE, TraCIConstants.VAR_LOADED_LIST, vehicleId);
-        return ((TraCIStringList)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, TraciConstants.VAR_LOADED_LIST, vehicleId);
+        return ((TraciStringList)result.Data).Value;
         }
 
     /// <summary>
@@ -1086,8 +1072,8 @@ public partial class Vehicle
     /// </remarks>
     public List<string> GetTeleportingIdList(string vehicleId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLE_VARIABLE, TraCIConstants.VAR_TELEPORTING_LIST, vehicleId);
-        return ((TraCIStringList)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, TraciConstants.VAR_TELEPORTING_LIST, vehicleId);
+        return ((TraciStringList)result.Data).Value;
         }
 
     /// <summary>
@@ -1100,8 +1086,8 @@ public partial class Vehicle
     /// </remarks>
     public List<Link> GetNextLinks(string vehicleId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLE_VARIABLE, TraCIConstants.VAR_NEXT_LINKS, vehicleId);
-        return ((TraCICompoundObject)result.Value).ToLinks();
+        var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, TraciConstants.VAR_NEXT_LINKS, vehicleId);
+        return ((TraciCompoundObject)result.Data).ToLinks();
         }
 
     /// <summary>
@@ -1114,8 +1100,8 @@ public partial class Vehicle
     /// </remarks>
     public double GetDeparture(string vehicleId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLE_VARIABLE, TraCIConstants.VAR_DEPARTURE, vehicleId);
-        return ((TraCIDouble)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, TraciConstants.VAR_DEPARTURE, vehicleId);
+        return ((TraciDouble)result.Data).Value;
         }
 
     /// <summary>
@@ -1128,8 +1114,8 @@ public partial class Vehicle
     /// </remarks>
     public double GetDepartDelay(string vehicleId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLE_VARIABLE, TraCIConstants.VAR_DEPART_DELAY, vehicleId);
-        return ((TraCIDouble)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, TraciConstants.VAR_DEPART_DELAY, vehicleId);
+        return ((TraciDouble)result.Data).Value;
         }
 
     /// <summary>
@@ -1143,8 +1129,8 @@ public partial class Vehicle
     public string GetSegmentId(string vehicleId)
         {
         // TODO there is no such command in python api, and not discribed as "deprecated" in the doc
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLE_VARIABLE, 0xa1, vehicleId);
-        return ((TraCIString)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, 0xa1, vehicleId);
+        return ((TraciString)result.Data).Value;
         }
 
     /// <summary>
@@ -1158,8 +1144,8 @@ public partial class Vehicle
     public int GetSegmentIndex(string vehicleId)
         {
         // TODO there is no such command in python api, and not discribed as "deprecated" in the doc
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLE_VARIABLE, 0xa2, vehicleId);
-        return ((TraCIInteger)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, 0xa2, vehicleId);
+        return ((TraciInteger)result.Data).Value;
         }
 
     /// <summary>
@@ -1172,8 +1158,8 @@ public partial class Vehicle
     /// </remarks>
     public double GetMass(string vehicleId)
         {
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLE_VARIABLE, TraCIConstants.VAR_MASS, vehicleId);
-        return ((TraCIDouble)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, TraciConstants.VAR_MASS, vehicleId);
+        return ((TraciDouble)result.Data).Value;
         }
 
     /// <summary>
@@ -1188,13 +1174,13 @@ public partial class Vehicle
     /// </remarks>
     public double GetAdaptedTravelTime(string vehicleId, double time, string edgeId)
         {
-        var tmp = new TraCICompoundObject()
+        var tmp = new TraciCompoundObject()
         {
-            new TraCIDouble() { Value = time },
-            new TraCIString() { Value = edgeId },
+            new TraciDouble(time) ,
+            new TraciString(edgeId) ,
         };
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLE_VARIABLE, TraCIConstants.VAR_EDGE_TRAVELTIME, vehicleId, tmp);
-        return ((TraCIDouble)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, TraciConstants.VAR_EDGE_TRAVELTIME, vehicleId, tmp);
+        return ((TraciDouble)result.Data).Value;
         }
 
     /// <summary>
@@ -1209,10 +1195,10 @@ public partial class Vehicle
     /// </remarks>
     public (double RequestTime, string edgeId) GetEffort(string vehicleId, double time, string edgeId)
         {
-        TraCICompoundObject tmp = [new TraCIDouble() { Value = time }, new TraCIString() { Value = edgeId }];
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLE_VARIABLE, TraCIConstants.VAR_EDGE_EFFORT, vehicleId, tmp);
-        var effortInformation = (TraCICompoundObject)result.Value;
-        return new(((TraCIDouble)effortInformation[0]).Value, ((TraCIString)effortInformation[1]).Value);
+        TraciCompoundObject tmp = [new TraciDouble(time), new TraciString(edgeId)];
+        var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, TraciConstants.VAR_EDGE_EFFORT, vehicleId, tmp);
+        var effortInformation = (TraciCompoundObject)result.Data;
+        return new(((TraciDouble)effortInformation[0]).Value, ((TraciString)effortInformation[1]).Value);
         }
 
     /// <summary>
@@ -1226,10 +1212,10 @@ public partial class Vehicle
     /// </remarks>
     public (string leadingVehilceId, double distance) GetLeader(string vehicleId, double distance = 100.0)
         {
-        TraCIDouble tmp = new() { Value = distance };
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLE_VARIABLE, TraCIConstants.VAR_LEADER, vehicleId, tmp);
-        var leaderInformation = (TraCICompoundObject)result.Value;
-        return new(((TraCIString)leaderInformation[0]).Value, ((TraCIDouble)leaderInformation[1]).Value);
+        TraciDouble tmp = new(distance);
+        var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, TraciConstants.VAR_LEADER, vehicleId, tmp);
+        var leaderInformation = (TraciCompoundObject)result.Data;
+        return new(((TraciString)leaderInformation[0]).Value, ((TraciDouble)leaderInformation[1]).Value);
         }
 
     /// <summary>
@@ -1245,18 +1231,13 @@ public partial class Vehicle
     /// </remarks>
     public double GetDrivingDistance(string vehicleId, string edgeId, double position, int laneIndex = 0)
         {
-        TraCICompoundObject tmp =
+        TraciCompoundObject tmp =
         [
-            new RoadMapPosition()
-            {
-                RoadId = new() { Value = edgeId },
-                LaneId = new() { Value = (byte)laneIndex },
-                Pos = new() { Value = position },
-            },
-            new TraCIUByte() { Value = TraCIConstants.REQUEST_DRIVINGDIST },
+            new RoadMapPosition(edgeId,position,(byte)laneIndex),
+            new TraciUnsignedByte(TraciConstants.DistanceType.DRIVINGDIST),
         ];
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLE_VARIABLE, TraCIConstants.DISTANCE_REQUEST, vehicleId, tmp);
-        return ((TraCIDouble)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, TraciConstants.DISTANCE_REQUEST, vehicleId, tmp);
+        return ((TraciDouble)result.Data).Value;
         }
 
     /// <summary>
@@ -1272,17 +1253,13 @@ public partial class Vehicle
 
     public double GetDrivingDistance2D(string vehicleId, double x, double y)
         {
-        TraCICompoundObject tmp =
+        TraciCompoundObject tmp =
         [
-            new Position2D()
-            {
-                X = new() { Value = x },
-                Y = new() { Value = y },
-            },
-            new TraCIUByte() { Value = TraCIConstants.REQUEST_DRIVINGDIST },
+            new Position2D(x,y),
+            new TraciUnsignedByte(TraciConstants.DistanceType.DRIVINGDIST),
         ];
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLE_VARIABLE, TraCIConstants.DISTANCE_REQUEST, vehicleId, tmp);
-        return ((TraCIDouble)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, TraciConstants.DISTANCE_REQUEST, vehicleId, tmp);
+        return ((TraciDouble)result.Data).Value;
         }
 
     /// <summary>
@@ -1297,10 +1274,10 @@ public partial class Vehicle
     /// </remarks>
     public (int Model, int Traci) GetLaneChangeState(string vehicleId, int direction)
         {
-        TraCIInteger tmp = new() { Value = direction };
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLE_VARIABLE, TraCIConstants.CMD_CHANGELANE, vehicleId, tmp);
-        var item = (TraCICompoundObject)result.Value;
-        return new(((TraCIInteger)item[0]).Value, ((TraCIInteger)item[1]).Value);
+        TraciInteger tmp = new(direction);
+        var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, CHANGELANE, vehicleId, tmp);
+        var item = (TraciCompoundObject)result.Data;
+        return new(((TraciInteger)item[0]).Value, ((TraciInteger)item[1]).Value);
         }
 
     /// <summary>
@@ -1323,12 +1300,12 @@ public partial class Vehicle
                 return false;
                 }
             }
-        if ((state & TraCIConstants.LCA_BLOCKED) == 0)
+        if ((state & TraciConstants.LCA_BLOCKED) == 0)
             {
             if (direction == -1)
-                return (state & TraCIConstants.LCA_RIGHT) != 0;
+                return (state & TraciConstants.LCA_RIGHT) != 0;
             if (direction == 1)
-                return (state & TraCIConstants.LCA_LEFT) != 0;
+                return (state & TraciConstants.LCA_LEFT) != 0;
             }
         return false;
         }
@@ -1353,7 +1330,7 @@ public partial class Vehicle
                 return false;
                 }
             }
-        return (state != TraCIConstants.LCA_UNKNOWN) && ((state & TraCIConstants.LCA_BLOCKED) == 0);
+        return (state != TraciConstants.LCA_UNKNOWN) && ((state & TraciConstants.LCA_BLOCKED) == 0);
         }
 
     /// <summary>
@@ -1370,11 +1347,11 @@ public partial class Vehicle
     /// </remarks>
     public List<(string Id, double Distance)> GetNeighbors(string vehicleId, byte mode)
         {
-        TraCIUByte tmp = new() { Value = mode };
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLE_VARIABLE, TraCIConstants.VAR_NEIGHBORS, vehicleId, tmp);
-        return ((TraCICompoundObject)result.Value)
+        TraciUnsignedByte tmp = new(mode);
+        var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, TraciConstants.VAR_NEIGHBORS, vehicleId, tmp);
+        return ((TraciCompoundObject)result.Data)
             .Chunk(2)
-            .Select(i => (Id: ((TraCIString)i[0]).Value, Distance: ((TraCIDouble)i[1]).Value))
+            .Select(i => (Id: ((TraciString)i[0]).Value, Distance: ((TraciDouble)i[1]).Value))
             .ToList();
         }
 
@@ -1387,10 +1364,7 @@ public partial class Vehicle
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/pydoc/traci._vehicle.html#VehicleDomain-getLeftFollowers"/>
     /// </remarks>
-    public List<(string Id, double Distance)> GetLeftFollowers(string vehicleId, bool blockingOnly = false)
-        {
-        return GetNeighbors(vehicleId, blockingOnly ? (byte)4 : (byte)0);
-        }
+    public List<(string Id, double Distance)> GetLeftFollowers(string vehicleId, bool blockingOnly = false) => GetNeighbors(vehicleId, blockingOnly ? (byte)4 : (byte)0);
 
     /// <summary>
     /// Returns a list of IDs for neighboring vehicle relevant to lane changing (>1 elements only possible for sublane model)
@@ -1401,10 +1375,7 @@ public partial class Vehicle
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/pydoc/traci._vehicle.html#VehicleDomain-getLeftLeaders"/>
     /// </remarks>
-    public List<(string Id, double Distance)> GetLeftLeaders(string vehicleId, bool blockingOnly = false)
-        {
-        return GetNeighbors(vehicleId, blockingOnly ? (byte)6 : (byte)2);
-        }
+    public List<(string Id, double Distance)> GetLeftLeaders(string vehicleId, bool blockingOnly = false) => GetNeighbors(vehicleId, blockingOnly ? (byte)6 : (byte)2);
 
     /// <summary>
     /// Returns a list of IDs for neighboring vehicle relevant to lane changing (>1 elements only possible for sublane model)
@@ -1415,10 +1386,7 @@ public partial class Vehicle
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/pydoc/traci._vehicle.html#VehicleDomain-getRightFollowers"/>
     /// </remarks>
-    public List<(string Id, double Distance)> GetRightFollowers(string vehicleId, bool blockingOnly = false)
-        {
-        return GetNeighbors(vehicleId, blockingOnly ? (byte)5 : (byte)1);
-        }
+    public List<(string Id, double Distance)> GetRightFollowers(string vehicleId, bool blockingOnly = false) => GetNeighbors(vehicleId, blockingOnly ? (byte)5 : (byte)1);
 
     /// <summary>
     /// Returns a list of IDs for neighboring vehicle relevant to lane changing (>1 elements only possible for sublane model)
@@ -1429,10 +1397,7 @@ public partial class Vehicle
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/pydoc/traci._vehicle.html#VehicleDomain-getRightLeaders"/>
     /// </remarks>
-    public List<(string Id, double Distance)> GetRightLeaders(string vehicleId, bool blockingOnly = false)
-        {
-        return GetNeighbors(vehicleId, blockingOnly ? (byte)7 : (byte)3);
-        }
+    public List<(string Id, double Distance)> GetRightLeaders(string vehicleId, bool blockingOnly = false) => GetNeighbors(vehicleId, blockingOnly ? (byte)7 : (byte)3);
 
     /// <summary>
     /// Return the follow speed computed by the carFollowModel of vehicle
@@ -1450,16 +1415,16 @@ public partial class Vehicle
 
     public double GetFollowSpeed(string vehicleId, double speed, double gap, double leaderSpeed, double leaderMaxDecel, string leaderId = "")
         {
-        TraCICompoundObject tmp =
+        TraciCompoundObject tmp =
         [
-            new TraCIDouble() { Value = speed },
-            new TraCIDouble() { Value = gap },
-            new TraCIDouble() { Value = leaderSpeed },
-            new TraCIDouble() { Value = leaderMaxDecel },
-            new TraCIString() { Value = leaderId },
+            new TraciDouble(speed),
+            new TraciDouble(gap),
+            new TraciDouble(leaderSpeed),
+            new TraciDouble(leaderMaxDecel),
+            new TraciString(leaderId),
         ];
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLE_VARIABLE, TraCIConstants.VAR_FOLLOW_SPEED, vehicleId, tmp);
-        return ((TraCIDouble)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, TraciConstants.VAR_FOLLOW_SPEED, vehicleId, tmp);
+        return ((TraciDouble)result.Data).Value;
         }
 
     /// <summary>
@@ -1477,16 +1442,16 @@ public partial class Vehicle
     /// </remarks>
     public double GetSecureGap(string vehicleId, double speed, double gap, double leaderSpeed, double leaderMaxDecel, string leaderId = "")
         {
-        TraCICompoundObject tmp =
+        TraciCompoundObject tmp =
         [
-            new TraCIDouble() { Value = speed },
-            new TraCIDouble() { Value = gap },
-            new TraCIDouble() { Value = leaderSpeed },
-            new TraCIDouble() { Value = leaderMaxDecel },
-            new TraCIString() { Value = leaderId },
+            new TraciDouble(speed),
+            new TraciDouble(gap),
+            new TraciDouble(leaderSpeed),
+            new TraciDouble(leaderMaxDecel),
+            new TraciString(leaderId),
         ];
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLE_VARIABLE, TraCIConstants.VAR_SECURE_GAP, vehicleId, tmp);
-        return ((TraCIDouble)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, TraciConstants.VAR_SECURE_GAP, vehicleId, tmp);
+        return ((TraciDouble)result.Data).Value;
         }
 
     /// <summary>
@@ -1501,9 +1466,9 @@ public partial class Vehicle
     /// </remarks>
     public double GetStopSpeed(string vehicleId, double speed, double gap)
         {
-        TraCICompoundObject tmp = [new TraCIDouble() { Value = speed }, new TraCIDouble() { Value = gap }];
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLE_VARIABLE, TraCIConstants.VAR_STOP_SPEED, vehicleId, tmp);
-        return ((TraCIDouble)result.Value).Value;
+        TraciCompoundObject tmp = [new TraciDouble(speed), new TraciDouble(gap)];
+        var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, TraciConstants.VAR_STOP_SPEED, vehicleId, tmp);
+        return ((TraciDouble)result.Data).Value;
         }
 
     /// <summary>
@@ -1518,9 +1483,9 @@ public partial class Vehicle
     public object GetJunctionFoes(string vehicleId, double distance = 0.0)
         {
         // TODO there is no discribe for return type in doc
-        TraCIDouble tmp = new() { Value = distance };
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLE_VARIABLE, TraCIConstants.VAR_FOES, vehicleId, tmp);
-        var foes = (TraCICompoundObject)result.Value;
+        TraciDouble tmp = new(distance);
+        var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, TraciConstants.VAR_FOES, vehicleId, tmp);
+        var foes = (TraciCompoundObject)result.Data;
         return foes.ToJunctionFoes();
         }
 
@@ -1536,13 +1501,13 @@ public partial class Vehicle
     /// <returns></returns>
     public string GetStopParameter(string vehicleId, int nextStopIndex, string param, bool customParam = false)
         {
-        TraCICompoundObject tmp =
+        TraciCompoundObject tmp =
         [
-            new TraCIInteger() { Value = nextStopIndex },
-            new TraCIString() { Value = param },
-            new TraCIByte() { Value = customParam ? (byte)1 : (byte)0 },
+            new TraciInteger (nextStopIndex),
+            new TraciString(param),
+            new TraciByte(customParam ? (byte)1 : (byte)0) ,
         ];
-        var result = _helper.ExecuteGetCommand(TraCIConstants.CMD_GET_VEHICLE_VARIABLE, TraCIConstants.VAR_STOP_PARAMETER, vehicleId, tmp);
-        return ((TraCIString)result.Value).Value;
+        var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, TraciConstants.VAR_STOP_PARAMETER, vehicleId, tmp);
+        return ((TraciString)result.Data).Value;
         }
     }

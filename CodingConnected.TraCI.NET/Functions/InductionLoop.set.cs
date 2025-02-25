@@ -1,5 +1,5 @@
-﻿using CodingConnected.TraCI.NET.DataTypes;
-
+using CodingConnected.TraCI.NET.DataTypes;
+using static CodingConnected.TraCI.NET.DataTypes.TraciConstants.Command.Set;
 namespace CodingConnected.TraCI.NET.Functions;
 public partial class InductionLoop
     {
@@ -14,8 +14,8 @@ public partial class InductionLoop
     /// </remarks>
     public bool OverrideTimeSinceDetection(string loopId, double time)
         {
-        var tmp = new TraCIDouble() { Value = time };
-        return _helper.ExecuteSetCommand(loopId, TraCIConstants.CMD_SET_INDUCTIONLOOP_VARIABLE, TraCIConstants.VAR_VIRTUAL_DETECTION, tmp);
+        TraciDouble tmp = new(time);
+        return _helper.ExecuteSetCommand(loopId, INDUCTIONLOOP_VARIABLE, TraciConstants.VAR_VIRTUAL_DETECTION, tmp);
 
         }
     }
