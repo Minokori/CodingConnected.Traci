@@ -17,7 +17,7 @@ public partial class TrafficLight
     public bool SetRedYellowGreenState(string tlsId, string state)
         {
         var tmp = new TraciString(state);
-        return _helper.ExecuteSetCommand(tlsId, TL_VARIABLE, TraciConstants.TL_RED_YELLOW_GREEN_STATE, tmp);
+        return _helper.ExecuteSetCommand(TL_VARIABLE, TraciConstants.TL_RED_YELLOW_GREEN_STATE, tlsId, tmp);
         }
 
     /// <summary>
@@ -52,7 +52,7 @@ public partial class TrafficLight
     public bool SetPhase(string tlsId, int index)
         {
         TraciInteger tmp = new(index);
-        return _helper.ExecuteSetCommand(tlsId, TL_VARIABLE, TraciConstants.TL_PHASE_INDEX, tmp);
+        return _helper.ExecuteSetCommand(TL_VARIABLE, TraciConstants.TL_PHASE_INDEX, tlsId, tmp);
         }
 
     /// <summary>
@@ -68,7 +68,7 @@ public partial class TrafficLight
     public bool SetProgram(string tlsId, string programId)
         {
         TraciString tmp = new(programId);
-        return _helper.ExecuteSetCommand(tlsId, TL_VARIABLE, TraciConstants.TL_PROGRAM, tmp);
+        return _helper.ExecuteSetCommand(TL_VARIABLE, TraciConstants.TL_PROGRAM, tlsId, tmp);
         }
 
     /// <summary>
@@ -83,7 +83,7 @@ public partial class TrafficLight
     public bool SetPhaseDuration(string tlsId, double phaseDuration)
         {
         TraciDouble tmp = new(phaseDuration);
-        return _helper.ExecuteSetCommand(tlsId, TL_VARIABLE, TraciConstants.TL_PHASE_DURATION, tmp);
+        return _helper.ExecuteSetCommand(TL_VARIABLE, TraciConstants.TL_PHASE_DURATION, tlsId, tmp);
         }
 
     /// <summary>
@@ -97,5 +97,5 @@ public partial class TrafficLight
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/pydoc/traci._trafficlight.html#TrafficLightDomain-setProgramLogic"/>
     /// </remarks>
-    public bool SetProgramLogic(string tlsId, TrafficLightLogic logic) => _helper.ExecuteSetCommand(tlsId, TL_VARIABLE, TraciConstants.TL_COMPLETE_PROGRAM_RYG, logic);
+    public bool SetProgramLogic(string tlsId, TrafficLightLogic logic) => _helper.ExecuteSetCommand(TL_VARIABLE, TraciConstants.TL_COMPLETE_PROGRAM_RYG, tlsId, logic);
     }

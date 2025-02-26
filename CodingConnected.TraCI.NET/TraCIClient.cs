@@ -35,7 +35,7 @@ public partial class TraCIClient : IDisposable
 
 
 
-    public List<TraCIResult> SendMessage(TraCICommand command) => TcpSerivce.SendMessage(command);
+    public List<TraciResult> SendMessage(TraCICommand command) => TcpSerivce.SendMessage(command);
 
 
 

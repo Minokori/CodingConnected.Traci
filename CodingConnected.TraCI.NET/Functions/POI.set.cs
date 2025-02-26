@@ -16,7 +16,7 @@ public partial class POI
     public bool SetType(string poiId, string poiType)
         {
         TraciString tmp = new(poiType);
-        return _helper.ExecuteSetCommand(poiId, POI_VARIABLE, TraciConstants.VAR_TYPE, tmp);
+        return _helper.ExecuteSetCommand(POI_VARIABLE, TraciConstants.VAR_TYPE, poiId, tmp);
         }
 
     /// <summary>
@@ -34,7 +34,7 @@ public partial class POI
     public bool SetColor(string poiId, int r, int g, int b, int a = 255)
         {
         Color color = new(r, g, b, a);
-        return _helper.ExecuteSetCommand(poiId, POI_VARIABLE, TraciConstants.VAR_COLOR, color);
+        return _helper.ExecuteSetCommand(POI_VARIABLE, TraciConstants.VAR_COLOR, poiId, color);
         }
 
     /// <summary>
@@ -50,7 +50,7 @@ public partial class POI
     public bool SetPosition(string poiId, double x, double y)
         {
         Position2D position2D = new(x, y);
-        return _helper.ExecuteSetCommand(poiId, POI_VARIABLE, TraciConstants.VAR_POSITION, position2D);
+        return _helper.ExecuteSetCommand(POI_VARIABLE, TraciConstants.VAR_POSITION, poiId, position2D);
         }
 
     /// <summary>
@@ -65,7 +65,7 @@ public partial class POI
     public bool SetImageFile(string poiId, string imageFile)
         {
         TraciString tmp = new(imageFile);
-        return _helper.ExecuteSetCommand(poiId, POI_VARIABLE, TraciConstants.VAR_IMAGEFILE, tmp);
+        return _helper.ExecuteSetCommand(POI_VARIABLE, TraciConstants.VAR_IMAGEFILE, poiId, tmp);
         }
 
     /// <summary>
@@ -80,7 +80,7 @@ public partial class POI
     public bool SetWidth(string poiId, double width)
         {
         var tmp = new TraciDouble(width);
-        return _helper.ExecuteSetCommand(poiId, POI_VARIABLE, TraciConstants.VAR_WIDTH, tmp);
+        return _helper.ExecuteSetCommand(POI_VARIABLE, TraciConstants.VAR_WIDTH, poiId, tmp);
         }
 
     /// <summary>
@@ -95,7 +95,7 @@ public partial class POI
     public bool SetHeight(string poiId, double height)
         {
         TraciDouble tmp = new(height);
-        return _helper.ExecuteSetCommand(poiId, POI_VARIABLE, TraciConstants.VAR_HEIGHT, tmp);
+        return _helper.ExecuteSetCommand(POI_VARIABLE, TraciConstants.VAR_HEIGHT, poiId, tmp);
         }
 
     /// <summary>
@@ -110,7 +110,7 @@ public partial class POI
     public bool SetAngle(string poiId, double angle)
         {
         TraciDouble tmp = new(angle);
-        return _helper.ExecuteSetCommand(poiId, POI_VARIABLE, TraciConstants.VAR_ANGLE, tmp);
+        return _helper.ExecuteSetCommand(POI_VARIABLE, TraciConstants.VAR_ANGLE, poiId, tmp);
         }
 
     /// <summary>
@@ -165,7 +165,7 @@ public partial class POI
             new TraciDouble(angle),
             new TraciString(icon),
         };
-        return _helper.ExecuteSetCommand(poiId, POI_VARIABLE, TraciConstants.ADD, tmp);
+        return _helper.ExecuteSetCommand(POI_VARIABLE, TraciConstants.ADD, poiId, tmp);
         }
 
     /// <summary>
@@ -180,7 +180,7 @@ public partial class POI
     public bool Remove(string poiId, int layer = 0)
         {
         TraciInteger tmp = new(layer);
-        return _helper.ExecuteSetCommand(poiId, POI_VARIABLE, TraciConstants.REMOVE, tmp);
+        return _helper.ExecuteSetCommand(POI_VARIABLE, TraciConstants.REMOVE, poiId, tmp);
         }
 
     /// <summary>
@@ -226,6 +226,6 @@ public partial class POI
             alphaMax > 0
                 ? [color, new TraciDouble(size), new TraciInteger(alphaMax), new TraciInteger(duration), new TraciUnsignedByte(type)]
                 : [color, new TraciDouble(size)];
-        return _helper.ExecuteSetCommand(poiId, POI_VARIABLE, TraciConstants.VAR_HIGHLIGHT, tmp);
+        return _helper.ExecuteSetCommand(POI_VARIABLE, TraciConstants.VAR_HIGHLIGHT, poiId, tmp);
         }
     }

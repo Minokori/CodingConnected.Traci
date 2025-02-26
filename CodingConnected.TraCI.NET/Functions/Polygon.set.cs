@@ -16,7 +16,7 @@ public partial class Polygon
     public bool SetType(string id, string typeId)
         {
         TraciString tmp = new(typeId);
-        return _helper.ExecuteSetCommand(id, POLYGON_VARIABLE, TraciConstants.VAR_TYPE, tmp);
+        return _helper.ExecuteSetCommand(POLYGON_VARIABLE, TraciConstants.VAR_TYPE, id, tmp);
         }
 
     /// <summary>
@@ -31,7 +31,7 @@ public partial class Polygon
     public bool SetColor(string polygonId, int r, int g, int b, int a = 255)
         {
         Color color = new(r, g, b, a);
-        return _helper.ExecuteSetCommand(polygonId, POLYGON_VARIABLE, TraciConstants.VAR_COLOR, color);
+        return _helper.ExecuteSetCommand(POLYGON_VARIABLE, TraciConstants.VAR_COLOR, polygonId, color);
         }
 
     /// <summary>
@@ -48,7 +48,7 @@ public partial class Polygon
         var polygon = (DataTypes.Polygon)shape
             .Select(p => new Position2D(p.x, p.y))
             .ToList();
-        return _helper.ExecuteSetCommand(polygonId, POLYGON_VARIABLE, TraciConstants.VAR_SHAPE, polygon);
+        return _helper.ExecuteSetCommand(POLYGON_VARIABLE, TraciConstants.VAR_SHAPE, polygonId, polygon);
         }
 
     /// <summary>
@@ -63,7 +63,7 @@ public partial class Polygon
     public bool SetFilled(string id, bool filled)
         {
         TraciUnsignedByte tmp = new(filled == true ? (byte)1 : (byte)0);
-        return _helper.ExecuteSetCommand(id, POLYGON_VARIABLE, TraciConstants.VAR_FILL, tmp);
+        return _helper.ExecuteSetCommand(POLYGON_VARIABLE, TraciConstants.VAR_FILL, id, tmp);
         }
 
     /// <summary>
@@ -78,7 +78,7 @@ public partial class Polygon
     public bool SetLineWidth(string polygonId, double lineWidth)
         {
         TraciDouble tmp = new(lineWidth);
-        return _helper.ExecuteSetCommand(polygonId, POLYGON_VARIABLE, TraciConstants.VAR_WIDTH, tmp);
+        return _helper.ExecuteSetCommand(POLYGON_VARIABLE, TraciConstants.VAR_WIDTH, polygonId, tmp);
         }
 
     /// <summary>
@@ -105,7 +105,7 @@ public partial class Polygon
             shape,
         };
 
-        return _helper.ExecuteSetCommand(id, POLYGON_VARIABLE, TraciConstants.ADD, tmp);
+        return _helper.ExecuteSetCommand(POLYGON_VARIABLE, TraciConstants.ADD, id, tmp);
         }
 
     /// <summary>
@@ -120,7 +120,7 @@ public partial class Polygon
     public bool Remove(string id, int layer)
         {
         TraciInteger tmp = new(layer);
-        return _helper.ExecuteSetCommand(id, POLYGON_VARIABLE, TraciConstants.REMOVE, tmp);
+        return _helper.ExecuteSetCommand(POLYGON_VARIABLE, TraciConstants.REMOVE, id, tmp);
         }
 
     /// <summary>
@@ -139,8 +139,8 @@ public partial class Polygon
     public bool AddDynamics(
         string polygonId,
         string trackedObjectId = "",
-        List<double> timeSpan = null,
-        List<double> alphaSpan = null,
+        List<double>? timeSpan = null,
+        List<double>? alphaSpan = null,
         bool looped = false,
         bool rotate = true
     )
@@ -153,6 +153,6 @@ public partial class Polygon
             new TraciUnsignedByte(looped == false ?(byte) 0 :(byte) 1),
             new TraciUnsignedByte(rotate == false ?(byte) 0 :(byte) 1),
         };
-        return _helper.ExecuteSetCommand(polygonId, POLYGON_VARIABLE, TraciConstants.VAR_ADD_DYNAMICS, tmp);
+        return _helper.ExecuteSetCommand(POLYGON_VARIABLE, TraciConstants.VAR_ADD_DYNAMICS, polygonId, tmp);
         }
     }

@@ -10,16 +10,23 @@ public interface ITCPConnectService
     NetworkStream Stream { get; }
     Task ConnectAsync(string hostname, int port);
     bool Connect(string hostname, int port);
-    List<TraCIResult> SendMessage(TraCICommand command);
+    List<TraciResult> SendMessage(TraCICommand command);
     }
 
 public interface ICommandService
     {
-    IAnswerFromSumo ExecuteGetCommand(byte commandType, byte? messageType, string id = null, ITraciType extendVariable = null);
-    TraCICommand GetCommand(byte commandType, byte? messageType = null, string id = null, ITraciType contents = null);
-    bool ExecuteSetCommand(string id, byte commandType, byte messageType, ITraciType value = null);
+    /// <summary>
+    /// Execute a get command.<para/>
+    /// </summary>
+    /// <param name="commandType">specify which domain to get</param>
+    /// <param name="variable">specify which variable to get</param>
+    /// <param name="id">specify the object id to work on</param>
+    /// <param name="extendParameter">if get command requires extend parameter, put it here.</param>
+    /// <returns></returns>
+    IAnswerFromSumo ExecuteGetCommand(byte commandType, byte? variable, string? id = null, ITraciType? extendParameter = null);
+    TraCICommand GetCommand(byte commandType, byte? variable = null, string? id = null, ITraciType? extendParameter = null);
+    bool ExecuteSetCommand(byte commandType, byte variable, string id, ITraciType? value = null);
 
-    //TraCIResponse<Tresponse> ExecuteSetCommand<Tresponse, Tvalue>(string id, byte commandType, byte messageType, Tvalue value);
     void ExecuteSubscribeCommand(double beginTime, double endTime, string objectId, byte commandType, List<byte> variables);
     void ExecuteSubscribeContextCommand(double beginTime, double endTime, string objectId, byte contextDomain, double contextRange, byte commandType, List<byte> variables);
 

@@ -16,7 +16,7 @@ public partial class Simulation
     public bool ClearPending(string routeId = "")
         {
         TraciString tmp = new(routeId);
-        return _helper.ExecuteSetCommand("", SIM_VARIABLE, CLEAR_PENDING_VEHICLES, tmp);
+        return _helper.ExecuteSetCommand(SIM_VARIABLE, CLEAR_PENDING_VEHICLES, "", tmp);
         }
 
     /// <summary>
@@ -31,7 +31,7 @@ public partial class Simulation
         {
         TraciString tmp = new(fileName);
 
-        return _helper.ExecuteSetCommand("", SIM_VARIABLE, SAVE_SIMSTATE, tmp);
+        return _helper.ExecuteSetCommand(SIM_VARIABLE, SAVE_SIMSTATE, "", tmp);
         }
 
 
@@ -49,7 +49,7 @@ public partial class Simulation
     public bool LoadState(string fileName)
         {
         TraciString tmp = new(fileName);
-        return _helper.ExecuteSetCommand("", SIM_VARIABLE, LOAD_SIMSTATE, tmp);
+        return _helper.ExecuteSetCommand(SIM_VARIABLE, LOAD_SIMSTATE, "", tmp);
         }
 
     /// <summary>
@@ -63,6 +63,6 @@ public partial class Simulation
     public bool SetScale(double value)
         {
         TraciDouble tmp = new(value);
-        return _helper.ExecuteSetCommand("", SIM_VARIABLE, TraciConstants.VAR_SCALE, tmp);
+        return _helper.ExecuteSetCommand(SIM_VARIABLE, TraciConstants.VAR_SCALE, "", tmp);
         }
     }

@@ -743,7 +743,7 @@ public partial class Vehicle
     public List<UpcomingTrafficLights> GetNextTLS(string vehicleId)
         {
         var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, TraciConstants.VAR_NEXT_TLS, vehicleId);
-        return (result.Data as TraciCompoundObject).ToUpcomingTrafficLights();
+        return ((TraciCompoundObject)result.Data).ToUpcomingTrafficLights();
         }
 
     /// <summary>

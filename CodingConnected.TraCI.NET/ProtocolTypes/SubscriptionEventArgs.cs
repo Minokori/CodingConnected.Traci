@@ -1,6 +1,9 @@
-﻿namespace CodingConnected.TraCI.NET.ProtocolTypes;
+namespace CodingConnected.TraCI.NET.ProtocolTypes;
 
-public class SubscriptionEventArgs(string objectId, int variableCount) : EventArgs
+
+
+
+public abstract class SubscriptionEventArgs(string objectId, int variableCount) : EventArgs
     {
     public string ObjectId { get; } = objectId;
 
@@ -12,7 +15,7 @@ public class SubscriptionEventArgs(string objectId, int variableCount) : EventAr
     /// <summary>
     /// The responses must be cast to the right type in order to be used.
     /// </summary>
-    public IEnumerable<TraciSubscriptionResponseUnit> Responses { get; set; }
+    public IEnumerable<TraciSubscriptionResponseUnit>? Responses { get; set; }
 
     public int Length => Responses != null ? Responses.Count() : 0;
     }

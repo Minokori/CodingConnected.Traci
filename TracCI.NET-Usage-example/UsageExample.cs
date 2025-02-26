@@ -182,8 +182,8 @@ internal class UsageExample
         //responseInfo = eventArgsNew.ResponseByVariableCode[TraciConstants.VAR_ACCEL];
         //Console.WriteLine(" VAR_SPEED  " + responseInfo.GetContentAs<float>());
 
-        //// We can Can still retrieve using TraCIResult. 
-        //// TraCIResult implements IResponseInfo. 
+        //// We can Can still retrieve using TraciResult. 
+        //// TraciResult implements IResponseInfo. 
         //// WARNING using TraCIResponse<> we must use the exact type (i.e for angle is double)
         //var traCIResponse = (TraCIResponse<double>)eventArgsNew.ResponseByVariableCode?[TraciConstants.VAR_ANGLE];
         //Console.WriteLine(" VAR_ANGLE  " + traCIResponse?.Content);
@@ -215,7 +215,7 @@ internal class UsageExample
         //    Console.WriteLine("     VAR_ACCEL  " +
         //        variableSubscriptionResponse[TraciConstants.VAR_ACCEL].GetContentAs<float>());
         //    Console.WriteLine("     VAR_ANGLE  " +
-        //        /* We can also use TraCIResult<> (). Warning using TraCIResponse<> we must use the exact type (i.e for angle is double) */
+        //        /* We can also use TraciResult<> (). Warning using TraCIResponse<> we must use the exact type (i.e for angle is double) */
         //        (variableSubscriptionResponse[TraciConstants.VAR_ANGLE] as TraCIResponse<double>).Content);
         //    Console.WriteLine("     VAR_ROUTE  " +
         //        variableSubscriptionResponse[TraciConstants.VAR_ROUTE_ID].GetContentAs<string>());

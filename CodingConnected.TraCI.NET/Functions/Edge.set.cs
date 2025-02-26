@@ -25,7 +25,7 @@ public partial class Edge
                 (null, _) or (_, null) => throw new ArgumentException($"Both {nameof(beginTime)} and {nameof(endTime)} must be specified"),
                 _ => [new TraciDouble(beginTime.Value), new TraciDouble(endTime.Value), new TraciDouble(travelTime)],
                 };
-        return _helper.ExecuteSetCommand(edgeId, EDGE_VARIABLE, TraciConstants.VAR_EDGE_TRAVELTIME, tmp);
+        return _helper.ExecuteSetCommand(EDGE_VARIABLE, TraciConstants.VAR_EDGE_TRAVELTIME, edgeId, tmp);
         }
 
     /// <summary>
@@ -49,7 +49,7 @@ public partial class Edge
                 _ => [new TraciDouble(beginTime.Value), new TraciDouble(endTime.Value), new TraciDouble(effort)],
                 };
 
-        return _helper.ExecuteSetCommand(edgeId, EDGE_VARIABLE, TraciConstants.VAR_EDGE_EFFORT, tmp);
+        return _helper.ExecuteSetCommand(EDGE_VARIABLE, TraciConstants.VAR_EDGE_EFFORT, edgeId, tmp);
         }
 
     /// <summary>
@@ -64,6 +64,6 @@ public partial class Edge
     public bool SetMaxSpeed(string edgeId, double speed)
         {
         TraciDouble tmp = new(speed);
-        return _helper.ExecuteSetCommand(edgeId, EDGE_VARIABLE, TraciConstants.VAR_MAXSPEED, tmp);
+        return _helper.ExecuteSetCommand(EDGE_VARIABLE, TraciConstants.VAR_MAXSPEED, edgeId, tmp);
         }
     }

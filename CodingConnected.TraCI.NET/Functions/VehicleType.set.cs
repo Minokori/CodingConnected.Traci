@@ -16,7 +16,7 @@ public partial class VehicleType
     public bool SetLength(string typeId, double length)
         {
         TraciDouble tmp = new(length);
-        return _helper.ExecuteSetCommand(typeId, VEHICLETYPE_VARIABLE, TraciConstants.VAR_LENGTH, tmp);
+        return _helper.ExecuteSetCommand(VEHICLETYPE_VARIABLE, TraciConstants.VAR_LENGTH, typeId, tmp);
         }
 
     /// <summary>
@@ -31,7 +31,7 @@ public partial class VehicleType
     public bool SetMaxSpeed(string typeId, double speed)
         {
         TraciDouble tmp = new(speed);
-        return _helper.ExecuteSetCommand(typeId, VEHICLETYPE_VARIABLE, TraciConstants.VAR_MAXSPEED, tmp);
+        return _helper.ExecuteSetCommand(VEHICLETYPE_VARIABLE, TraciConstants.VAR_MAXSPEED, typeId, tmp);
         }
 
     /// <summary>
@@ -46,7 +46,7 @@ public partial class VehicleType
     public bool SetVehicleClass(string typeId, string vehicleClass)
         {
         TraciString tmp = new(vehicleClass);
-        return _helper.ExecuteSetCommand(typeId, VEHICLETYPE_VARIABLE, TraciConstants.VAR_VEHICLECLASS, tmp);
+        return _helper.ExecuteSetCommand(VEHICLETYPE_VARIABLE, TraciConstants.VAR_VEHICLECLASS, typeId, tmp);
         }
 
     /// <summary>
@@ -61,7 +61,7 @@ public partial class VehicleType
     public bool SetSpeedFactor(string typeId, double speedFactor)
         {
         TraciDouble tmp = new(speedFactor);
-        return _helper.ExecuteSetCommand(typeId, VEHICLETYPE_VARIABLE, TraciConstants.VAR_SPEED_FACTOR, tmp);
+        return _helper.ExecuteSetCommand(VEHICLETYPE_VARIABLE, TraciConstants.VAR_SPEED_FACTOR, typeId, tmp);
         }
 
     /// <summary>
@@ -77,7 +77,7 @@ public partial class VehicleType
         {
         TraciDouble tmp = new(speedDeviation);
 
-        return _helper.ExecuteSetCommand(typeId, VEHICLETYPE_VARIABLE, TraciConstants.VAR_SPEED_DEVIATION, tmp);
+        return _helper.ExecuteSetCommand(VEHICLETYPE_VARIABLE, TraciConstants.VAR_SPEED_DEVIATION, typeId, tmp);
         }
 
     /// <summary>
@@ -93,7 +93,7 @@ public partial class VehicleType
         {
         TraciString tmp = new(emissionClass);
 
-        return _helper.ExecuteSetCommand(typeId, VEHICLETYPE_VARIABLE, TraciConstants.VAR_EMISSIONCLASS, tmp);
+        return _helper.ExecuteSetCommand(VEHICLETYPE_VARIABLE, TraciConstants.VAR_EMISSIONCLASS, typeId, tmp);
         }
 
     /// <summary>
@@ -109,7 +109,7 @@ public partial class VehicleType
         {
         TraciDouble tmp = new(width);
 
-        return _helper.ExecuteSetCommand(typeId, VEHICLETYPE_VARIABLE, TraciConstants.VAR_WIDTH, tmp);
+        return _helper.ExecuteSetCommand(VEHICLETYPE_VARIABLE, TraciConstants.VAR_WIDTH, typeId, tmp);
         }
 
     /// <summary>
@@ -124,7 +124,7 @@ public partial class VehicleType
     public bool SetHeight(string typeId, double height)
         {
         TraciDouble tmp = new(height);
-        return _helper.ExecuteSetCommand(typeId, VEHICLETYPE_VARIABLE, TraciConstants.VAR_HEIGHT, tmp);
+        return _helper.ExecuteSetCommand(VEHICLETYPE_VARIABLE, TraciConstants.VAR_HEIGHT, typeId, tmp);
         }
 
     /// <summary>
@@ -139,7 +139,7 @@ public partial class VehicleType
     public bool SetMinGap(string typeId, double minGap)
         {
         TraciDouble tmp = new(minGap);
-        return _helper.ExecuteSetCommand(typeId, VEHICLETYPE_VARIABLE, TraciConstants.VAR_MINGAP, tmp);
+        return _helper.ExecuteSetCommand(VEHICLETYPE_VARIABLE, TraciConstants.VAR_MINGAP, typeId, tmp);
         }
 
     /// <summary>
@@ -154,7 +154,7 @@ public partial class VehicleType
     public bool SetShapeClass(string typeId, string shapeClass)
         {
         TraciString tmp = new(shapeClass);
-        return _helper.ExecuteSetCommand(typeId, VEHICLETYPE_VARIABLE, TraciConstants.VAR_SHAPECLASS, tmp);
+        return _helper.ExecuteSetCommand(VEHICLETYPE_VARIABLE, TraciConstants.VAR_SHAPECLASS, typeId, tmp);
         }
 
     /// <summary>
@@ -169,7 +169,7 @@ public partial class VehicleType
     public bool SetAccel(string typeId, double accel)
         {
         TraciDouble tmp = new(accel);
-        return _helper.ExecuteSetCommand(typeId, VEHICLETYPE_VARIABLE, TraciConstants.VAR_ACCEL, tmp);
+        return _helper.ExecuteSetCommand(VEHICLETYPE_VARIABLE, TraciConstants.VAR_ACCEL, typeId, tmp);
         }
 
     /// <summary>
@@ -185,7 +185,7 @@ public partial class VehicleType
         {
         TraciDouble tmp = new(decel);
 
-        return _helper.ExecuteSetCommand(typeId, VEHICLETYPE_VARIABLE, TraciConstants.VAR_DECEL, tmp);
+        return _helper.ExecuteSetCommand(VEHICLETYPE_VARIABLE, TraciConstants.VAR_DECEL, typeId, tmp);
         }
 
     /// <summary>
@@ -200,7 +200,7 @@ public partial class VehicleType
     public bool SetImperfection(string typeId, double imperfection)
         {
         TraciDouble tmp = new(imperfection);
-        return _helper.ExecuteSetCommand(typeId, VEHICLETYPE_VARIABLE, TraciConstants.VAR_IMPERFECTION, tmp);
+        return _helper.ExecuteSetCommand(VEHICLETYPE_VARIABLE, TraciConstants.VAR_IMPERFECTION, typeId, tmp);
         }
 
     /// <summary>
@@ -215,7 +215,7 @@ public partial class VehicleType
     public bool SetTau(string typeId, double tau)
         {
         TraciDouble tmp = new(tau);
-        return _helper.ExecuteSetCommand(typeId, VEHICLETYPE_VARIABLE, TraciConstants.VAR_TAU, tmp);
+        return _helper.ExecuteSetCommand(VEHICLETYPE_VARIABLE, TraciConstants.VAR_TAU, typeId, tmp);
         }
 
     /// <summary>
@@ -228,7 +228,7 @@ public partial class VehicleType
     /// see <see href="https://sumo.dlr.de/pydoc/traci._vehicletype.html#VehicleTypeDomain-setColor"/>
     /// </remarks>
     public bool SetColor(string typeId, Color color) =>
-        _helper.ExecuteSetCommand(typeId, VEHICLETYPE_VARIABLE, TraciConstants.VAR_COLOR, color);
+        _helper.ExecuteSetCommand(VEHICLETYPE_VARIABLE, TraciConstants.VAR_COLOR, typeId, color);
 
     /// <summary>
     /// Sets the vehicle type's color.
@@ -262,7 +262,7 @@ public partial class VehicleType
         {
         TraciDouble tmp = new(maxSpeed);
 
-        return _helper.ExecuteSetCommand(typeId, VEHICLETYPE_VARIABLE, TraciConstants.VAR_MAXSPEED_LAT, tmp);
+        return _helper.ExecuteSetCommand(VEHICLETYPE_VARIABLE, TraciConstants.VAR_MAXSPEED_LAT, typeId, tmp);
         }
 
     /// <summary>
@@ -278,7 +278,7 @@ public partial class VehicleType
         {
         TraciDouble tmp = new(minGapLat);
 
-        return _helper.ExecuteSetCommand(typeId, VEHICLETYPE_VARIABLE, TraciConstants.VAR_MINGAP_LAT, tmp);
+        return _helper.ExecuteSetCommand(VEHICLETYPE_VARIABLE, TraciConstants.VAR_MINGAP_LAT, typeId, tmp);
         }
 
     /// <summary>
@@ -293,7 +293,7 @@ public partial class VehicleType
     public bool SetLateralAlignment(string typeId, string latAlignment)
         {
         TraciString tmp = new(latAlignment);
-        return _helper.ExecuteSetCommand(typeId, VEHICLETYPE_VARIABLE, TraciConstants.VAR_LATALIGNMENT, tmp);
+        return _helper.ExecuteSetCommand(VEHICLETYPE_VARIABLE, TraciConstants.VAR_LATALIGNMENT, typeId, tmp);
         }
 
     /// <summary>
@@ -308,7 +308,7 @@ public partial class VehicleType
     public bool SetBoardingDuration(string typeId, double boardingDuration)
         {
         TraciDouble tmp = new(boardingDuration);
-        return _helper.ExecuteSetCommand(typeId, VEHICLETYPE_VARIABLE, TraciConstants.VAR_BOARDING_DURATION, tmp);
+        return _helper.ExecuteSetCommand(VEHICLETYPE_VARIABLE, TraciConstants.VAR_BOARDING_DURATION, typeId, tmp);
         }
 
     /// <summary>
@@ -324,7 +324,7 @@ public partial class VehicleType
     public bool SetImpatience(string typeId, double impatience)
         {
         TraciDouble tmp = new(impatience);
-        return _helper.ExecuteSetCommand(typeId, VEHICLETYPE_VARIABLE, TraciConstants.VAR_IMPATIENCE, tmp);
+        return _helper.ExecuteSetCommand(VEHICLETYPE_VARIABLE, TraciConstants.VAR_IMPATIENCE, typeId, tmp);
         }
 
     /// <summary>
@@ -339,7 +339,7 @@ public partial class VehicleType
     public bool Copy(string origTypeId, string newTypeId)
         {
         TraciString tmp = new(newTypeId);
-        return _helper.ExecuteSetCommand(origTypeId, VEHICLETYPE_VARIABLE, TraciConstants.COPY, tmp);
+        return _helper.ExecuteSetCommand(VEHICLETYPE_VARIABLE, TraciConstants.COPY, origTypeId, tmp);
         }
 
     /// <summary>
@@ -359,7 +359,7 @@ public partial class VehicleType
         {
         actionStepLength = resetActionOffset ? actionStepLength : actionStepLength * -1;
         TraciDouble tmp = new(actionStepLength);
-        return _helper.ExecuteSetCommand(typeId, VEHICLETYPE_VARIABLE, TraciConstants.VAR_ACTIONSTEPLENGTH, tmp);
+        return _helper.ExecuteSetCommand(VEHICLETYPE_VARIABLE, TraciConstants.VAR_ACTIONSTEPLENGTH, typeId, tmp);
         }
 
     /// <summary>
@@ -374,7 +374,7 @@ public partial class VehicleType
     public bool SetScale(string typeId, double scale)
         {
         TraciDouble tmp = new(scale);
-        return _helper.ExecuteSetCommand(typeId, VEHICLETYPE_VARIABLE, TraciConstants.VAR_SCALE, tmp);
+        return _helper.ExecuteSetCommand(VEHICLETYPE_VARIABLE, TraciConstants.VAR_SCALE, typeId, tmp);
         }
 
     /// <summary>
@@ -389,6 +389,6 @@ public partial class VehicleType
     public bool SetMass(string typeId, double mass)
         {
         TraciDouble tmp = new(mass);
-        return _helper.ExecuteSetCommand(typeId, VEHICLETYPE_VARIABLE, TraciConstants.VAR_MASS, tmp);
+        return _helper.ExecuteSetCommand(VEHICLETYPE_VARIABLE, TraciConstants.VAR_MASS, typeId, tmp);
         }
     }

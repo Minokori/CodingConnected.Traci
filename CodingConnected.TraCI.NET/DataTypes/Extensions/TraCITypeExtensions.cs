@@ -9,10 +9,10 @@ internal static class TraCITypeExtensions
     internal static List<EdgeInformation> ToEdgeInformations(this TraciCompoundObject content)
         {
         List<EdgeInformation> edges = [];
-        var numberOfEdges = (content[0] as TraciInteger).Value;
+        var numberOfEdges = ((TraciInteger)content[0]).Value;
         for (var i = 0; i < numberOfEdges; i++)
             {
-            var edge = content.Skip(1 + (6 * i)).Take(6) as EdgeInformation;
+            var edge = (EdgeInformation)content.Skip(1 + (6 * i)).Take(6);
             edges.Add(edge);
             }
         return edges;
@@ -23,7 +23,7 @@ internal static class TraCITypeExtensions
     internal static List<TrafficLightLogic> ToTrafficLightLogics(this TraciCompoundObject content)
         {
         List<TrafficLightLogic> result = [];
-        var numberOfLogics = (content[0] as TraciInteger).Value;
+        var numberOfLogics = ((TraciInteger)content[0]).Value;
         content = (TraciCompoundObject)content.Skip(1);
         while (content.Count > 0)
             {

@@ -43,7 +43,7 @@ public partial class Calibrator
             new TraciString(departLane),
             new TraciString(departSpeed)
             ];
-        return _helper.ExecuteSetCommand(calibrationId, CALIBRATOR_VARIABLE,
-            FLOW, tmp);
+        return _helper.ExecuteSetCommand(CALIBRATOR_VARIABLE, FLOW,
+            calibrationId, tmp);
         }
     }

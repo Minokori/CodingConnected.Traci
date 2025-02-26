@@ -7,7 +7,7 @@ internal partial class CommandService(ITCPConnectService tcpService) : ICommandS
     {
     private readonly ITCPConnectService _tcpService = tcpService;
 
-    public bool ExecuteSetCommand(string id, byte commandType, byte messageType, ITraciType value = null)
+    public bool ExecuteSetCommand(byte commandType, byte messageType, string id, ITraciType? value = null)
         {
         var command = GetCommand(commandType, messageType, id, value);
         if (command != null)
@@ -59,13 +59,14 @@ internal partial class CommandService(ITCPConnectService tcpService) : ICommandS
         _ = _tcpService.SendMessage(command);
         }
 
-    public IAnswerFromSumo ExecuteGetCommand(byte commandType, byte? messageType = null, string id = null, ITraciType extendVariables = null)
+    public IAnswerFromSumo ExecuteGetCommand(byte commandType, byte? messageType = null, string? id = null, ITraciType? extendVariables = null)
         {
         var command = GetCommand(commandType, messageType, id, extendVariables);
         var response = _tcpService.SendMessage(command);
         try
             {
-            return response.ExtractData(commandType, messageType);
+            var answer = response.ExtractData(commandType, messageType);
+            return answer is null ? throw new Exception("Answer from traci is null") : answer;
             }
         catch
             {
@@ -94,16 +95,16 @@ internal partial class CommandService(ITCPConnectService tcpService) : ICommandS
         List<byte> commandPart2 = contextDomain.HasValue ? [contextDomain.Value] : [];
         List<byte> commandPart3 = contextRange.HasValue ? [.. TraciDouble.AsBytes(contextRange.Value)] : [];
         List<byte> commandPart4 = [(byte)variables.Count, .. variables];
-        TraCICommand command = new() { Identifier = commandType, Contents = [.. commandPart1, .. commandPart2, .. commandPart3, .. commandPart4] };
+        TraCICommand command = new(commandType, [.. commandPart1, .. commandPart2, .. commandPart3, .. commandPart4]);
         return command;
         }
 
-    public TraCICommand GetCommand(byte commandType, byte? messageType = null, string id = null, ITraciType contents = null)
+    public TraCICommand GetCommand(byte commandType, byte? messageType = null, string? id = null, ITraciType? contents = null)
         {
         byte[] commandPart1 = messageType.HasValue ? [messageType.Value] : [];
         var commandPart2 = id is null ? [] : TraciString.AsBytes(id);
         var commandPart3 = contents?.ToBytes() ?? [];
-        TraCICommand command = new() { Identifier = commandType, Contents = [.. commandPart1, .. commandPart2, .. commandPart3] };
+        TraCICommand command = new(commandType, [.. commandPart1, .. commandPart2, .. commandPart3]);
         return command;
         }
     }

@@ -2,19 +2,19 @@ using System.Text;
 using static CodingConnected.TraCI.NET.DataTypes.TraciConstants;
 namespace CodingConnected.TraCI.NET.ProtocolTypes;
 
-public partial class TraCIResult
+public partial class TraciResult
     {
     ResultCode IStatusResponse.Result => (ResultCode)Content[0];
-    int IStatusResponse.DescriptionLength => BitConverter.ToInt32(Content.Take(4).ToArray());
+    int IStatusResponse.DescriptionLength => BitConverter.ToInt32(Content.Skip(1).Take(4).ToArray());
 
     string IStatusResponse.Description =>
         Encoding.ASCII.GetString(
-            Content.Skip(1 + 4).Take(((IStatusResponse)this).DescriptionLength).ToArray()
+            [.. Content.Skip(1 + 4).Take(((IStatusResponse)this).DescriptionLength)]
         );
     }
 
 /// <summary>
-/// 显式实现的接口，用于将 <see cref="TraCIResult"/> 解析为 status response
+/// 显式实现的接口，用于将 <see cref="TraciResult"/> 解析为 status response
 /// </summary>
 /// <remarks>
 /// see <see href="https://sumo.dlr.de/docs/TraCI/Protocol.html#status_response"/>

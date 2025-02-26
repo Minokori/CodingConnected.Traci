@@ -57,17 +57,17 @@ internal class ConnectService : ITCPConnectService
             }
         }
 
-    public List<TraCIResult> SendMessage(TraCICommand command)
+    public List<TraciResult> SendMessage(TraCICommand command)
         {
-        if (!Client.Connected)
+        if (Client is null || Client!.Connected)
             {
-            return null;
+            return [];
             }
 
         //send message
         Client.Client.Send(command.ToMessageBytes());
 
-        //read response
+        //read responseBytes
         try
             {
             var hasReadLength = Stream.Read(_receiveBuffer, 0, 32768);
@@ -77,11 +77,11 @@ internal class ConnectService : ITCPConnectService
                 throw new IOException();
                 }
 
-            // Totol Byte to read
-            var totalLength = BitConverter.ToInt32(_receiveBuffer.Take(4).Reverse().ToArray(), 0);
+            // Totals Byte to read
+            var totalLength = BitConverter.ToInt32([.. _receiveBuffer.Take(4).Reverse()], 0);
 
-            // push all byte to response
-            List<byte> response = [.. _receiveBuffer.Take(hasReadLength).ToArray()];
+            // push all byte to responseBytes
+            List<byte> responseBytes = [.. _receiveBuffer.Take(hasReadLength).ToArray()];
 
             // if buffer is not enough to read all bytes, read until all bytes are read
             if (hasReadLength != totalLength)
@@ -89,15 +89,15 @@ internal class ConnectService : ITCPConnectService
                 while (hasReadLength < totalLength)
                     {
                     var innerLength = Stream.Read(_receiveBuffer, 0, 32768);
-                    response.AddRange(_receiveBuffer.Take(innerLength).ToArray());
+                    responseBytes.AddRange([.. _receiveBuffer.Take(innerLength)]);
                     hasReadLength += innerLength;
                     }
                 }
-            return response.AsTraCIResults();
+            return responseBytes.AsTraCIResults();
             }
         catch
             {
-            return null;
+            return [];
             }
         }
     }

@@ -16,6 +16,6 @@ public partial class LaneAreaDetector
     public bool OverrideVehicleNumber(string detectorId, int vehicleNumber)
         {
         TraciInteger tmp = new(vehicleNumber);
-        return _helper.ExecuteSetCommand(detectorId, CHANGE_LANE_AREA_DETECTOR, TraciConstants.VAR_VEHICLE_NUMBER, tmp);
+        return _helper.ExecuteSetCommand(CHANGE_LANE_AREA_DETECTOR, TraciConstants.VAR_VEHICLE_NUMBER, detectorId, tmp);
         }
     }

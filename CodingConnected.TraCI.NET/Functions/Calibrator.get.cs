@@ -5,7 +5,7 @@ namespace CodingConnected.TraCI.NET.Functions;
 public partial class Calibrator
     {
     /// <summary>
-    /// 	Returns the begin time of the current calibration interval
+    /// Returns the begin time of the current calibration interval
     /// </summary>
     /// <param name="calibratorId"></param>
     /// <returns></returns>

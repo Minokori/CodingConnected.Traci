@@ -15,6 +15,6 @@ public partial class Route
     public bool Add(string routeId, List<string> edges)
         {
         TraciStringList tmp = new(edges);
-        return _helper.ExecuteSetCommand(routeId, ROUTE_VARIABLE, TraciConstants.ADD, tmp);
+        return _helper.ExecuteSetCommand(ROUTE_VARIABLE, TraciConstants.ADD, routeId, tmp);
         }
     }

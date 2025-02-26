@@ -16,7 +16,7 @@ public partial class ChargingStation
     public bool SetChargingPower(string stopId, double power)
         {
         TraciDouble tmp = new(power);
-        return _helper.ExecuteSetCommand(stopId, CHARGINGSTATION_VARIABLE, TraciConstants.VAR_CHARGING_POWER, tmp);
+        return _helper.ExecuteSetCommand(CHARGINGSTATION_VARIABLE, TraciConstants.VAR_CHARGING_POWER, stopId, tmp);
         }
 
     /// <summary>
@@ -31,7 +31,7 @@ public partial class ChargingStation
     public bool SetEfficiency(string stopId, double efficiency)
         {
         TraciDouble tmp = new(efficiency);
-        return _helper.ExecuteSetCommand(stopId, CHARGINGSTATION_VARIABLE, TraciConstants.VAR_CHARGING_EFFICIENCY, tmp);
+        return _helper.ExecuteSetCommand(CHARGINGSTATION_VARIABLE, TraciConstants.VAR_CHARGING_EFFICIENCY, stopId, tmp);
         }
 
     /// <summary>
@@ -46,7 +46,7 @@ public partial class ChargingStation
     public bool SetChargeInTransit(string stopId, int inTransit)
         {
         TraciDouble tmp = new(inTransit);
-        return _helper.ExecuteSetCommand(stopId, CHARGINGSTATION_VARIABLE, TraciConstants.VAR_CHARGING_TRANSIT, tmp);
+        return _helper.ExecuteSetCommand(CHARGINGSTATION_VARIABLE, TraciConstants.VAR_CHARGING_TRANSIT, stopId, tmp);
         }
 
     /// <summary>
@@ -61,6 +61,6 @@ public partial class ChargingStation
     public bool SetChargeDelay(string stopId, double delay)
         {
         TraciDouble tmp = new(delay);
-        return _helper.ExecuteSetCommand(stopId, CHARGINGSTATION_VARIABLE, TraciConstants.VAR_CHARGING_DELAY, tmp);
+        return _helper.ExecuteSetCommand(CHARGINGSTATION_VARIABLE, TraciConstants.VAR_CHARGING_DELAY, stopId, tmp);
         }
     }
