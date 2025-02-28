@@ -1,5 +1,5 @@
 #pragma warning disable IDE0130 // 命名空间与文件夹结构不匹配
-using static CodingConnected.TraCI.NET.DataTypes.TraciConstants.DataType;
+using CodingConnected.TraCI.NET.Constants;
 namespace CodingConnected.TraCI.NET.DataTypes;
 /// <summary>
 /// a <see cref="List{T}"/> of <see cref="ITraciType"/> values
@@ -23,7 +23,7 @@ public class TraciCompoundObject : TraciArrayType, ITraciType
     /// In theses cases, override this property to false.
     /// </remarks>
     protected virtual bool IsComplete => true;
-    public virtual byte TYPE => IsComplete ? COMPOUND : throw new NotImplementedException($"a sub-list of {nameof(TraciCompoundObject)} has no TYPE ");
+    public virtual DataType TypeIdentifier => IsComplete ? DataType.COMPOUND : throw new NotImplementedException($"a sub-list of {nameof(TraciCompoundObject)} has no TYPE ");
 
     public override byte[] ToBytes()
         {
@@ -33,9 +33,9 @@ public class TraciCompoundObject : TraciArrayType, ITraciType
         return [.. bytes];
         }
 
-    public static new (TraciCompoundObject TraciData, IEnumerable<byte> RemainingBytes) FromBytes(IEnumerable<byte> bytes) =>
-        throw new NotImplementedException($"{nameof(TraciCompoundObject)} cannot frombytes directly cause the class inner it is uncertain");
+    public static new (TraciCompoundObject traciData, IEnumerable<byte> remainingBytes) FromBytes(IEnumerable<byte> bytes) => throw new NotImplementedException($"{nameof(TraciCompoundObject)} cannot frombytes directly cause the class inner it is uncertain");
 
     public static new byte[] AsBytes(List<ValueType> value) =>
         throw new NotImplementedException($"{nameof(TraciCompoundObject)} cannot {nameof(AsBytes)} directly cause the class inner it is uncertain");
+
     }

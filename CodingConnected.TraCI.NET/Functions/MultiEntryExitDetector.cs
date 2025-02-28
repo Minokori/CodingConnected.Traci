@@ -1,4 +1,4 @@
-using CodingConnected.TraCI.NET.DataTypes;
+using CodingConnected.TraCI.NET.Constants;
 using CodingConnected.TraCI.NET.Services;
 
 namespace CodingConnected.TraCI.NET.Functions;
@@ -34,11 +34,11 @@ public partial class MultiEntryExitDetector(ITCPConnectService tcpService, IComm
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/docs/TraCI/Object_Variable_Subscription.html#command_0xdx_subscribe_variable"/>
     /// </remarks>
-    public void Subscribe(string detectorId, int beginTime, int endTime, List<byte> ListOfVariablesToSubsribeTo) => _helper.ExecuteSubscribeCommand(
+    public override void Subscribe(string detectorId, int beginTime, int endTime, List<byte> ListOfVariablesToSubsribeTo) => _helper.ExecuteSubscribeCommand(
             beginTime,
             endTime,
-            detectorId,
-            TraciConstants.Command.Subscribe.MULTIENTRYEXIT_VARIABLE,
+            (byte)CommandIdentifier.Subscribe.MULTIENTRYEXIT_VARIABLE,
             ListOfVariablesToSubsribeTo
-        );
+,
+            detectorId);
     }

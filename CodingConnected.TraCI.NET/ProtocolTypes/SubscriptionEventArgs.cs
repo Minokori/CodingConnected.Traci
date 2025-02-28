@@ -1,8 +1,4 @@
 namespace CodingConnected.TraCI.NET.ProtocolTypes;
-
-
-
-
 public abstract class SubscriptionEventArgs(string objectId, int variableCount) : EventArgs
     {
     public string ObjectId { get; } = objectId;

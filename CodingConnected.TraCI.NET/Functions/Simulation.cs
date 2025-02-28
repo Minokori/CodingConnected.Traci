@@ -1,6 +1,7 @@
+using CodingConnected.TraCI.NET.Constants;
 using CodingConnected.TraCI.NET.DataTypes;
 using CodingConnected.TraCI.NET.Services;
-using static CodingConnected.TraCI.NET.DataTypes.TraciConstants.Command.Get;
+using static CodingConnected.TraCI.NET.Constants.CommandIdentifier.Get;
 namespace CodingConnected.TraCI.NET.Functions;
 
 /// <summary>
@@ -44,5 +45,5 @@ public partial class Simulation(ITCPConnectService tcpService, ICommandService h
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/docs/TraCI/Object_Variable_Subscription.html#command_0xdx_subscribe_variable"/>
     /// </remarks>
-    public void Subscribe(string objectId, int beginTime, int endTime, List<byte> ListOfVariablesToSubsribeTo) => _helper.ExecuteSubscribeCommand(beginTime, endTime, "", TraciConstants.Command.Subscribe.SIM_VARIABLE, ListOfVariablesToSubsribeTo);
+    public override void Subscribe(string objectId, int beginTime, int endTime, List<byte> ListOfVariablesToSubsribeTo) => _helper.ExecuteSubscribeCommand(beginTime, endTime, (byte)CommandIdentifier.Subscribe.SIM_VARIABLE, ListOfVariablesToSubsribeTo, "");
     }

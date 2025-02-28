@@ -1,4 +1,4 @@
-using static CodingConnected.TraCI.NET.DataTypes.TraciConstants;
+using CodingConnected.TraCI.NET.Constants;
 #pragma warning disable IDE0130 // 命名空间与文件夹结构不匹配
 namespace CodingConnected.TraCI.NET.DataTypes;
 
@@ -7,15 +7,15 @@ namespace CodingConnected.TraCI.NET.DataTypes;
 /// </summary>
 public class TrafficLightPhase : TraciArrayType
     {
-
     /// <summary>
     /// preceding road affected by the respective light phase.
     /// </summary>
-    public string PrecedingRoad => ((TraciString)this[0]).Value;
+    public string PrecedingRoad => (TraciString)this[0];
+
     /// <summary>
     /// succeeding road affected by the respective light phase.
     /// </summary>
-    public string SucceedingRoad => ((TraciString)this[1]).Value;
+    public string SucceedingRoad => (TraciString)this[1];
     public PhaseState Phase => (PhaseState)((TraciByte)this[2]).Value;
 
     public static new Tuple<TrafficLightPhase, IEnumerable<byte>> FromBytes(IEnumerable<byte> bytes)
@@ -26,7 +26,9 @@ public class TrafficLightPhase : TraciArrayType
         TrafficLightPhase result = [precRoad, succRoad, phase];
         return new(result, bytes);
         }
+
     private TrafficLightPhase() { }
+
     public TrafficLightPhase(string precedingRoad, string succeedingRoad, PhaseState phase)
         {
         this[0] = new TraciString(precedingRoad);

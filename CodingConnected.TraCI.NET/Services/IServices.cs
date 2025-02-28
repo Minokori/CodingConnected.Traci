@@ -4,7 +4,7 @@ using CodingConnected.TraCI.NET.ProtocolTypes;
 
 namespace CodingConnected.TraCI.NET.Services;
 
-public interface ITCPConnectService
+public interface ITCPConnectService : IDisposable
     {
     TcpClient Client { get; }
     NetworkStream Stream { get; }
@@ -18,18 +18,54 @@ public interface ICommandService
     /// <summary>
     /// Execute a get command.<para/>
     /// </summary>
-    /// <param name="commandType">specify which domain to get</param>
+    /// <param name="commandIdentifier">specify which command to execute</param>
     /// <param name="variable">specify which variable to get</param>
     /// <param name="id">specify the object id to work on</param>
     /// <param name="extendParameter">if get command requires extend parameter, put it here.</param>
     /// <returns></returns>
-    IAnswerFromSumo ExecuteGetCommand(byte commandType, byte? variable, string? id = null, ITraciType? extendParameter = null);
-    TraCICommand GetCommand(byte commandType, byte? variable = null, string? id = null, ITraciType? extendParameter = null);
-    bool ExecuteSetCommand(byte commandType, byte variable, string id, ITraciType? value = null);
+    IAnswerFromSumo ExecuteGetCommand(byte commandIdentifier, byte? variable, string? id = null, ITraciType? extendParameter = null);
 
-    void ExecuteSubscribeCommand(double beginTime, double endTime, string objectId, byte commandType, List<byte> variables);
-    void ExecuteSubscribeContextCommand(double beginTime, double endTime, string objectId, byte contextDomain, double contextRange, byte commandType, List<byte> variables);
 
+    /// <summary>
+    /// Execute a set command.<para/>
+    /// </summary>
+    /// <param name="commandIdentifier">specify which command to execute</param>
+    /// <param name="variable">specify which variable to set</param>
+    /// <param name="id">specify the object id to work on</param>
+    /// <param name="value">value to set</param>
+    /// <returns>command success or not</returns>
+    bool ExecuteSetCommand(byte commandIdentifier, byte variable, string id, ITraciType? value = null);
+
+    /// <summary>
+    /// Execute a subscribe command.<para/>
+    /// </summary>
+    /// <param name="beginTime"></param>
+    /// <param name="endTime"></param>
+    /// <param name="commandIdentifier">specify which command to execute</param>
+    /// <param name="variables">specify which variables to subscribe</param>
+    /// <param name="objectId">specify the object id to subscribe</param>
+    void ExecuteSubscribeCommand(double beginTime, double endTime, byte commandIdentifier, List<byte> variables, string objectId);
+
+    void ExecuteSubscribeContextCommand(
+        double beginTime,
+        double endTime,
+        byte commandIdentifier,
+        List<byte> variables,
+        string objectId,
+        byte contextDomain,
+        double contextRange);
+
+    TraCICommand GenerateCommand(byte commandIdentifier, byte? variable = null, string? id = null, ITraciType? extendParameter = null);
+    TraCICommand GenerateSubscribeCommand(
+        double beginTime,
+        double endTime,
+        byte commandIdentifier,
+        List<byte> variables,
+        string objectId,
+        /*below params for context subscribe*/
+        byte? contextDomain = null,
+        double? contextRange = null
+    );
     }
 
 public interface IEventService
@@ -70,16 +106,13 @@ public interface IEventService
 
     void OnPolygonSubscription(SubscriptionEventArgs eventArgs);
 
-
     void OnPOISubscription(SubscriptionEventArgs eventArgs);
 
     void OnRouteSubscription(SubscriptionEventArgs eventArgs);
 
     void OnVehicleTypeSubscription(SubscriptionEventArgs eventArgs);
 
-
     void OnVehicleSubscription(SubscriptionEventArgs eventArgs);
-
 
     void OnLaneSubscription(SubscriptionEventArgs eventArgs);
 

@@ -1,4 +1,4 @@
-using CodingConnected.TraCI.NET.DataTypes;
+using CodingConnected.TraCI.NET.Constants;
 using CodingConnected.TraCI.NET.Services;
 
 namespace CodingConnected.TraCI.NET.Functions;
@@ -7,17 +7,18 @@ namespace CodingConnected.TraCI.NET.Functions;
 /// <summary>
 /// Base class for TraCI Functions
 /// </summary>
-/// <param name="tcpService">send/recieve data to/from traci host</param>
+/// <param name="tcpService">send/receive data to/from traci host</param>
 /// <param name="helper">parse commands/convert contents from response</param>
 public abstract class FunctionBase(ITCPConnectService tcpService, ICommandService helper)
     {
     protected ICommandService _helper = helper;
     protected ITCPConnectService _tcpService = tcpService;
+    public virtual void Subscribe(string objectId, int beginTime, int endTime, List<byte> VariablesToSubscribeTo) => throw new NotImplementedException();
     }
 
 
 
-public abstract class TraCIContextSubscribableCommands(ITCPConnectService tcpService, ICommandService helper) : FunctionBase(tcpService, helper)
+public abstract class TraCIContextSubscribeCommands(ITCPConnectService tcpService, ICommandService helper) : FunctionBase(tcpService, helper)
     {
     /// <summary>
     /// Cache an empty list of bytes to unsubscribe. Prevents allocation when multiple unsubscribe occur.
@@ -25,7 +26,7 @@ public abstract class TraCIContextSubscribableCommands(ITCPConnectService tcpSer
     private static readonly List<byte> EmptyVariableSubscriptionList = [];
 
     /// <summary>
-    /// Should be overriden and return TraciConstants.CMD_SUBSCRIBE_&lt;Command Domain&gt;_CONTEXT
+    /// Should be overridden and return TraciConstants.CMD_SUBSCRIBE_&lt;CommandIdentifier Domain&gt;_CONTEXT
     /// for the corresponding domain.
     /// </summary>
     /// <remarks>
@@ -35,7 +36,7 @@ public abstract class TraCIContextSubscribableCommands(ITCPConnectService tcpSer
     /// protected override byte ContextSubscribeCommand => TraciConstants.CMD_SUBSCRIBE_VEHICLE_CONTEXT;
     /// </example>
     /// </remarks>
-    protected abstract byte ContextSubscribeCommand { get; }
+    protected abstract CommandIdentifier.Subscribe ContextSubscribeCommand { get; }
 
     /// <summary>
     /// SubscribeContext for the objects of the domain this class belongs to.
@@ -56,24 +57,23 @@ public abstract class TraCIContextSubscribableCommands(ITCPConnectService tcpSer
         double endTime,
         byte contextDomain,
         double dist,
-        List<byte> ListOfVariablesToSubsribeTo
+        List<byte> ListOfVariablesToSubscribeTo
     ) => _helper.ExecuteSubscribeContextCommand(
             beginTime,
             endTime,
+            (byte)ContextSubscribeCommand,
+            ListOfVariablesToSubscribeTo,
             objectId,
             contextDomain,
-            dist,
-            ContextSubscribeCommand,
-            ListOfVariablesToSubsribeTo
-        );
+            dist);
 
     public void UnsubscribeContext(string objectId, byte contextDomain) => _helper.ExecuteSubscribeContextCommand(
             TraciConstants.INVALID_DOUBLE_VALUE,
             TraciConstants.INVALID_DOUBLE_VALUE,
+            (byte)ContextSubscribeCommand,
+            EmptyVariableSubscriptionList
+,
             objectId,
             contextDomain,
-            TraciConstants.INVALID_DOUBLE_VALUE,
-            ContextSubscribeCommand,
-            EmptyVariableSubscriptionList
-        );
+            TraciConstants.INVALID_DOUBLE_VALUE);
     }

@@ -1,5 +1,5 @@
 #pragma warning disable IDE0130 // 命名空间与文件夹结构不匹配
-using static CodingConnected.TraCI.NET.DataTypes.TraciConstants.PositionType;
+using CodingConnected.TraCI.NET.Constants;
 
 namespace CodingConnected.TraCI.NET.DataTypes;
 
@@ -7,9 +7,9 @@ namespace CodingConnected.TraCI.NET.DataTypes;
 /// A cartesian 3D position within the simulation network,
 /// described by three double values (x, y and z coordinates).
 /// </summary>
-public class Position3D : TraciListType<TraciDouble, double>, ITraciType
+public sealed class Position3D : TraciListType<TraciDouble, double>, ITraciType
     {
-    public override byte TYPE => X_Y_Z;
+    public override DataType TypeIdentifier => DataType.X_Y_Z;
     public double X => this[0].Value;
     public double Y => this[1].Value;
     public double Z => this[2].Value;

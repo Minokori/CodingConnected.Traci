@@ -1,5 +1,5 @@
 #pragma warning disable IDE0130 // 命名空间与文件夹结构不匹配
-using static CodingConnected.TraCI.NET.DataTypes.TraciConstants;
+using CodingConnected.TraCI.NET.Constants;
 
 namespace CodingConnected.TraCI.NET.DataTypes;
 
@@ -7,9 +7,9 @@ namespace CodingConnected.TraCI.NET.DataTypes;
 /// A (R,G,B,A)-quadruple of unsigned byte (0-255).
 /// TODO it may should use <see cref="sbyte"/> instead of <see cref="byte"/>
 /// </summary>
-public class Color : TraciListType<TraciByte, byte>, ITraciType
+public sealed class Color : TraciListType<TraciByte, byte>, ITraciType
     {
-    public override byte TYPE => DataType.COLOR;
+    public override DataType TypeIdentifier => DataType.COLOR;
 
     public byte R => this[0].Value;
     public byte G => this[1].Value;

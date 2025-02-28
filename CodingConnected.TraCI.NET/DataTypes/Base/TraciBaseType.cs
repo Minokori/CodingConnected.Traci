@@ -1,5 +1,7 @@
 #pragma warning disable IDE0130 // 命名空间与文件夹结构不匹配
 
+using CodingConnected.TraCI.NET.Constants;
+
 namespace CodingConnected.TraCI.NET.DataTypes;
 /// <summary>
 /// base value type for traci data type.
@@ -9,7 +11,7 @@ namespace CodingConnected.TraCI.NET.DataTypes;
 /// <param name="value"></param>
 public abstract class TraciBaseType<T>(T value) : ITraciType
     {
-    public virtual byte TYPE => throw new NotImplementedException($"{nameof(TYPE)} is not implemented in abstract class");
+    public virtual DataType TypeIdentifier => throw new NotImplementedException($"{nameof(TypeIdentifier)} is not implemented in abstract class");
     public virtual T Value { get; init; } = value;
     public virtual byte[] ToBytes() => throw new NotImplementedException($"{nameof(ToBytes)} is not implemented in abstract class");
 
@@ -20,19 +22,4 @@ public abstract class TraciBaseType<T>(T value) : ITraciType
     public static implicit operator T(TraciBaseType<T> traciData) => traciData.Value;
     }
 
-
-public interface ITraciValue
-    {
-
-    }
-
-public interface ITraciValue<T> : ITraciValue
-    {
-    T Value { get; }
-    }
-
-public interface ITraciValue<T1, T2> : ITraciValue
-    {
-
-    }
 

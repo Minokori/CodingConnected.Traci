@@ -1,5 +1,7 @@
+using CodingConnected.TraCI.NET.Constants;
 using CodingConnected.TraCI.NET.DataTypes;
-using static CodingConnected.TraCI.NET.DataTypes.TraciConstants.Command.Get;
+using static CodingConnected.TraCI.NET.Constants.CommandIdentifier.Get;
+using static CodingConnected.TraCI.NET.Constants.TraciConstants;
 
 namespace CodingConnected.TraCI.NET.Functions;
 
@@ -408,11 +410,11 @@ public partial class Simulation
     /// </remarks>
     public Tuple<double, double> Convert2D(string edgeId, double position, int laneIndex = 0, bool toGeo = false)
         {
-        var positionType = toGeo ? TraciConstants.PositionType.LON_LAT : TraciConstants.PositionType.X_Y;
+        var positionType = toGeo ? DataType.LON_LAT : DataType.X_Y;
         var tmp = new TraciCompoundObject()
         {
             new TraciCompoundObject() { new TraciString(edgeId), new TraciDouble(position), new TraciUnsignedByte((byte)laneIndex) },
-            new TraciUnsignedByte(positionType),
+            new TraciUnsignedByte(positionType.ToByte()),
         };
         var result = _helper.ExecuteGetCommand(SIM_VARIABLE, TraciConstants.POSITION_CONVERSION, null, tmp);
 
@@ -445,11 +447,11 @@ public partial class Simulation
 
     public Tuple<double, double, double> Convert3D(string edgeId, double position, int laneIndex = 0, bool toGeo = false)
         {
-        var positionType = toGeo ? TraciConstants.PositionType.LON_LAT_ALT : TraciConstants.PositionType.X_Y_Z;
+        var positionType = toGeo ? DataType.LON_LAT_ALT : DataType.X_Y_Z;
         var tmp = new TraciCompoundObject()
         {
             new TraciCompoundObject() { new TraciString(edgeId), new TraciDouble(position), new TraciUnsignedByte((byte)laneIndex) },
-            new TraciUnsignedByte(positionType),
+            new TraciUnsignedByte(positionType.ToByte()),
         };
         var result = _helper.ExecuteGetCommand(SIM_VARIABLE, TraciConstants.POSITION_CONVERSION, null, tmp);
         switch (toGeo)
@@ -480,27 +482,27 @@ public partial class Simulation
 
     public Tuple<double, double> ConvertGeo(double x, double y, bool fromGeo = false)
         {
-        byte positionType;
+        DataType positionType;
         ITraciType position;
         switch (fromGeo)
             {
             case true:
                     {
-                    positionType = TraciConstants.PositionType.LON_LAT;
+                    positionType = DataType.LON_LAT;
                     position = new LonLatPosition(x, y);
                     break;
                     }
             case false:
                     {
-                    positionType = TraciConstants.PositionType.X_Y;
+                    positionType = DataType.X_Y;
                     position = new Position2D(x, y);
                     break;
                     }
             }
 
-        var tmp = new TraciCompoundObject() { position, new TraciUnsignedByte(positionType) };
+        TraciCompoundObject tmp = [position, new TraciUnsignedByte(positionType.ToByte())];
 
-        var result = _helper.ExecuteGetCommand(TraciConstants.Command.Set.SIM_VARIABLE, TraciConstants.POSITION_CONVERSION, null, tmp);
+        var result = _helper.ExecuteGetCommand(CommandIdentifier.Set.SIM_VARIABLE, TraciConstants.POSITION_CONVERSION, null, tmp);
 
         switch (fromGeo)
             {
@@ -531,8 +533,8 @@ public partial class Simulation
     public Tuple<string, int, double> ConvertRoad(double x, double y, bool isGeo = false, string vClass = "ignoring")
         {
         ITraciType position = isGeo ? new LonLatPosition(x, y) : new Position2D(x, y);
-        var tmp = new TraciCompoundObject() { position, new TraciUnsignedByte(TraciConstants.PositionType.ROADMAP), new TraciString(vClass) };
-        var result = _helper.ExecuteGetCommand(SIM_VARIABLE, TraciConstants.POSITION_CONVERSION, null, tmp);
+        TraciCompoundObject tmp = [position, new TraciUnsignedByte(DataType.ROADMAP.ToByte()), new TraciString(vClass)];
+        var result = _helper.ExecuteGetCommand(SIM_VARIABLE, POSITION_CONVERSION, null, tmp);
         var roadMapPosition = (RoadMapPosition)result.Data;
         return new(roadMapPosition.RoadId, roadMapPosition.LaneId, roadMapPosition.Position);
         }
@@ -551,11 +553,11 @@ public partial class Simulation
     /// </remarks>
     public double GetDistanceRoad(string edgeId1, double position1, string edgeId2, double position2, bool isDriving = false)
         {
-        var distanceType = isDriving ? TraciConstants.DistanceType.DRIVINGDIST : TraciConstants.DistanceType.AIRDIST;
+        var distanceType = isDriving ? DistanceType.DRIVINGDIST : DistanceType.AIRDIST;
         RoadMapPosition roadMapPosition1 = new(edgeId1, position1, 0);
         RoadMapPosition roadMapPosition2 = new(edgeId2, position2, 0);
 
-        var tmp = new TraciCompoundObject() { roadMapPosition1, roadMapPosition2, new TraciUnsignedByte(distanceType) };
+        var tmp = new TraciCompoundObject() { roadMapPosition1, roadMapPosition2, new TraciUnsignedByte((byte)distanceType) };
 
         var result = _helper.ExecuteGetCommand(SIM_VARIABLE, TraciConstants.DISTANCE_REQUEST, null, tmp);
 
@@ -578,13 +580,13 @@ public partial class Simulation
 
     public double GetDistance2D(double x1, double y1, double x2, double y2, bool isGeo = false, bool isDriving = false)
         {
-        var distanceType = isDriving ? TraciConstants.DistanceType.DRIVINGDIST : TraciConstants.DistanceType.AIRDIST;
+        var distanceType = isDriving ? DistanceType.DRIVINGDIST : DistanceType.AIRDIST;
 
         ITraciType position1 = isGeo ? new LonLatPosition(x1, y1) : new Position2D(x1, y1);
 
         ITraciType position2 = isGeo ? new LonLatPosition(x2, y2) : new Position2D(x2, y2);
 
-        var tmp = new TraciCompoundObject() { position1, position2, new TraciUnsignedByte(distanceType) };
+        var tmp = new TraciCompoundObject() { position1, position2, new TraciUnsignedByte((byte)distanceType) };
 
         var result = _helper.ExecuteGetCommand(SIM_VARIABLE, TraciConstants.DISTANCE_REQUEST, null, tmp);
 
@@ -692,7 +694,7 @@ public partial class Simulation
         var result = (TraciCompoundObject)
             _helper.ExecuteGetCommand(SIM_VARIABLE, TraciConstants.FIND_INTERMODAL_ROUTE, null, tmp);
 
-        return result
+        return [.. result
             .Chunk(5)
             .Select(x => new Tuple<string, string, List<string>, double, double>(
                 ((TraciString)x[0]).Value,
@@ -700,8 +702,7 @@ public partial class Simulation
                 ((TraciStringList)x[2]).Value,
                 ((TraciDouble)x[3]).Value,
                 ((TraciDouble)x[4]).Value
-            ))
-            .ToList();
+            ))];
         }
 
     /// <summary>

@@ -3,15 +3,15 @@ namespace CodingConnected.TraCI.NET.DataTypes;
 public sealed class StopData : TraciArrayType
     {
 
-    public TraciString LaneId => (TraciString)this[0];
+    public string LaneId => (TraciString)this[0];
 
-    public TraciDouble EndPosition => (TraciDouble)this[1];
+    public double EndPosition => (TraciDouble)this[1];
 
-    public TraciString StoppingPlaceId => (TraciString)this[2];
+    public string StoppingPlaceId => (TraciString)this[2];
 
-    public TraciInteger StopFlags => (TraciInteger)this[3];
+    public int StopFlags => (TraciInteger)this[3];
 
-    public TraciDouble Duration => (TraciDouble)this[4];
+    public double Duration => (TraciDouble)this[4];
 
-    public TraciDouble Until => (TraciDouble)this[5];
+    public double Until => (TraciDouble)this[5];
     }

@@ -16,7 +16,7 @@ public sealed class TrafficLightLogic : TraciCompoundObject
     /// The id of the traffic light program; This must be a new program name for the traffic light id.
     /// Please note that "off" is reserved
     /// </summary>
-    public string ProgramId => ((TraciString)this[0]).Value;
+    public string ProgramId => (TraciString)this[0];
 
     /// <summary>
     /// The type of the traffic light (fixed phase durations, phase prolongation based on time gaps between vehicles (actuated), or on accumulated time loss of queued vehicles (delay_based) )
@@ -24,7 +24,7 @@ public sealed class TrafficLightLogic : TraciCompoundObject
     /// <remarks>
     /// <u> <see cref="Type"/> and <see cref="SubParameter"/> aren't currently implemented therefore they are 0.</u>
     /// </remarks>
-    public int Type => ((TraciInteger)this[1]).Value;
+    public int Type => (TraciInteger)this[1];
 
     /// <summary>
     /// no describe in document. we guess "offset","tlsId" may be put in this field in the future.
@@ -33,8 +33,8 @@ public sealed class TrafficLightLogic : TraciCompoundObject
     /// <u> <see cref="Type"/> and <see cref="SubParameter"/> aren't currently implemented therefore they are 0.</u>
     /// </remarks>
     public TraciCompoundObject SubParameter => (TraciCompoundObject)this[2];
-    public int CurrentPhaseIndex => ((TraciInteger)this[3]).Value;
-    public int NumberOfPhases => ((TraciInteger)this[4]).Value;
+    public int CurrentPhaseIndex => (TraciInteger)this[3];
+    public int NumberOfPhases => (TraciInteger)this[4];
     public List<TrafficLightProgramPhase> TrafficLightPhases => [.. this.Skip(5) //skip sub-id, type, sub-parameter, current phase index, number of phases
                 .Take(NumberOfPhases * 4) // every phase has 4 elements,totally 4 * number of phases elements
                 .Chunk(4) //every phase has 4 elements

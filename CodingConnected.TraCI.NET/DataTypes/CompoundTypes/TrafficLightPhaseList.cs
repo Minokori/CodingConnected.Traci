@@ -1,3 +1,5 @@
+using CodingConnected.TraCI.NET.Constants;
+
 namespace CodingConnected.TraCI.NET.DataTypes;
 
 /// <summary>
@@ -9,9 +11,9 @@ namespace CodingConnected.TraCI.NET.DataTypes;
 /// <remarks>
 /// see <see href="https://sumo.dlr.de/docs/TraCI/Protocol.html#traffic_light_phase_list_ubyte_identifier_0x0d"/>
 /// </remarks>
-public class TrafficLightPhaseList : List<TrafficLightPhase>, ITraciType
+public sealed class TrafficLightPhaseList : List<TrafficLightPhase>, ITraciType
     {
-    public byte TYPE => TraciConstants.DataType.TLPHASELIST;
+    public DataType TypeIdentifier => DataType.TLPHASELIST;
 
     public byte[] ToBytes()
         {
@@ -23,10 +25,13 @@ public class TrafficLightPhaseList : List<TrafficLightPhase>, ITraciType
         return [.. bytes];
         }
 
-    public static Tuple<TrafficLightPhaseList, IEnumerable<byte>> FromBytes(IEnumerable<byte> bytes)
+    public static (TrafficLightPhaseList tlsPhaseList, IEnumerable<byte> remainingBytes) FromBytes(IEnumerable<byte> bytes)
         {
+        // how many phases are there
         int count = bytes.First();
         bytes = bytes.Skip(1);
+
+        // a list to put the phases in
         List<TrafficLightPhase> phases = [];
 
         for (var i = 0; i < count; i++)

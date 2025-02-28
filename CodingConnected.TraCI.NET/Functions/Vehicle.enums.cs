@@ -1,20 +1,9 @@
-﻿namespace CodingConnected.TraCI.NET.Functions;
+namespace CodingConnected.TraCI.NET.Functions;
 public partial class Vehicle
     {
 
     }
 
-public enum StopFlag : byte
-    {
-    STOP_DEFAULT = 0x00,
-    STOP_PARKING = 0x01,
-    STOP_TRIGGERED = 0x02,
-    STOP_CONTAINER_TRIGGERED = 0x04,
-    STOP_BUS_STOP = 0x08,
-    STOP_CONTAINER_STOP = 0x10,
-    STOP_CHARGING_STATION = 0x20,
-    STOP_PARKING_AREA = 0x40,
-    }
 
 /// <summary>
 /// see http://sumo.dlr.de/wiki/TraCI/Vehicle_Signalling

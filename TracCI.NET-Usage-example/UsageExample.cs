@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 using CodingConnected.TraCI.NET;
-using CodingConnected.TraCI.NET.DataTypes;
+using CodingConnected.TraCI.NET.Constants;
 using CodingConnected.TraCI.NET.ProtocolTypes;
 
 namespace CodingConnected.TraCI.UsageExample;
@@ -417,7 +417,7 @@ internal class UsageExample
                 case ConsoleKey.C:
                     Console.Write(" enter vehicle id for subscription: >");
                     id = Console.ReadLine();
-                    client.Vehicle.SubscribeContext(id, 0, 1000, TraciConstants.Command.Get.VEHICLE_VARIABLE, 1000f, variablesToSubscribeTo);
+                    client.Vehicle.SubscribeContext(id, 0, 1000, CommandIdentifier.Get.VEHICLE_VARIABLE, 1000f, variablesToSubscribeTo);
                     Console.WriteLine("Attempted to subscribe to vehicle with id \"" + id + "\" (see SUMO output to know  if it failed) \n" +
                         "!Warning: Context subscription ends the simulation if it fails!");
                     break;
@@ -438,7 +438,7 @@ internal class UsageExample
                 case ConsoleKey.U:
                     Console.Write(" enter vehicle id to unsubscribe context");
                     id = Console.ReadLine();
-                    client.Vehicle.UnsubscribeContext(id, TraciConstants.Command.Get.VEHICLE_VARIABLE);
+                    client.Vehicle.UnsubscribeContext(id, CommandIdentifier.Get.VEHICLE_VARIABLE);
                     Console.WriteLine("Attempted to unsubscribe context to vehicle with id \"" + id + "\" (see SUMO output to know if it failed)");
                     break;
                 default:

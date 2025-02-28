@@ -1,5 +1,5 @@
+using CodingConnected.TraCI.NET.Constants;
 using static System.BitConverter;
-using static CodingConnected.TraCI.NET.DataTypes.TraciConstants;
 #pragma warning disable IDE0130 // 命名空间与文件夹结构不匹配
 namespace CodingConnected.TraCI.NET.DataTypes;
 
@@ -9,9 +9,9 @@ namespace CodingConnected.TraCI.NET.DataTypes;
 /// <remarks>
 /// this class is inherited from <see cref="List{T}"/> of <see cref="TraciString"/>
 /// </remarks>
-public class TraciStringList : TraciListType<TraciString, string>, ITraciType
+public sealed class TraciStringList : TraciListType<TraciString, string>, ITraciType
     {
-    public override byte TYPE => DataType.STRINGLIST;
+    public override DataType TypeIdentifier => DataType.STRINGLIST;
 
 
     public override byte[] ToBytes()
@@ -21,7 +21,7 @@ public class TraciStringList : TraciListType<TraciString, string>, ITraciType
         return [.. bytes];
         }
 
-    public static new (TraciStringList TraciData, IEnumerable<byte> RemainingBytes) FromBytes(IEnumerable<byte> bytes)
+    public static new (TraciStringList traciData, IEnumerable<byte> remainingBytes) FromBytes(IEnumerable<byte> bytes)
         {
         var count = ToInt32(bytes.Take(DataSize.INTEGER_SIZE).Reverse().ToArray());
         bytes = bytes.Skip(DataSize.INTEGER_SIZE);

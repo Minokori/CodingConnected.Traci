@@ -1,4 +1,4 @@
-using CodingConnected.TraCI.NET.DataTypes;
+using CodingConnected.TraCI.NET.Constants;
 using CodingConnected.TraCI.NET.Services;
 
 namespace CodingConnected.TraCI.NET.Functions;
@@ -34,5 +34,5 @@ public partial class Route(ITCPConnectService tcpService, ICommandService helper
     /// see <see href="https://sumo.dlr.de/docs/TraCI/Object_Variable_Subscription.html#command_0xdx_subscribe_variable"/>
     /// </remarks>
 
-    public void Subscribe(string routeId, int beginTime, int endTime, List<byte> ListOfVariablesToSubsribeTo) => _helper.ExecuteSubscribeCommand(beginTime, endTime, routeId, TraciConstants.Command.Subscribe.ROUTE_VARIABLE, ListOfVariablesToSubsribeTo);
+    public override void Subscribe(string routeId, int beginTime, int endTime, List<byte> ListOfVariablesToSubsribeTo) => _helper.ExecuteSubscribeCommand(beginTime, endTime, (byte)CommandIdentifier.Subscribe.ROUTE_VARIABLE, ListOfVariablesToSubsribeTo, routeId);
     }

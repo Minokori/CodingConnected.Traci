@@ -1,13 +1,11 @@
+using CodingConnected.TraCI.NET.Constants;
 using static System.BitConverter;
-using static CodingConnected.TraCI.NET.DataTypes.TraciConstants;
 #pragma warning disable IDE0130 // 命名空间与文件夹结构不匹配
 namespace CodingConnected.TraCI.NET.DataTypes;
 
-public class TraCIDoubleList : TraciListType<TraciDouble, double>, ITraciType
+public sealed class TraCIDoubleList : TraciListType<TraciDouble, double>, ITraciType
     {
-    public override byte TYPE => DataType.DOUBLELIST;
-
-
+    public override DataType TypeIdentifier => DataType.DOUBLELIST;
     public override byte[] ToBytes()
         {
         List<byte> bytes = [.. GetBytes(Count).Reverse()];
@@ -15,7 +13,7 @@ public class TraCIDoubleList : TraciListType<TraciDouble, double>, ITraciType
         return [.. bytes];
         }
 
-    public static new Tuple<TraCIDoubleList, IEnumerable<byte>> FromBytes(IEnumerable<byte> bytes)
+    public static new (TraCIDoubleList traciData, IEnumerable<byte> remainingBytes) FromBytes(IEnumerable<byte> bytes)
         {
         var count = ToInt32(bytes.Take(DataSize.INTEGER_SIZE).Reverse().ToArray());
         bytes = bytes.Skip(DataSize.INTEGER_SIZE);

@@ -1,11 +1,10 @@
-﻿namespace CodingConnected.TraCI.NET;
+namespace CodingConnected.TraCI.NET;
 
 public partial class TraCIClient
     {
     public void Dispose()
         {
-        TcpSerivce.Client.Close();
-        TcpSerivce.Stream.Dispose();
+        TcpService.Dispose();
         GC.SuppressFinalize(this);
         }
     }

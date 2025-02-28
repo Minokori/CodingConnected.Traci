@@ -1,6 +1,8 @@
+using CodingConnected.TraCI.NET.Constants;
 using CodingConnected.TraCI.NET.DataTypes;
-using static CodingConnected.TraCI.NET.DataTypes.TraciConstants.Command;
-using static CodingConnected.TraCI.NET.DataTypes.TraciConstants.Command.Get;
+using static CodingConnected.TraCI.NET.Constants.CommandIdentifier;
+using static CodingConnected.TraCI.NET.Constants.CommandIdentifier.Get;
+
 namespace CodingConnected.TraCI.NET.Functions;
 
 public partial class Vehicle
@@ -426,7 +428,7 @@ public partial class Vehicle
     public List<EdgeInformation> GetBestLanes(string vehicleId)
         {
         var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, TraciConstants.VAR_BEST_LANES, vehicleId);
-        return ((TraciCompoundObject)result.Data).ToEdgeInformations();
+        return ((TraciCompoundObject)result.Data).ToEdgeInformationList();
         }
 
     /// <summary>
@@ -1030,7 +1032,7 @@ public partial class Vehicle
         // used in GetNextStops() command, which has been deprecated.
         var tmp = new TraciInteger(limit);
         var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, TraciConstants.VAR_NEXT_STOPS2, vehicleId, tmp);
-        return ((TraciCompoundObject)result.Data).ToStopDatas();
+        return ((TraciCompoundObject)result.Data).ToStopDataList();
         }
 
     /// <summary>
@@ -1174,11 +1176,7 @@ public partial class Vehicle
     /// </remarks>
     public double GetAdaptedTravelTime(string vehicleId, double time, string edgeId)
         {
-        var tmp = new TraciCompoundObject()
-        {
-            new TraciDouble(time) ,
-            new TraciString(edgeId) ,
-        };
+        var tmp = new TraciCompoundObject() { new TraciDouble(time), new TraciString(edgeId) };
         var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, TraciConstants.VAR_EDGE_TRAVELTIME, vehicleId, tmp);
         return ((TraciDouble)result.Data).Value;
         }
@@ -1231,11 +1229,7 @@ public partial class Vehicle
     /// </remarks>
     public double GetDrivingDistance(string vehicleId, string edgeId, double position, int laneIndex = 0)
         {
-        TraciCompoundObject tmp =
-        [
-            new RoadMapPosition(edgeId,position,(byte)laneIndex),
-            new TraciUnsignedByte(TraciConstants.DistanceType.DRIVINGDIST),
-        ];
+        TraciCompoundObject tmp = [new RoadMapPosition(edgeId, position, (byte)laneIndex), new TraciUnsignedByte((byte)DistanceType.DRIVINGDIST)];
         var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, TraciConstants.DISTANCE_REQUEST, vehicleId, tmp);
         return ((TraciDouble)result.Data).Value;
         }
@@ -1253,11 +1247,7 @@ public partial class Vehicle
 
     public double GetDrivingDistance2D(string vehicleId, double x, double y)
         {
-        TraciCompoundObject tmp =
-        [
-            new Position2D(x,y),
-            new TraciUnsignedByte(TraciConstants.DistanceType.DRIVINGDIST),
-        ];
+        TraciCompoundObject tmp = [new Position2D(x, y), new TraciUnsignedByte((byte)DistanceType.DRIVINGDIST)];
         var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, TraciConstants.DISTANCE_REQUEST, vehicleId, tmp);
         return ((TraciDouble)result.Data).Value;
         }
@@ -1349,10 +1339,7 @@ public partial class Vehicle
         {
         TraciUnsignedByte tmp = new(mode);
         var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, TraciConstants.VAR_NEIGHBORS, vehicleId, tmp);
-        return ((TraciCompoundObject)result.Data)
-            .Chunk(2)
-            .Select(i => (Id: ((TraciString)i[0]).Value, Distance: ((TraciDouble)i[1]).Value))
-            .ToList();
+        return [.. ((TraciCompoundObject)result.Data).Chunk(2).Select(i => (Id: ((TraciString)i[0]).Value, Distance: ((TraciDouble)i[1]).Value))];
         }
 
     /// <summary>
@@ -1364,7 +1351,8 @@ public partial class Vehicle
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/pydoc/traci._vehicle.html#VehicleDomain-getLeftFollowers"/>
     /// </remarks>
-    public List<(string Id, double Distance)> GetLeftFollowers(string vehicleId, bool blockingOnly = false) => GetNeighbors(vehicleId, blockingOnly ? (byte)4 : (byte)0);
+    public List<(string Id, double Distance)> GetLeftFollowers(string vehicleId, bool blockingOnly = false) =>
+        GetNeighbors(vehicleId, blockingOnly ? (byte)4 : (byte)0);
 
     /// <summary>
     /// Returns a list of IDs for neighboring vehicle relevant to lane changing (>1 elements only possible for sublane model)
@@ -1375,7 +1363,8 @@ public partial class Vehicle
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/pydoc/traci._vehicle.html#VehicleDomain-getLeftLeaders"/>
     /// </remarks>
-    public List<(string Id, double Distance)> GetLeftLeaders(string vehicleId, bool blockingOnly = false) => GetNeighbors(vehicleId, blockingOnly ? (byte)6 : (byte)2);
+    public List<(string Id, double Distance)> GetLeftLeaders(string vehicleId, bool blockingOnly = false) =>
+        GetNeighbors(vehicleId, blockingOnly ? (byte)6 : (byte)2);
 
     /// <summary>
     /// Returns a list of IDs for neighboring vehicle relevant to lane changing (>1 elements only possible for sublane model)
@@ -1386,7 +1375,8 @@ public partial class Vehicle
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/pydoc/traci._vehicle.html#VehicleDomain-getRightFollowers"/>
     /// </remarks>
-    public List<(string Id, double Distance)> GetRightFollowers(string vehicleId, bool blockingOnly = false) => GetNeighbors(vehicleId, blockingOnly ? (byte)5 : (byte)1);
+    public List<(string Id, double Distance)> GetRightFollowers(string vehicleId, bool blockingOnly = false) =>
+        GetNeighbors(vehicleId, blockingOnly ? (byte)5 : (byte)1);
 
     /// <summary>
     /// Returns a list of IDs for neighboring vehicle relevant to lane changing (>1 elements only possible for sublane model)
@@ -1397,7 +1387,8 @@ public partial class Vehicle
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/pydoc/traci._vehicle.html#VehicleDomain-getRightLeaders"/>
     /// </remarks>
-    public List<(string Id, double Distance)> GetRightLeaders(string vehicleId, bool blockingOnly = false) => GetNeighbors(vehicleId, blockingOnly ? (byte)7 : (byte)3);
+    public List<(string Id, double Distance)> GetRightLeaders(string vehicleId, bool blockingOnly = false) =>
+        GetNeighbors(vehicleId, blockingOnly ? (byte)7 : (byte)3);
 
     /// <summary>
     /// Return the follow speed computed by the carFollowModel of vehicle
@@ -1501,12 +1492,7 @@ public partial class Vehicle
     /// <returns></returns>
     public string GetStopParameter(string vehicleId, int nextStopIndex, string param, bool customParam = false)
         {
-        TraciCompoundObject tmp =
-        [
-            new TraciInteger (nextStopIndex),
-            new TraciString(param),
-            new TraciByte(customParam ? (byte)1 : (byte)0) ,
-        ];
+        TraciCompoundObject tmp = [new TraciInteger(nextStopIndex), new TraciString(param), new TraciByte(customParam ? (byte)1 : (byte)0)];
         var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, TraciConstants.VAR_STOP_PARAMETER, vehicleId, tmp);
         return ((TraciString)result.Data).Value;
         }

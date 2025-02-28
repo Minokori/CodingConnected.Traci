@@ -1,3 +1,4 @@
+using CodingConnected.TraCI.NET.Constants;
 using CodingConnected.TraCI.NET.DataTypes;
 using CodingConnected.TraCI.NET.Services;
 
@@ -21,9 +22,9 @@ namespace CodingConnected.TraCI.NET.Functions;
 /// </item>
 /// </list>
 /// </remarks>
-public partial class POI(ITCPConnectService tcpService, ICommandService helper) : TraCIContextSubscribableCommands(tcpService, helper)
+public partial class POI(ITCPConnectService tcpService, ICommandService helper) : TraCIContextSubscribeCommands(tcpService, helper)
     {
-    protected override byte ContextSubscribeCommand => TraciConstants.Command.Subscribe.POI_CONTEXT;
+    protected override CommandIdentifier.Subscribe ContextSubscribeCommand => CommandIdentifier.Subscribe.POI_CONTEXT;
 
 
 
@@ -37,6 +38,6 @@ public partial class POI(ITCPConnectService tcpService, ICommandService helper) 
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/docs/TraCI/Object_Variable_Subscription.html#command_0xdx_subscribe_variable"/>
     /// </remarks>
-    public void Subscribe(string poiId, double beginTime, double endTime, List<byte> ListOfVariablesToSubsribeTo) => _helper.ExecuteSubscribeCommand(beginTime, endTime, poiId, TraciConstants.Command.Subscribe.POI_VARIABLE, ListOfVariablesToSubsribeTo);
+    public void Subscribe(string poiId, double beginTime, double endTime, List<byte> ListOfVariablesToSubsribeTo) => _helper.ExecuteSubscribeCommand(beginTime, endTime, (byte)CommandIdentifier.Subscribe.POI_VARIABLE, ListOfVariablesToSubsribeTo, poiId);
     }
 

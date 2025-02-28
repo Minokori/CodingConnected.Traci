@@ -1,6 +1,7 @@
+using CodingConnected.TraCI.NET.Constants;
 using CodingConnected.TraCI.NET.DataTypes;
-using static CodingConnected.TraCI.NET.DataTypes.TraciConstants.Command;
-using static CodingConnected.TraCI.NET.DataTypes.TraciConstants.Command.Set;
+using static CodingConnected.TraCI.NET.Constants.CommandIdentifier;
+using static CodingConnected.TraCI.NET.Constants.CommandIdentifier.Set;
 namespace CodingConnected.TraCI.NET.Functions;
 
 public partial class Vehicle
@@ -28,7 +29,7 @@ public partial class Vehicle
         double endPosition = 1.0,
         byte laneIndex = 0,
         double duration = TraciConstants.INVALID_DOUBLE_VALUE,
-        StopFlag flags = StopFlag.STOP_DEFAULT,
+        StopFlag flags = StopFlag.DEFAULT,
         double startPosition = TraciConstants.INVALID_DOUBLE_VALUE,
         double until = TraciConstants.INVALID_DOUBLE_VALUE
     )
@@ -66,8 +67,8 @@ public partial class Vehicle
         string stopId,
         double duration = TraciConstants.INVALID_DOUBLE_VALUE,
         double until = TraciConstants.INVALID_DOUBLE_VALUE,
-        StopFlag flags = StopFlag.STOP_DEFAULT
-    ) => SetStop(vehicleId, stopId, duration: duration, until: until, flags: flags | StopFlag.STOP_BUS_STOP);
+        StopFlag flags = StopFlag.DEFAULT
+    ) => SetStop(vehicleId, stopId, duration: duration, until: until, flags: flags | StopFlag.BUS_STOP);
 
     /// <summary>
     /// Lets the vehicle stop at the given edge, at the given position and lane.<para/>
@@ -88,8 +89,8 @@ public partial class Vehicle
         string stopId,
         double duration = TraciConstants.INVALID_DOUBLE_VALUE,
         double until = TraciConstants.INVALID_DOUBLE_VALUE,
-        StopFlag flags = StopFlag.STOP_DEFAULT
-    ) => SetStop(vehicleId, stopId, duration: duration, until: until, flags: flags | StopFlag.STOP_CONTAINER_STOP);
+        StopFlag flags = StopFlag.DEFAULT
+    ) => SetStop(vehicleId, stopId, duration: duration, until: until, flags: flags | StopFlag.CONTAINER_STOP);
 
     /// <summary>
     /// Lets the vehicle stop at the given edge, at the given position and lane.<para/>
@@ -110,8 +111,8 @@ public partial class Vehicle
         string stopId,
         double duration = TraciConstants.INVALID_DOUBLE_VALUE,
         double until = TraciConstants.INVALID_DOUBLE_VALUE,
-        StopFlag flags = StopFlag.STOP_DEFAULT
-    ) => SetStop(vehicleId, stopId, duration: duration, until: until, flags: flags | StopFlag.STOP_CHARGING_STATION);
+        StopFlag flags = StopFlag.DEFAULT
+    ) => SetStop(vehicleId, stopId, duration: duration, until: until, flags: flags | StopFlag.CHARGING_STATION);
 
     /// <summary>
     /// Lets the vehicle stop at the given edge, at the given position and lane.<para/>
@@ -132,8 +133,8 @@ public partial class Vehicle
         string stopId,
         double duration = TraciConstants.INVALID_DOUBLE_VALUE,
         double until = TraciConstants.INVALID_DOUBLE_VALUE,
-        StopFlag flags = StopFlag.STOP_PARKING
-    ) => SetStop(vehicleId, stopId, duration: duration, until: until, flags: flags | StopFlag.STOP_PARKING_AREA);
+        StopFlag flags = StopFlag.PARKING
+    ) => SetStop(vehicleId, stopId, duration: duration, until: until, flags: flags | StopFlag.PARKING_AREA);
 
     /// <summary>
     /// Forces a lane change to the lane with the given index; if successful, the lane will be chosen for the given amount of time (in seconds).
@@ -498,7 +499,7 @@ public partial class Vehicle
         double position = 1.0,
         int laneIndex = 0,
         double duration = TraciConstants.INVALID_DOUBLE_VALUE,
-        StopFlag flags = StopFlag.STOP_DEFAULT,
+        StopFlag flags = StopFlag.DEFAULT,
         double startPosition = TraciConstants.INVALID_DOUBLE_VALUE,
         double until = TraciConstants.INVALID_DOUBLE_VALUE,
         int teleport = 0
@@ -547,7 +548,7 @@ public partial class Vehicle
         double position = 1.0,
         int laneIndex = 0,
         double duration = TraciConstants.INVALID_DOUBLE_VALUE,
-        StopFlag flags = StopFlag.STOP_DEFAULT,
+        StopFlag flags = StopFlag.DEFAULT,
         double startPosition = TraciConstants.INVALID_DOUBLE_VALUE,
         double until = TraciConstants.INVALID_DOUBLE_VALUE,
         int teleport = 0

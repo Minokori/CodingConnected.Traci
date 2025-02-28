@@ -1,4 +1,4 @@
-using CodingConnected.TraCI.NET.DataTypes;
+using CodingConnected.TraCI.NET.Constants;
 using CodingConnected.TraCI.NET.Services;
 
 namespace CodingConnected.TraCI.NET.Functions;
@@ -22,9 +22,9 @@ namespace CodingConnected.TraCI.NET.Functions;
 /// </item>
 /// </list>
 /// </remarks>
-public partial class Edge(ITCPConnectService tcpService, ICommandService helper) : TraCIContextSubscribableCommands(tcpService, helper)
+public partial class Edge(ITCPConnectService tcpService, ICommandService helper) : TraCIContextSubscribeCommands(tcpService, helper)
     {
-    protected override byte ContextSubscribeCommand => TraciConstants.Command.Subscribe.EDGE_CONTEXT;
+    protected override CommandIdentifier.Subscribe ContextSubscribeCommand => CommandIdentifier.Subscribe.EDGE_CONTEXT;
 
     /// <summary>
     /// subscribe to a list of variables of a edge
@@ -36,5 +36,5 @@ public partial class Edge(ITCPConnectService tcpService, ICommandService helper)
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/docs/TraCI/Object_Variable_Subscription.html#command_0xdx_subscribe_variable"/>
     /// </remarks>
-    public void Subscribe(string edgeId, double beginTime, double endTime, List<byte> ListOfVariablesToSubsribeTo) => _helper.ExecuteSubscribeCommand(beginTime, endTime, edgeId, TraciConstants.Command.Subscribe.EDGE_VARIABLE, ListOfVariablesToSubsribeTo);
+    public void Subscribe(string edgeId, double beginTime, double endTime, List<byte> ListOfVariablesToSubsribeTo) => _helper.ExecuteSubscribeCommand(beginTime, endTime, (byte)CommandIdentifier.Subscribe.EDGE_VARIABLE, ListOfVariablesToSubsribeTo, edgeId);
     }

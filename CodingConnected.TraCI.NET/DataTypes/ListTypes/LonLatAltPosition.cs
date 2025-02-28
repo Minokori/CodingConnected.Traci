@@ -1,5 +1,5 @@
 #pragma warning disable IDE0130 // 命名空间与文件夹结构不匹配
-using static CodingConnected.TraCI.NET.DataTypes.TraciConstants.PositionType;
+using CodingConnected.TraCI.NET.Constants;
 
 namespace CodingConnected.TraCI.NET.DataTypes;
 
@@ -7,14 +7,14 @@ namespace CodingConnected.TraCI.NET.DataTypes;
 /// A position within the simulation network in geo-coordinates with altitude,
 /// described by three double values (longitude, latitude, and altitude).
 /// </summary>
-public class LonLatAltPosition : TraciListType<TraciDouble, double>, ITraciType
+public sealed class LonLatAltPosition : TraciListType<TraciDouble, double>, ITraciType
     {
-    public override byte TYPE => LON_LAT_ALT;
+    public override DataType TypeIdentifier => DataType.LON_LAT_ALT;
     public double Longitude => this[0].Value;
     public double Latitude => this[1].Value;
     public double Altitude => this[2].Value;
 
-    public static new (LonLatAltPosition longLatPosition, IEnumerable<byte> remaining) FromBytes(IEnumerable<byte> bytes)
+    public static new (LonLatAltPosition longLatPosition, IEnumerable<byte> remainingBytes) FromBytes(IEnumerable<byte> bytes)
         {
         (var longitude, bytes) = TraciDouble.FromBytes(bytes);
         (var latitude, bytes) = TraciDouble.FromBytes(bytes);

@@ -1,5 +1,6 @@
+using CodingConnected.TraCI.NET.Constants;
 using CodingConnected.TraCI.NET.DataTypes;
-using static CodingConnected.TraCI.NET.DataTypes.TraciConstants.Command.Get;
+using static CodingConnected.TraCI.NET.Constants.CommandIdentifier.Get;
 namespace CodingConnected.TraCI.NET.Functions;
 
 public partial class POI

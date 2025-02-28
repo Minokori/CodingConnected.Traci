@@ -1,15 +1,16 @@
+using CodingConnected.TraCI.NET.Constants;
 using CodingConnected.TraCI.NET.DataTypes;
 using CodingConnected.TraCI.NET.ProtocolTypes;
-using static CodingConnected.TraCI.NET.DataTypes.TraciConstants;
+
 namespace CodingConnected.TraCI.NET.Services;
 
 internal partial class CommandService(ITCPConnectService tcpService) : ICommandService
     {
     private readonly ITCPConnectService _tcpService = tcpService;
 
-    public bool ExecuteSetCommand(byte commandType, byte messageType, string id, ITraciType? value = null)
+    public bool ExecuteSetCommand(byte commandIdentifier, byte variable, string id, ITraciType? value = null)
         {
-        var command = GetCommand(commandType, messageType, id, value);
+        var command = GenerateCommand(commandIdentifier, variable, id, value);
         if (command != null)
             {
             var response = _tcpService.SendMessage(command);
@@ -22,9 +23,24 @@ internal partial class CommandService(ITCPConnectService tcpService) : ICommandS
             }
         }
 
-    public void ExecuteSubscribeCommand(double beginTime, double endTime, string objectId, byte commandType, List<byte> variables)
+    public IAnswerFromSumo ExecuteGetCommand(byte commandIdentifier, byte? variable = null, string? id = null, ITraciType? extendParameter = null)
         {
-        var command = GetCommand(objectId, beginTime, endTime, commandType, variables);
+        var command = GenerateCommand(commandIdentifier, variable, id, extendParameter);
+        var response = _tcpService.SendMessage(command);
+        try
+            {
+            var answer = response.ExtractData(commandIdentifier, variable);
+            return answer is null ? throw new Exception("Answer from traci is null") : answer;
+            }
+        catch
+            {
+            throw;
+            }
+        }
+
+    public void ExecuteSubscribeCommand(double beginTime, double endTime, byte commandIdentifier, List<byte> variables, string objectId)
+        {
+        var command = GenerateSubscribeCommand(beginTime, endTime, commandIdentifier, variables, objectId);
         _ = _tcpService.SendMessage(command);
         }
 
@@ -37,74 +53,55 @@ internal partial class CommandService(ITCPConnectService tcpService) : ICommandS
     /// <see href="https://sumo.dlr.de/wiki/TraCI/Object_Context_Subscription"/>
     /// </summary>
     /// <remarks>  </remarks>
-    /// <param name="client"> the client that is connected to the SUMO server </param>
     /// <param name="beginTime"> begin Time: the subscription is executed only in time steps >= this value; in ms </param>
     /// <param name="endTime"> the subscription is executed in time steps &lt;= this value; the subscription is removed if the simulation has reached a higher time step; in ms </param>
-    /// <param name="objectId"> the id of the object for the context subsription </param>
+    /// <param name="commandIdentifier"> The identifier for the Object Context Subscription command. </param>
+    /// <param name="variables"> the list of variables to return </param>
+    /// <param name="objectId"> the id of the object for the context subscription </param>
     /// <param name="contextDomain"> the type of objects in the addressed object's surrounding to ask values from </param>
     /// <param name="contextRange"> the radius of the surrounding </param>
-    /// <param name="commandType"> The identifier for the Object Context Subscription command. </param>
-    /// <param name="variables"> the list of variables to return </param>
     public void ExecuteSubscribeContextCommand(
         double beginTime,
         double endTime,
+        byte commandIdentifier,
+        List<byte> variables,
         string objectId,
         byte contextDomain,
-        double contextRange,
-        byte commandType,
-        List<byte> variables
+        double contextRange
     )
         {
-        var command = GetCommand(objectId, beginTime, endTime, commandType, variables, contextDomain, contextRange);
+        var command = GenerateSubscribeCommand(beginTime, endTime, commandIdentifier, variables, objectId, contextDomain, contextRange);
         _ = _tcpService.SendMessage(command);
         }
 
-    public IAnswerFromSumo ExecuteGetCommand(byte commandType, byte? messageType = null, string? id = null, ITraciType? extendVariables = null)
-        {
-        var command = GetCommand(commandType, messageType, id, extendVariables);
-        var response = _tcpService.SendMessage(command);
-        try
-            {
-            var answer = response.ExtractData(commandType, messageType);
-            return answer is null ? throw new Exception("Answer from traci is null") : answer;
-            }
-        catch
-            {
-            throw;
-            }
-        }
-
     /// <summary>
-    /// Helper GetCommand for Object Context Subscription
+    /// Helper GenerateSubscribeCommand for Object Context Subscription
     /// </summary>
     /// <returns></returns>
-    public static TraCICommand GetCommand(
-        string objectId,
+    public TraCICommand GenerateSubscribeCommand(
         double beginTime,
         double endTime,
-        byte commandType,
+        byte commandIdentifier,
         List<byte> variables,
+        string objectId,
         byte? contextDomain = null,
         double? contextRange = null
     )
         {
-        List<byte> commandPart1 = [
-            .. TraciDouble.AsBytes(beginTime),
-            .. TraciDouble.AsBytes(endTime),
-            .. TraciString.AsBytes(objectId)];
+        List<byte> commandPart1 = [.. TraciDouble.AsBytes(beginTime), .. TraciDouble.AsBytes(endTime), .. TraciString.AsBytes(objectId)];
         List<byte> commandPart2 = contextDomain.HasValue ? [contextDomain.Value] : [];
         List<byte> commandPart3 = contextRange.HasValue ? [.. TraciDouble.AsBytes(contextRange.Value)] : [];
         List<byte> commandPart4 = [(byte)variables.Count, .. variables];
-        TraCICommand command = new(commandType, [.. commandPart1, .. commandPart2, .. commandPart3, .. commandPart4]);
+        TraCICommand command = new(commandIdentifier, [.. commandPart1, .. commandPart2, .. commandPart3, .. commandPart4]);
         return command;
         }
 
-    public TraCICommand GetCommand(byte commandType, byte? messageType = null, string? id = null, ITraciType? contents = null)
+    public TraCICommand GenerateCommand(byte commandIdentifier, byte? messageType = null, string? id = null, ITraciType? contents = null)
         {
         byte[] commandPart1 = messageType.HasValue ? [messageType.Value] : [];
         var commandPart2 = id is null ? [] : TraciString.AsBytes(id);
         var commandPart3 = contents?.ToBytes() ?? [];
-        TraCICommand command = new(commandType, [.. commandPart1, .. commandPart2, .. commandPart3]);
+        TraCICommand command = new(commandIdentifier, [.. commandPart1, .. commandPart2, .. commandPart3]);
         return command;
         }
     }

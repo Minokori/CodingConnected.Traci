@@ -1,5 +1,7 @@
+using CodingConnected.TraCI.NET.Constants;
 using CodingConnected.TraCI.NET.DataTypes;
-using static CodingConnected.TraCI.NET.DataTypes.TraciConstants.Command.Get;
+using static CodingConnected.TraCI.NET.Constants.CommandIdentifier.Get;
+
 namespace CodingConnected.TraCI.NET.Functions;
 
 public partial class InductionLoop
@@ -15,7 +17,7 @@ public partial class InductionLoop
     public List<string> GetIdList()
         {
         var result = _helper.ExecuteGetCommand(INDUCTIONLOOP_VARIABLE, TraciConstants.ID_LIST, "ignored");
-        return ((TraciStringList)result).Value;
+        return (TraciStringList)result.Data;
         }
 
     /// <summary>
@@ -31,7 +33,7 @@ public partial class InductionLoop
     public double GetPosition(string loopId)
         {
         var result = _helper.ExecuteGetCommand(INDUCTIONLOOP_VARIABLE, TraciConstants.VAR_POSITION, loopId);
-        return ((TraciDouble)result.Data).Value;
+        return (TraciDouble)result.Data;
         }
 
     /// <summary>
@@ -45,7 +47,7 @@ public partial class InductionLoop
     public string GetLaneId(string loopId)
         {
         var result = _helper.ExecuteGetCommand(INDUCTIONLOOP_VARIABLE, TraciConstants.VAR_LANE_ID, loopId);
-        return ((TraciString)result).Value;
+        return (TraciString)result.Data;
         }
 
     /// <summary>
@@ -99,7 +101,7 @@ public partial class InductionLoop
     public List<string> GetLastStepVehicleIds(string loopId)
         {
         var result = _helper.ExecuteGetCommand(INDUCTIONLOOP_VARIABLE, TraciConstants.LAST_STEP_VEHICLE_ID_LIST, loopId);
-        return ((TraciStringList)result).Value;
+        return (TraciStringList)result.Data;
         }
 
     /// <summary>
@@ -154,8 +156,7 @@ public partial class InductionLoop
     /// </remarks>
     public List<VehicleInformationPacket> GetVehicleData(string loopId)
         {
-        var result = (TraciCompoundObject)
-            _helper.ExecuteGetCommand(INDUCTIONLOOP_VARIABLE, TraciConstants.LAST_STEP_VEHICLE_DATA, loopId);
+        var result = (TraciCompoundObject)_helper.ExecuteGetCommand(INDUCTIONLOOP_VARIABLE, TraciConstants.LAST_STEP_VEHICLE_DATA, loopId);
         return result.ToVehicleInformationPackets();
         }
 
@@ -212,7 +213,7 @@ public partial class InductionLoop
     public List<string> GetIntervalVehicleIds(string loopId)
         {
         var result = _helper.ExecuteGetCommand(INDUCTIONLOOP_VARIABLE, TraciConstants.VAR_INTERVAL_IDS, loopId);
-        return ((TraciStringList)result).Value;
+        return (TraciStringList)result.Data;
         }
 
     /// <summary>
@@ -268,6 +269,6 @@ public partial class InductionLoop
     public List<string> GetLastIntervalVehicleIds(string loopId)
         {
         var result = _helper.ExecuteGetCommand(INDUCTIONLOOP_VARIABLE, TraciConstants.VAR_LAST_INTERVAL_IDS, loopId);
-        return ((TraciStringList)result).Value;
+        return (TraciStringList)result.Data;
         }
     }

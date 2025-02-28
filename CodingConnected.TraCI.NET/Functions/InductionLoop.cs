@@ -1,3 +1,4 @@
+using CodingConnected.TraCI.NET.Constants;
 using CodingConnected.TraCI.NET.DataTypes;
 using CodingConnected.TraCI.NET.Services;
 
@@ -22,9 +23,9 @@ namespace CodingConnected.TraCI.NET.Functions;
 /// </item>
 /// </list>
 /// </remarks>
-public partial class InductionLoop(ITCPConnectService tcpService, ICommandService helper) : TraCIContextSubscribableCommands(tcpService, helper)
+public partial class InductionLoop(ITCPConnectService tcpService, ICommandService helper) : TraCIContextSubscribeCommands(tcpService, helper)
     {
-    protected override byte ContextSubscribeCommand => TraciConstants.Command.Subscribe.INDUCTIONLOOP_CONTEXT;
+    protected override CommandIdentifier.Subscribe ContextSubscribeCommand => CommandIdentifier.Subscribe.INDUCTIONLOOP_CONTEXT;
 
 
 
@@ -43,8 +44,8 @@ public partial class InductionLoop(ITCPConnectService tcpService, ICommandServic
     public void Subscribe(string loopId, double beginTime, double endTime, List<byte> ListOfVariablesToSubsribeTo) => _helper.ExecuteSubscribeCommand(
             beginTime,
             endTime,
-            loopId,
-            TraciConstants.Command.Subscribe.INDUCTIONLOOP_VARIABLE,
+            (byte)CommandIdentifier.Subscribe.INDUCTIONLOOP_VARIABLE,
             ListOfVariablesToSubsribeTo
-        );
+,
+            loopId);
     }

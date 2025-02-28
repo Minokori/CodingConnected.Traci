@@ -11,7 +11,7 @@ namespace CodingConnected.TraCI.NET;
 /// </summary>
 public partial class TraCIClient : IDisposable
     {
-    private ITCPConnectService TcpSerivce => services.GetRequiredService<ITCPConnectService>();
+    private ITCPConnectService TcpService => services.GetRequiredService<ITCPConnectService>();
     private readonly ServiceProvider services;
 
 
@@ -24,20 +24,17 @@ public partial class TraCIClient : IDisposable
     /// </summary>
     /// <param name="hostname">Hostname or ip address where SUMO is running</param>
     /// <param name="port">Port at which SUMO exposes the API</param>
-    public async Task<Tuple<int, string>> ConnectAsync(string hostname, int port) => await TcpSerivce.ConnectAsync(hostname, port)
+    public async Task<Tuple<int, string>> ConnectAsync(string hostname, int port) => await TcpService.ConnectAsync(hostname, port)
             .ContinueWith(_ => Control.GetVersion())
             .ContinueWith(versionTask => versionTask.Result);
 
 
-    public bool Connect(string hostname, int port) => TcpSerivce.Connect(hostname, port);
+    public bool Connect(string hostname, int port) => TcpService.Connect(hostname, port);
 
     #endregion // Public Methods
 
 
 
-    public List<TraciResult> SendMessage(TraCICommand command) => TcpSerivce.SendMessage(command);
-
-
-
+    public List<TraciResult> SendMessage(TraCICommand command) => TcpService.SendMessage(command);
     }
 

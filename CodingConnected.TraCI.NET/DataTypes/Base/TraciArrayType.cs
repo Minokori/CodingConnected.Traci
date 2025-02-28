@@ -1,4 +1,6 @@
 #pragma warning disable IDE0130 // 命名空间与文件夹结构不匹配
+using CodingConnected.TraCI.NET.Constants;
+
 namespace CodingConnected.TraCI.NET.DataTypes;
 /// <summary>
 /// a <see cref="List{T}"/> of <see cref="ITraciType"/> values<para/>
@@ -12,7 +14,7 @@ public abstract class TraciArrayType : List<ITraciType>
         List<byte> bytes = [];
         foreach (var item in this)
             {
-            bytes.Add(item.TYPE);
+            bytes.Add(item.TypeIdentifier.ToByte());
             bytes.AddRange(item.ToBytes());
             }
         return [.. bytes];

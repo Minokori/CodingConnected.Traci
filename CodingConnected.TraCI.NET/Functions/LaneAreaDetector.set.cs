@@ -1,5 +1,6 @@
+using CodingConnected.TraCI.NET.Constants;
 using CodingConnected.TraCI.NET.DataTypes;
-using static CodingConnected.TraCI.NET.DataTypes.TraciConstants.Command;
+using static CodingConnected.TraCI.NET.Constants.CommandIdentifier;
 namespace CodingConnected.TraCI.NET.Functions;
 public partial class LaneAreaDetector
     {

@@ -1,4 +1,4 @@
-using CodingConnected.TraCI.NET.DataTypes;
+using CodingConnected.TraCI.NET.Constants;
 using CodingConnected.TraCI.NET.Services;
 
 namespace CodingConnected.TraCI.NET.Functions;
@@ -35,5 +35,5 @@ public partial class TrafficLight(ITCPConnectService tcpService, ICommandService
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/docs/TraCI/Object_Variable_Subscription.html#command_0xdx_subscribe_variable"/>
     /// </remarks>
-    public void Subscribe(string tlsId, int beginTime, int endTime, List<byte> ListOfVariablesToSubsribeTo) => _helper.ExecuteSubscribeCommand(beginTime, endTime, tlsId, TraciConstants.Command.Subscribe.TL_VARIABLE, ListOfVariablesToSubsribeTo);
+    public override void Subscribe(string tlsId, int beginTime, int endTime, List<byte> ListOfVariablesToSubsribeTo) => _helper.ExecuteSubscribeCommand(beginTime, endTime, (byte)CommandIdentifier.Subscribe.TL_VARIABLE, ListOfVariablesToSubsribeTo, tlsId);
     }

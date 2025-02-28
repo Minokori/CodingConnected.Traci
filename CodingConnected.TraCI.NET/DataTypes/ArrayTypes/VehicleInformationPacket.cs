@@ -3,14 +3,13 @@ namespace CodingConnected.TraCI.NET.DataTypes;
 
 public sealed class VehicleInformationPacket : TraciArrayType
     {
+    public string VehicleId => (TraciString)this[0];
 
-    public string VehicleId => ((TraciString)this[0]).Value;
+    public double VehicleLength => (TraciDouble)this[1];
 
-    public double VehicleLength => ((TraciDouble)this[1]).Value;
+    public double EntryTime => (TraciDouble)this[2];
 
-    public double EntryTime => ((TraciDouble)this[2]).Value;
+    public double LeaveTime => (TraciDouble)this[3];
 
-    public double LeaveTime => ((TraciDouble)this[3]).Value;
-
-    public string VehicleTypeId => ((TraciString)this[4]).Value;
+    public string VehicleTypeId => (TraciString)this[4];
     }

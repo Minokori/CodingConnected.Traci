@@ -1,3 +1,4 @@
+using CodingConnected.TraCI.NET.Constants;
 using CodingConnected.TraCI.NET.DataTypes;
 using CodingConnected.TraCI.NET.Services;
 
@@ -21,9 +22,9 @@ namespace CodingConnected.TraCI.NET.Functions;
 /// </item>
 /// </list>
 /// </remarks>
-public partial class Lane(ITCPConnectService tcpService, ICommandService helper) : TraCIContextSubscribableCommands(tcpService, helper)
+public partial class Lane(ITCPConnectService tcpService, ICommandService helper) : TraCIContextSubscribeCommands(tcpService, helper)
     {
-    protected override byte ContextSubscribeCommand => TraciConstants.Command.Subscribe.LANE_CONTEXT;
+    protected override CommandIdentifier.Subscribe ContextSubscribeCommand => CommandIdentifier.Subscribe.LANE_CONTEXT;
 
     /// <summary>
     /// subscribe to a list of variables of a lane
@@ -35,5 +36,5 @@ public partial class Lane(ITCPConnectService tcpService, ICommandService helper)
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/docs/TraCI/Object_Variable_Subscription.html#command_0xdx_subscribe_variable"/>
     /// </remarks>
-    public void Subscribe(string laneId, double beginTime, double endTime, List<byte> ListOfVariablesToSubsribeTo) => _helper.ExecuteSubscribeCommand(beginTime, endTime, laneId, TraciConstants.Command.Subscribe.LANE_VARIABLE, ListOfVariablesToSubsribeTo);
+    public void Subscribe(string laneId, double beginTime, double endTime, List<byte> ListOfVariablesToSubsribeTo) => _helper.ExecuteSubscribeCommand(beginTime, endTime, (byte)CommandIdentifier.Subscribe.LANE_VARIABLE, ListOfVariablesToSubsribeTo, laneId);
     }

@@ -1,4 +1,6 @@
 #pragma warning disable IDE0130 // 命名空间与文件夹结构不匹配
+using CodingConnected.TraCI.NET.Constants;
+
 namespace CodingConnected.TraCI.NET.DataTypes;
 
 /// <summary>
@@ -9,7 +11,7 @@ namespace CodingConnected.TraCI.NET.DataTypes;
 public abstract class TraciListType<U, T> : List<U>, ITraciType
     where U : TraciBaseType<T>
     {
-    public virtual byte TYPE => throw new NotImplementedException($"{nameof(TYPE)} is not implemented in abstract class");
+    public virtual DataType TypeIdentifier => throw new NotImplementedException($"{nameof(TypeIdentifier)} is not implemented in abstract class");
 
     public virtual List<T> Value => [.. this.Select(i => i)];
 

@@ -1,5 +1,4 @@
-using static CodingConnected.TraCI.NET.DataTypes.TraciConstants.PositionType;
-
+using CodingConnected.TraCI.NET.Constants;
 #pragma warning disable IDE0130 // 命名空间与文件夹结构不匹配
 namespace CodingConnected.TraCI.NET.DataTypes;
 
@@ -14,22 +13,22 @@ namespace CodingConnected.TraCI.NET.DataTypes;
 public sealed class RoadMapPosition : TraciCompoundObject
     {
     protected override bool IsComplete => false;
-    public override byte TYPE => ROADMAP;
+    public override DataType TypeIdentifier => DataType.ROADMAP;
 
     /// <summary>
     /// a road segment (edge)
     /// </summary>
-    public string RoadId => ((TraciString)this[0]).Value;
+    public string RoadId => (TraciString)this[0];
 
     /// <summary>
     /// the position of the node in longitudinal direction (ranging from 0 to the road's length)
     /// </summary>
-    public double Position => ((TraciDouble)this[1]).Value;
+    public double Position => (TraciDouble)this[1];
 
     /// <summary>
     /// the driving lane on the road segment. Lanes are numbered sequentially from right to left starting with 0
     /// </summary>
-    public byte LaneId => ((TraciByte)this[2]).Value;
+    public byte LaneId => (TraciByte)this[2];
 
 
     public static new (RoadMapPosition roadMapPosition, IEnumerable<byte> remainingBytes) FromBytes(IEnumerable<byte> bytes)

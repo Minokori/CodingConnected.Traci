@@ -1,3 +1,4 @@
+using CodingConnected.TraCI.NET.Constants;
 using CodingConnected.TraCI.NET.DataTypes;
 using CodingConnected.TraCI.NET.Services;
 
@@ -22,10 +23,10 @@ namespace CodingConnected.TraCI.NET.Functions;
 /// </item>
 /// </list>
 /// </remarks>
-public partial class Polygon(ITCPConnectService tcpService, ICommandService helper) : TraCIContextSubscribableCommands(tcpService, helper)
+public partial class Polygon(ITCPConnectService tcpService, ICommandService helper) : TraCIContextSubscribeCommands(tcpService, helper)
     {
 
-    protected override byte ContextSubscribeCommand => TraciConstants.Command.Subscribe.POLYGON_CONTEXT;
+    protected override CommandIdentifier.Subscribe ContextSubscribeCommand => CommandIdentifier.Subscribe.POLYGON_CONTEXT;
 
 
 
@@ -41,6 +42,6 @@ public partial class Polygon(ITCPConnectService tcpService, ICommandService help
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/docs/TraCI/Object_Variable_Subscription.html#command_0xdx_subscribe_variable"/>
     /// </remarks>
-    public void Subscribe(string ploygonId, double beginTime, double endTime, List<byte> ListOfVariablesToSubsribeTo) => _helper.ExecuteSubscribeCommand(beginTime, endTime, ploygonId, TraciConstants.Command.Subscribe.POLYGON_VARIABLE, ListOfVariablesToSubsribeTo);
+    public void Subscribe(string ploygonId, double beginTime, double endTime, List<byte> ListOfVariablesToSubsribeTo) => _helper.ExecuteSubscribeCommand(beginTime, endTime, (byte)CommandIdentifier.Subscribe.POLYGON_VARIABLE, ListOfVariablesToSubsribeTo, ploygonId);
     }
 

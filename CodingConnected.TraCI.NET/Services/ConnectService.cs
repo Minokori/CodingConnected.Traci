@@ -59,7 +59,7 @@ internal class ConnectService : ITCPConnectService
 
     public List<TraciResult> SendMessage(TraCICommand command)
         {
-        if (Client is null || Client!.Connected)
+        if (Client is null || !Client.Connected)
             {
             return [];
             }
@@ -99,5 +99,11 @@ internal class ConnectService : ITCPConnectService
             {
             return [];
             }
+        }
+
+    public void Dispose()
+        {
+        Client.Close();
+        Stream.Dispose();
         }
     }

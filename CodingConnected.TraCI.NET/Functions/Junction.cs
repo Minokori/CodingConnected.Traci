@@ -1,3 +1,4 @@
+using CodingConnected.TraCI.NET.Constants;
 using CodingConnected.TraCI.NET.DataTypes;
 using CodingConnected.TraCI.NET.Services;
 
@@ -18,9 +19,9 @@ namespace CodingConnected.TraCI.NET.Functions;
 /// </item>
 /// </list>
 /// </remarks>
-public partial class Junction(ITCPConnectService tcpService, ICommandService helper) : TraCIContextSubscribableCommands(tcpService, helper)
+public partial class Junction(ITCPConnectService tcpService, ICommandService helper) : TraCIContextSubscribeCommands(tcpService, helper)
     {
-    protected override byte ContextSubscribeCommand => TraciConstants.Command.Subscribe.JUNCTION_CONTEXT;
+    protected override CommandIdentifier.Subscribe ContextSubscribeCommand => CommandIdentifier.Subscribe.JUNCTION_CONTEXT;
 
     /// <summary>
     /// subscribe to a list of variables of a junction
@@ -32,5 +33,5 @@ public partial class Junction(ITCPConnectService tcpService, ICommandService hel
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/docs/TraCI/Object_Variable_Subscription.html#command_0xdx_subscribe_variable"/>
     /// </remarks>
-    public void Subscribe(string junctionId, double beginTime, double endTime, List<byte> ListOfVariablesToSubsribeTo) => _helper.ExecuteSubscribeCommand(beginTime, endTime, junctionId, TraciConstants.Command.Subscribe.JUNCTION_VARIABLE, ListOfVariablesToSubsribeTo);
+    public void Subscribe(string junctionId, double beginTime, double endTime, List<byte> ListOfVariablesToSubsribeTo) => _helper.ExecuteSubscribeCommand(beginTime, endTime, (byte)CommandIdentifier.Subscribe.JUNCTION_VARIABLE, ListOfVariablesToSubsribeTo, junctionId);
     }

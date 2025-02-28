@@ -7,17 +7,17 @@ namespace CodingConnected.TraCI.NET.DataTypes;
 /// </summary>
 public sealed class UpcomingTrafficLights : TraciArrayType
     {
-    public string TrafficLightsId => ((TraciString)this[0]).Value;
+    public string TrafficLightsId => (TraciString)this[0];
 
-    public int TrafficLightsLinkIndex => ((TraciInteger)this[1]).Value;
+    public int TrafficLightsLinkIndex => (TraciInteger)this[1];
 
     /// <summary>
     /// distance to TLS
     /// </summary>
-    public double Distance => ((TraciDouble)this[2]).Value;
+    public double Distance => (TraciDouble)this[2];
+
     /// <summary>
     /// see<see href="https://sumo.dlr.de/docs/Simulation/Traffic_Lights.html#signal_state_definitions"/>
     /// </summary>
-    public byte State => ((TraciByte)this[3]).Value;
+    public byte State => (TraciByte)this[3];
     }
-

@@ -1,4 +1,4 @@
-using CodingConnected.TraCI.NET.DataTypes;
+using CodingConnected.TraCI.NET.Constants;
 using CodingConnected.TraCI.NET.Services;
 
 namespace CodingConnected.TraCI.NET.Functions;
@@ -22,9 +22,9 @@ namespace CodingConnected.TraCI.NET.Functions;
 /// </list>
 /// </remarks>
 public partial class Vehicle(ITCPConnectService tcpService, ICommandService helper, Simulation simulation)
-    : TraCIContextSubscribableCommands(tcpService, helper)
+    : TraCIContextSubscribeCommands(tcpService, helper)
     {
-    protected override byte ContextSubscribeCommand => TraciConstants.Command.Subscribe.VEHICLE_CONTEXT;
+    protected override CommandIdentifier.Subscribe ContextSubscribeCommand => CommandIdentifier.Subscribe.VEHICLE_CONTEXT;
     private readonly Simulation _simulation = simulation;
 
     /// <summary>
@@ -37,5 +37,5 @@ public partial class Vehicle(ITCPConnectService tcpService, ICommandService help
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/docs/TraCI/Object_Variable_Subscription.html#command_0xdx_subscribe_variable"/>
     /// </remarks>
-    public void Subscribe(string vehicleId, double beginTime, double endTime, List<byte> ListOfVariablesToSubsribeTo) => _helper.ExecuteSubscribeCommand(beginTime, endTime, vehicleId, TraciConstants.Command.Subscribe.VEHICLE_VARIABLE, ListOfVariablesToSubsribeTo);
+    public void Subscribe(string vehicleId, double beginTime, double endTime, List<byte> ListOfVariablesToSubsribeTo) => _helper.ExecuteSubscribeCommand(beginTime, endTime, (byte)CommandIdentifier.Subscribe.VEHICLE_VARIABLE, ListOfVariablesToSubsribeTo, vehicleId);
     }

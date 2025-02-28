@@ -1,4 +1,6 @@
 #pragma warning disable IDE0130 // 命名空间与文件夹结构不匹配
+using CodingConnected.TraCI.NET.Constants;
+
 namespace CodingConnected.TraCI.NET.DataTypes;
 
 /// <summary>
@@ -10,7 +12,7 @@ namespace CodingConnected.TraCI.NET.DataTypes;
 /// </remarks>
 public sealed class Polygon : List<Position2D>, ITraciType
     {
-    public byte TYPE => TraciConstants.DataType.POLYGON;
+    public DataType TypeIdentifier => DataType.POLYGON;
 
 
     public byte[] ToBytes()
@@ -23,7 +25,7 @@ public sealed class Polygon : List<Position2D>, ITraciType
         return [.. bytes];
         }
 
-    public static (Polygon polygon, IEnumerable<byte> remainBytes) FromBytes(IEnumerable<byte> bytes)
+    public static (Polygon polygon, IEnumerable<byte> remainingBytes) FromBytes(IEnumerable<byte> bytes)
         {
         int count = bytes.First();
         bytes = [.. bytes.Skip(1)];

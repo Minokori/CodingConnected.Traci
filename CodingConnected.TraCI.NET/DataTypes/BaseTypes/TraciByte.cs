@@ -1,5 +1,6 @@
-using static CodingConnected.TraCI.NET.DataTypes.TraciConstants.DataType;
 #pragma warning disable IDE0130 // 命名空间与文件夹结构不匹配
+using CodingConnected.TraCI.NET.Constants;
+
 namespace CodingConnected.TraCI.NET.DataTypes;
 
 /// <summary>
@@ -10,11 +11,11 @@ namespace CodingConnected.TraCI.NET.DataTypes;
 /// </remarks>
 public sealed class TraciByte(byte value) : TraciBaseType<byte>(value), ITraciType
     {
-    public override byte TYPE => BYTE;
+    public override DataType TypeIdentifier => DataType.BYTE;
 
     public override byte[] ToBytes() => [Value];
 
-    public static new (TraciByte TraciData, IEnumerable<byte> RemainingBytes) FromBytes(IEnumerable<byte> bytes) =>
+    public static new (TraciByte traciData, IEnumerable<byte> remainingBytes) FromBytes(IEnumerable<byte> bytes) =>
         new(new(bytes.First()), bytes.Skip(1));
 
     public static new byte[] AsBytes(byte value) => [value];

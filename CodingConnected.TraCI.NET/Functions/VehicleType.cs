@@ -1,3 +1,4 @@
+using CodingConnected.TraCI.NET.Constants;
 using CodingConnected.TraCI.NET.DataTypes;
 using CodingConnected.TraCI.NET.Services;
 
@@ -34,5 +35,5 @@ public partial class VehicleType(ITCPConnectService tcpService, ICommandService 
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/docs/TraCI/Object_Variable_Subscription.html#command_0xdx_subscribe_variable"/>
     /// </remarks>
-    public void Subscribe(string typeId, double beginTime, double endTime, List<byte> ListOfVariablesToSubsribeTo) => _helper.ExecuteSubscribeCommand(beginTime, endTime, typeId, TraciConstants.Command.Subscribe.VEHICLETYPE_VARIABLE, ListOfVariablesToSubsribeTo);
+    public void Subscribe(string typeId, double beginTime, double endTime, List<byte> ListOfVariablesToSubsribeTo) => _helper.ExecuteSubscribeCommand(beginTime, endTime, (byte)CommandIdentifier.Subscribe.VEHICLETYPE_VARIABLE, ListOfVariablesToSubsribeTo, typeId);
     }

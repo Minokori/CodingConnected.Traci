@@ -73,7 +73,7 @@ public interface IAnswerFromSumo
     string SumoId { get; }
 
     /// <summary>
-    /// traci data type of the value.Used to parse the data type,see <see cref="ITraciType.TYPE"/>.<para/>
+    /// traci data type of the value.Used to parse the data type,see <see cref="ITraciType.TypeIdentifier"/>.<para/>
     /// </summary>
     byte ReturnType { get; }
 

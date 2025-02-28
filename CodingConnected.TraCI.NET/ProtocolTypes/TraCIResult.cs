@@ -20,4 +20,5 @@ public partial class TraciResult : IStatusResponse, IAnswerFromSumo
     /// The response content <b>(excludes length and identifier)</b>
     /// </summary>
     public byte[] Content { get; init; } = [];
+
     }

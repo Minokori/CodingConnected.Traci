@@ -1,11 +1,11 @@
 #pragma warning disable IDE0130 // 命名空间与文件夹结构不匹配
-using static CodingConnected.TraCI.NET.DataTypes.TraciConstants;
+using CodingConnected.TraCI.NET.Constants;
 
 namespace CodingConnected.TraCI.NET.DataTypes;
 
-public class BoundaryBox : TraciListType<TraciDouble, double>
+public sealed class BoundaryBox : TraciListType<TraciDouble, double>
     {
-    public override byte TYPE => DataType.BOUNDINGBOX;
+    public override DataType TypeIdentifier => DataType.BOUNDINGBOX;
     public double LowerLeftX => this[0].Value;
     public double LowerLeftY => this[1].Value;
     public double UpperRightX => this[2].Value;

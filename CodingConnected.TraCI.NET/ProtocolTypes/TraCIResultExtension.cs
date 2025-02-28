@@ -1,7 +1,7 @@
+using CodingConnected.TraCI.NET.Constants;
 using CodingConnected.TraCI.NET.DataTypes;
 using static System.BitConverter;
-using static CodingConnected.TraCI.NET.DataTypes.TraciConstants;
-using static CodingConnected.TraCI.NET.DataTypes.TraciConstants.Command;
+using static CodingConnected.TraCI.NET.Constants.CommandIdentifier;
 namespace CodingConnected.TraCI.NET.ProtocolTypes;
 
 internal static class TraCIResultExtension
@@ -64,7 +64,7 @@ internal static class TraCIResultExtension
             }
 
         // find results of specific command type, statusResponse is status results ,result is result
-        (var statusResponse, var i) = results.Select((result, index) => (result, index)).FirstOrDefault(x => x.result.Identifier == Command.SIMSTEP);
+        (var statusResponse, var i) = results.Select((result, index) => (result, index)).FirstOrDefault(x => x.result.Identifier == CommandIdentifier.SIMSTEP);
         if (statusResponse is null)
             {
             return null;
@@ -100,29 +100,29 @@ internal static class TraCIResultExtension
     /// <exception cref="ArgumentOutOfRangeException"></exception>
     internal static (ITraciType traciValue, IEnumerable<byte> remainBytes) GetValueFromTypeAndArray(byte type, IEnumerable<byte> bytes)
         {
-        switch (type)
+        switch ((DataType)type)
             {
-            case PositionType.LON_LAT:
+            case DataType.LON_LAT:
                 {
                 (var result, bytes) = LonLatPosition.FromBytes(bytes);
                 return new(result, bytes);
                 }
-            case PositionType.X_Y:
+            case DataType.X_Y:
                 {
                 (var result, bytes) = Position2D.FromBytes(bytes);
                 return new(result, bytes);
                 }
-            case PositionType.LON_LAT_ALT:
+            case DataType.LON_LAT_ALT:
                 {
                 (var result, bytes) = LonLatAltPosition.FromBytes(bytes);
                 return new(result, bytes);
                 }
-            case PositionType.X_Y_Z:
+            case DataType.X_Y_Z:
                 {
                 (var result, bytes) = Position3D.FromBytes(bytes);
                 return new(result, bytes);
                 }
-            case PositionType.ROADMAP:
+            case DataType.ROADMAP:
                 {
                 (var result, bytes) = RoadMapPosition.FromBytes(bytes);
                 return new(result, bytes);
@@ -184,9 +184,14 @@ internal static class TraCIResultExtension
                 }
             case DataType.COMPOUND:
                 {
+                //get how many items in this traciCompoundObject
                 var innerValueNumber = ToInt32(bytes.Take(DataSize.INTEGER_SIZE).Reverse().ToArray());
                 bytes = bytes.Skip(DataSize.INTEGER_SIZE);
+
+                // init a list to put inner data
                 List<ITraciType> innerDataList = [];
+
+                // put inner data into the list
                 for (var i = 0; i < innerValueNumber; i++)
                     {
                     var innerItemType = bytes.First();

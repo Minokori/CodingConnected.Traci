@@ -1,10 +1,9 @@
+using CodingConnected.TraCI.NET.Constants;
 using CodingConnected.TraCI.NET.DataTypes;
 using CodingConnected.TraCI.NET.ProtocolTypes;
 using CodingConnected.TraCI.NET.Services;
-using static CodingConnected.TraCI.NET.DataTypes.TraciConstants;
-using static CodingConnected.TraCI.NET.DataTypes.TraciConstants.Command;
-using static CodingConnected.TraCI.NET.DataTypes.TraciConstants.Response.Subscribe;
-
+using static CodingConnected.TraCI.NET.Constants.CommandIdentifier;
+using static CodingConnected.TraCI.NET.Constants.TraciConstants;
 namespace CodingConnected.TraCI.NET.Functions;
 
 /// <summary>
@@ -42,7 +41,7 @@ public class Control(ITCPConnectService tcpService, ICommandService helper, IEve
     /// </remarks>
     public Tuple<int, string> GetVersion()
         {
-        var command = _helper.GetCommand(GETVERSION);
+        var command = _helper.GenerateCommand(GETVERSION);
         var results = _tcpService.SendMessage(command);
         switch ((results[0] as IStatusResponse).Result)
             {
@@ -79,7 +78,7 @@ public class Control(ITCPConnectService tcpService, ICommandService helper, IEve
     public void SimStep(double targetTime = 0)
         {
         // make a simulation step
-        var command = _helper.GetCommand(SIMSTEP, extendParameter: new TraciDouble(targetTime));
+        var command = _helper.GenerateCommand(SIMSTEP, extendParameter: new TraciDouble(targetTime));
         // get the results
         var results = _tcpService.SendMessage(command);
         if (results.Count != 1)
@@ -116,72 +115,72 @@ public class Control(ITCPConnectService tcpService, ICommandService helper, IEve
                     }
                 eventArgs.Responses = response.Responses;
 
-                switch (response.Identifier)
+                switch ((Response.Subscribe)response.Identifier)
                     {
-                    case INDUCTIONLOOP_VARIABLE:
+                    case Response.Subscribe.INDUCTIONLOOP_VARIABLE:
                         _events.OnInductionLoopSubscription(eventArgs);
                         break;
-                    case MULTIENTRYEXIT_VARIABLE:
+                    case Response.Subscribe.MULTIENTRYEXIT_VARIABLE:
                         _events.OnMultiEntryExitSubscription(eventArgs);
                         break;
-                    case TL_VARIABLE:
+                    case Response.Subscribe.TL_VARIABLE:
                         _events.OnTrafficLightSubscription(eventArgs);
                         break;
-                    case LANE_VARIABLE:
+                    case Response.Subscribe.LANE_VARIABLE:
                         _events.OnLaneSubscription(eventArgs);
                         break;
-                    case VEHICLE_VARIABLE:
+                    case Response.Subscribe.VEHICLE_VARIABLE:
                         _events.OnVehicleSubscription(eventArgs);
                         break;
-                    case VEHICLETYPE_VARIABLE:
+                    case Response.Subscribe.VEHICLETYPE_VARIABLE:
                         _events.OnVehicleTypeSubscription(eventArgs);
                         break;
-                    case ROUTE_VARIABLE:
+                    case Response.Subscribe.ROUTE_VARIABLE:
                         _events.OnRouteSubscription(eventArgs);
                         break;
-                    case POI_VARIABLE:
+                    case Response.Subscribe.POI_VARIABLE:
                         _events.OnPOISubscription(eventArgs);
                         break;
-                    case POLYGON_VARIABLE:
+                    case Response.Subscribe.POLYGON_VARIABLE:
                         _events.OnPolygonSubscription(eventArgs);
                         break;
-                    case JUNCTION_VARIABLE:
+                    case Response.Subscribe.JUNCTION_VARIABLE:
                         _events.OnJunctionSubscription(eventArgs);
                         break;
-                    case EDGE_VARIABLE:
+                    case Response.Subscribe.EDGE_VARIABLE:
                         _events.OnEdgeSubscription(eventArgs);
                         break;
-                    case SIM_VARIABLE:
+                    case Response.Subscribe.SIM_VARIABLE:
                         _events.OnSimulationSubscription(eventArgs);
                         break;
-                    case GUI_VARIABLE:
+                    case Response.Subscribe.GUI_VARIABLE:
                         _events.OnGUISubscription(eventArgs);
                         break;
-                    case LANEAREA_VARIABLE:
+                    case Response.Subscribe.LANEAREA_VARIABLE:
                         _events.OnLaneAreaSubscription(eventArgs);
                         break;
-                    case PERSON_VARIABLE:
+                    case Response.Subscribe.PERSON_VARIABLE:
                         _events.OnPersonSubscription(eventArgs);
                         break;
-                    case INDUCTIONLOOP_CONTEXT:
+                    case Response.Subscribe.INDUCTIONLOOP_CONTEXT:
                         _events.OnInductionLoopContextSubscription((ContextSubscriptionEventArgs)eventArgs);
                         break;
-                    case LANE_CONTEXT:
+                    case Response.Subscribe.LANE_CONTEXT:
                         _events.OnLaneContextSubscription((ContextSubscriptionEventArgs)eventArgs);
                         break;
-                    case VEHICLE_CONTEXT:
+                    case Response.Subscribe.VEHICLE_CONTEXT:
                         _events.OnVehicleContextSubscription((ContextSubscriptionEventArgs)eventArgs);
                         break;
-                    case POI_CONTEXT:
+                    case Response.Subscribe.POI_CONTEXT:
                         _events.OnPOIContextSubscription((ContextSubscriptionEventArgs)eventArgs);
                         break;
-                    case POLYGON_CONTEXT:
+                    case Response.Subscribe.POLYGON_CONTEXT:
                         _events.OnPolygonContextSubscription((ContextSubscriptionEventArgs)eventArgs);
                         break;
-                    case JUNCTION_CONTEXT:
+                    case Response.Subscribe.JUNCTION_CONTEXT:
                         _events.OnJunctionContextSubscription((ContextSubscriptionEventArgs)eventArgs);
                         break;
-                    case EDGE_CONTEXT:
+                    case Response.Subscribe.EDGE_CONTEXT:
                         _events.OnEdgeContextSubscription((ContextSubscriptionEventArgs)eventArgs);
                         break;
                     default:
@@ -200,7 +199,7 @@ public class Control(ITCPConnectService tcpService, ICommandService helper, IEve
     /// </remarks>
     public void ExecuteMove()
         {
-        var command = _helper.GetCommand(EXECUTE_MOVE);
+        var command = _helper.GenerateCommand(EXECUTE_MOVE);
         _ = _tcpService.SendMessage(command);
         }
 
@@ -212,7 +211,7 @@ public class Control(ITCPConnectService tcpService, ICommandService helper, IEve
     /// </remarks>
     public void Close()
         {
-        var command = _helper.GetCommand(CLOSE);
+        var command = _helper.GenerateCommand(CLOSE);
         _ = _tcpService.SendMessage(command);
         }
 
@@ -227,7 +226,7 @@ public class Control(ITCPConnectService tcpService, ICommandService helper, IEve
 
     public void Load(List<string> options)
         {
-        var command = _helper.GetCommand(LOAD, extendParameter: new TraciStringList(options));
+        var command = _helper.GenerateCommand(LOAD, extendParameter: new TraciStringList(options));
         _ = _tcpService.SendMessage(command);
         }
 
@@ -242,7 +241,7 @@ public class Control(ITCPConnectService tcpService, ICommandService helper, IEve
     /// </remarks>
     public void SetOrder(int index)
         {
-        var command = _helper.GetCommand(SETORDER, extendParameter: new TraciInteger(index));
+        var command = _helper.GenerateCommand(SETORDER, extendParameter: new TraciInteger(index));
         _ = _tcpService.SendMessage(command);
         }
     }

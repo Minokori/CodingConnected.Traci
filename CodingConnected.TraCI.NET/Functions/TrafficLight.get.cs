@@ -1,5 +1,6 @@
+using CodingConnected.TraCI.NET.Constants;
 using CodingConnected.TraCI.NET.DataTypes;
-using static CodingConnected.TraCI.NET.DataTypes.TraciConstants.Command.Get;
+using static CodingConnected.TraCI.NET.Constants.CommandIdentifier.Get;
 namespace CodingConnected.TraCI.NET.Functions;
 
 public partial class TrafficLight
@@ -33,7 +34,7 @@ public partial class TrafficLight
         }
 
     /// <summary>
-    /// Returns the named tl's state as a tuple of light definitions from
+    /// Returns the named tls state as a tuple of light definitions from
     /// rugGyYoO, for red, yed-yellow, green, yellow, off, where lower case letters mean that the stream
     /// has to decelerate.
     /// </summary>
