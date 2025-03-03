@@ -1,10 +1,10 @@
-﻿using CodingConnected.TraCI.NET.Functions;
+using CodingConnected.TraCI.NET.Functions;
 using CodingConnected.TraCI.NET.Services;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace CodingConnected.TraCI.NET;
 
-public partial class TraCIClient
+public partial class TraciClient
     {
     public IEventService EventService => services.GetRequiredService<IEventService>();
     public Control Control => services.GetRequiredService<Control>();

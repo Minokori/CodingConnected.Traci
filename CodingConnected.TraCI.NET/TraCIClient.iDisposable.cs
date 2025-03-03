@@ -1,6 +1,6 @@
 namespace CodingConnected.TraCI.NET;
 
-public partial class TraCIClient
+public partial class TraciClient
     {
     public void Dispose()
         {

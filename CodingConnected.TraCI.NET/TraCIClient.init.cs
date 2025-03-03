@@ -4,11 +4,14 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace CodingConnected.TraCI.NET;
 
-public partial class TraCIClient
+public partial class TraciClient
     {
-    public TraCIClient()
+    public TraciClient(string? sumoFilePath = null, int? port = null)
         {
+        SumoFile = sumoFilePath ?? string.Empty;
+        Port = port ?? 0;
         ServiceCollection servicesBuilder = new();
+        servicesBuilder.AddSingleton<IDebugService, DebugService>(i => new(true));
         servicesBuilder.AddSingleton<ITCPConnectService, ConnectService>();
         servicesBuilder.AddSingleton<ICommandService, CommandService>();
         servicesBuilder.AddSingleton<IEventService, EventService>();
@@ -36,6 +39,10 @@ public partial class TraCIClient
         servicesBuilder.AddSingleton<RouteProbe>();
         servicesBuilder.AddSingleton<VariableSpeedSign>();
         services = servicesBuilder.BuildServiceProvider();
+
+
+
+
         }
 
     }

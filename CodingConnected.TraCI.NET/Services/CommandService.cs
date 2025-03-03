@@ -4,9 +4,10 @@ using CodingConnected.TraCI.NET.ProtocolTypes;
 
 namespace CodingConnected.TraCI.NET.Services;
 
-internal partial class CommandService(ITCPConnectService tcpService) : ICommandService
+internal partial class CommandService(ITCPConnectService tcpService, IDebugService debugHelper) : ICommandService
     {
     private readonly ITCPConnectService _tcpService = tcpService;
+    private readonly IDebugService _debugHelper = debugHelper;
 
     public bool ExecuteSetCommand(byte commandIdentifier, byte variable, string id, ITraciType? value = null)
         {
@@ -23,7 +24,7 @@ internal partial class CommandService(ITCPConnectService tcpService) : ICommandS
             }
         }
 
-    public IAnswerFromSumo ExecuteGetCommand(byte commandIdentifier, byte? variable = null, string? id = null, ITraciType? extendParameter = null)
+    public IAnswerFromSumo ExecuteGetCommand(byte commandIdentifier, byte? variable = null, string id = "", ITraciType? extendParameter = null)
         {
         var command = GenerateCommand(commandIdentifier, variable, id, extendParameter);
         var response = _tcpService.SendMessage(command);
@@ -102,6 +103,9 @@ internal partial class CommandService(ITCPConnectService tcpService) : ICommandS
         var commandPart2 = id is null ? [] : TraciString.AsBytes(id);
         var commandPart3 = contents?.ToBytes() ?? [];
         TraCICommand command = new(commandIdentifier, [.. commandPart1, .. commandPart2, .. commandPart3]);
+
+        _debugHelper.LogToConsole($"GenerateCommand : {command.DebugString}");
+
         return command;
         }
     }

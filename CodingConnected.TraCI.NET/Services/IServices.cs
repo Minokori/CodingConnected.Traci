@@ -23,7 +23,7 @@ public interface ICommandService
     /// <param name="id">specify the object id to work on</param>
     /// <param name="extendParameter">if get command requires extend parameter, put it here.</param>
     /// <returns></returns>
-    IAnswerFromSumo ExecuteGetCommand(byte commandIdentifier, byte? variable, string? id = null, ITraciType? extendParameter = null);
+    IAnswerFromSumo ExecuteGetCommand(byte commandIdentifier, byte? variable, string id = "", ITraciType? extendParameter = null);
 
 
     /// <summary>
@@ -134,4 +134,10 @@ public interface IEventService
     void OnJunctionContextSubscription(ContextSubscriptionEventArgs eventArgs);
 
     void OnEdgeContextSubscription(ContextSubscriptionEventArgs eventArgs);
+    }
+
+
+public interface IDebugService
+    {
+    void LogToConsole(string debugMessage);
     }
