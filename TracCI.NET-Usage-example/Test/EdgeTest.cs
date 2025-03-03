@@ -3,12 +3,13 @@ using System.Reflection;
 using CodingConnected.TraCI.NET;
 
 namespace TracCI.NET.UsageExample.Test;
-public static partial class GuiTest
+public static partial class EdgeTest
     {
-    public static void TestGui(this TraciClient client)
+
+    public static void TestEdge(this TraciClient client)
         {
         Console.WriteLine();
-        var boolMethods = typeof(GuiTest).GetMethods(BindingFlags.NonPublic | BindingFlags.Static);
+        var boolMethods = typeof(EdgeTest).GetMethods(BindingFlags.NonPublic | BindingFlags.Static);
         foreach (var method in boolMethods)
             {
             Console.Write($"Method: {method.Name}");

@@ -1,9 +1,8 @@
 using CodingConnected.TraCI.NET.Constants;
 using CodingConnected.TraCI.NET.DataTypes;
-using static CodingConnected.TraCI.NET.Constants.CommandIdentifier.Get;
+using static CodingConnected.TraCI.NET.Constants.CommandIdentifier;
+
 namespace CodingConnected.TraCI.NET.Functions;
-
-
 
 public partial class BusStop
     {
@@ -17,11 +16,13 @@ public partial class BusStop
     /// </remarks>
     public double GetEndPosition(string stopId)
         {
-        var result = _helper.ExecuteGetCommand(BUSSTOP_VARIABLE,
-            TraciConstants.VAR_LANEPOSITION, stopId);
-        return ((TraciDouble)result.Data).Value;
+        var result = _helper.ExecuteGetCommand(
+            Get.BUSSTOP_VARIABLE,
+            TraciConstants.VAR_LANEPOSITION,
+            stopId
+        );
+        return (TraciDouble)result.Data;
         }
-
 
     /// <summary>
     /// Returns the lane of this calibrator (if it applies to a single lane)
@@ -34,9 +35,12 @@ public partial class BusStop
 
     public string GetLaneId(string stopId)
         {
-        var result = _helper.ExecuteGetCommand(BUSSTOP_VARIABLE,
-            TraciConstants.VAR_LANE_ID, stopId);
-        return ((TraciString)result.Data).Value;
+        var result = _helper.ExecuteGetCommand(
+            Get.BUSSTOP_VARIABLE,
+            TraciConstants.VAR_LANE_ID,
+            stopId
+        );
+        return (TraciString)result.Data;
         }
 
     /// <summary>
@@ -49,9 +53,12 @@ public partial class BusStop
     /// </remarks>
     public string GetName(string stopId)
         {
-        var result = _helper.ExecuteGetCommand(BUSSTOP_VARIABLE,
-            TraciConstants.VAR_NAME, stopId);
-        return ((TraciString)result.Data).Value;
+        var result = _helper.ExecuteGetCommand(
+            Get.BUSSTOP_VARIABLE,
+            TraciConstants.VAR_NAME,
+            stopId
+        );
+        return (TraciString)result.Data;
         }
 
     /// <summary>
@@ -64,9 +71,12 @@ public partial class BusStop
     /// </remarks>
     public int GetPersonCount(string stopId)
         {
-        var result = _helper.ExecuteGetCommand(BUSSTOP_VARIABLE,
-            TraciConstants.VAR_BUS_STOP_WAITING, stopId);
-        return ((TraciInteger)result.Data).Value;
+        var result = _helper.ExecuteGetCommand(
+            Get.BUSSTOP_VARIABLE,
+            TraciConstants.VAR_BUS_STOP_WAITING,
+            stopId
+        );
+        return (TraciInteger)result.Data;
         }
 
     /// <summary>
@@ -79,9 +89,12 @@ public partial class BusStop
     /// </remarks>
     public List<string> GetPersonIds(string stopId)
         {
-        var result = _helper.ExecuteGetCommand(BUSSTOP_VARIABLE,
-            TraciConstants.VAR_BUS_STOP_WAITING_IDS, stopId);
-        return ((TraciStringList)result.Data).Value;
+        var result = _helper.ExecuteGetCommand(
+            Get.BUSSTOP_VARIABLE,
+            TraciConstants.VAR_BUS_STOP_WAITING_IDS,
+            stopId
+        );
+        return (TraciStringList)result.Data;
         }
 
     /// <summary>
@@ -94,9 +107,12 @@ public partial class BusStop
     /// </remarks>
     public double GetStartPosition(string stopId)
         {
-        var result = _helper.ExecuteGetCommand(BUSSTOP_VARIABLE,
-            TraciConstants.VAR_POSITION, stopId);
-        return ((TraciDouble)result.Data).Value;
+        var result = _helper.ExecuteGetCommand(
+            Get.BUSSTOP_VARIABLE,
+            TraciConstants.VAR_POSITION,
+            stopId
+        );
+        return (TraciDouble)result.Data;
         }
 
     /// <summary>
@@ -109,9 +125,12 @@ public partial class BusStop
     /// </remarks>
     public int GetVehicleCount(string stopId)
         {
-        var result = _helper.ExecuteGetCommand(BUSSTOP_VARIABLE,
-            TraciConstants.VAR_STOP_STARTING_VEHICLES_NUMBER, stopId);
-        return ((TraciInteger)result.Data).Value;
+        var result = _helper.ExecuteGetCommand(
+            Get.BUSSTOP_VARIABLE,
+            TraciConstants.VAR_STOP_STARTING_VEHICLES_NUMBER,
+            stopId
+        );
+        return (TraciInteger)result.Data;
         }
 
     /// <summary>
@@ -125,8 +144,11 @@ public partial class BusStop
 
     public List<string> GetVehicleIds(string stopId)
         {
-        var result = _helper.ExecuteGetCommand(BUSSTOP_VARIABLE,
-            TraciConstants.VAR_STOP_STARTING_VEHICLES_IDS, stopId);
-        return ((TraciStringList)result.Data).Value;
+        var result = _helper.ExecuteGetCommand(
+            Get.BUSSTOP_VARIABLE,
+            TraciConstants.VAR_STOP_STARTING_VEHICLES_IDS,
+            stopId
+        );
+        return (TraciStringList)result.Data;
         }
     }

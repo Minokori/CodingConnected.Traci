@@ -16,7 +16,7 @@ public partial class Edge
     public List<string> GetIdList()
         {
         var result = _helper.ExecuteGetCommand(EDGE_VARIABLE, TraciConstants.ID_LIST, "ignored");
-        return ((TraciStringList)result.Data).Value;
+        return (TraciStringList)result.Data;
         }
 
     /// <summary>
@@ -29,7 +29,7 @@ public partial class Edge
     public int GetIdCount()
         {
         var result = _helper.ExecuteGetCommand(EDGE_VARIABLE, TraciConstants.ID_COUNT, "ignored");
-        return ((TraciInteger)result.Data).Value;
+        return (TraciInteger)result.Data;
         }
 
     /// <summary>
@@ -43,7 +43,7 @@ public partial class Edge
     public int GetLaneNumber(string edgeId)
         {
         var result = _helper.ExecuteGetCommand(EDGE_VARIABLE, TraciConstants.VAR_LANE_INDEX, edgeId);
-        return ((TraciInteger)result.Data).Value;
+        return (TraciInteger)result.Data;
         }
 
     /// <summary>
@@ -57,7 +57,7 @@ public partial class Edge
     public string GetStreetName(string edgeId)
         {
         var result = _helper.ExecuteGetCommand(EDGE_VARIABLE, TraciConstants.VAR_STREET_NAME, edgeId);
-        return ((TraciString)result.Data).Value;
+        return (TraciString)result.Data;
         }
 
     /// <summary>
@@ -68,10 +68,10 @@ public partial class Edge
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/pydoc/traci._edge.html#EdgeDomain-getTraveltime"/>
     /// </remarks>
-    public double GetTraveltime(string edgeId)
+    public double GetTravelTime(string edgeId)
         {
         var result = _helper.ExecuteGetCommand(EDGE_VARIABLE, TraciConstants.VAR_CURRENT_TRAVELTIME, edgeId);
-        return ((TraciDouble)result.Data).Value;
+        return (TraciDouble)result.Data;
         }
 
     /// <summary>
@@ -85,7 +85,7 @@ public partial class Edge
     public double GetCO2Emission(string edgeId)
         {
         var result = _helper.ExecuteGetCommand(EDGE_VARIABLE, TraciConstants.VAR_CO2EMISSION, edgeId);
-        return ((TraciDouble)result.Data).Value;
+        return (TraciDouble)result.Data;
         }
 
     /// <summary>
@@ -307,9 +307,9 @@ public partial class Edge
     /// <remarks>
     /// see <see href=""/>
     /// </remarks>
-    public double GetAngle(string edgeId)
+    public double GetAngle(string edgeId, double relativePosition = TraciConstants.INVALID_DOUBLE_VALUE)
         {
-        var result = _helper.ExecuteGetCommand(EDGE_VARIABLE, TraciConstants.VAR_ANGLE, edgeId);
+        var result = _helper.ExecuteGetCommand(EDGE_VARIABLE, TraciConstants.VAR_ANGLE, edgeId, new TraciDouble(relativePosition));
         return ((TraciDouble)result.Data).Value;
         }
 

@@ -44,6 +44,8 @@ using TraciClient client = new(sumoFile, 4321);
 Console.WriteLine($"Connected to SUMO version: {api}, Version String:{ver}");
 Console.WriteLine(instructions);
 client.TestGui();
+
+client.TestEdge();
 /*main loop */
 do
     {
