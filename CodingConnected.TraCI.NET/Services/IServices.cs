@@ -6,8 +6,8 @@ namespace CodingConnected.TraCI.NET.Services;
 
 public interface ITCPConnectService : IDisposable
     {
-    TcpClient Client { get; }
-    NetworkStream Stream { get; }
+    TcpClient? Client { get; }
+    NetworkStream? Stream { get; }
     Task ConnectAsync(string hostname, int port);
     bool Connect(string hostname, int port);
     List<TraciResult> SendMessage(TraCICommand command);

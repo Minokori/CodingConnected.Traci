@@ -6,12 +6,12 @@ namespace CodingConnected.TraCI.NET;
 
 public partial class TraciClient
     {
-    public TraciClient(string? sumoFilePath = null, int? port = null)
+    public TraciClient(string? sumoFilePath = null, int? port = null, bool enableDebug = false)
         {
         SumoFile = sumoFilePath ?? string.Empty;
         Port = port ?? 0;
         ServiceCollection servicesBuilder = new();
-        servicesBuilder.AddSingleton<IDebugService, DebugService>(i => new(true));
+        servicesBuilder.AddSingleton<IDebugService, DebugService>(i => new(enableDebug));
         servicesBuilder.AddSingleton<ITCPConnectService, ConnectService>();
         servicesBuilder.AddSingleton<ICommandService, CommandService>();
         servicesBuilder.AddSingleton<IEventService, EventService>();

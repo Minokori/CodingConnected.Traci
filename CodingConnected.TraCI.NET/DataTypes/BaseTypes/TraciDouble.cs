@@ -1,6 +1,5 @@
 using CodingConnected.TraCI.NET.Constants;
 using static System.BitConverter;
-using static CodingConnected.TraCI.NET.Constants.TraciConstants;
 #pragma warning disable IDE0130 // 命名空间与文件夹结构不匹配
 namespace CodingConnected.TraCI.NET.DataTypes;
 

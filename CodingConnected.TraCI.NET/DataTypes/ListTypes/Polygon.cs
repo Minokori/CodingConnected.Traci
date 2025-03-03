@@ -37,4 +37,6 @@ public sealed class Polygon : List<Position2D>, ITraciType
             }
         return new(points, bytes);
         }
+
+    public static implicit operator (double lowerLeftX, double lowerLeftY, double rightUpperX, double rightUpperY)(Polygon polygon) => (polygon[0].X, polygon[0].Y, polygon[1].X, polygon[1].Y);
     }

@@ -22,7 +22,7 @@ namespace CodingConnected.TraCI.NET.Functions;
 /// </item>
 /// </list>
 /// </remarks>
-public partial class Edge(ITCPConnectService tcpService, ICommandService helper) : TraCIContextSubscribeCommands(tcpService, helper)
+public partial class Edge(ITCPConnectService tcpService, ICommandService helper, IDebugService logger) : TraCIContextSubscribeCommands(tcpService, helper, logger)
     {
     protected override CommandIdentifier.Subscribe ContextSubscribeCommand => CommandIdentifier.Subscribe.EDGE_CONTEXT;
 

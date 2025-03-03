@@ -2,7 +2,7 @@
     <PropertyGroup>
         <TargetFramework>net9.0</TargetFramework>
         <OutputType>Exe</OutputType>
-        <RootNamespace>TracCI.NET_Usage_example</RootNamespace>
+        <RootNamespace>TracCI.NET.UsageExample</RootNamespace>
         <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
         <LangVersion>latest</LangVersion>
     </PropertyGroup>

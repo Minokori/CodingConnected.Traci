@@ -22,7 +22,7 @@ namespace CodingConnected.TraCI.NET.Functions;
 /// </item>
 /// </list>
 /// </remarks>
-public partial class TrafficLight(ITCPConnectService tcpService, ICommandService helper) : FunctionBase(tcpService, helper)
+public partial class TrafficLight(ITCPConnectService tcpService, ICommandService helper, IDebugService logger) : FunctionBase(tcpService, helper, logger)
     {
 
     /// <summary>

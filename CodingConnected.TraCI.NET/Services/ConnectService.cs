@@ -7,8 +7,8 @@ internal class ConnectService : ITCPConnectService
     {
     private readonly byte[] _receiveBuffer = new byte[32768];
 
-    public TcpClient Client { get; private set; }
-    public NetworkStream Stream { get; private set; }
+    public TcpClient? Client { get; private set; }
+    public NetworkStream? Stream { get; private set; }
 
     /// <summary>
     /// Connects to the SUMO server instance
@@ -70,7 +70,7 @@ internal class ConnectService : ITCPConnectService
         //read responseBytes
         try
             {
-            var hasReadLength = Stream.Read(_receiveBuffer, 0, 32768);
+            var hasReadLength = Stream!.Read(_receiveBuffer, 0, 32768);
             if (hasReadLength < 0)
                 {
                 // Read returns 0 if the client closes the connection
@@ -103,7 +103,7 @@ internal class ConnectService : ITCPConnectService
 
     public void Dispose()
         {
-        Client.Close();
-        Stream.Dispose();
+        Client?.Close();
+        Stream?.Dispose();
         }
     }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using CodingConnected.TraCI.NET;
 using CodingConnected.TraCI.NET.Constants;
+using TracCI.NET.UsageExample.Test;
 
 #region static variables
 
@@ -42,7 +43,7 @@ using TraciClient client = new(sumoFile, 4321);
 (var api, var ver) = await client.Start();
 Console.WriteLine($"Connected to SUMO version: {api}, Version String:{ver}");
 Console.WriteLine(instructions);
-
+client.TestGui();
 /*main loop */
 do
     {

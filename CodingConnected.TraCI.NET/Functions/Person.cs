@@ -21,7 +21,7 @@ namespace CodingConnected.TraCI.NET.Functions;
 /// </item>
 /// </list>
 /// </remarks>
-public partial class Person(ITCPConnectService tcpService, ICommandService helper) : FunctionBase(tcpService, helper)
+public partial class Person(ITCPConnectService tcpService, ICommandService helper, IDebugService logger) : FunctionBase(tcpService, helper, logger)
     {
     /// <summary>
     /// subscribe to a list of variables of a person

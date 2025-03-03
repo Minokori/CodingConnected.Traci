@@ -20,7 +20,7 @@ namespace CodingConnected.TraCI.NET.Functions;
 /// </item>
 /// </list>
 /// </remarks>
-public partial class MultiEntryExitDetector(ITCPConnectService tcpService, ICommandService helper) : FunctionBase(tcpService, helper)
+public partial class MultiEntryExitDetector(ITCPConnectService tcpService, ICommandService helper, IDebugService logger) : FunctionBase(tcpService, helper, logger)
     {
 
 

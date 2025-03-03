@@ -27,7 +27,8 @@ public sealed class Position2D : TraciListType<TraciDouble, double>, ITraciType
 
     public Position2D(double x, double y)
         {
-        this[0] = new(x);
-        this[1] = new(y);
+
+        Add(new(x));
+        Add(new(y));
         }
     }

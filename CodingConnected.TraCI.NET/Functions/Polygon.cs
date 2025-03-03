@@ -1,5 +1,4 @@
 using CodingConnected.TraCI.NET.Constants;
-using CodingConnected.TraCI.NET.DataTypes;
 using CodingConnected.TraCI.NET.Services;
 
 namespace CodingConnected.TraCI.NET.Functions;
@@ -23,7 +22,7 @@ namespace CodingConnected.TraCI.NET.Functions;
 /// </item>
 /// </list>
 /// </remarks>
-public partial class Polygon(ITCPConnectService tcpService, ICommandService helper) : TraCIContextSubscribeCommands(tcpService, helper)
+public partial class Polygon(ITCPConnectService tcpService, ICommandService helper, IDebugService logger) : TraCIContextSubscribeCommands(tcpService, helper, logger)
     {
 
     protected override CommandIdentifier.Subscribe ContextSubscribeCommand => CommandIdentifier.Subscribe.POLYGON_CONTEXT;

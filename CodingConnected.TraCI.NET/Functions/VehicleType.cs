@@ -1,5 +1,4 @@
 using CodingConnected.TraCI.NET.Constants;
-using CodingConnected.TraCI.NET.DataTypes;
 using CodingConnected.TraCI.NET.Services;
 
 namespace CodingConnected.TraCI.NET.Functions;
@@ -22,7 +21,7 @@ namespace CodingConnected.TraCI.NET.Functions;
 /// </item>
 /// </list>
 /// </remarks>
-public partial class VehicleType(ITCPConnectService tcpService, ICommandService helper) : FunctionBase(tcpService, helper)
+public partial class VehicleType(ITCPConnectService tcpService, ICommandService helper, IDebugService logger) : FunctionBase(tcpService, helper, logger)
     {
 
     /// <summary>

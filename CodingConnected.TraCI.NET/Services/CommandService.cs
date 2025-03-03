@@ -101,7 +101,7 @@ internal partial class CommandService(ITCPConnectService tcpService, IDebugServi
         {
         byte[] commandPart1 = messageType.HasValue ? [messageType.Value] : [];
         var commandPart2 = id is null ? [] : TraciString.AsBytes(id);
-        var commandPart3 = contents?.ToBytes() ?? [];
+        byte[] commandPart3 = contents is not null ? [(byte)contents.TypeIdentifier, .. contents.ToBytes()] : [];
         TraCICommand command = new(commandIdentifier, [.. commandPart1, .. commandPart2, .. commandPart3]);
 
         _debugHelper.LogToConsole($"GenerateCommand : {command.DebugString}");

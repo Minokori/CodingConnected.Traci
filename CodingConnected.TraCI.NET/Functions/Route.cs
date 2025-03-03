@@ -21,7 +21,7 @@ namespace CodingConnected.TraCI.NET.Functions;
 /// </item>
 /// </list>
 /// </remarks>
-public partial class Route(ITCPConnectService tcpService, ICommandService helper) : FunctionBase(tcpService, helper)
+public partial class Route(ITCPConnectService tcpService, ICommandService helper, IDebugService logger) : FunctionBase(tcpService, helper, logger)
     {
     /// <summary>
     /// subscribe to a list of variables of a vehicle type

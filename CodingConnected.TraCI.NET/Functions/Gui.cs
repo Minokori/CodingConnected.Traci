@@ -21,7 +21,7 @@ namespace CodingConnected.TraCI.NET.Functions;
 /// </item>
 /// </list>
 /// </remarks>
-public partial class Gui(ITCPConnectService tcpService, ICommandService helper) : FunctionBase(tcpService, helper)
+public partial class Gui(ITCPConnectService tcpService, ICommandService helper, IDebugService logger) : FunctionBase(tcpService, helper, logger)
     {
     /// <summary>
     /// subscribe to a list of variables of a vehicle type
@@ -29,9 +29,9 @@ public partial class Gui(ITCPConnectService tcpService, ICommandService helper) 
     /// <param name="viewId">view ID</param>
     /// <param name="beginTime">the subscription is executed only in time steps >= this value; in ms</param>
     /// <param name="endTime">the subscription is executed in time steps <= this value; the subscription is removed if the simulation has reached a higher time step; in ms</param>
-    /// <param name="ListOfVariablesToSubsribeTo">The list of variables to return. please refer to <see cref="TraciConstants"/></param>
+    /// <param name="ListOfVariablesToSubscribeTo">The list of variables to return. please refer to <see cref="TraciConstants"/></param>
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/docs/TraCI/Object_Variable_Subscription.html#command_0xdx_subscribe_variable"/>
     /// </remarks>
-    public override void Subscribe(string viewId, int beginTime, int endTime, List<byte> ListOfVariablesToSubsribeTo) => _helper.ExecuteSubscribeCommand(beginTime, endTime, (byte)CommandIdentifier.Subscribe.GUI_VARIABLE, ListOfVariablesToSubsribeTo, viewId);
+    public override void Subscribe(string viewId, int beginTime, int endTime, List<byte> ListOfVariablesToSubscribeTo) => _helper.ExecuteSubscribeCommand(beginTime, endTime, (byte)CommandIdentifier.Subscribe.GUI_VARIABLE, ListOfVariablesToSubscribeTo, viewId);
     }

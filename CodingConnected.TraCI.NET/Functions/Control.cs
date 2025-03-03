@@ -19,7 +19,7 @@ namespace CodingConnected.TraCI.NET.Functions;
 /// </response>
 /// </list>
 /// </remarks>
-public class Control(ITCPConnectService tcpService, ICommandService helper, IEventService eventService) : FunctionBase(tcpService, helper)
+public class Control(ITCPConnectService tcpService, ICommandService helper, IEventService eventService, IDebugService logger) : FunctionBase(tcpService, helper, logger)
     {
     private readonly IEventService _events = eventService;
 
