@@ -50,20 +50,7 @@ public partial class Junction
             includeZ ? TraciConstants.VAR_POSITION3D : TraciConstants.VAR_POSITION,
             junctionId
         );
-
-        switch (includeZ)
-            {
-            case true:
-                    {
-                    var position3D = (Position3D)result.Data;
-                    return new(position3D.X, position3D.Y, position3D.Z);
-                    }
-            case false:
-                    {
-                    var position2D = (Position2D)result.Data;
-                    return new(position2D.X, position2D.Y, TraciConstants.INVALID_DOUBLE_VALUE);
-                    }
-            }
+        return includeZ ? (Position3D)result.Data : (Position2D)result.Data;
         }
 
     /// <summary>

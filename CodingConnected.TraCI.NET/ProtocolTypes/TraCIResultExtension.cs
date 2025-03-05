@@ -199,7 +199,8 @@ internal static class TraCIResultExtension
                         (var result, bytes) = GetValueFromTypeAndArray(innerItemType, bytes);
                         innerDataList.Add(result);
                         }
-                    return new((TraciCompoundObject)innerDataList, bytes);
+                    // BUG 不能直接将List<ITraciType> 转换为 TraciCompoundObject
+                    return new(new TraciCompoundObject(innerDataList), bytes);
                     }
             default:
                     {

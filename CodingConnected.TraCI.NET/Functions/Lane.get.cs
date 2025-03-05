@@ -17,7 +17,7 @@ public partial class Lane
     public List<string> GetIdList()
         {
         var result = _helper.ExecuteGetCommand(LANE_VARIABLE, TraciConstants.ID_LIST, "ignored");
-        return ((TraciStringList)result.Data).Value;
+        return (TraciStringList)result.Data;
         }
 
     /// <summary>
@@ -31,7 +31,7 @@ public partial class Lane
     public int GetIdCount()
         {
         var result = _helper.ExecuteGetCommand(LANE_VARIABLE, TraciConstants.ID_COUNT, "ignored");
-        return ((TraciInteger)result.Data).Value;
+        return (TraciInteger)result.Data;
         }
 
     /// <summary>
@@ -42,10 +42,14 @@ public partial class Lane
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/pydoc/traci._lane.html#LaneDomain-getLinkNumber"/>
     /// </remarks>
-    public byte GetLinkNumber(string laneId)
+    public int GetLinkNumber(string laneId)
         {
-        var result = _helper.ExecuteGetCommand(LANE_VARIABLE, TraciConstants.LANE_LINK_NUMBER, laneId);
-        return ((TraciByte)result.Data).Value;
+        var result = _helper.ExecuteGetCommand(
+            LANE_VARIABLE,
+            TraciConstants.LANE_LINK_NUMBER,
+            laneId
+        );
+        return (TraciInteger)result.Data;
         }
 
     /// <summary>
@@ -59,7 +63,7 @@ public partial class Lane
     public string GetEdgeId(string laneId)
         {
         var result = _helper.ExecuteGetCommand(LANE_VARIABLE, TraciConstants.LANE_EDGE_ID, laneId);
-        return ((TraciString)result.Data).Value;
+        return (TraciString)result.Data;
         }
 
     /// <summary>
@@ -72,7 +76,8 @@ public partial class Lane
     /// </remarks>
     public List<Link> GetLinks(string laneId)
         {
-        var result = (TraciCompoundObject)_helper.ExecuteGetCommand(LANE_VARIABLE, TraciConstants.LANE_LINKS, laneId);
+        var result = (TraciCompoundObject)
+            _helper.ExecuteGetCommand(LANE_VARIABLE, TraciConstants.LANE_LINKS, laneId).Data;
         return result.ToLinks();
         }
 
@@ -87,7 +92,7 @@ public partial class Lane
     public List<string> GetAllowed(string laneId)
         {
         var result = _helper.ExecuteGetCommand(LANE_VARIABLE, TraciConstants.LANE_ALLOWED, laneId);
-        return ((TraciStringList)result.Data).Value;
+        return (TraciStringList)result.Data;
         }
 
     /// <summary>
@@ -100,15 +105,19 @@ public partial class Lane
     /// </remarks>
     public List<string> GetDisallowed(string laneId)
         {
-        var result = _helper.ExecuteGetCommand(LANE_VARIABLE, TraciConstants.LANE_DISALLOWED, laneId);
-        return ((TraciStringList)result.Data).Value;
+        var result = _helper.ExecuteGetCommand(
+            LANE_VARIABLE,
+            TraciConstants.LANE_DISALLOWED,
+            laneId
+        );
+        return (TraciStringList)result.Data;
         }
 
     /// <summary>
     /// Returns the mml-definitions of vehicle classes allowed to change to the left/right neighbor lane
     /// </summary>
     /// <param name="laneId"></param>
-    /// <param name="direction">(left=0, right=1)</param>
+    /// <param name="direction">(left=-1, right=1)</param>
     /// <returns></returns>
     ///<remarks>
     /// see <see href="https://sumo.dlr.de/pydoc/traci._lane.html#LaneDomain-getChangePermissions"/>
@@ -116,8 +125,13 @@ public partial class Lane
     public List<string> GetChangePermissions(string laneId, int direction)
         {
         TraciByte tmp = new((byte)direction);
-        var result = _helper.ExecuteGetCommand(LANE_VARIABLE, TraciConstants.LANE_CHANGES, laneId, tmp);
-        return ((TraciStringList)result.Data).Value;
+        var result = _helper.ExecuteGetCommand(
+            LANE_VARIABLE,
+            TraciConstants.LANE_CHANGES,
+            laneId,
+            tmp
+        );
+        return (TraciStringList)result.Data;
         }
 
     /// <summary>
@@ -131,7 +145,7 @@ public partial class Lane
     public double GetLength(string laneId)
         {
         var result = _helper.ExecuteGetCommand(LANE_VARIABLE, TraciConstants.VAR_LENGTH, laneId);
-        return ((TraciDouble)result.Data).Value;
+        return (TraciDouble)result.Data;
         }
 
     /// <summary>
@@ -145,7 +159,7 @@ public partial class Lane
     public double GetMaxSpeed(string laneId)
         {
         var result = _helper.ExecuteGetCommand(LANE_VARIABLE, TraciConstants.VAR_MAXSPEED, laneId);
-        return ((TraciDouble)result.Data).Value;
+        return (TraciDouble)result.Data;
         }
 
     /// <summary>
@@ -174,7 +188,7 @@ public partial class Lane
     public double GetWidth(string laneId)
         {
         var result = _helper.ExecuteGetCommand(LANE_VARIABLE, TraciConstants.VAR_WIDTH, laneId);
-        return ((TraciDouble)result.Data).Value;
+        return (TraciDouble)result.Data;
         }
 
     /// <summary>
@@ -187,8 +201,12 @@ public partial class Lane
     /// </remarks>
     public double GetCO2Emission(string laneId)
         {
-        var result = _helper.ExecuteGetCommand(LANE_VARIABLE, TraciConstants.VAR_CO2EMISSION, laneId);
-        return ((TraciDouble)result.Data).Value;
+        var result = _helper.ExecuteGetCommand(
+            LANE_VARIABLE,
+            TraciConstants.VAR_CO2EMISSION,
+            laneId
+        );
+        return (TraciDouble)result.Data;
         }
 
     /// <summary>
@@ -201,8 +219,12 @@ public partial class Lane
     /// </remarks>
     public double GetCOEmission(string laneId)
         {
-        var result = _helper.ExecuteGetCommand(LANE_VARIABLE, TraciConstants.VAR_COEMISSION, laneId);
-        return ((TraciDouble)result.Data).Value;
+        var result = _helper.ExecuteGetCommand(
+            LANE_VARIABLE,
+            TraciConstants.VAR_COEMISSION,
+            laneId
+        );
+        return (TraciDouble)result.Data;
         }
 
     /// <summary>
@@ -215,8 +237,12 @@ public partial class Lane
     /// </remarks>
     public double GetHCEmission(string laneId)
         {
-        var result = _helper.ExecuteGetCommand(LANE_VARIABLE, TraciConstants.VAR_HCEMISSION, laneId);
-        return ((TraciDouble)result.Data).Value;
+        var result = _helper.ExecuteGetCommand(
+            LANE_VARIABLE,
+            TraciConstants.VAR_HCEMISSION,
+            laneId
+        );
+        return (TraciDouble)result.Data;
         }
 
     /// <summary>
@@ -229,8 +255,12 @@ public partial class Lane
     /// </remarks>
     public double GetPMxEmission(string laneId)
         {
-        var result = _helper.ExecuteGetCommand(LANE_VARIABLE, TraciConstants.VAR_PMXEMISSION, laneId);
-        return ((TraciDouble)result.Data).Value;
+        var result = _helper.ExecuteGetCommand(
+            LANE_VARIABLE,
+            TraciConstants.VAR_PMXEMISSION,
+            laneId
+        );
+        return (TraciDouble)result.Data;
         }
 
     /// <summary>
@@ -243,8 +273,12 @@ public partial class Lane
     /// </remarks>
     public double GetNOxEmission(string laneId)
         {
-        var result = _helper.ExecuteGetCommand(LANE_VARIABLE, TraciConstants.VAR_NOXEMISSION, laneId);
-        return ((TraciDouble)result.Data).Value;
+        var result = _helper.ExecuteGetCommand(
+            LANE_VARIABLE,
+            TraciConstants.VAR_NOXEMISSION,
+            laneId
+        );
+        return (TraciDouble)result.Data;
         }
 
     /// <summary>
@@ -257,8 +291,12 @@ public partial class Lane
     /// </remarks>
     public double GetFuelConsumption(string laneId)
         {
-        var result = _helper.ExecuteGetCommand(LANE_VARIABLE, TraciConstants.VAR_FUELCONSUMPTION, laneId);
-        return ((TraciDouble)result.Data).Value;
+        var result = _helper.ExecuteGetCommand(
+            LANE_VARIABLE,
+            TraciConstants.VAR_FUELCONSUMPTION,
+            laneId
+        );
+        return (TraciDouble)result.Data;
         }
 
     /// <summary>
@@ -271,8 +309,12 @@ public partial class Lane
     /// </remarks>
     public double GetNoiseEmission(string laneId)
         {
-        var result = _helper.ExecuteGetCommand(LANE_VARIABLE, TraciConstants.VAR_NOISEEMISSION, laneId);
-        return ((TraciDouble)result.Data).Value;
+        var result = _helper.ExecuteGetCommand(
+            LANE_VARIABLE,
+            TraciConstants.VAR_NOISEEMISSION,
+            laneId
+        );
+        return (TraciDouble)result.Data;
         }
 
     /// <summary>
@@ -282,8 +324,12 @@ public partial class Lane
     /// <returns></returns>
     public double GetElectricityConsumption(string laneId)
         {
-        var result = _helper.ExecuteGetCommand(LANE_VARIABLE, TraciConstants.VAR_ELECTRICITYCONSUMPTION, laneId);
-        return ((TraciDouble)result.Data).Value;
+        var result = _helper.ExecuteGetCommand(
+            LANE_VARIABLE,
+            TraciConstants.VAR_ELECTRICITYCONSUMPTION,
+            laneId
+        );
+        return (TraciDouble)result.Data;
         }
 
     /// <summary>
@@ -296,8 +342,12 @@ public partial class Lane
     /// </remarks>
     public int GetLastStepVehicleNumber(string laneId)
         {
-        var result = _helper.ExecuteGetCommand(LANE_VARIABLE, TraciConstants.LAST_STEP_VEHICLE_NUMBER, laneId);
-        return ((TraciInteger)result.Data).Value;
+        var result = _helper.ExecuteGetCommand(
+            LANE_VARIABLE,
+            TraciConstants.LAST_STEP_VEHICLE_NUMBER,
+            laneId
+        );
+        return (TraciInteger)result.Data;
         }
 
     /// <summary>
@@ -310,8 +360,12 @@ public partial class Lane
     /// </remarks>
     public double GetLastStepMeanSpeed(string laneId)
         {
-        var result = _helper.ExecuteGetCommand(LANE_VARIABLE, TraciConstants.LAST_STEP_MEAN_SPEED, laneId);
-        return ((TraciDouble)result.Data).Value;
+        var result = _helper.ExecuteGetCommand(
+            LANE_VARIABLE,
+            TraciConstants.LAST_STEP_MEAN_SPEED,
+            laneId
+        );
+        return (TraciDouble)result.Data;
         }
 
     /// <summary>
@@ -324,8 +378,12 @@ public partial class Lane
     /// </remarks>
     public List<string> GetLastStepVehicleIds(string laneId)
         {
-        var result = _helper.ExecuteGetCommand(LANE_VARIABLE, TraciConstants.LAST_STEP_VEHICLE_ID_LIST, laneId);
-        return ((TraciStringList)result.Data).Value;
+        var result = _helper.ExecuteGetCommand(
+            LANE_VARIABLE,
+            TraciConstants.LAST_STEP_VEHICLE_ID_LIST,
+            laneId
+        );
+        return (TraciStringList)result.Data;
         }
 
     /// <summary>
@@ -338,8 +396,12 @@ public partial class Lane
     /// </remarks>
     public double GetLastStepOccupancy(string laneId)
         {
-        var result = _helper.ExecuteGetCommand(LANE_VARIABLE, TraciConstants.LAST_STEP_OCCUPANCY, laneId);
-        return ((TraciDouble)result.Data).Value;
+        var result = _helper.ExecuteGetCommand(
+            LANE_VARIABLE,
+            TraciConstants.LAST_STEP_OCCUPANCY,
+            laneId
+        );
+        return (TraciDouble)result.Data;
         }
 
     /// <summary>
@@ -352,8 +414,12 @@ public partial class Lane
     /// </remarks>
     public double GetLastStepLength(string laneId)
         {
-        var result = _helper.ExecuteGetCommand(LANE_VARIABLE, TraciConstants.LAST_STEP_LENGTH, laneId);
-        return ((TraciDouble)result.Data).Value;
+        var result = _helper.ExecuteGetCommand(
+            LANE_VARIABLE,
+            TraciConstants.LAST_STEP_LENGTH,
+            laneId
+        );
+        return (TraciDouble)result.Data;
         }
 
     /// <summary>
@@ -366,8 +432,12 @@ public partial class Lane
     /// </remarks>
     public double GetWaitingTime(string laneId)
         {
-        var result = _helper.ExecuteGetCommand(LANE_VARIABLE, TraciConstants.VAR_WAITING_TIME, laneId);
-        return ((TraciDouble)result.Data).Value;
+        var result = _helper.ExecuteGetCommand(
+            LANE_VARIABLE,
+            TraciConstants.VAR_WAITING_TIME,
+            laneId
+        );
+        return (TraciDouble)result.Data;
         }
 
     /// <summary>
@@ -380,8 +450,12 @@ public partial class Lane
     /// </remarks>
     public double GetTravelTime(string laneId)
         {
-        var result = _helper.ExecuteGetCommand(LANE_VARIABLE, TraciConstants.VAR_CURRENT_TRAVELTIME, laneId);
-        return ((TraciDouble)result.Data).Value;
+        var result = _helper.ExecuteGetCommand(
+            LANE_VARIABLE,
+            TraciConstants.VAR_CURRENT_TRAVELTIME,
+            laneId
+        );
+        return (TraciDouble)result.Data;
         }
 
     /// <summary>
@@ -395,8 +469,12 @@ public partial class Lane
     /// </remarks>
     public int GetLastStepHaltingNumber(string laneId)
         {
-        var result = _helper.ExecuteGetCommand(LANE_VARIABLE, TraciConstants.LAST_STEP_VEHICLE_HALTING_NUMBER, laneId);
-        return ((TraciInteger)result.Data).Value;
+        var result = _helper.ExecuteGetCommand(
+            LANE_VARIABLE,
+            TraciConstants.LAST_STEP_VEHICLE_HALTING_NUMBER,
+            laneId
+        );
+        return (TraciInteger)result.Data;
         }
 
     /// <summary>
@@ -407,10 +485,10 @@ public partial class Lane
     ///<remarks>
     /// see <see href="https://sumo.dlr.de/pydoc/traci._lane.html#LaneDomain-getAngle"/>
     /// </remarks>
-    public double GetAngle(string laneId)
+    public double GetAngle(string laneId, double relativePosition = TraciConstants.INVALID_DOUBLE_VALUE)
         {
-        var result = _helper.ExecuteGetCommand(LANE_VARIABLE, TraciConstants.VAR_ANGLE, laneId);
-        return ((TraciDouble)result.Data).Value;
+        var result = _helper.ExecuteGetCommand(LANE_VARIABLE, TraciConstants.VAR_ANGLE, laneId, new TraciDouble(relativePosition));
+        return (TraciDouble)result.Data;
         }
 
     /// <summary>
@@ -434,6 +512,6 @@ public partial class Lane
         {
         TraciString tmp = new(toLaneId);
         var result = _helper.ExecuteGetCommand(LANE_VARIABLE, TraciConstants.VAR_FOES, laneId, tmp);
-        return ((TraciStringList)result.Data).Value;
+        return (TraciStringList)result.Data;
         }
     }

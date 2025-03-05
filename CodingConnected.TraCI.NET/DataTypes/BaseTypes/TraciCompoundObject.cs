@@ -38,4 +38,12 @@ public class TraciCompoundObject : TraciArrayType, ITraciType
     public static new byte[] AsBytes(List<ValueType> value) =>
         throw new NotImplementedException($"{nameof(TraciCompoundObject)} cannot {nameof(AsBytes)} directly cause the class inner it is uncertain");
 
+    public TraciCompoundObject()
+        {
+
+        }
+
+    public TraciCompoundObject(IEnumerable<ITraciType> innerObjects) : base(innerObjects)
+        {
+        }
     }

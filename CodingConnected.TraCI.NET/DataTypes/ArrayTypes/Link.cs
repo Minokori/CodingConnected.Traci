@@ -27,4 +27,9 @@ public sealed class Link : TraciArrayType
     public string Direction => (TraciString)this[6];
 
     public double Length => (TraciDouble)this[7];
+
+
+    public Link(IEnumerable<ITraciType> innerObjects) : base(innerObjects)
+        {
+        }
     }

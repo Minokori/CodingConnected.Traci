@@ -1,4 +1,5 @@
 using CodingConnected.TraCI.NET.Constants;
+using TracCI.NET.UsageExample.Test;
 
 #region static variables
 
@@ -43,6 +44,7 @@ Console.WriteLine($"Connected to SUMO version: {api}, Version String:{ver}");
 //client.TestGui(); // all passed
 //client.TestEdge(); // all passed
 //client.TestJunction(); // all passed
+client.TestLane();
 #endregion
 
 

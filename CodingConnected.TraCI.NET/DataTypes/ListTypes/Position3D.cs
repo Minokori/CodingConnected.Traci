@@ -27,8 +27,12 @@ public sealed class Position3D : TraciListType<TraciDouble, double>, ITraciType
 
     public Position3D(double x, double y, double z)
         {
-        this[0] = new(x);
-        this[1] = new(y);
-        this[2] = new(z);
+        Clear();
+        Add(new(x));
+        Add(new(y));
+        Add(new(z));
         }
+    public static implicit operator (double x, double y)(Position3D position3D) => (position3D.X, position3D.Y);
+    public static implicit operator (double x, double y, double z)(Position3D position3D) => (position3D.X, position3D.Y, position3D.Z);
+
     }

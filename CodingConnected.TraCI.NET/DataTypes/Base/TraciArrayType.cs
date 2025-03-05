@@ -28,4 +28,14 @@ public abstract class TraciArrayType : List<ITraciType>
 
     public static implicit operator List<object>(TraciArrayType traciData) =>
         throw new NotImplementedException($"{nameof(TraciArrayType)} cannot convert to List<object> directly cause the class inner it is uncertain");
+
+
+
+    protected TraciArrayType(IEnumerable<ITraciType>? innerObjects = null)
+        {
+        Clear();
+        if (innerObjects != null)
+            AddRange(innerObjects);
+        }
+
     }

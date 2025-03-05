@@ -33,4 +33,5 @@ public sealed class Position2D : TraciListType<TraciDouble, double>, ITraciType
         }
 
     public static implicit operator (double x, double y)(Position2D position2D) => (position2D.X, position2D.Y);
+    public static implicit operator (double x, double y, double z)(Position2D position2D) => (position2D.X, position2D.Y, TraciConstants.INVALID_DOUBLE_VALUE);
     }
