@@ -1,13 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using CodingConnected.TraCI.NET;
 using CodingConnected.TraCI.NET.Constants;
-using TracCI.NET.UsageExample.Test;
 
 #region static variables
 
-var sumoFile = args.Length > 0 ? args[0] : Path.Combine(".", "sumo-scenarios", "usage-example", "run.sumocfg");
+var sumoFile =
+    args.Length > 0 ? args[0] : Path.Combine(".", "sumo-scenarios", "usage-example", "run.sumocfg");
 
 /* The Variables used for VariableType and Context Subscription for this example */
 List<byte> variablesToSubscribeTo =
@@ -42,91 +38,114 @@ Console.WriteLine($"SUMO file path:{sumoFile}");
 using TraciClient client = new(sumoFile, 4321);
 (var api, var ver) = await client.Start();
 Console.WriteLine($"Connected to SUMO version: {api}, Version String:{ver}");
-Console.WriteLine(instructions);
-client.TestGui();
 
-client.TestEdge();
-/*main loop */
-do
-    {
-    Console.Write("\n>");
-    var curTime = client.Simulation.GetTime();
-    var keyPressed = Console.ReadKey(false).Key;
-    switch (keyPressed)
-        {
-        case ConsoleKey.Enter:
-                {
-                Console.WriteLine("************************************************************");
-                Console.WriteLine($"Current Simulation time: {curTime} ms");
-                client.Control.SimStep();
-                break;
-                }
-        case ConsoleKey.Escape:
-                {
-                isEscapePressed = true;
-                break;
-                }
-        case ConsoleKey.V:
-                {
-                Console.Write(" enter vehicle id for subscription: >");
-                var id = Console.ReadLine();
-                Console.WriteLine("Attempted to subscribe to vehicle with id \"" + id + "\" (see SUMO output to know if it failed)");
-                client.Vehicle.Subscribe(id, 0, 1000, variablesToSubscribeTo);
-                break;
-                }
-        case ConsoleKey.C:
-                {
-                Console.Write(" enter vehicle id for subscription: >");
-                var id = Console.ReadLine();
-                client.Vehicle.SubscribeContext(id, 0, 1000, CommandIdentifier.Get.VEHICLE_VARIABLE, 1000f, variablesToSubscribeTo);
-                Console.WriteLine(
-                    "Attempted to subscribe to vehicle with id \""
-                        + id
-                        + "\" (see SUMO output to know  if it failed) \n"
-                        + "!Warning: Context subscription ends the simulation if it fails!"
-                );
-                break;
-                }
-        case ConsoleKey.P:
-                {
-                Console.WriteLine();
-                PrintActiveVehicles();
-                PrintDepartedVehicles();
-                PrintLoadedVehicles();
-                PrintArrivedVehicles();
-                break;
-                }
-        case ConsoleKey.T:
-                {
-                Console.WriteLine();
-                Console.WriteLine("Current Simulation time: " + curTime + " ms");
-                break;
-                }
-        case ConsoleKey.H:
-                {
-                Console.WriteLine(instructions);
-                break;
-                }
-        case ConsoleKey.U:
-                {
-                Console.Write(" enter vehicle id to unsubscribe context");
-                var id = Console.ReadLine();
-                client.Vehicle.UnsubscribeContext(id, CommandIdentifier.Get.VEHICLE_VARIABLE);
-                Console.WriteLine("Attempted to unsubscribe context to vehicle with id \"" + id + "\" (see SUMO output to know if it failed)");
-                break;
-                }
-        default:
-                {
-                Console.Write("\n        No such command. \n");
-                Console.WriteLine(instructions);
-                break;
-                }
-        }
-    } while (!isEscapePressed);
+#region Test
+//client.TestGui(); // all passed
+//client.TestEdge(); // all passed
+//client.TestJunction(); // all passed
+#endregion
 
-client.Control.Close();
+
+
+#region main loop
+//Console.WriteLine(instructions);
+//do
+//    {
+//    Console.Write("\n>");
+//    var curTime = client.Simulation.GetTime();
+//    var keyPressed = Console.ReadKey(false).Key;
+//    switch (keyPressed)
+//        {
+//        case ConsoleKey.Enter:
+//                {
+//                Console.WriteLine("************************************************************");
+//                Console.WriteLine($"Current Simulation time: {curTime} ms");
+//                client.Control.SimStep();
+//                break;
+//                }
+//        case ConsoleKey.Escape:
+//                {
+//                isEscapePressed = true;
+//                break;
+//                }
+//        case ConsoleKey.V:
+//                {
+//                Console.Write(" enter vehicle id for subscription: >");
+//                var id = Console.ReadLine();
+//                Console.WriteLine(
+//                    "Attempted to subscribe to vehicle with id \""
+//                        + id
+//                        + "\" (see SUMO output to know if it failed)"
+//                );
+//                client.Vehicle.Subscribe(id, 0, 1000, variablesToSubscribeTo);
+//                break;
+//                }
+//        case ConsoleKey.C:
+//                {
+//                Console.Write(" enter vehicle id for subscription: >");
+//                var id = Console.ReadLine();
+//                client.Vehicle.SubscribeContext(
+//                    id,
+//                    0,
+//                    1000,
+//                    CommandIdentifier.Get.VEHICLE_VARIABLE,
+//                    1000f,
+//                    variablesToSubscribeTo
+//                );
+//                Console.WriteLine(
+//                    "Attempted to subscribe to vehicle with id \""
+//                        + id
+//                        + "\" (see SUMO output to know  if it failed) \n"
+//                        + "!Warning: Context subscription ends the simulation if it fails!"
+//                );
+//                break;
+//                }
+//        case ConsoleKey.P:
+//                {
+//                Console.WriteLine();
+//                PrintActiveVehicles();
+//                PrintDepartedVehicles();
+//                PrintLoadedVehicles();
+//                PrintArrivedVehicles();
+//                break;
+//                }
+//        case ConsoleKey.T:
+//                {
+//                Console.WriteLine();
+//                Console.WriteLine("Current Simulation time: " + curTime + " ms");
+//                break;
+//                }
+//        case ConsoleKey.H:
+//                {
+//                Console.WriteLine(instructions);
+//                break;
+//                }
+//        case ConsoleKey.U:
+//                {
+//                Console.Write(" enter vehicle id to unsubscribe context");
+//                var id = Console.ReadLine();
+//                client.Vehicle.UnsubscribeContext(id, CommandIdentifier.Get.VEHICLE_VARIABLE);
+//                Console.WriteLine(
+//                    "Attempted to unsubscribe context to vehicle with id \""
+//                        + id
+//                        + "\" (see SUMO output to know if it failed)"
+//                );
+//                break;
+//                }
+//        default:
+//                {
+//                Console.Write("\n        No such command. \n");
+//                Console.WriteLine(instructions);
+//                break;
+//                }
+//        }
+//    } while (!isEscapePressed);
+#endregion
+
+
 Console.WriteLine("Simulation ended. Press any key to quit");
 Console.ReadKey();
+client.Control.Close();
 
 #region Printing vehicle ids methods
 

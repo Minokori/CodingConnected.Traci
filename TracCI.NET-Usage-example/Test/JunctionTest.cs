@@ -1,11 +1,11 @@
 namespace TracCI.NET.UsageExample.Test;
-public static partial class GuiTest
+public static partial class JunctionTest
     {
-    public static void TestGui(this TraciClient client)
+    public static void TestJunction(this TraciClient client)
         {
         Console.WriteLine();
-        Console.WriteLine("Gui Test");
-        var boolMethods = typeof(GuiTest).GetMethods(BindingFlags.NonPublic | BindingFlags.Static);
+        Console.WriteLine("Junction Test");
+        var boolMethods = typeof(JunctionTest).GetMethods(BindingFlags.NonPublic | BindingFlags.Static);
         foreach (var method in boolMethods)
             {
             Console.Write($"Method: {method.Name}");

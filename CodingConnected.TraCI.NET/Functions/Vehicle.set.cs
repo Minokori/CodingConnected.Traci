@@ -400,7 +400,7 @@ public partial class Vehicle
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/pydoc/traci._vehicle.html#VehicleDomain-setSignals"/>
     /// </remarks>
-    public bool SetSignals(string vehicleId, VehicleSignalling signals)
+    public bool SetSignals(string vehicleId, VehicleSignaling signals)
         {
         TraciInteger tmp = new((int)signals);
         return _helper.ExecuteSetCommand(VEHICLE_VARIABLE, TraciConstants.VAR_ROUTE, vehicleId, tmp);

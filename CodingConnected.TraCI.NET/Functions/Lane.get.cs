@@ -156,11 +156,11 @@ public partial class Lane
     ///<remarks>
     /// see <see href="https://sumo.dlr.de/pydoc/traci._lane.html#LaneDomain-getShape"/>
     /// </remarks>
-    public List<Tuple<double, double>> GetShape(string laneId)
+    public List<(double x, double y)> GetShape(string laneId)
         {
         var result = _helper.ExecuteGetCommand(LANE_VARIABLE, TraciConstants.VAR_SHAPE, laneId);
         var polygon = (DataTypes.Polygon)result.Data;
-        return polygon.Select(i => new Tuple<double, double>(i.X, i.Y)).ToList();
+        return [.. polygon];
         }
 
     /// <summary>

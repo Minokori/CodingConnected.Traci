@@ -10,12 +10,14 @@ public partial class Junction
     /// </summary>
     /// <returns></returns>
     /// <remarks>
+    /// This method will return junctions ids and inner sumo object ids, which begin with ":".<para/>
+    /// if you want to get only junction ids, remember to filter the result.<para/>
     /// see <see href=""/>
     /// </remarks>
     public List<string> GetIdList()
         {
-        var result = _helper.ExecuteGetCommand(JUNCTION_VARIABLE, TraciConstants.ID_LIST, "ignored");
-        return ((TraciStringList)result.Data).Value;
+        var result = _helper.ExecuteGetCommand(JUNCTION_VARIABLE, TraciConstants.ID_LIST, "");
+        return (TraciStringList)result.Data;
         }
 
     /// <summary>
@@ -28,8 +30,8 @@ public partial class Junction
     /// </remarks>
     public int GetIdCount()
         {
-        var result = _helper.ExecuteGetCommand(JUNCTION_VARIABLE, TraciConstants.ID_COUNT, "ignored");
-        return ((TraciInteger)result.Data).Value;
+        var result = _helper.ExecuteGetCommand(JUNCTION_VARIABLE, TraciConstants.ID_COUNT, "");
+        return (TraciInteger)result.Data;
         }
 
     /// <summary>
@@ -41,7 +43,7 @@ public partial class Junction
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/pydoc/traci._junction.html#JunctionDomain-getPosition"/>
     /// </remarks>
-    public Tuple<double, double, double> GetPosition(string junctionId, bool includeZ = false)
+    public (double x, double y, double z) GetPosition(string junctionId, bool includeZ = false)
         {
         var result = _helper.ExecuteGetCommand(
             JUNCTION_VARIABLE,
@@ -72,12 +74,11 @@ public partial class Junction
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/pydoc/traci._junction.html#JunctionDomain-getShape"/>
     /// </remarks>
-    public List<Tuple<double, double>> GetShape(string junctionId)
+    public List<(double x, double y)> GetShape(string junctionId)
         {
         var result = _helper.ExecuteGetCommand(JUNCTION_VARIABLE, TraciConstants.VAR_SHAPE, junctionId);
         var polygon = (DataTypes.Polygon)result.Data;
-
-        return [.. polygon.Select(i => new Tuple<double, double>(i.X, i.Y))];
+        return [.. polygon];
         }
 
     /// <summary>
@@ -91,7 +92,7 @@ public partial class Junction
     public List<string> GetIncomingEdges(string junctionId)
         {
         var result = _helper.ExecuteGetCommand(JUNCTION_VARIABLE, TraciConstants.INCOMING_EDGES, junctionId);
-        return ((TraciStringList)result.Data).Value;
+        return (TraciStringList)result.Data;
         }
 
     /// <summary>
@@ -105,6 +106,6 @@ public partial class Junction
     public List<string> GetOutgoingEdges(string junctionId)
         {
         var result = _helper.ExecuteGetCommand(JUNCTION_VARIABLE, TraciConstants.OUTGOING_EDGES, junctionId);
-        return ((TraciStringList)result.Data).Value;
+        return (TraciStringList)result.Data;
         }
     }

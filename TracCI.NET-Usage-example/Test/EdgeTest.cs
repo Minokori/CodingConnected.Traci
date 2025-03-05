@@ -1,7 +1,3 @@
-using System;
-using System.Reflection;
-using CodingConnected.TraCI.NET;
-
 namespace TracCI.NET.UsageExample.Test;
 public static partial class EdgeTest
     {
@@ -9,6 +5,7 @@ public static partial class EdgeTest
     public static void TestEdge(this TraciClient client)
         {
         Console.WriteLine();
+        Console.WriteLine("Edge Test");
         var boolMethods = typeof(EdgeTest).GetMethods(BindingFlags.NonPublic | BindingFlags.Static);
         foreach (var method in boolMethods)
             {

@@ -1,6 +1,6 @@
 namespace CodingConnected.TraCI.NET.Constants;
 
-public enum RoutingMode
+public enum RoutingMode : int
     {
     /// <summary>
     /// use custom weights if available, fall back to loaded weights and then to free-flow speed

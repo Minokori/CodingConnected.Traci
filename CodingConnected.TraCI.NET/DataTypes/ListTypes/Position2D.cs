@@ -31,4 +31,6 @@ public sealed class Position2D : TraciListType<TraciDouble, double>, ITraciType
         Add(new(x));
         Add(new(y));
         }
+
+    public static implicit operator (double x, double y)(Position2D position2D) => (position2D.X, position2D.Y);
     }

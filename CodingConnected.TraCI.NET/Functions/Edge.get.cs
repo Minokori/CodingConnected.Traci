@@ -1,6 +1,7 @@
 using CodingConnected.TraCI.NET.Constants;
 using CodingConnected.TraCI.NET.DataTypes;
 using static CodingConnected.TraCI.NET.Constants.CommandIdentifier.Get;
+
 namespace CodingConnected.TraCI.NET.Functions;
 
 public partial class Edge
@@ -42,7 +43,11 @@ public partial class Edge
     /// </remarks>
     public int GetLaneNumber(string edgeId)
         {
-        var result = _helper.ExecuteGetCommand(EDGE_VARIABLE, TraciConstants.VAR_LANE_INDEX, edgeId);
+        var result = _helper.ExecuteGetCommand(
+            EDGE_VARIABLE,
+            TraciConstants.VAR_LANE_INDEX,
+            edgeId
+        );
         return (TraciInteger)result.Data;
         }
 
@@ -56,7 +61,11 @@ public partial class Edge
     /// </remarks>
     public string GetStreetName(string edgeId)
         {
-        var result = _helper.ExecuteGetCommand(EDGE_VARIABLE, TraciConstants.VAR_STREET_NAME, edgeId);
+        var result = _helper.ExecuteGetCommand(
+            EDGE_VARIABLE,
+            TraciConstants.VAR_STREET_NAME,
+            edgeId
+        );
         return (TraciString)result.Data;
         }
 
@@ -70,7 +79,11 @@ public partial class Edge
     /// </remarks>
     public double GetTravelTime(string edgeId)
         {
-        var result = _helper.ExecuteGetCommand(EDGE_VARIABLE, TraciConstants.VAR_CURRENT_TRAVELTIME, edgeId);
+        var result = _helper.ExecuteGetCommand(
+            EDGE_VARIABLE,
+            TraciConstants.VAR_CURRENT_TRAVELTIME,
+            edgeId
+        );
         return (TraciDouble)result.Data;
         }
 
@@ -84,7 +97,11 @@ public partial class Edge
     /// </remarks>
     public double GetCO2Emission(string edgeId)
         {
-        var result = _helper.ExecuteGetCommand(EDGE_VARIABLE, TraciConstants.VAR_CO2EMISSION, edgeId);
+        var result = _helper.ExecuteGetCommand(
+            EDGE_VARIABLE,
+            TraciConstants.VAR_CO2EMISSION,
+            edgeId
+        );
         return (TraciDouble)result.Data;
         }
 
@@ -98,8 +115,12 @@ public partial class Edge
     /// </remarks>
     public double GetCOEmission(string edgeId)
         {
-        var result = _helper.ExecuteGetCommand(EDGE_VARIABLE, TraciConstants.VAR_COEMISSION, edgeId);
-        return ((TraciDouble)result.Data).Value;
+        var result = _helper.ExecuteGetCommand(
+            EDGE_VARIABLE,
+            TraciConstants.VAR_COEMISSION,
+            edgeId
+        );
+        return (TraciDouble)result.Data;
         }
 
     /// <summary>
@@ -112,8 +133,12 @@ public partial class Edge
     /// </remarks>
     public double GetHCEmission(string edgeId)
         {
-        var result = _helper.ExecuteGetCommand(EDGE_VARIABLE, TraciConstants.VAR_HCEMISSION, edgeId);
-        return ((TraciDouble)result.Data).Value;
+        var result = _helper.ExecuteGetCommand(
+            EDGE_VARIABLE,
+            TraciConstants.VAR_HCEMISSION,
+            edgeId
+        );
+        return (TraciDouble)result.Data;
         }
 
     /// <summary>
@@ -126,8 +151,12 @@ public partial class Edge
     /// </remarks>
     public double GetPMxEmission(string edgeId)
         {
-        var result = _helper.ExecuteGetCommand(EDGE_VARIABLE, TraciConstants.VAR_PMXEMISSION, edgeId);
-        return ((TraciDouble)result.Data).Value;
+        var result = _helper.ExecuteGetCommand(
+            EDGE_VARIABLE,
+            TraciConstants.VAR_PMXEMISSION,
+            edgeId
+        );
+        return (TraciDouble)result.Data;
         }
 
     /// <summary>
@@ -140,8 +169,12 @@ public partial class Edge
     /// </remarks>
     public double GetNOxEmission(string edgeId)
         {
-        var result = _helper.ExecuteGetCommand(EDGE_VARIABLE, TraciConstants.VAR_NOXEMISSION, edgeId);
-        return ((TraciDouble)result.Data).Value;
+        var result = _helper.ExecuteGetCommand(
+            EDGE_VARIABLE,
+            TraciConstants.VAR_NOXEMISSION,
+            edgeId
+        );
+        return (TraciDouble)result.Data;
         }
 
     /// <summary>
@@ -154,8 +187,12 @@ public partial class Edge
     /// </remarks>
     public double GetFuelConsumption(string edgeId)
         {
-        var result = _helper.ExecuteGetCommand(EDGE_VARIABLE, TraciConstants.VAR_FUELCONSUMPTION, edgeId);
-        return ((TraciDouble)result.Data).Value;
+        var result = _helper.ExecuteGetCommand(
+            EDGE_VARIABLE,
+            TraciConstants.VAR_FUELCONSUMPTION,
+            edgeId
+        );
+        return (TraciDouble)result.Data;
         }
 
     /// <summary>
@@ -168,8 +205,12 @@ public partial class Edge
     /// </remarks>
     public double GetNoiseEmission(string edgeId)
         {
-        var result = _helper.ExecuteGetCommand(EDGE_VARIABLE, TraciConstants.VAR_NOISEEMISSION, edgeId);
-        return ((TraciDouble)result.Data).Value;
+        var result = _helper.ExecuteGetCommand(
+            EDGE_VARIABLE,
+            TraciConstants.VAR_NOISEEMISSION,
+            edgeId
+        );
+        return (TraciDouble)result.Data;
         }
 
     /// <summary>
@@ -182,8 +223,12 @@ public partial class Edge
     /// </remarks>
     public double GetElectricityConsumption(string edgeId)
         {
-        var result = _helper.ExecuteGetCommand(EDGE_VARIABLE, TraciConstants.VAR_ELECTRICITYCONSUMPTION, edgeId);
-        return ((TraciDouble)result.Data).Value;
+        var result = _helper.ExecuteGetCommand(
+            EDGE_VARIABLE,
+            TraciConstants.VAR_ELECTRICITYCONSUMPTION,
+            edgeId
+        );
+        return (TraciDouble)result.Data;
         }
 
     /// <summary>
@@ -196,8 +241,12 @@ public partial class Edge
     /// </remarks>
     public int GetLastStepVehicleNumber(string edgeId)
         {
-        var result = _helper.ExecuteGetCommand(EDGE_VARIABLE, (byte)StopFlag.CONTAINER_STOP, edgeId);
-        return ((TraciInteger)result.Data).Value;
+        var result = _helper.ExecuteGetCommand(
+            EDGE_VARIABLE,
+            (byte)StopFlag.CONTAINER_STOP,
+            edgeId
+        );
+        return (TraciInteger)result.Data;
         }
 
     /// <summary>
@@ -211,7 +260,7 @@ public partial class Edge
     public double GetLastStepMeanSpeed(string edgeId)
         {
         var result = _helper.ExecuteGetCommand(EDGE_VARIABLE, DataType.COLOR.ToByte(), edgeId);
-        return ((TraciDouble)result.Data).Value;
+        return (TraciDouble)result.Data;
         }
 
     /// <summary>
@@ -225,8 +274,12 @@ public partial class Edge
     /// </remarks>
     public List<string> GetLastStepVehicleIDs(string edgeId)
         {
-        var result = _helper.ExecuteGetCommand(EDGE_VARIABLE, TraciConstants.LAST_STEP_VEHICLE_ID_LIST, edgeId);
-        return ((TraciStringList)result.Data).Value;
+        var result = _helper.ExecuteGetCommand(
+            EDGE_VARIABLE,
+            TraciConstants.LAST_STEP_VEHICLE_ID_LIST,
+            edgeId
+        );
+        return (TraciStringList)result.Data;
         }
 
     /// <summary>
@@ -239,8 +292,12 @@ public partial class Edge
     /// </remarks>
     public double GetLastStepOccupancy(string edgeId)
         {
-        var result = _helper.ExecuteGetCommand(EDGE_VARIABLE, TraciConstants.LAST_STEP_OCCUPANCY, edgeId);
-        return ((TraciDouble)result.Data).Value;
+        var result = _helper.ExecuteGetCommand(
+            EDGE_VARIABLE,
+            TraciConstants.LAST_STEP_OCCUPANCY,
+            edgeId
+        );
+        return (TraciDouble)result.Data;
         }
 
     /// <summary>
@@ -253,8 +310,12 @@ public partial class Edge
     /// </remarks>
     public double GetLastStepLength(string edgeId)
         {
-        var result = _helper.ExecuteGetCommand(EDGE_VARIABLE, TraciConstants.LAST_STEP_LENGTH, edgeId);
-        return ((TraciDouble)result.Data).Value;
+        var result = _helper.ExecuteGetCommand(
+            EDGE_VARIABLE,
+            TraciConstants.LAST_STEP_LENGTH,
+            edgeId
+        );
+        return (TraciDouble)result.Data;
         }
 
     /// <summary>
@@ -267,8 +328,12 @@ public partial class Edge
     /// </remarks>
     public double GetWaitingTime(string edgeId)
         {
-        var result = _helper.ExecuteGetCommand(EDGE_VARIABLE, TraciConstants.VAR_WAITING_TIME, edgeId);
-        return ((TraciDouble)result.Data).Value;
+        var result = _helper.ExecuteGetCommand(
+            EDGE_VARIABLE,
+            TraciConstants.VAR_WAITING_TIME,
+            edgeId
+        );
+        return (TraciDouble)result.Data;
         }
 
     /// <summary>
@@ -281,8 +346,12 @@ public partial class Edge
     /// </remarks>
     public List<string> GetLastStepPersonIds(string edgeId)
         {
-        var result = _helper.ExecuteGetCommand(EDGE_VARIABLE, TraciConstants.LAST_STEP_PERSON_ID_LIST, edgeId);
-        return ((TraciStringList)result.Data).Value;
+        var result = _helper.ExecuteGetCommand(
+            EDGE_VARIABLE,
+            TraciConstants.LAST_STEP_PERSON_ID_LIST,
+            edgeId
+        );
+        return (TraciStringList)result.Data;
         }
 
     /// <summary>
@@ -295,8 +364,12 @@ public partial class Edge
     /// </remarks>
     public int GetLastStepHaltingNumber(string edgeId)
         {
-        var result = _helper.ExecuteGetCommand(EDGE_VARIABLE, TraciConstants.LAST_STEP_VEHICLE_HALTING_NUMBER, edgeId);
-        return ((TraciInteger)result.Data).Value;
+        var result = _helper.ExecuteGetCommand(
+            EDGE_VARIABLE,
+            TraciConstants.LAST_STEP_VEHICLE_HALTING_NUMBER,
+            edgeId
+        );
+        return (TraciInteger)result.Data;
         }
 
     /// <summary>
@@ -307,10 +380,18 @@ public partial class Edge
     /// <remarks>
     /// see <see href=""/>
     /// </remarks>
-    public double GetAngle(string edgeId, double relativePosition = TraciConstants.INVALID_DOUBLE_VALUE)
+    public double GetAngle(
+        string edgeId,
+        double relativePosition = TraciConstants.INVALID_DOUBLE_VALUE
+    )
         {
-        var result = _helper.ExecuteGetCommand(EDGE_VARIABLE, TraciConstants.VAR_ANGLE, edgeId, new TraciDouble(relativePosition));
-        return ((TraciDouble)result.Data).Value;
+        var result = _helper.ExecuteGetCommand(
+            EDGE_VARIABLE,
+            TraciConstants.VAR_ANGLE,
+            edgeId,
+            new TraciDouble(relativePosition)
+        );
+        return (TraciDouble)result.Data;
         }
 
     /// <summary>
@@ -324,9 +405,8 @@ public partial class Edge
     public string GetFromJunction(string edgeId)
         {
         var result = _helper.ExecuteGetCommand(EDGE_VARIABLE, TraciConstants.FROM_JUNCTION, edgeId);
-        return ((TraciString)result.Data).Value;
+        return (TraciString)result.Data;
         }
-
 
     /// <summary>
     /// Returns the edgeId of the junction at the end of this edge.
@@ -339,7 +419,7 @@ public partial class Edge
     public string GetToJunction(string edgeId)
         {
         var result = _helper.ExecuteGetCommand(EDGE_VARIABLE, TraciConstants.TO_JUNCTION, edgeId);
-        return ((TraciString)result.Data).Value;
+        return (TraciString)result.Data;
         }
 
     /// <summary>
@@ -355,8 +435,13 @@ public partial class Edge
     public double GetAdaptedTravelTime(string edgeId, double time)
         {
         var tmp = new TraciDouble(time);
-        var result = _helper.ExecuteGetCommand(EDGE_VARIABLE, TraciConstants.VAR_EDGE_TRAVELTIME, edgeId, tmp);
-        return ((TraciDouble)result.Data).Value;
+        var result = _helper.ExecuteGetCommand(
+            EDGE_VARIABLE,
+            TraciConstants.VAR_EDGE_TRAVELTIME,
+            edgeId,
+            tmp
+        );
+        return (TraciDouble)result.Data;
         }
 
     /// <summary>
@@ -372,7 +457,12 @@ public partial class Edge
     public double GetEffort(string edgeId, double time)
         {
         var tmp = new TraciDouble(time);
-        var result = _helper.ExecuteGetCommand(EDGE_VARIABLE, TraciConstants.VAR_EDGE_EFFORT, edgeId, tmp);
-        return ((TraciDouble)result.Data).Value;
+        var result = _helper.ExecuteGetCommand(
+            EDGE_VARIABLE,
+            TraciConstants.VAR_EDGE_EFFORT,
+            edgeId,
+            tmp
+        );
+        return (TraciDouble)result.Data;
         }
     }

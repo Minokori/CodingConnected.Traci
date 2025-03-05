@@ -1,6 +1,6 @@
 using CodingConnected.TraCI.NET.Constants;
 using CodingConnected.TraCI.NET.DataTypes;
-using static CodingConnected.TraCI.NET.Constants.CommandIdentifier.Get;
+using static CodingConnected.TraCI.NET.Constants.CommandIdentifier;
 namespace CodingConnected.TraCI.NET.Functions;
 
 public partial class Edge
@@ -18,7 +18,7 @@ public partial class Edge
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/pydoc/traci._edge.html#EdgeDomain-adaptTraveltime"/>
     /// </remarks>
-    public bool AdaptTraveltime(string edgeId, double travelTime, double? beginTime = null, double? endTime = null)
+    public bool AdaptTravelTime(string edgeId, double travelTime, double? beginTime = null, double? endTime = null)
         {
         TraciCompoundObject tmp = (beginTime, endTime) switch
             {
@@ -26,7 +26,7 @@ public partial class Edge
                 (null, _) or (_, null) => throw new ArgumentException($"Both {nameof(beginTime)} and {nameof(endTime)} must be specified"),
                 _ => [new TraciDouble(beginTime.Value), new TraciDouble(endTime.Value), new TraciDouble(travelTime)],
                 };
-        return _helper.ExecuteSetCommand(EDGE_VARIABLE, TraciConstants.VAR_EDGE_TRAVELTIME, edgeId, tmp);
+        return _helper.ExecuteSetCommand(Set.EDGE_VARIABLE, TraciConstants.VAR_EDGE_TRAVELTIME, edgeId, tmp);
         }
 
     /// <summary>
@@ -50,7 +50,7 @@ public partial class Edge
                 _ => [new TraciDouble(beginTime.Value), new TraciDouble(endTime.Value), new TraciDouble(effort)],
                 };
 
-        return _helper.ExecuteSetCommand(EDGE_VARIABLE, TraciConstants.VAR_EDGE_EFFORT, edgeId, tmp);
+        return _helper.ExecuteSetCommand(Set.EDGE_VARIABLE, TraciConstants.VAR_EDGE_EFFORT, edgeId, tmp);
         }
 
     /// <summary>
@@ -65,6 +65,6 @@ public partial class Edge
     public bool SetMaxSpeed(string edgeId, double speed)
         {
         TraciDouble tmp = new(speed);
-        return _helper.ExecuteSetCommand(EDGE_VARIABLE, TraciConstants.VAR_MAXSPEED, edgeId, tmp);
+        return _helper.ExecuteSetCommand(Set.EDGE_VARIABLE, TraciConstants.VAR_MAXSPEED, edgeId, tmp);
         }
     }

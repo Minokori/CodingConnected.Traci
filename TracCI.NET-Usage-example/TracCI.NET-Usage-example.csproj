@@ -5,6 +5,7 @@
         <RootNamespace>TracCI.NET.UsageExample</RootNamespace>
         <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
         <LangVersion>latest</LangVersion>
+        <ImplicitUsings>enable</ImplicitUsings>
     </PropertyGroup>
     <ItemGroup>
         <ProjectReference Include="..\CodingConnected.Traci.NET\CodingConnected.TraCI.NET.csproj" />
@@ -16,5 +17,9 @@
         <None Include="sumo-scenarios\**">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
+    </ItemGroup>
+    <ItemGroup>
+      <Using Include="CodingConnected.TraCI.NET" />
+      <Using Include="System.Reflection" />
     </ItemGroup>
 </Project>
