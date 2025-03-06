@@ -69,14 +69,14 @@ public partial class TrafficLight
     /// Returns the list of lanes which are controlled by the named traffic light.<para/
     /// Returns at least one entry for every element of the phase state (signal index)
     /// </summary>
-    /// <param name="tlsID"></param>
+    /// <param name="tlsId"></param>
     /// <returns></returns>
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/pydoc/traci._trafficlight.html#TrafficLightDomain-getControlledLanes"/>
     /// </remarks>
-    public List<string> GetControlledLanes(string tlsID)
+    public List<string> GetControlledLanes(string tlsId)
         {
-        var result = _helper.ExecuteGetCommand(TL_VARIABLE, TraciConstants.TL_CONTROLLED_LANES, tlsID);
+        var result = _helper.ExecuteGetCommand(TL_VARIABLE, TraciConstants.TL_CONTROLLED_LANES, tlsId);
         return ((TraciStringList)result.Data).Value;
         }
 
@@ -126,7 +126,7 @@ public partial class TrafficLight
 
     /// <summary>
     /// Returns a list of Logic objects.<para/>
-    /// Each Logic encodes a traffic light program for the given tlsID.
+    /// Each Logic encodes a traffic light program for the given tlsId.
     /// </summary>
     /// <param name="tlsId"></param>
     /// <returns></returns>
@@ -135,7 +135,7 @@ public partial class TrafficLight
     /// </remarks>
     public List<TrafficLightLogic> GetCompleteRedYellowGreenDefinition(string tlsId)
         {
-        var result = (TraciCompoundObject)_helper.ExecuteGetCommand(TL_VARIABLE, TraciConstants.TL_COMPLETE_DEFINITION_RYG, tlsId);
+        var result = (TraciCompoundObject)_helper.ExecuteGetCommand(TL_VARIABLE, TraciConstants.TL_COMPLETE_DEFINITION_RYG, tlsId).Data;
         return result.ToTrafficLightLogics();
         }
 

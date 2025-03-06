@@ -27,27 +27,27 @@ internal static class TraciTypeExtensions
     internal static List<TrafficLightLogic> ToTrafficLightLogics(this TraciCompoundObject content)
         {
         List<TrafficLightLogic> result = [];
-        var numberOfLogics = ((TraciInteger)content[0]).Value;
-        content = (TraciCompoundObject)content.Skip(1);
-        while (content.Count > 0)
+
+        foreach (var trafficLightLogic in content.Cast<TraciCompoundObject>())
             {
-            var totalLengthOfLogic = 5 + (((TraciInteger)content.Skip(4).First()).Value * 4);
-            var logic = (TrafficLightLogic)content.Take(totalLengthOfLogic);
-            content = (TraciCompoundObject)content.Skip(totalLengthOfLogic);
-            result.Add(logic);
+            TrafficLightLogic item = new(trafficLightLogic);
+            result.Add(item);
             }
         return result;
+
         }
 
     internal static List<ControlledLinks> ToControlledLinks(this TraciCompoundObject content)
         {
         List<ControlledLinks> result = [];
-        while (content.Count > 0)
+        int numberOfSignals = (TraciInteger)content.First();
+        var remainContent = content.Skip(1);
+        while (remainContent.Count() > 0)
             {
-            var totalLengthOfLinks = 1 + ((TraciInteger)content.First()).Value;
-            var links = (ControlledLinks)content.Take(totalLengthOfLinks);
-            content = (TraciCompoundObject)content.Skip(totalLengthOfLinks);
-            result.Add(links);
+            var linksNumber = (TraciInteger)remainContent.First();
+            ControlledLinks link = new(remainContent.Take(1 + linksNumber));
+            remainContent = remainContent.Skip(1 + linksNumber);
+            result.Add(link);
             }
         return result;
         }

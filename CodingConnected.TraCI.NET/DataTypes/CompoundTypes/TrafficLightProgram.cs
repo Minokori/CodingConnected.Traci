@@ -8,9 +8,9 @@ namespace CodingConnected.TraCI.NET.DataTypes;
 /// so use definitions in below link as standard<para/>
 /// see <see href="https://sumo.dlr.de/docs/Simulation/Traffic_Lights.html#tllogic_attributes"/>
 /// </summary>
-public sealed class TrafficLightLogic : TraciCompoundObject
+public sealed class TrafficLightLogic(IEnumerable<ITraciType> innerObjects) : TraciCompoundObject(innerObjects)
     {
-    protected override bool IsComplete => false;
+    //protected override bool IsComplete => false;
 
     /// <summary>
     /// The id of the traffic light program; This must be a new program name for the traffic light id.
@@ -32,11 +32,21 @@ public sealed class TrafficLightLogic : TraciCompoundObject
     /// <remarks>
     /// <u> <see cref="Type"/> and <see cref="SubParameter"/> aren't currently implemented therefore they are 0.</u>
     /// </remarks>
-    public TraciCompoundObject SubParameter => (TraciCompoundObject)this[2];
-    public int CurrentPhaseIndex => (TraciInteger)this[3];
-    public int NumberOfPhases => (TraciInteger)this[4];
-    public List<TrafficLightProgramPhase> TrafficLightPhases => [.. this.Skip(5) //skip sub-id, type, sub-parameter, current phase index, number of phases
-                .Take(NumberOfPhases * 4) // every phase has 4 elements,totally 4 * number of phases elements
-                .Chunk(4) //every phase has 4 elements
-                .Select(i => (TrafficLightProgramPhase)i.ToList())];
+    public int CurrentPhaseIndex => (TraciInteger)this[2];
+    public List<TrafficLightProgramPhase> TrafficLightPhases
+        {
+        get
+            {
+            List<TrafficLightProgramPhase> phases = [];
+
+            foreach (var phase in (TraciCompoundObject)this[3])
+                {
+                TrafficLightProgramPhase item = new((TraciCompoundObject)phase);
+                phases.Add(item);
+                }
+            return phases;
+            }
+        }
+
+    public TraciCompoundObject SubParameter => (TraciCompoundObject)this.Last();
     }
