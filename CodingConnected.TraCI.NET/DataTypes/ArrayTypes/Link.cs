@@ -1,8 +1,7 @@
 #pragma warning disable IDE0130 // 命名空间与文件夹结构不匹配
-
 namespace CodingConnected.TraCI.NET.DataTypes;
 
-public sealed class Link : TraciArrayType
+public sealed class Link(IEnumerable<ITraciType> innerObjects) : TraciArrayType(innerObjects)
     {
     public string ConsecutiveNotInternalLane => (TraciString)this[0];
 
@@ -27,9 +26,4 @@ public sealed class Link : TraciArrayType
     public string Direction => (TraciString)this[6];
 
     public double Length => (TraciDouble)this[7];
-
-
-    public Link(IEnumerable<ITraciType> innerObjects) : base(innerObjects)
-        {
-        }
     }

@@ -5,9 +5,9 @@ namespace CodingConnected.TraCI.NET.DataTypes;
 /// <summary>
 /// unsigned <see cref="byte"/> value in traci
 /// </summary>
-public sealed class TraciUnsignedByte(byte value) : TraciBaseType<byte>(value), ITraciType
+public sealed class TraciUnsignedByte(byte value, bool raw = false) : TraciBaseType<byte>(value), ITraciType
     {
-    public override DataType TypeIdentifier => DataType.UNSIGNEDBYTE;
+    public override DataType TypeIdentifier => raw ? DataType.NULL : DataType.UNSIGNEDBYTE;
 
     public override byte[] ToBytes() => [Value];
 
@@ -15,8 +15,6 @@ public sealed class TraciUnsignedByte(byte value) : TraciBaseType<byte>(value), 
 
     public static new byte[] AsBytes(byte value) => [value];
     }
-
-// list-like traci types
 
 
 

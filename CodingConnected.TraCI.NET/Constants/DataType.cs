@@ -40,4 +40,6 @@ public enum DataType : byte
     COMPOUND = 0x0F,
     DOUBLELIST = 0x10,
     COLOR = 0x11,
+    /*this flag is NOT from traci, just for some compatibility*/
+    NULL = 0xFF
     }

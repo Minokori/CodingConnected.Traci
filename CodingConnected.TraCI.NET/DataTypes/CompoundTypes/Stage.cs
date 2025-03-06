@@ -78,7 +78,14 @@ public class Stage : TraciCompoundObject
         {
         get => (TraciString)this[12];
         set => this[12] = value;
-        } //
+        }
+
+    // TODO 改成工厂方法
+    public Stage(IEnumerable<ITraciType> traciCompoundObject)
+        {
+        Clear();
+        AddRange(traciCompoundObject);
+        }
     }
 
 public sealed class WaitingStage : TraciCompoundObject

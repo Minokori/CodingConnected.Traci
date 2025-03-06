@@ -7,9 +7,9 @@ namespace CodingConnected.TraCI.NET.DataTypes;
 /// <summary>
 /// <see cref="string"/> value in traci
 /// </summary>
-public sealed class TraciString(string value) : TraciBaseType<string>(value), ITraciType
+public sealed class TraciString(string value, bool raw = false) : TraciBaseType<string>(value), ITraciType
     {
-    public override DataType TypeIdentifier => DataType.STRING;
+    public override DataType TypeIdentifier => raw ? DataType.NULL : DataType.STRING;
 
     public override byte[] ToBytes() => [.. GetBytes(Value.Length).Reverse(), .. Encoding.ASCII.GetBytes(Value)];
 

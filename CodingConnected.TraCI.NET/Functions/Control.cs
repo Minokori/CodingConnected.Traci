@@ -39,7 +39,7 @@ public class Control(ITCPConnectService tcpService, ICommandService helper, IEve
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/docs/TraCI/Control-related_commands.html#command_0x00_get_version"/>
     /// </remarks>
-    public Tuple<int, string> GetVersion()
+    public (int traciApiVersion, string sumoVersion) GetVersion()
         {
         var command = _helper.GenerateCommand(GETVERSION);
         var results = _tcpService.SendMessage(command);

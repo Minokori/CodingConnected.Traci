@@ -44,7 +44,11 @@ Console.WriteLine($"Connected to SUMO version: {api}, Version String:{ver}");
 //client.TestGui(); // all passed
 //client.TestEdge(); // all passed
 //client.TestJunction(); // all passed
-client.TestLane();
+//client.TestLane(); // all passed
+//client.TestRoute(); // all passed
+//client.TestRouteProbe(); // all passed
+//client.TestRerouter(); // all passed
+client.TestSimulation(); // all passed
 #endregion
 
 
@@ -164,7 +168,7 @@ void PrintActiveVehicles()
 
 void PrintArrivedVehicles()
     {
-    var vehicleIds = client.Simulation.GetArrivedIDList();
+    var vehicleIds = client.Simulation.GetArrivedIdList();
     Console.Write("Arrived Vehicles: [");
     foreach (var id in vehicleIds)
         {
@@ -175,7 +179,7 @@ void PrintArrivedVehicles()
 
 void PrintLoadedVehicles()
     {
-    var vehicleIds = client.Simulation.GetLoadedIDList();
+    var vehicleIds = client.Simulation.GetLoadedIdList();
     Console.Write("Loaded Vehicles: [");
     foreach (var id in vehicleIds)
         {
@@ -186,7 +190,7 @@ void PrintLoadedVehicles()
 
 void PrintDepartedVehicles()
     {
-    var vehicleIds = client.Simulation.GetDepartedIDList();
+    var vehicleIds = client.Simulation.GetDepartedIdList();
     Console.Write("Departed Vehicles: [");
     foreach (var id in vehicleIds)
         {

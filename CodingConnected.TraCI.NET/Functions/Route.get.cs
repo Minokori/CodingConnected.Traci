@@ -1,7 +1,9 @@
 using CodingConnected.TraCI.NET.Constants;
 using CodingConnected.TraCI.NET.DataTypes;
 using static CodingConnected.TraCI.NET.Constants.CommandIdentifier.Get;
+
 namespace CodingConnected.TraCI.NET.Functions;
+
 public partial class Route
     {
     /// <summary>
@@ -14,7 +16,7 @@ public partial class Route
     public List<string> GetIdList()
         {
         var result = _helper.ExecuteGetCommand(ROUTE_VARIABLE, TraciConstants.ID_LIST, "ignored");
-        return ((TraciStringList)result.Data).Value;
+        return (TraciStringList)result.Data;
         }
 
     /// <summary>
@@ -28,7 +30,7 @@ public partial class Route
     public int GetIdCount()
         {
         var result = _helper.ExecuteGetCommand(ROUTE_VARIABLE, TraciConstants.ID_COUNT, "ignored");
-        return ((TraciInteger)result.Data).Value;
+        return (TraciInteger)result.Data;
         }
 
     /// <summary>
@@ -42,6 +44,6 @@ public partial class Route
     public List<string> GetEdges(string routeId)
         {
         var result = _helper.ExecuteGetCommand(ROUTE_VARIABLE, TraciConstants.VAR_EDGES, routeId);
-        return ((TraciStringList)result.Data).Value;
+        return (TraciStringList)result.Data;
         }
     }

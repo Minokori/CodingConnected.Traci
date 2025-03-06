@@ -22,7 +22,7 @@ public partial class TraciClient : IDisposable
     /// </summary>
     /// <param name="hostname">Hostname or ip address where SUMO is running</param>
     /// <param name="port">Port at which SUMO exposes the API</param>
-    public async Task<Tuple<int, string>> ConnectAsync(string hostname, int port) =>
+    public async Task<(int traciApiVersion, string sumoVersion)> ConnectAsync(string hostname, int port) =>
         await TcpService
             .ConnectAsync(hostname, port)
             .ContinueWith(_ => Control.GetVersion())

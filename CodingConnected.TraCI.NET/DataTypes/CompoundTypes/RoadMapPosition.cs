@@ -44,8 +44,19 @@ public sealed class RoadMapPosition : TraciCompoundObject
 
     public RoadMapPosition(string roadId, double position, byte laneId)
         {
-        this[0] = new TraciString(roadId);
-        this[1] = new TraciDouble(position);
-        this[2] = new TraciByte(laneId);
+        Clear();
+        Add(new TraciString(roadId));
+        Add(new TraciDouble(position));
+        Add(new TraciByte(laneId));
+        }
+
+    public override byte[] ToBytes()
+        {
+        List<byte> bytes = [];
+        foreach (var item in this)
+            {
+            bytes.AddRange(item.ToBytes());
+            }
+        return [.. bytes];
         }
     }

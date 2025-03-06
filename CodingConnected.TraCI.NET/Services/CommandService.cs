@@ -24,7 +24,7 @@ internal partial class CommandService(ITCPConnectService tcpService, IDebugServi
             }
         }
 
-    public IAnswerFromSumo ExecuteGetCommand(byte commandIdentifier, byte? variable = null, string id = "", ITraciType? extendParameter = null)
+    public IAnswerFromSumo ExecuteGetCommand(byte commandIdentifier, byte? variable = null, string? id = "", ITraciType? extendParameter = null)
         {
         var command = GenerateCommand(commandIdentifier, variable, id, extendParameter);
         var response = _tcpService.SendMessage(command);
@@ -101,7 +101,12 @@ internal partial class CommandService(ITCPConnectService tcpService, IDebugServi
         {
         byte[] commandPart1 = messageType.HasValue ? [messageType.Value] : [];
         var commandPart2 = id is null ? [] : TraciString.AsBytes(id);
+
         byte[] commandPart3 = contents is not null ? [(byte)contents.TypeIdentifier, .. contents.ToBytes()] : [];
+        if (contents is not null && contents.TypeIdentifier == DataType.NULL)
+            {
+            commandPart3 = [.. commandPart3.Skip(1)];
+            }
         TraCICommand command = new(commandIdentifier, [.. commandPart1, .. commandPart2, .. commandPart3]);
 
         _debugHelper.LogToConsole($"GenerateCommand : {command.DebugString}");
