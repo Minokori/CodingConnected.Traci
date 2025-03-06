@@ -4,7 +4,7 @@ using TracCI.NET.UsageExample.Test;
 #region static variables
 
 var sumoFile =
-    args.Length > 0 ? args[0] : Path.Combine(".", "sumo-scenarios", "simple-intersection", "test.sumocfg");
+    args.Length > 0 ? args[0] : Path.Combine(".", "sumo-scenarios", "busses", "test.sumocfg");
 
 /* The Variables used for VariableType and Context Subscription for this example */
 List<byte> variablesToSubscribeTo =
@@ -49,7 +49,8 @@ Console.WriteLine($"Connected to SUMO version: {api}, Version String:{ver}");
 //client.TestRouteProbe(); // all passed
 //client.TestRerouter(); // all passed
 //client.TestSimulation(); // all passed
-client.TestTrafficLight();
+//client.TestTrafficLight();// all passed
+//client.TestBusStop(); // all passed
 #endregion
 
 

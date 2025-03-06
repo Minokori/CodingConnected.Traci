@@ -10,7 +10,7 @@ namespace CodingConnected.TraCI.NET.Functions;
 /// <remarks>
 /// <list type="bullet">
 /// <item>
-/// get-commands part see <see href="https://sumo.dlr.de/docs/TraCI/Calibrator.html"/>
+/// get-commands part see <see href="https://sumo.dlr.de/docs/TraCI/ChargingStation.html"/>
 /// </item>
 /// <item>
 ///  set-commands part see <see href="https://sumo.dlr.de/docs/TraCI/Change_ChargingStation_State.html"/>

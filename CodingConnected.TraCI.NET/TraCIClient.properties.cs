@@ -42,4 +42,6 @@ public partial class TraciClient
     public RouteProbe RouteProbe => services.GetRequiredService<RouteProbe>();
 
     public VariableSpeedSign VariableSpeedSign => services.GetRequiredService<VariableSpeedSign>();
+
+    public BusStop BusStop => services.GetRequiredService<BusStop>();
     }
