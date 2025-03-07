@@ -30,10 +30,11 @@ public sealed class Color : TraciListType<TraciByte, byte>, ITraciType
 
     public Color(int r, int g, int b, int a = 255)
         {
-        this[0] = new((byte)r);
-        this[1] = new((byte)g);
-        this[2] = new((byte)b);
-        this[3] = new((byte)a);
+        Clear();
+        Add(new((byte)r));
+        Add(new((byte)g));
+        Add(new((byte)b));
+        Add(new((byte)a));
         }
 
     public void Deconstruct(out int r, out int g, out int b, out int a)

@@ -149,7 +149,7 @@ public partial class LaneAreaDetector
     public double GetLastStepHaltingNumber(string detectorId)
         {
         var result = _helper.ExecuteGetCommand(LANEAREA_VARIABLE, TraciConstants.LAST_STEP_VEHICLE_HALTING_NUMBER, detectorId);
-        return ((TraciDouble)result.Data).Value;
+        return ((TraciInteger)result.Data).Value;
         }
 
     /// <summary>
@@ -250,7 +250,7 @@ public partial class LaneAreaDetector
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/pydoc/traci._inductionloop.html#InductionLoopDomain-getLastIntervalOccupancy"/>
     /// </remarks>
-    public double GetLastIntetrvalOccupancy(string detectorId)
+    public double GetLastIntervalOccupancy(string detectorId)
         {
         var result = _helper.ExecuteGetCommand(LANEAREA_VARIABLE, TraciConstants.VAR_LAST_INTERVAL_OCCUPANCY, detectorId);
         return ((TraciDouble)result.Data).Value;

@@ -1,6 +1,6 @@
 using CodingConnected.TraCI.NET.Constants;
 using CodingConnected.TraCI.NET.DataTypes;
-using static CodingConnected.TraCI.NET.Constants.CommandIdentifier.Get;
+using static CodingConnected.TraCI.NET.Constants.CommandIdentifier.Set;
 
 namespace CodingConnected.TraCI.NET.Functions;
 
@@ -15,10 +15,9 @@ public partial class ParkingArea
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/pydoc/traci._parkingarea.html#ParkingAreaDomain-setAcceptedBadges"/>
     /// </remarks>
-    public List<string> SetAcceptedBadges(string stopId, List<string> badges)
+    public bool SetAcceptedBadges(string stopId, List<string> badges)
         {
         TraciStringList tmp = new(badges);
-        var result = _helper.ExecuteGetCommand(PARKINGAREA_VARIABLE, TraciConstants.VAR_BADGES, stopId, tmp);
-        return ((TraciStringList)result.Data).Value;
+        return _helper.ExecuteSetCommand(PARKINGAREA_VARIABLE, TraciConstants.VAR_BADGES, stopId, tmp);
         }
     }

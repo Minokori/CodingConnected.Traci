@@ -8,7 +8,7 @@ internal class DebugService(bool enableDebug = false) : IDebugService
         {
         if (_debugMode)
             {
-            Console.WriteLine(debugMessage);
+            Console.WriteLine(debugMessage.ToLower());
             }
         }
     }

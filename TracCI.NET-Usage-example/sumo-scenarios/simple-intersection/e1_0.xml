@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- generated on 2025-03-07 12:59:41 by Eclipse SUMO GUI Version 1.22.0
+This data file and the accompanying materials
+are made available under the terms of the Eclipse Public License v2.0
+which accompanies this distribution, and is available at
+http://www.eclipse.org/legal/epl-v20.html
+This file may also be made available under the following Secondary
+Licenses when the conditions for such availability set forth in the Eclipse
+Public License 2.0 are satisfied: GNU General Public License, version 2
+or later which is available at
+https://www.gnu.org/licenses/old-licenses/gpl-2.0-standalone.html
+SPDX-License-Identifier: EPL-2.0 OR GPL-2.0-or-later
+<sumoConfiguration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/sumoConfiguration.xsd">
+
+    <input>
+        <net-file value="D:\Lenovo\Documents\Visual Studio 2022\Projects\CodingConnected.Traci\TracCI.NET-Usage-example\sumo-scenarios\simple-intersection\net.net.xml"/>
+        <route-files value="D:\Lenovo\Documents\Visual Studio 2022\Projects\CodingConnected.Traci\TracCI.NET-Usage-example\sumo-scenarios\simple-intersection\input_routes.rou.xml"/>
+        <additional-files value="D:\Lenovo\Documents\Visual Studio 2022\Projects\CodingConnected.Traci\TracCI.NET-Usage-example\sumo-scenarios\simple-intersection\test.add.xml"/>
+    </input>
+
+    <output>
+        <write-license value="true"/>
+    </output>
+
+    <processing>
+        <time-to-teleport value="-1"/>
+        <default.speeddev value="0"/>
+    </processing>
+
+    <report>
+        <duration-log.disable value="true"/>
+        <no-step-log value="true"/>
+    </report>
+
+    <gui_only>
+        <start value="true"/>
+    </gui_only>
+
+</sumoConfiguration>
+-->
+
+<detector xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/det_e1_file.xsd">
+    <interval begin="0.00" end="300.00" id="e1_0" nVehContrib="7" flow="84.00" occupancy="3.58" speed="4.85" harmonicMeanSpeed="3.26" length="5.00" nVehEntered="7"/>
+    <interval begin="300.00" end="600.00" id="e1_0" nVehContrib="12" flow="144.00" occupancy="6.89" speed="3.58" harmonicMeanSpeed="2.90" length="5.00" nVehEntered="12"/>
+    <interval begin="600.00" end="900.00" id="e1_0" nVehContrib="9" flow="108.00" occupancy="5.17" speed="3.58" harmonicMeanSpeed="2.90" length="5.00" nVehEntered="9"/>
+    <interval begin="900.00" end="1200.00" id="e1_0" nVehContrib="9" flow="108.00" occupancy="5.17" speed="3.58" harmonicMeanSpeed="2.90" length="5.00" nVehEntered="9"/>
+    <interval begin="1200.00" end="1500.00" id="e1_0" nVehContrib="12" flow="144.00" occupancy="6.89" speed="3.58" harmonicMeanSpeed="2.90" length="5.00" nVehEntered="12"/>
+    <interval begin="1500.00" end="1800.00" id="e1_0" nVehContrib="9" flow="108.00" occupancy="5.17" speed="3.58" harmonicMeanSpeed="2.90" length="5.00" nVehEntered="9"/>
+    <interval begin="1800.00" end="2100.00" id="e1_0" nVehContrib="9" flow="108.00" occupancy="5.17" speed="3.58" harmonicMeanSpeed="2.90" length="5.00" nVehEntered="9"/>
+    <interval begin="2100.00" end="2400.00" id="e1_0" nVehContrib="12" flow="144.00" occupancy="6.89" speed="3.58" harmonicMeanSpeed="2.90" length="5.00" nVehEntered="12"/>
+    <interval begin="2400.00" end="2700.00" id="e1_0" nVehContrib="9" flow="108.00" occupancy="5.17" speed="3.58" harmonicMeanSpeed="2.90" length="5.00" nVehEntered="9"/>
+    <interval begin="2700.00" end="3000.00" id="e1_0" nVehContrib="9" flow="108.00" occupancy="5.17" speed="3.58" harmonicMeanSpeed="2.90" length="5.00" nVehEntered="9"/>
+    <interval begin="3000.00" end="3300.00" id="e1_0" nVehContrib="4" flow="48.00" occupancy="2.69" speed="3.11" harmonicMeanSpeed="2.48" length="5.00" nVehEntered="4"/>
+    <interval begin="3300.00" end="3541.00" id="e1_0" nVehContrib="0" flow="0.00" occupancy="0.00" speed="-1.00" harmonicMeanSpeed="-1.00" length="-1.00" nVehEntered="0"/>
+</detector>

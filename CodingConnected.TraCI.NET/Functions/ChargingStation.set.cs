@@ -1,6 +1,6 @@
 using CodingConnected.TraCI.NET.Constants;
 using CodingConnected.TraCI.NET.DataTypes;
-using static CodingConnected.TraCI.NET.Constants.CommandIdentifier.Get;
+using static CodingConnected.TraCI.NET.Constants.CommandIdentifier.Set;
 namespace CodingConnected.TraCI.NET.Functions;
 
 public partial class ChargingStation
@@ -46,7 +46,7 @@ public partial class ChargingStation
     /// </remarks>
     public bool SetChargeInTransit(string stopId, int inTransit)
         {
-        TraciDouble tmp = new(inTransit);
+        TraciInteger tmp = new(inTransit);
         return _helper.ExecuteSetCommand(CHARGINGSTATION_VARIABLE, TraciConstants.VAR_CHARGING_TRANSIT, stopId, tmp);
         }
 

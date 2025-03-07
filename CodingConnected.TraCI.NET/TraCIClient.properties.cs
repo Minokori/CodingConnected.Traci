@@ -44,4 +44,10 @@ public partial class TraciClient
     public VariableSpeedSign VariableSpeedSign => services.GetRequiredService<VariableSpeedSign>();
 
     public BusStop BusStop => services.GetRequiredService<BusStop>();
+
+    public ParkingArea ParkingArea => services.GetRequiredService<ParkingArea>();
+
+    public Calibrator Calibrator => services.GetRequiredService<Calibrator>();
+
+    public ChargingStation ChargingStation => services.GetRequiredService<ChargingStation>();
     }

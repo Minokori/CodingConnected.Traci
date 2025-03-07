@@ -38,5 +38,18 @@ public sealed class Polygon : List<Position2D>, ITraciType
         return new(points, bytes);
         }
 
-    public static implicit operator (double lowerLeftX, double lowerLeftY, double rightUpperX, double rightUpperY)(Polygon polygon) => (polygon[0].X, polygon[0].Y, polygon[1].X, polygon[1].Y);
+    public Polygon(params IEnumerable<(double x, double y)> points)
+        {
+        Clear();
+        foreach (var (x, y) in points)
+            {
+            Add(new Position2D(x, y));
+            }
+        }
+
+    /// <summary>
+    /// this will return the lower left and upper right corner of the polygon(first and last point)
+    /// </summary>
+    /// <param name="polygon"></param>
+    public static implicit operator (double lowerLeftX, double lowerLeftY, double rightUpperX, double rightUpperY)(Polygon polygon) => (polygon[0].X, polygon[0].Y, polygon[-1].X, polygon[-1].Y);
     }

@@ -1,10 +1,9 @@
 using CodingConnected.TraCI.NET.Constants;
-using TracCI.NET.UsageExample.Test;
 
 #region static variables
 
 var sumoFile =
-    args.Length > 0 ? args[0] : Path.Combine(".", "sumo-scenarios", "busses", "test.sumocfg");
+    args.Length > 0 ? args[0] : Path.Combine(".", "sumo-scenarios", "simple-intersection", "test.sumocfg");
 
 /* The Variables used for VariableType and Context Subscription for this example */
 List<byte> variablesToSubscribeTo =
@@ -36,7 +35,7 @@ var instructions =
 Console.WriteLine($"SUMO file path:{sumoFile}");
 
 /* Create a TraciClient for the commands */
-using TraciClient client = new(sumoFile, 4321);
+using TraciClient client = new(sumoFile, 4321, false);
 (var api, var ver) = await client.Start();
 Console.WriteLine($"Connected to SUMO version: {api}, Version String:{ver}");
 
@@ -51,6 +50,21 @@ Console.WriteLine($"Connected to SUMO version: {api}, Version String:{ver}");
 //client.TestSimulation(); // all passed
 //client.TestTrafficLight();// all passed
 //client.TestBusStop(); // all passed
+//client.TestParkingArea(); //all passed
+//client.TestCalibrator(); // all passed
+//client.TestChargingStation(); // all passed
+//client.TestInductionLoop(); // all passed
+//client.TestLaneAreaDetector(); // all passed
+//client.TestPOI(); // all passed
+
+/*                                        */
+
+//client.TestVehicle(); // all passed
+//client.TestVehicleType(); // all passed
+//client.TestPerson(); // all passed
+//client.TestPolygon(); // all passed
+//client.TestMultiEntryExitDetector(); // all passed
+
 #endregion
 
 

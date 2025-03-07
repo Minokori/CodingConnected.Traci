@@ -1,7 +1,7 @@
 #pragma warning disable IDE0130 // 命名空间与文件夹结构不匹配
 namespace CodingConnected.TraCI.NET.DataTypes;
 
-public sealed class VehicleInformationPacket : TraciArrayType
+public sealed class VehicleInformationPacket(IEnumerable<ITraciType> innerObjects) : TraciArrayType(innerObjects)
     {
     public string VehicleId => (TraciString)this[0];
 

@@ -53,7 +53,7 @@ internal static class TraciTypeExtensions
         }
 
     internal static List<VehicleInformationPacket> ToVehicleInformationPackets(this TraciCompoundObject content) =>
-        [.. content.Skip(1).Chunk(5).Select(i => (VehicleInformationPacket)i.ToList())];
+        [.. content.Skip(1).Chunk(5).Select(i => new VehicleInformationPacket(i))];
 
     internal static List<Link> ToLinks(this TraciCompoundObject content) => [.. content.Skip(1).Chunk(8).Select(i => new Link(i))];
 

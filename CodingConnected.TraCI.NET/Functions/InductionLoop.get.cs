@@ -156,7 +156,7 @@ public partial class InductionLoop
     /// </remarks>
     public List<VehicleInformationPacket> GetVehicleData(string loopId)
         {
-        var result = (TraciCompoundObject)_helper.ExecuteGetCommand(INDUCTIONLOOP_VARIABLE, TraciConstants.LAST_STEP_VEHICLE_DATA, loopId);
+        var result = (TraciCompoundObject)_helper.ExecuteGetCommand(INDUCTIONLOOP_VARIABLE, TraciConstants.LAST_STEP_VEHICLE_DATA, loopId).Data;
         return result.ToVehicleInformationPackets();
         }
 
