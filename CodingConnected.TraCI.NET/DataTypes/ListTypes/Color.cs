@@ -44,4 +44,6 @@ public sealed class Color : TraciListType<TraciByte, byte>, ITraciType
         b = B;
         a = A;
         }
+
+    public static implicit operator (int r, int g, int b, int a)(Color color) => new(color.R, color.G, color.B, color.A);
     }

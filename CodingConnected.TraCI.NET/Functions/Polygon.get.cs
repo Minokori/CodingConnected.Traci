@@ -68,7 +68,7 @@ public partial class Polygon
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/pydoc/traci._polygon.html#PolygonDomain-getShape"/>
     /// </remarks>
-    public DataTypes.Polygon GetShape(string polygonId)
+    public List<(double x, double y)> GetShape(string polygonId)
         {
         var result = _helper.ExecuteGetCommand(POLYGON_VARIABLE, TraciConstants.VAR_SHAPE, polygonId);
         return (DataTypes.Polygon)result.Data;
@@ -85,7 +85,7 @@ public partial class Polygon
     public bool GetFilled(string polygonId)
         {
         var result = _helper.ExecuteGetCommand(POLYGON_VARIABLE, TraciConstants.VAR_FILL, polygonId);
-        return ((TraciUnsignedByte)result.Data).Value == 1;
+        return ((TraciInteger)result.Data).Value == 1;
         }
 
     /// <summary>

@@ -46,9 +46,7 @@ public partial class Polygon
     /// </remarks>
     public bool SetShape(string polygonId, List<(double x, double y)> shape)
         {
-        var polygon = (DataTypes.Polygon)shape
-            .Select(p => new Position2D(p.x, p.y))
-            .ToList();
+        DataTypes.Polygon polygon = new(shape);
         return _helper.ExecuteSetCommand(POLYGON_VARIABLE, TraciConstants.VAR_SHAPE, polygonId, polygon);
         }
 
@@ -63,7 +61,7 @@ public partial class Polygon
     /// </remarks>
     public bool SetFilled(string id, bool filled)
         {
-        TraciUnsignedByte tmp = new(filled == true ? (byte)1 : (byte)0);
+        TraciInteger tmp = new(filled == true ? (byte)1 : (byte)0);
         return _helper.ExecuteSetCommand(POLYGON_VARIABLE, TraciConstants.VAR_FILL, id, tmp);
         }
 
@@ -95,15 +93,15 @@ public partial class Polygon
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/pydoc/traci._polygon.html#PolygonDomain-add"/>
     /// </remarks>
-    public bool Add(string id, string name, Color color, bool filled, int layer, DataTypes.Polygon shape)
+    public bool Add(string id, string name, int r, int g, int b, int a, bool filled, int layer, List<(double x, double y)> shape)
         {
         var tmp = new TraciCompoundObject
         {
             new TraciString(name),
-            color,
+            new Color(r, g, b, a),
             new TraciUnsignedByte(filled == false ?(byte) 0 :(byte) 1),
             new TraciInteger(layer) ,
-            shape,
+            new DataTypes.Polygon(shape),
         };
 
         return _helper.ExecuteSetCommand(POLYGON_VARIABLE, TraciConstants.ADD, id, tmp);

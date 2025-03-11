@@ -20,6 +20,8 @@ public abstract class TraciBaseType<T>(T value) : ITraciType
     public static byte[] AsBytes(T value) => throw new NotImplementedException($"{nameof(AsBytes)} is not implemented in abstract class");
 
     public static implicit operator T(TraciBaseType<T> traciData) => traciData.Value;
+
+    public override string ToString() => Value.ToString();
     }
 
 

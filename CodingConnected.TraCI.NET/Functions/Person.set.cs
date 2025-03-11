@@ -25,9 +25,9 @@ public partial class Person
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/pydoc/traci._person.html#PersonDomain-add"/>
     /// </remarks>
-    public bool Add(string personId, string edgeId, double position, double depart, string typeId)
+    public bool Add(string personId, string edgeId, double position, double depart = -3, string typeId = "DEFAULT_PEDTYPE")
         {
-        var tmp = new TraciCompoundObject { new TraciString(typeId), new TraciString(edgeId), new TraciDouble(depart), new TraciDouble(position) };
+        TraciCompoundObject tmp = [new TraciString(typeId), new TraciString(edgeId), new TraciDouble(depart), new TraciDouble(position)];
         return _helper.ExecuteSetCommand(PERSON_VARIABLE, TraciConstants.ADD, personId, tmp);
         }
 
@@ -73,7 +73,7 @@ public partial class Person
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/pydoc/traci._person.html#PersonDomain-appendWaitingStage"/>
     /// </remarks>
-    public bool AppendWaitingStage(string personId, int duration, string description = "waiting", string stopId = "")
+    public bool AppendWaitingStage(string personId, double duration, string description = "waiting", string stopId = "")
         {
         // TODO: in document, duration is int, but in python document, it is float. we should check it.
         WaitingStage stage = new(duration, description, stopId);
@@ -168,8 +168,8 @@ public partial class Person
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/pydoc/traci._person.html#PersonDomain-remove"/>
     /// </remarks>
-    public bool Remove(string personId) =>
-        _helper.ExecuteSetCommand(PERSON_VARIABLE, TraciConstants.REMOVE, personId, new TraciCompoundObject());
+    public bool Remove(string personId, RemoveReason reason = RemoveReason.Vaporized) =>
+        _helper.ExecuteSetCommand(PERSON_VARIABLE, TraciConstants.REMOVE, personId, new TraciByte((byte)reason));
 
     /// <summary>
     /// Computes a new route to the current destination that minimizes travel time.<para/>
@@ -182,7 +182,7 @@ public partial class Person
     /// see <see href="https://sumo.dlr.de/pydoc/traci._person.html#PersonDomain-rerouteTraveltime"/>
     /// </remarks>
     public bool RerouteTravelTime(string personId) =>
-        _helper.ExecuteSetCommand(PERSON_VARIABLE, REROUTE_TRAVELTIME, personId);
+        _helper.ExecuteSetCommand(PERSON_VARIABLE, REROUTE_TRAVELTIME, personId, new TraciCompoundObject());
 
     /// <summary>
     /// Moves the person to a new position after normal movements have taken place.<para/>
@@ -217,7 +217,7 @@ public partial class Person
             new TraciDouble(x),
             new TraciDouble(y),
             new TraciDouble(angle),
-            new TraciInteger(keepRoute),
+            new TraciByte((byte)keepRoute),
             new TraciDouble(matchThreshold),
         };
         return _helper.ExecuteSetCommand(PERSON_VARIABLE, TraciConstants.MOVE_TO_XY, personId, tmp);

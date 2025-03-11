@@ -32,4 +32,6 @@ public abstract class TraciListType<U, T> : List<U>, ITraciType
         throw new NotImplementedException($"{nameof(AsBytes)} is not implemented in abstract class");
 
     public static implicit operator List<T>(TraciListType<U, T> traciData) => traciData.Value;
+
+    public override string ToString() => string.Concat(Value.Select(i => i.ToString() + " "));
     }

@@ -59,7 +59,7 @@ public partial class MultiEntryExitDetector
     public List<string> GetExitLanes(string detectorId)
         {
         var result = _helper.ExecuteGetCommand(MULTIENTRYEXIT_VARIABLE, TraciConstants.VAR_EXIT_LANES, detectorId);
-        return ((TraciStringList)result.Data).Value;
+        return (TraciStringList)result.Data;
         }
 
     /// <summary>
@@ -70,17 +70,10 @@ public partial class MultiEntryExitDetector
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/pydoc/traci._multientryexit.html#MultiEntryExitDomain-getEntryPositions"/>
     /// </remarks>
-    public List<Tuple<double, double>> GetEntryPositions(string detectorId)
+    public List<double> GetEntryPositions(string detectorId)
         {
-        // TODO check if the return type is position2d or list of position2d
         var result = _helper.ExecuteGetCommand(MULTIENTRYEXIT_VARIABLE, TraciConstants.VAR_POSITION, detectorId);
-        var positions = (TraciCompoundObject)result.Data;
-        var list = positions.Select<ITraciType, Tuple<double, double>>(i =>
-        {
-            var position = (Position2D)i;
-            return new(position.X, position.Y);
-        });
-        return list.ToList();
+        return (TraCIDoubleList)result.Data;
         }
 
     /// <summary>
@@ -91,17 +84,11 @@ public partial class MultiEntryExitDetector
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/pydoc/traci._multientryexit.html#MultiEntryExitDomain-getExitPositions"/>
     /// </remarks>
-    public List<Tuple<double, double>> GetExitPositions(string detectorId)
+    public List<double> GetExitPositions(string detectorId)
         {
-        // TODO check if the return type is position2d or list of position2d
         var result = _helper.ExecuteGetCommand(MULTIENTRYEXIT_VARIABLE, TraciConstants.VAR_EXIT_POSITIONS, detectorId);
-        var positions = (TraciCompoundObject)result.Data;
-        var list = positions.Select<ITraciType, Tuple<double, double>>(i =>
-        {
-            var position = (Position2D)i;
-            return new(position.X, position.Y);
-        });
-        return list.ToList();
+        return (TraCIDoubleList)result.Data;
+
         }
 
     /// <summary>

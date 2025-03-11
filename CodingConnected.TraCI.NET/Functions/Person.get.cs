@@ -57,11 +57,10 @@ public partial class Person
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/pydoc/traci._person.html#PersonDomain-getPosition"/>
     /// </remarks>
-    public Tuple<double, double> GetPosition(string personId)
+    public (double x, double y) GetPosition(string personId)
         {
         var result = _helper.ExecuteGetCommand(PERSON_VARIABLE, TraciConstants.VAR_POSITION, personId);
-        var position = (Position2D)result.Data;
-        return new(position.X, position.Y);
+        return (Position2D)result.Data;
         }
 
     /// <summary>
@@ -73,11 +72,10 @@ public partial class Person
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/pydoc/traci._person.html#PersonDomain-getPosition3D"/>
     /// </remarks>
-    public Tuple<double, double, double> GetPosition3D(string personId)
+    public (double x, double y, double z) GetPosition3D(string personId)
         {
         var result = _helper.ExecuteGetCommand(PERSON_VARIABLE, TraciConstants.VAR_POSITION3D, personId);
-        var position = (Position3D)result.Data;
-        return new(position.X, position.Y, position.Z);
+        return (Position3D)result.Data;
         }
 
     /// <summary>
@@ -118,7 +116,7 @@ public partial class Person
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/pydoc/traci._person.html#PersonDomain-getRoadID"/>
     /// </remarks>
-    public string GetRoadID(string personId)
+    public string GetRoadId(string personId)
         {
         var result = _helper.ExecuteGetCommand(PERSON_VARIABLE, TraciConstants.VAR_ROAD_ID, personId);
         return ((TraciString)result.Data).Value;
@@ -132,7 +130,7 @@ public partial class Person
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/pydoc/traci._person.html#PersonDomain-getTypeID"/>
     /// </remarks>
-    public string GetTypeID(string personId)
+    public string GetTypeId(string personId)
         {
         var result = _helper.ExecuteGetCommand(PERSON_VARIABLE, TraciConstants.VAR_TYPE, personId);
         return ((TraciString)result.Data).Value;
@@ -146,11 +144,11 @@ public partial class Person
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/pydoc/traci._person.html#PersonDomain-getColor"/>
     /// </remarks>
-    public Tuple<int, int, int, int> GetColor(string personId)
+    public (int r, int g, int b, int a) GetColor(string personId)
         {
         var result = _helper.ExecuteGetCommand(PERSON_VARIABLE, TraciConstants.VAR_COLOR, personId);
-        var color = (Color)result.Data;
-        return new(color.R, color.G, color.B, color.A);
+
+        return (Color)result.Data;
         }
 
     /// <summary>
@@ -313,7 +311,7 @@ public partial class Person
         {
         TraciInteger tmp = new(nextStageIndex);
         var result = _helper.ExecuteGetCommand(PERSON_VARIABLE, TraciConstants.VAR_STAGE, personId, tmp);
-        return (Stage)(TraciCompoundObject)result.Data;
+        return new((TraciCompoundObject)result.Data);
         }
 
     /// <summary>

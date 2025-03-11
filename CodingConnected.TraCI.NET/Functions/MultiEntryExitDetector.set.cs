@@ -1,5 +1,5 @@
-﻿namespace CodingConnected.TraCI.NET.Functions;
+namespace CodingConnected.TraCI.NET.Functions;
 public partial class MultiEntryExitDetector
     {
-    // set commands not aviailable in the traci API 21 yet
+    // set commands not available in the traci API 21 yet
     }

@@ -52,4 +52,7 @@ public sealed class Polygon : List<Position2D>, ITraciType
     /// </summary>
     /// <param name="polygon"></param>
     public static implicit operator (double lowerLeftX, double lowerLeftY, double rightUpperX, double rightUpperY)(Polygon polygon) => (polygon[0].X, polygon[0].Y, polygon[-1].X, polygon[-1].Y);
+
+
+    public static implicit operator List<(double x, double y)>(Polygon polygon) => [.. polygon.Select(i => (i.X, i.Y))];
     }
