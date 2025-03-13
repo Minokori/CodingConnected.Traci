@@ -697,7 +697,7 @@ public partial class Vehicle
         LaneChangeSpeedMode speed,
         LaneChangeRightMode right,
         LaneChangeRespectMode respect,
-        LaneChangeSublaneMode sublane
+        LaneChangeSubLaneMode sublane
     )
         {
         var tmp = ((int)stragic * 1) + ((int)cooperative * 4) + ((int)speed * 16) + ((int)right * 32) + ((int)respect * 64) + ((int)sublane * 128);

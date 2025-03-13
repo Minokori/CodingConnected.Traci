@@ -1,5 +1,3 @@
-using CodingConnected.TraCI.NET;
-
 namespace TracCI.NET.UsageExample.Test;
 
 public static partial class GuiTest

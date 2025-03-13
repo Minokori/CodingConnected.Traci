@@ -422,15 +422,15 @@ public partial class Simulation
         switch (toGeo)
             {
             case true:
-                {
-                var position2D = (LonLatPosition)result.Data;
-                return new(position2D.Longitude, position2D.Latitude);
-                }
+                    {
+                    var position2D = (LonLatPosition)result.Data;
+                    return new(position2D.Longitude, position2D.Latitude);
+                    }
             case false:
-                {
-                var position2D = (Position2D)result.Data;
-                return new(position2D.X, position2D.Y);
-                }
+                    {
+                    var position2D = (Position2D)result.Data;
+                    return new(position2D.X, position2D.Y);
+                    }
             }
         }
 
@@ -458,15 +458,15 @@ public partial class Simulation
         switch (toGeo)
             {
             case true:
-                {
-                var position3D = (LonLatAltPosition)result.Data;
-                return new(position3D.Longitude, position3D.Latitude, position3D.Altitude);
-                }
+                    {
+                    var position3D = (LonLatAltPosition)result.Data;
+                    return new(position3D.Longitude, position3D.Latitude, position3D.Altitude);
+                    }
             case false:
-                {
-                var position3D = (Position3D)result.Data;
-                return new(position3D.X, position3D.Y, position3D.Z);
-                }
+                    {
+                    var position3D = (Position3D)result.Data;
+                    return new(position3D.X, position3D.Y, position3D.Z);
+                    }
             }
         }
 
@@ -488,17 +488,17 @@ public partial class Simulation
         switch (fromGeo)
             {
             case true:
-                {
-                positionType = DataType.X_Y;
-                position = new LonLatPosition(x, y);
-                break;
-                }
+                    {
+                    positionType = DataType.X_Y;
+                    position = new LonLatPosition(x, y);
+                    break;
+                    }
             case false:
-                {
-                positionType = DataType.LON_LAT;
-                position = new Position2D(x, y);
-                break;
-                }
+                    {
+                    positionType = DataType.LON_LAT;
+                    position = new Position2D(x, y);
+                    break;
+                    }
             }
 
         TraciCompoundObject tmp = [position, new TraciUnsignedByte((byte)positionType)];
@@ -508,15 +508,15 @@ public partial class Simulation
         switch (fromGeo)
             {
             case true:
-                {
-                var position2D = (Position2D)result.Data;
-                return new(position2D.X, position2D.Y);
-                }
+                    {
+                    var position2D = (Position2D)result.Data;
+                    return new(position2D.X, position2D.Y);
+                    }
             case false:
-                {
-                var position2D = (LonLatPosition)result.Data;
-                return new(position2D.Longitude, position2D.Latitude);
-                }
+                    {
+                    var position2D = (LonLatPosition)result.Data;
+                    return new(position2D.Longitude, position2D.Latitude);
+                    }
             }
         }
 

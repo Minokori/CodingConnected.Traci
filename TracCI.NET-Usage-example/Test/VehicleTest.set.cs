@@ -1,6 +1,4 @@
 using CodingConnected.TraCI.NET.Constants;
-using CodingConnected.TraCI.NET.Functions;
-using RemoveReason = CodingConnected.TraCI.NET.Functions.RemoveReason;
 
 namespace TracCI.NET.UsageExample.Test;
 internal partial class VehicleTest
@@ -60,14 +58,14 @@ internal partial class VehicleTest
 
     private static bool SetSpeedFactor(TraciClient client) => client.Vehicle.SetSpeedFactor("v0", 10);
 
-    private static bool SetLaneChangeMode(TraciClient client) => client.Vehicle.SetLaneChangeMode("v0", LaneChangeStrategicMode.ChangeIfNotInConflict, LaneChangeCooperativeMode.ChangeIfNotInConflict, LaneChangeSpeedMode.ChangeIfNotInConflict, LaneChangeRightMode.ChangeIfNotInConflict, LaneChangeRespectMode.NotRespectOther, LaneChangeSublaneMode.NoSublaneChanges);
+    private static bool SetLaneChangeMode(TraciClient client) => client.Vehicle.SetLaneChangeMode("v0", LaneChangeStrategicMode.ChangeIfNotInConflict, LaneChangeCooperativeMode.ChangeIfNotInConflict, LaneChangeSpeedMode.ChangeIfNotInConflict, LaneChangeRightMode.ChangeIfNotInConflict, LaneChangeRespectMode.NotRespectOther, LaneChangeSubLaneMode.NoSubLaneChanges);
 
 
     private static bool UpdateBestLanes(TraciClient client) => client.Vehicle.UpdateBestLanes("v0");
 
     private static bool Add(TraciClient client) => client.Vehicle.Add("v100", "r");
 
-    private static bool Remove(TraciClient client) => client.Vehicle.Remove("v100", RemoveReason.Teleport);
+    private static bool Remove(TraciClient client) => client.Vehicle.Remove("v100", RemoveReason.TELEPORT);
 
     private static bool SetLength(TraciClient client) => client.Vehicle.SetLength("v0", 10);
 

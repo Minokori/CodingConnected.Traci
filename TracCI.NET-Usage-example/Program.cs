@@ -1,5 +1,4 @@
 using CodingConnected.TraCI.NET.Constants;
-using TracCI.NET.UsageExample.Test;
 
 #region static variables
 

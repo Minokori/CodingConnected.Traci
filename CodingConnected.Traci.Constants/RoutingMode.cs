@@ -1,4 +1,4 @@
-namespace CodingConnected.TraCI.NET.Constants;
+namespace CodingConnected.Traci.Constants;
 
 [Flags]
 public enum RoutingMode : int

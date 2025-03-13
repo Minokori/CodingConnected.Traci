@@ -17,6 +17,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TracCI.NET-Usage-example", "TracCI.NET-Usage-example\TracCI.NET-Usage-example.csproj", "{C510A87A-1B59-4B12-B915-66BC7F19D02F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodingConnected.Traci.Constants", "CodingConnected.Traci.Constants\CodingConnected.Traci.Constants.csproj", "{3DD2B14A-1251-4F24-A84A-3572FF6DA4F0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -61,6 +63,18 @@ Global
 		{C510A87A-1B59-4B12-B915-66BC7F19D02F}.Release|x64.Build.0 = Release|Any CPU
 		{C510A87A-1B59-4B12-B915-66BC7F19D02F}.Release|x86.ActiveCfg = Release|Any CPU
 		{C510A87A-1B59-4B12-B915-66BC7F19D02F}.Release|x86.Build.0 = Release|Any CPU
+		{3DD2B14A-1251-4F24-A84A-3572FF6DA4F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3DD2B14A-1251-4F24-A84A-3572FF6DA4F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3DD2B14A-1251-4F24-A84A-3572FF6DA4F0}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{3DD2B14A-1251-4F24-A84A-3572FF6DA4F0}.Debug|x64.Build.0 = Debug|Any CPU
+		{3DD2B14A-1251-4F24-A84A-3572FF6DA4F0}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{3DD2B14A-1251-4F24-A84A-3572FF6DA4F0}.Debug|x86.Build.0 = Debug|Any CPU
+		{3DD2B14A-1251-4F24-A84A-3572FF6DA4F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3DD2B14A-1251-4F24-A84A-3572FF6DA4F0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3DD2B14A-1251-4F24-A84A-3572FF6DA4F0}.Release|x64.ActiveCfg = Release|Any CPU
+		{3DD2B14A-1251-4F24-A84A-3572FF6DA4F0}.Release|x64.Build.0 = Release|Any CPU
+		{3DD2B14A-1251-4F24-A84A-3572FF6DA4F0}.Release|x86.ActiveCfg = Release|Any CPU
+		{3DD2B14A-1251-4F24-A84A-3572FF6DA4F0}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

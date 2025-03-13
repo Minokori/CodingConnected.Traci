@@ -168,7 +168,7 @@ public partial class Person
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/pydoc/traci._person.html#PersonDomain-remove"/>
     /// </remarks>
-    public bool Remove(string personId, RemoveReason reason = RemoveReason.Vaporized) =>
+    public bool Remove(string personId, RemoveReason reason = RemoveReason.VAPORIZED) =>
         _helper.ExecuteSetCommand(PERSON_VARIABLE, TraciConstants.REMOVE, personId, new TraciByte((byte)reason));
 
     /// <summary>
