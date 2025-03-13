@@ -1,4 +1,5 @@
 using System.Text;
+using CodingConnected.TraCI.NET.Constants;
 using CodingConnected.TraCI.NET.DataTypes;
 using static CodingConnected.TraCI.NET.ProtocolTypes.TraCIResultExtension;
 
@@ -32,6 +33,26 @@ public partial class TraciResult : IAnswerFromSumo
         {
         get
             {
+            if (((IAnswerFromSumo)this).Variable == TraciConstants.VAR_NEXT_STOPS2)
+                {
+                var bytes = Content.Skip(
+                    1 /* remainBytes of Variable */
+                        + 4 /* remainBytes of SumoIdLength */
+                        + ((IAnswerFromSumo)this).SumoIdLength /* remainBytes of SumoId */
+                        + 1 /* remainBytes of ReturnType: 0F */
+                        + 4 /* an int*/
+                        + 5 /*an int with type identifier*/
+                );
+                TraciCompoundObject value = [];
+                while (bytes.Any())
+                    {
+                    (var innerObject, bytes) = GetValueFromTypeAndArray(bytes.First(), bytes.Skip(1));
+                    value.Add(innerObject);
+                    }
+                return value;
+                }
+
+
             var (traciValue, remainBytes) = GetValueFromTypeAndArray(
                 ((IAnswerFromSumo)this).ReturnType,
                 Content.Skip(

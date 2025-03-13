@@ -78,7 +78,7 @@ public class Control(ITCPConnectService tcpService, ICommandService helper, IEve
     public void SimStep(double targetTime = 0)
         {
         // make a simulation step
-        var command = _helper.GenerateCommand(SIMSTEP, extendParameter: new TraciDouble(targetTime));
+        var command = _helper.GenerateCommand(SIMSTEP, extendParameter: new TraciDouble(targetTime, true));
         // get the results
         var results = _tcpService.SendMessage(command);
         if (results.Count != 1)

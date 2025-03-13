@@ -10,7 +10,6 @@ public class TraCICommand(byte identifier, IEnumerable<byte> content)
     public string DebugString => string.Concat(ToMessageBytes().Select(i => i.ToString("X2") + " "));
 
 
-    // bug 
     public byte[] ToMessageBytes()
         {
         List<byte> contentPart = [];

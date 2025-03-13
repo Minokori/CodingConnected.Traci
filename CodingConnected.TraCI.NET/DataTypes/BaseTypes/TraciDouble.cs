@@ -6,9 +6,9 @@ namespace CodingConnected.TraCI.NET.DataTypes;
 /// <summary>
 /// <see cref="double"/> value in traci
 /// </summary>
-public sealed class TraciDouble(double value) : TraciBaseType<double>(value), ITraciType
+public sealed class TraciDouble(double value, bool raw = false) : TraciBaseType<double>(value), ITraciType
     {
-    public override DataType TypeIdentifier => DataType.DOUBLE;
+    public override DataType TypeIdentifier => raw ? DataType.NULL : DataType.DOUBLE;
 
     public override byte[] ToBytes() => [.. GetBytes(Value).Reverse()];
 

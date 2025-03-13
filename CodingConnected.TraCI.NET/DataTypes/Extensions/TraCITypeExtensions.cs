@@ -15,7 +15,7 @@ internal static class TraciTypeExtensions
         for (var i = 0; i < numberOfEdges; i++)
             {
             // TODO it seems no need to skip 1 + (6*i), check it
-            var edge = (EdgeInformation)content.Skip(0 + (6 * i)).Take(6);
+            EdgeInformation edge = new(content.Skip(0 + (6 * i)).Take(6));
             edges.Add(edge);
             }
         return edges;
@@ -58,7 +58,7 @@ internal static class TraciTypeExtensions
     internal static List<Link> ToLinks(this TraciCompoundObject content) => [.. content.Skip(1).Chunk(8).Select(i => new Link(i))];
 
     internal static List<StopData> ToStopDataList(this TraciCompoundObject content) =>
-        [.. content.Skip(1).Chunk(6).Select(i => (StopData)i.ToList())];
+        [.. content.Skip(1).Chunk(16).Select(i => new StopData(i))];
 
     internal static List<Foe> ToJunctionFoes(this TraciCompoundObject content) => content.Skip(1).Chunk(9).Select(i => (Foe)i.ToList()).ToList();
     }

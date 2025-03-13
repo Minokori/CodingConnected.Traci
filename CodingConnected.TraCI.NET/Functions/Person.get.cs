@@ -282,7 +282,8 @@ public partial class Person
     /// </remarks>
     public List<TaxiReservations> GetTaxiReservations(int onlyNew = 0)
         {
-        // TODO documents has a poor describe of this method. we should check it.
+        // TODO: Test this function
+        Console.WriteLine($"Warning: {nameof(GetTaxiReservations)} has NOT been Tested, it may cause Errors");
         TraciInteger tmp = new(onlyNew);
         var result = _helper.ExecuteGetCommand(PERSON_VARIABLE, TraciConstants.VAR_TAXI_RESERVATIONS, "", tmp);
         var reservations = ((TraciCompoundObject)result.Data).Chunk(8).Select(i => (TaxiReservations)i.ToList()).ToList();

@@ -159,7 +159,7 @@ public partial class Vehicle
     /// <param name="vehicleId"></param>
     /// <param name="lateralDistance"></param>
     /// <returns></returns>
-    public bool ChangeSublane(string vehicleId, double lateralDistance)
+    public bool ChangeSubLane(string vehicleId, double lateralDistance)
         {
         var tmp = new TraciDouble(lateralDistance);
         return _helper.ExecuteSetCommand(VEHICLE_VARIABLE, CHANGESUBLANE, vehicleId, tmp);
@@ -199,12 +199,12 @@ public partial class Vehicle
     /// The vehicle's destination edge is set to the given. The route is rebuilt.
     /// </summary>
     /// <param name="vehicleId"></param>
-    /// <param name="desitinationEdgeId"></param>
+    /// <param name="destinationEdgeId"></param>
     /// <returns></returns>
     /// <see href="https://sumo.dlr.de/pydoc/traci._vehicle.html#VehicleDomain-changeTarget"/>
-    public bool ChangeTarget(string vehicleId, string desitinationEdgeId)
+    public bool ChangeTarget(string vehicleId, string destinationEdgeId)
         {
-        TraciString tmp = new(desitinationEdgeId);
+        TraciString tmp = new(destinationEdgeId);
         return _helper.ExecuteSetCommand(VEHICLE_VARIABLE, CHANGETARGET, vehicleId, tmp);
         }
 
@@ -284,7 +284,7 @@ public partial class Vehicle
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/pydoc/traci._vehicle.html#VehicleDomain-setRouteID"/>
     /// </remarks>
-    public bool SetRoutID(string vehicleId, string routeId)
+    public bool SetRouteId(string vehicleId, string routeId)
         {
         TraciString tmp = new(routeId);
         return _helper.ExecuteSetCommand(VEHICLE_VARIABLE, TraciConstants.VAR_ROUTE_ID, vehicleId, tmp);
@@ -458,7 +458,7 @@ public partial class Vehicle
         double yPosition,
         double angle = TraciConstants.INVALID_DOUBLE_VALUE,
         int keepRoute = 1,
-        double matchThreshould = 100.0
+        double matchThreshold = 100.0
     )
         {
         TraciCompoundObject tmp =
@@ -469,7 +469,7 @@ public partial class Vehicle
             new TraciDouble(yPosition),
             new TraciDouble(angle),
             new TraciByte((byte)keepRoute),
-            new TraciDouble(matchThreshould),
+            new TraciDouble(matchThreshold),
         ];
         return _helper.ExecuteSetCommand(VEHICLE_VARIABLE, TraciConstants.MOVE_TO_XY, id, tmp);
         }
@@ -497,7 +497,7 @@ public partial class Vehicle
         int nextStopIndex,
         string edgeId,
         double position = 1.0,
-        int laneIndex = 0,
+        byte laneIndex = 0,
         double duration = TraciConstants.INVALID_DOUBLE_VALUE,
         StopFlag flags = StopFlag.DEFAULT,
         double startPosition = TraciConstants.INVALID_DOUBLE_VALUE,
@@ -509,7 +509,7 @@ public partial class Vehicle
         {
             new TraciString(edgeId),
             new TraciDouble(position),
-            new TraciInteger(laneIndex),
+            new TraciByte(laneIndex),
             new TraciDouble(duration),
             new TraciInteger((int)flags),
             new TraciDouble(startPosition),
@@ -546,7 +546,7 @@ public partial class Vehicle
         int nextStopIndex,
         string edgeId,
         double position = 1.0,
-        int laneIndex = 0,
+        byte laneIndex = 0,
         double duration = TraciConstants.INVALID_DOUBLE_VALUE,
         StopFlag flags = StopFlag.DEFAULT,
         double startPosition = TraciConstants.INVALID_DOUBLE_VALUE,
@@ -558,7 +558,7 @@ public partial class Vehicle
         {
             new TraciString(edgeId),
             new TraciDouble(position),
-            new TraciInteger(laneIndex),
+            new TraciByte(laneIndex),
             new TraciDouble(duration),
             new TraciInteger((int)flags),
             new TraciDouble(startPosition),
@@ -605,13 +605,13 @@ public partial class Vehicle
     public bool RerouteTravelTime(string vehicleId, bool currentTravelTimes = true)
         {
         var routingMode = GetRoutingMode(vehicleId);
-        if (currentTravelTimes && routingMode == (int)RoutingMode.Default)
+        if (currentTravelTimes && routingMode == (int)RoutingMode.DEFAULT)
             {
-            SetRoutingMode(vehicleId, RoutingMode.AggregatedCustom);
+            SetRoutingMode(vehicleId, RoutingMode.AGGREGATED);
             }
         TraciCompoundObject tmp = [];
         var result = _helper.ExecuteSetCommand(VEHICLE_VARIABLE, REROUTE_TRAVELTIME, vehicleId, tmp);
-        if (currentTravelTimes && routingMode == (int)RoutingMode.Default)
+        if (currentTravelTimes && routingMode == (int)RoutingMode.DEFAULT)
             {
             SetRoutingMode(vehicleId, (RoutingMode)routingMode);
             }
@@ -1077,7 +1077,7 @@ public partial class Vehicle
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/pydoc/traci._vehicle.html#VehicleDomain-setParameter"/>
     /// </remarks>
-    public bool SetParamater(string vehicleId, string key, string value)
+    public bool SetParameter(string vehicleId, string key, string value)
         {
         var tmp = new TraciCompoundObject() { new TraciString(key), new TraciString(value) };
         return _helper.ExecuteSetCommand(VEHICLE_VARIABLE, TraciConstants.VAR_PARAMETER, vehicleId, tmp);

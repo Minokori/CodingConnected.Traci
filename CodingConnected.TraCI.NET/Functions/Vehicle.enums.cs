@@ -7,14 +7,14 @@ public partial class Vehicle
 /// <summary>
 /// see <see href="https://sumo.dlr.de/docs/Simulation/Routing.html#travel-time_values_for_routing"/>
 /// </summary>
-public enum RoutingMode : int
-    {
-    Default = 0,
-    Aggregated = 1,
-    AggregatedCustom = 4,
-    IgnoreRerouterChanges = 8,
-    AggregatedAndIgnoringRerouterChanges = 9,
-    }
+//public enum RoutingMode : int
+//    {
+//    Default = 0,
+//    Aggregated = 1,
+//    AggregatedCustom = 4,
+//    IgnoreRerouterChanges = 8,
+//    AggregatedAndIgnoringRerouterChanges = 9,
+//    }
 
 /// <summary>
 /// see <see href="https://sumo.dlr.de/docs/TraCI/Change_Vehicle_State.html#speed_mode_0xb3"/>

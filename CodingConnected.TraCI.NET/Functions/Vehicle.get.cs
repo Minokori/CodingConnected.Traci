@@ -85,7 +85,7 @@ public partial class Vehicle
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/pydoc/traci._vehicle.html#VehicleDomain-getPosition"/>
     /// </remarks>
-    public (double X, double Y) GetPosition(string vehicleId)
+    public (double x, double y) GetPosition(string vehicleId)
         {
         var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, TraciConstants.VAR_POSITION, vehicleId);
         var position = (Position2D)result.Data;
@@ -100,7 +100,7 @@ public partial class Vehicle
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/pydoc/traci._vehicle.html#VehicleDomain-getPosition3D"/>
     /// </remarks>
-    public (double X, double Y, double Z) GetPosition3D(string vehicleId)
+    public (double x, double y, double z) GetPosition3D(string vehicleId)
         {
         var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, TraciConstants.VAR_POSITION3D, vehicleId);
         var position = (Position3D)result.Data;
@@ -129,7 +129,7 @@ public partial class Vehicle
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/pydoc/traci._vehicle.html#VehicleDomain-getRoadID"/>
     /// </remarks>
-    public string GetRoadID(string vehicleId)
+    public string GetRoadId(string vehicleId)
         {
         var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, TraciConstants.VAR_ROAD_ID, vehicleId);
         return ((TraciString)result.Data).Value;
@@ -143,7 +143,7 @@ public partial class Vehicle
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/pydoc/traci._vehicle.html#VehicleDomain-getLaneID"/>
     /// </remarks>
-    public string GetLaneID(string vehicleId)
+    public string GetLaneId(string vehicleId)
         {
         var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, TraciConstants.VAR_LANE_ID, vehicleId);
         return ((TraciString)result.Data).Value;
@@ -171,7 +171,7 @@ public partial class Vehicle
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/pydoc/traci._vehicle.html#VehicleDomain-getTypeID"/>
     /// </remarks>
-    public string GetTypeID(string vehicleId)
+    public string GetTypeId(string vehicleId)
         {
         var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, TraciConstants.VAR_TYPE, vehicleId);
         return ((TraciString)result.Data).Value;
@@ -185,7 +185,7 @@ public partial class Vehicle
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/pydoc/traci._vehicle.html#VehicleDomain-getRouteID"/>
     /// </remarks>
-    public string GetRouteID(string vehicleId)
+    public string GetRouteId(string vehicleId)
         {
         var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, TraciConstants.VAR_ROUTE_ID, vehicleId);
         return ((TraciString)result.Data).Value;
@@ -199,10 +199,10 @@ public partial class Vehicle
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/pydoc/traci._vehicle.html#VehicleDomain-getRouteIndex"/>
     /// </remarks>
-    public int GetRouteIndex(string vehicleId)
+    public string GetRouteIndex(string vehicleId)
         {
         var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, TraciConstants.VAR_ROUTE_ID, vehicleId);
-        return ((TraciInteger)result.Data).Value;
+        return ((TraciString)result.Data).Value;
         }
 
     /// <summary>
@@ -869,7 +869,7 @@ public partial class Vehicle
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/pydoc/traci._vehicle.html#VehicleDomain-getSpeedWithoutTraCI"/>
     /// </remarks>
-    public double GetSpeedWithoutTraCI(string vehicleId)
+    public double GetSpeedWithoutTraci(string vehicleId)
         {
         var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, TraciConstants.VAR_SPEED_WITHOUT_TRACI, vehicleId);
         return ((TraciDouble)result.Data).Value;
@@ -1028,7 +1028,8 @@ public partial class Vehicle
     /// </remarks>
     public List<StopData> GetStops(string vehicleId, int limit = 0)
         {
-        // TODO cause there is no discribe fos stop data, we try parse it as StopInfomation
+        //BUG sumo returns an traci compound object, which identifies itself with 9 objects in it, but it got many objects in it(num of stop*16)
+        // TODO cause there is no describe fos stop data, we try parse it as StopInformation
         // used in GetNextStops() command, which has been deprecated.
         var tmp = new TraciInteger(limit);
         var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, TraciConstants.VAR_NEXT_STOPS2, vehicleId, tmp);
@@ -1191,12 +1192,12 @@ public partial class Vehicle
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/pydoc/traci._vehicle.html#VehicleDomain-getEffort"/>
     /// </remarks>
-    public (double RequestTime, string edgeId) GetEffort(string vehicleId, double time, string edgeId)
+    public double GetEffort(string vehicleId, double time, string edgeId)
         {
         TraciCompoundObject tmp = [new TraciDouble(time), new TraciString(edgeId)];
         var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, TraciConstants.VAR_EDGE_EFFORT, vehicleId, tmp);
-        var effortInformation = (TraciCompoundObject)result.Data;
-        return new(((TraciDouble)effortInformation[0]).Value, ((TraciString)effortInformation[1]).Value);
+        return (TraciDouble)result.Data;
+
         }
 
     /// <summary>
@@ -1229,7 +1230,7 @@ public partial class Vehicle
     /// </remarks>
     public double GetDrivingDistance(string vehicleId, string edgeId, double position, int laneIndex = 0)
         {
-        TraciCompoundObject tmp = [new RoadMapPosition(edgeId, position, (byte)laneIndex), new TraciUnsignedByte((byte)DistanceType.DRIVINGDIST)];
+        TraciCompoundObject tmp = [new RoadMapPosition(edgeId, position, (byte)laneIndex), new TraciUnsignedByte((byte)DistanceType.DRIVINGDIST, true)];
         var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, TraciConstants.DISTANCE_REQUEST, vehicleId, tmp);
         return ((TraciDouble)result.Data).Value;
         }
@@ -1247,7 +1248,7 @@ public partial class Vehicle
 
     public double GetDrivingDistance2D(string vehicleId, double x, double y)
         {
-        TraciCompoundObject tmp = [new Position2D(x, y), new TraciUnsignedByte((byte)DistanceType.DRIVINGDIST)];
+        TraciCompoundObject tmp = [new Position2D(x, y), new TraciUnsignedByte((byte)DistanceType.DRIVINGDIST, true)];
         var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, TraciConstants.DISTANCE_REQUEST, vehicleId, tmp);
         return ((TraciDouble)result.Data).Value;
         }
@@ -1262,7 +1263,7 @@ public partial class Vehicle
     /// change lane information see <see href="https://sumo.dlr.de/docs/TraCI/Vehicle_Value_Retrieval.html#change_lane_information_0x13"></see><para/>
     /// see <see href="https://sumo.dlr.de/pydoc/traci._vehicle.html#VehicleDomain-getLaneChangeState"/>
     /// </remarks>
-    public (int Model, int Traci) GetLaneChangeState(string vehicleId, int direction)
+    public (int model, int traci) GetLaneChangeState(string vehicleId, int direction)
         {
         TraciInteger tmp = new(direction);
         var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, CHANGELANE, vehicleId, tmp);
@@ -1335,7 +1336,7 @@ public partial class Vehicle
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/pydoc/traci._vehicle.html#VehicleDomain-getNeighbors"/>
     /// </remarks>
-    public List<(string Id, double Distance)> GetNeighbors(string vehicleId, byte mode)
+    public List<(string id, double distance)> GetNeighbors(string vehicleId, byte mode)
         {
         TraciUnsignedByte tmp = new(mode);
         var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, TraciConstants.VAR_NEIGHBORS, vehicleId, tmp);
@@ -1351,7 +1352,7 @@ public partial class Vehicle
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/pydoc/traci._vehicle.html#VehicleDomain-getLeftFollowers"/>
     /// </remarks>
-    public List<(string Id, double Distance)> GetLeftFollowers(string vehicleId, bool blockingOnly = false) =>
+    public List<(string id, double distance)> GetLeftFollowers(string vehicleId, bool blockingOnly = false) =>
         GetNeighbors(vehicleId, blockingOnly ? (byte)4 : (byte)0);
 
     /// <summary>
@@ -1363,7 +1364,7 @@ public partial class Vehicle
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/pydoc/traci._vehicle.html#VehicleDomain-getLeftLeaders"/>
     /// </remarks>
-    public List<(string Id, double Distance)> GetLeftLeaders(string vehicleId, bool blockingOnly = false) =>
+    public List<(string id, double distance)> GetLeftLeaders(string vehicleId, bool blockingOnly = false) =>
         GetNeighbors(vehicleId, blockingOnly ? (byte)6 : (byte)2);
 
     /// <summary>
@@ -1375,7 +1376,7 @@ public partial class Vehicle
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/pydoc/traci._vehicle.html#VehicleDomain-getRightFollowers"/>
     /// </remarks>
-    public List<(string Id, double Distance)> GetRightFollowers(string vehicleId, bool blockingOnly = false) =>
+    public List<(string id, double distance)> GetRightFollowers(string vehicleId, bool blockingOnly = false) =>
         GetNeighbors(vehicleId, blockingOnly ? (byte)5 : (byte)1);
 
     /// <summary>
@@ -1387,7 +1388,7 @@ public partial class Vehicle
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/pydoc/traci._vehicle.html#VehicleDomain-getRightLeaders"/>
     /// </remarks>
-    public List<(string Id, double Distance)> GetRightLeaders(string vehicleId, bool blockingOnly = false) =>
+    public List<(string id, double distance)> GetRightLeaders(string vehicleId, bool blockingOnly = false) =>
         GetNeighbors(vehicleId, blockingOnly ? (byte)7 : (byte)3);
 
     /// <summary>
@@ -1431,12 +1432,11 @@ public partial class Vehicle
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/pydoc/traci._vehicle.html#VehicleDomain-getSecureGap"/>
     /// </remarks>
-    public double GetSecureGap(string vehicleId, double speed, double gap, double leaderSpeed, double leaderMaxDecel, string leaderId = "")
+    public double GetSecureGap(string vehicleId, double speed, double leaderSpeed, double leaderMaxDecel, string leaderId = "")
         {
         TraciCompoundObject tmp =
         [
             new TraciDouble(speed),
-            new TraciDouble(gap),
             new TraciDouble(leaderSpeed),
             new TraciDouble(leaderMaxDecel),
             new TraciString(leaderId),
