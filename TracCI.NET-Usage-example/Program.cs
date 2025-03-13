@@ -62,7 +62,7 @@ Console.WriteLine($"Connected to SUMO version: {api}, Version String:{ver}");
 //client.TestPerson(); // not all passed (taxi)
 /*                                        */
 client.Control.SimStep();
-client.TestVehicle(); // all passed
+//client.TestVehicle(); // all passed
 //client.TestVehicleType(); // all passed
 
 

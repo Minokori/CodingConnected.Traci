@@ -228,27 +228,9 @@ public partial class VehicleType
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/pydoc/traci._vehicletype.html#VehicleTypeDomain-setColor"/>
     /// </remarks>
-    public bool SetColor(string typeId, Color color) =>
-        _helper.ExecuteSetCommand(VEHICLETYPE_VARIABLE, TraciConstants.VAR_COLOR, typeId, color);
+    public bool SetColor(string typeId, int r, int g, int b, int a = 255) =>
+        _helper.ExecuteSetCommand(VEHICLETYPE_VARIABLE, TraciConstants.VAR_COLOR, typeId, new Color(r, g, b, a));
 
-    /// <summary>
-    /// Sets the vehicle type's color.
-    /// </summary>
-    /// <param name="typeId">vehicle type ID</param>
-    /// <param name="r">red value</param>
-    /// <param name="g">green value</param>
-    /// <param name="b">blue value</param>
-    /// <param name="a">alpha value</param>
-    /// <returns>success or not</returns>
-    /// <remarks>
-    /// see <see href="https://sumo.dlr.de/pydoc/traci._vehicletype.html#VehicleTypeDomain-setColor"/>
-    /// </remarks>
-    public bool SetColor(string typeId, int r, int g, int b, int a)
-        {
-        var tmp = new Color(r, g, b, a);
-
-        return SetColor(typeId, tmp);
-        }
 
     /// <summary>
     /// Sets the maximum lateral speed in m/s of this type.

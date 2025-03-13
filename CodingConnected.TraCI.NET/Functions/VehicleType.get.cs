@@ -238,11 +238,10 @@ public partial class VehicleType
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/pydoc/traci._vehicletype.html#VehicleTypeDomain-getColor"/>
     /// </remarks>
-    public Tuple<int, int, int, int> GetColor(string typeId)
+    public (int r, int g, int b, int a) GetColor(string typeId)
         {
         var result = _helper.ExecuteGetCommand(VEHICLETYPE_VARIABLE, TraciConstants.VAR_COLOR, typeId);
-        var color = (Color)result.Data;
-        return new(color.R, color.G, color.B, color.A);
+        return (Color)result.Data;
         }
 
     /// <summary>
@@ -357,10 +356,10 @@ public partial class VehicleType
     /// base impatience see <see href="https://sumo.dlr.de/docs/Definition_of_Vehicles%2C_Vehicle_Types%2C_and_Routes.html#impatience"/><para/>
     /// see <see href="https://sumo.dlr.de/pydoc/traci._vehicletype.html#VehicleTypeDomain-getImpatience"/>
     /// </remarks>
-    public string GetImpatience(string typeId)
+    public double GetImpatience(string typeId)
         {
         var result = _helper.ExecuteGetCommand(VEHICLETYPE_VARIABLE, TraciConstants.VAR_IMPATIENCE, typeId);
-        return ((TraciString)result.Data).Value;
+        return ((TraciDouble)result.Data).Value;
         }
 
 
