@@ -1,9 +1,8 @@
 using System.Diagnostics;
-using CodingConnected.TraCI.NET.ProtocolTypes;
-using CodingConnected.TraCI.NET.Services;
+using CodingConnected.Traci.Services;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace CodingConnected.TraCI.NET;
+namespace CodingConnected.Traci;
 
 /// <summary>
 /// A simple )and yet incomplete) client-side implementation of TraCI, for using SUMO
@@ -16,13 +15,15 @@ public partial class TraciClient : IDisposable
     private ITCPConnectService TcpService => services.GetRequiredService<ITCPConnectService>();
     private readonly ServiceProvider services;
 
-
     /// <summary>
     /// Connects to the SUMO server instance
     /// </summary>
     /// <param name="hostname">Hostname or ip address where SUMO is running</param>
     /// <param name="port">Port at which SUMO exposes the API</param>
-    public async Task<(int traciApiVersion, string sumoVersion)> ConnectAsync(string hostname, int port) =>
+    public async Task<(int traciApiVersion, string sumoVersion)> ConnectAsync(
+        string hostname,
+        int port
+    ) =>
         await TcpService
             .ConnectAsync(hostname, port)
             .ContinueWith(_ => Control.GetVersion())
@@ -46,7 +47,6 @@ public partial class TraciClient : IDisposable
         bool quit = true
     )
         {
-
         SumoFile = sumoFile ?? SumoFile;
         Port = port ?? Port;
 
@@ -70,7 +70,5 @@ public partial class TraciClient : IDisposable
         return (versionId, versionString);
         }
 
-
-    public List<TraciResult> SendMessage(TraCICommand command) => TcpService.SendMessage(command);
-
+    public List<TraciResult> SendMessage(TraciCommand command) => TcpService.SendMessage(command);
     }

@@ -1,7 +1,5 @@
-using CodingConnected.TraCI.NET.Constants;
-using CodingConnected.TraCI.NET.DataTypes;
-using static CodingConnected.TraCI.NET.Constants.CommandIdentifier.Set;
-namespace CodingConnected.TraCI.NET.Functions;
+using static CodingConnected.Traci.Constants.CommandIdentifier.Set;
+namespace CodingConnected.Traci.Functions;
 
 public partial class Gui
     {
@@ -75,7 +73,7 @@ public partial class Gui
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/pydoc/traci._gui.html#GuiDomain-setBoundary"/>
     /// </remarks>
-    public bool SetBoundary(string viewId, DataTypes.Polygon boundaryBox) => boundaryBox.Count != 2
+    public bool SetBoundary(string viewId, Polygon boundaryBox) => boundaryBox.Count != 2
             ? throw new ArgumentException("The boundary box must contain exactly 2 points")
             : _helper.ExecuteSetCommand(GUI_VARIABLE, TraciConstants.VAR_VIEW_BOUNDARY, viewId, boundaryBox);
 
@@ -95,7 +93,7 @@ public partial class Gui
     /// </remarks>
     public bool SetBoundary(string viewId, double xMin, double yMin, double xMax, double yMax)
         {
-        DataTypes.Polygon boundaryBox = [new(xMin, yMin), new(xMax, yMax)];
+        Polygon boundaryBox = [new(xMin, yMin), new(xMax, yMax)];
         return _helper.ExecuteSetCommand(GUI_VARIABLE, TraciConstants.VAR_VIEW_BOUNDARY, viewId, boundaryBox);
         }
 

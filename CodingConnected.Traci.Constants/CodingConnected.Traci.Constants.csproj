@@ -1,9 +1,42 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
-  <PropertyGroup>
-    <TargetFramework>net9.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
-
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+        <Authors>CodingConnected,Minokori</Authors>
+        <Title>Traci Constants</Title>
+        <PackageOutputPath>D:\Lenovo\Documents\Visual Studio 2022\Nuget Debug Packages\</PackageOutputPath>
+        <Description>Constants used for Traci Commands</Description>
+        <Copyright>MIT License, Copyright (c) 2017-2018 CodingConnected e.U., Menno van der Woude; MIT License, Minokori</Copyright>
+        <PackageProjectUrl>https://github.com/Minokori/CodingConnected.Traci/tree/feature_updates</PackageProjectUrl>
+        <PackageIcon>sumo-logo.png</PackageIcon>
+        <PackageTags>Traci;SUMO</PackageTags>
+        <PackageReleaseNotes>Break Change.
+Split the original project into 3 parts.
+        </PackageReleaseNotes>
+        <IncludeSymbols>False</IncludeSymbols>
+        <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
+        <Company>CodingConnected,Minokori</Company>
+        <PackageId>CodingConnected.Traci.Constants</PackageId>
+        <Version>1.0.0</Version>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+        <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+        <IsAotCompatible>True</IsAotCompatible>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+        <IsAotCompatible>True</IsAotCompatible>
+    </PropertyGroup>
+    <ItemGroup>
+      <None Update="README.md">
+        <Pack>True</Pack>
+        <PackagePath>\</PackagePath>
+      </None>
+      <None Update="sumo-logo.png">
+        <Pack>True</Pack>
+        <PackagePath>\</PackagePath>
+      </None>
+    </ItemGroup>
 </Project>

@@ -11,4 +11,3 @@ public enum StopFlag : byte
     CHARGING_STATION = 0x20,
     PARKING_AREA = 0x40,
     }
-

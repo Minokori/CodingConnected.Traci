@@ -1,9 +1,7 @@
-using CodingConnected.TraCI.NET.Constants;
-using CodingConnected.TraCI.NET.DataTypes;
-using static CodingConnected.TraCI.NET.Constants.CommandIdentifier.Get;
-namespace CodingConnected.TraCI.NET.Functions;
+using static CodingConnected.Traci.Constants.CommandIdentifier.Get;
+namespace CodingConnected.Traci.Functions;
 
-public partial class Polygon
+public partial class PolygonFunctions
     {
     /// <summary>
     /// Returns a list of ids of all polygons
@@ -71,7 +69,7 @@ public partial class Polygon
     public List<(double x, double y)> GetShape(string polygonId)
         {
         var result = _helper.ExecuteGetCommand(POLYGON_VARIABLE, TraciConstants.VAR_SHAPE, polygonId);
-        return (DataTypes.Polygon)result.Data;
+        return (Polygon)result.Data;
         }
 
     /// <summary>

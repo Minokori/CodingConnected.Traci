@@ -8,18 +8,16 @@
         <ImplicitUsings>enable</ImplicitUsings>
     </PropertyGroup>
     <ItemGroup>
-        <ProjectReference Include="..\CodingConnected.Traci.NET\CodingConnected.TraCI.NET.csproj" />
-    </ItemGroup>
-    <ItemGroup>
-        <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
-    </ItemGroup>
-    <ItemGroup>
         <None Include="sumo-scenarios\**">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
     </ItemGroup>
     <ItemGroup>
-      <Using Include="CodingConnected.TraCI.NET" />
+      <PackageReference Include="CodingConnected.Traci" Version="1.2.0" />
+    </ItemGroup>
+    <ItemGroup>
+      <Using Include="CodingConnected.Traci" />
+      <Using Include="CodingConnected.Traci.Constants" />
       <Using Include="System.Reflection" />
     </ItemGroup>
 </Project>

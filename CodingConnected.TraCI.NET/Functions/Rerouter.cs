@@ -1,6 +1,6 @@
-using CodingConnected.TraCI.NET.Services;
+using CodingConnected.Traci.Services;
 
-namespace CodingConnected.TraCI.NET.Functions;
+namespace CodingConnected.Traci.Functions;
 
 /// <summary>
 /// rerouter related Commands

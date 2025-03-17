@@ -1,8 +1,5 @@
-using CodingConnected.TraCI.NET.Constants;
-using CodingConnected.TraCI.NET.DataTypes;
-using static CodingConnected.TraCI.NET.Constants.CommandIdentifier.Get;
-
-namespace CodingConnected.TraCI.NET.Functions;
+using static CodingConnected.Traci.Constants.CommandIdentifier.Get;
+namespace CodingConnected.Traci.Functions;
 
 public partial class Edge
     {
@@ -259,7 +256,7 @@ public partial class Edge
     /// </remarks>
     public double GetLastStepMeanSpeed(string edgeId)
         {
-        var result = _helper.ExecuteGetCommand(EDGE_VARIABLE, DataType.COLOR.ToByte(), edgeId);
+        var result = _helper.ExecuteGetCommand(EDGE_VARIABLE, (byte)DataType.COLOR, edgeId);
         return (TraciDouble)result.Data;
         }
 

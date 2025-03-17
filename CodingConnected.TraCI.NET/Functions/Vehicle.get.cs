@@ -1,9 +1,5 @@
-using CodingConnected.TraCI.NET.Constants;
-using CodingConnected.TraCI.NET.DataTypes;
-using static CodingConnected.TraCI.NET.Constants.CommandIdentifier;
-using static CodingConnected.TraCI.NET.Constants.CommandIdentifier.Get;
-
-namespace CodingConnected.TraCI.NET.Functions;
+using static CodingConnected.Traci.Constants.CommandIdentifier.Get;
+namespace CodingConnected.Traci.Functions;
 
 public partial class Vehicle
     {
@@ -1266,7 +1262,7 @@ public partial class Vehicle
     public (int model, int traci) GetLaneChangeState(string vehicleId, int direction)
         {
         TraciInteger tmp = new(direction);
-        var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, CHANGELANE, vehicleId, tmp);
+        var result = _helper.ExecuteGetCommand(VEHICLE_VARIABLE, CommandIdentifier.CHANGELANE, vehicleId, tmp);
         var item = (TraciCompoundObject)result.Data;
         return new(((TraciInteger)item[0]).Value, ((TraciInteger)item[1]).Value);
         }

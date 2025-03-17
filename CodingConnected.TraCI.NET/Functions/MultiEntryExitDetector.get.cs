@@ -1,7 +1,5 @@
-using CodingConnected.TraCI.NET.Constants;
-using CodingConnected.TraCI.NET.DataTypes;
-using static CodingConnected.TraCI.NET.Constants.CommandIdentifier.Get;
-namespace CodingConnected.TraCI.NET.Functions;
+using static CodingConnected.Traci.Constants.CommandIdentifier.Get;
+namespace CodingConnected.Traci.Functions;
 
 public partial class MultiEntryExitDetector
     {
@@ -73,7 +71,7 @@ public partial class MultiEntryExitDetector
     public List<double> GetEntryPositions(string detectorId)
         {
         var result = _helper.ExecuteGetCommand(MULTIENTRYEXIT_VARIABLE, TraciConstants.VAR_POSITION, detectorId);
-        return (TraCIDoubleList)result.Data;
+        return (TraciDoubleList)result.Data;
         }
 
     /// <summary>
@@ -87,7 +85,7 @@ public partial class MultiEntryExitDetector
     public List<double> GetExitPositions(string detectorId)
         {
         var result = _helper.ExecuteGetCommand(MULTIENTRYEXIT_VARIABLE, TraciConstants.VAR_EXIT_POSITIONS, detectorId);
-        return (TraCIDoubleList)result.Data;
+        return (TraciDoubleList)result.Data;
 
         }
 

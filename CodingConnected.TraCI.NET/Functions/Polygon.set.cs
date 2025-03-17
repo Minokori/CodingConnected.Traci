@@ -1,9 +1,7 @@
-using CodingConnected.TraCI.NET.Constants;
-using CodingConnected.TraCI.NET.DataTypes;
-using static CodingConnected.TraCI.NET.Constants.CommandIdentifier.Set;
-namespace CodingConnected.TraCI.NET.Functions;
+using static CodingConnected.Traci.Constants.CommandIdentifier.Set;
+namespace CodingConnected.Traci.Functions;
 
-public partial class Polygon
+public partial class PolygonFunctions
     {
     /// <summary>
     /// Sets the shape's type to the given value
@@ -46,7 +44,7 @@ public partial class Polygon
     /// </remarks>
     public bool SetShape(string polygonId, List<(double x, double y)> shape)
         {
-        DataTypes.Polygon polygon = new(shape);
+        Polygon polygon = new(shape);
         return _helper.ExecuteSetCommand(POLYGON_VARIABLE, TraciConstants.VAR_SHAPE, polygonId, polygon);
         }
 
@@ -81,7 +79,7 @@ public partial class Polygon
         }
 
     /// <summary>
-    /// Adds the defined Polygon
+    /// Adds the defined PolygonFunctions
     /// </summary>
     /// <param name="id"></param>
     /// <param name="name"></param>
@@ -101,14 +99,14 @@ public partial class Polygon
             new Color(r, g, b, a),
             new TraciUnsignedByte(filled == false ?(byte) 0 :(byte) 1),
             new TraciInteger(layer) ,
-            new DataTypes.Polygon(shape),
+            new Polygon(shape),
         };
 
         return _helper.ExecuteSetCommand(POLYGON_VARIABLE, TraciConstants.ADD, id, tmp);
         }
 
     /// <summary>
-    /// Removes the defined Polygon
+    /// Removes the defined PolygonFunctions
     /// </summary>
     /// <param name="id"></param>
     /// <param name="layer"></param>
@@ -123,7 +121,7 @@ public partial class Polygon
         }
 
     /// <summary>
-    /// Adds the specified dynamics for the Polygon
+    /// Adds the specified dynamics for the PolygonFunctions
     /// </summary>
     /// <param name="polygonId">ID of the shape, upon which the specified dynamics shall act</param>
     /// <param name="trackedObjectId">ID of a SUMO traffic object, which shall be tracked by the shape</param>
@@ -147,8 +145,8 @@ public partial class Polygon
         var tmp = new TraciCompoundObject
         {
             new TraciString(trackedObjectId)  ,
-            new TraCIDoubleList(timeSpan),
-            new TraCIDoubleList(alphaSpan),
+            new TraciDoubleList(timeSpan),
+            new TraciDoubleList(alphaSpan),
             new TraciUnsignedByte(looped == false ?(byte) 0 :(byte) 1),
             new TraciUnsignedByte(rotate == false ?(byte) 0 :(byte) 1),
         };

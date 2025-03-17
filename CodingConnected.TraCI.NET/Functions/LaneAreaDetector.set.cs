@@ -1,7 +1,4 @@
-using CodingConnected.TraCI.NET.Constants;
-using CodingConnected.TraCI.NET.DataTypes;
-using static CodingConnected.TraCI.NET.Constants.CommandIdentifier;
-namespace CodingConnected.TraCI.NET.Functions;
+namespace CodingConnected.Traci.Functions;
 public partial class LaneAreaDetector
     {
     /// <summary>
@@ -17,6 +14,6 @@ public partial class LaneAreaDetector
     public bool OverrideVehicleNumber(string detectorId, int vehicleNumber)
         {
         TraciInteger tmp = new(vehicleNumber);
-        return _helper.ExecuteSetCommand(CHANGE_LANE_AREA_DETECTOR, TraciConstants.VAR_VEHICLE_NUMBER, detectorId, tmp);
+        return _helper.ExecuteSetCommand(CommandIdentifier.CHANGE_LANE_AREA_DETECTOR, TraciConstants.VAR_VEHICLE_NUMBER, detectorId, tmp);
         }
     }

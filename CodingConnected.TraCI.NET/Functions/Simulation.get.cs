@@ -1,9 +1,5 @@
-using CodingConnected.TraCI.NET.Constants;
-using CodingConnected.TraCI.NET.DataTypes;
-using static CodingConnected.TraCI.NET.Constants.CommandIdentifier.Get;
-using static CodingConnected.TraCI.NET.Constants.TraciConstants;
-
-namespace CodingConnected.TraCI.NET.Functions;
+using static CodingConnected.Traci.Constants.CommandIdentifier.Get;
+namespace CodingConnected.Traci.Functions;
 
 public partial class Simulation
     {
@@ -165,7 +161,7 @@ public partial class Simulation
     public ((double x, double y) lowerLeftPoint, (double x, double y) upperRightPoint) GetNetBoundary()
         {
         var result = _helper.ExecuteGetCommand(SIM_VARIABLE, TraciConstants.VAR_NET_BOUNDING_BOX);
-        var polygon = (DataTypes.Polygon)result.Data;
+        var polygon = (Polygon)result.Data;
         return new(polygon[0], polygon[1]);
         }
 
@@ -414,9 +410,8 @@ public partial class Simulation
         var tmp = new TraciCompoundObject()
         {
             new RoadMapPosition(edgeId,position,laneIndex),
-            new TraciUnsignedByte(positionType.ToByte()),
+            new TraciUnsignedByte((byte)positionType),
         };
-        // 00 00 00 26 22 ab 82 00 00 00 00 0f 00 00 00 02 04 00 00 00 06 44 31 32 44 31 33 00 00 00 00 00 00 00 00 00 07 01
         var result = _helper.ExecuteGetCommand(SIM_VARIABLE, TraciConstants.POSITION_CONVERSION, extendParameter: tmp);
 
         switch (toGeo)
@@ -452,7 +447,7 @@ public partial class Simulation
         var tmp = new TraciCompoundObject()
         {
             new RoadMapPosition(edgeId,position,laneIndex),
-            new TraciUnsignedByte(positionType.ToByte()),
+            new TraciUnsignedByte((byte) positionType),
         };
         var result = _helper.ExecuteGetCommand(SIM_VARIABLE, TraciConstants.POSITION_CONVERSION, extendParameter: tmp);
         switch (toGeo)
@@ -534,8 +529,8 @@ public partial class Simulation
     public Tuple<string, int, double> ConvertRoad(double x, double y, bool isGeo = false, string vClass = "ignoring")
         {
         ITraciType position = isGeo ? new LonLatPosition(x, y) : new Position2D(x, y);
-        TraciCompoundObject tmp = [position, new TraciUnsignedByte(DataType.ROADMAP.ToByte()), new TraciString(vClass)];
-        var result = _helper.ExecuteGetCommand(SIM_VARIABLE, POSITION_CONVERSION, extendParameter: tmp);
+        TraciCompoundObject tmp = [position, new TraciUnsignedByte((byte)DataType.ROADMAP), new TraciString(vClass)];
+        var result = _helper.ExecuteGetCommand(SIM_VARIABLE, TraciConstants.POSITION_CONVERSION, extendParameter: tmp);
         var roadMapPosition = (RoadMapPosition)result.Data;
         return new(roadMapPosition.RoadId, roadMapPosition.LaneId, roadMapPosition.Position);
         }

@@ -1,5 +1,4 @@
-namespace CodingConnected.TraCI.NET.Constants;
-
+namespace CodingConnected.Traci.Constants;
 public static partial class CommandIdentifier
     {
     public enum Subscribe : byte

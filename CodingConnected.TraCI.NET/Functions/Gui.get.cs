@@ -1,7 +1,5 @@
-using CodingConnected.TraCI.NET.Constants;
-using CodingConnected.TraCI.NET.DataTypes;
-using static CodingConnected.TraCI.NET.Constants.CommandIdentifier;
-namespace CodingConnected.TraCI.NET.Functions;
+using static CodingConnected.Traci.Constants.CommandIdentifier;
+namespace CodingConnected.Traci.Functions;
 
 public partial class Gui
     {
@@ -61,7 +59,7 @@ public partial class Gui
     public Tuple<Tuple<double, double>, Tuple<double, double>> GetBoundary(string viewId = "View #0")
         {
         var result = _helper.ExecuteGetCommand(Get.GUI_VARIABLE, TraciConstants.VAR_VIEW_BOUNDARY, viewId);
-        var polygon = (DataTypes.Polygon)result.Data;
+        var polygon = (Polygon)result.Data;
         return new(new(polygon[0].X, polygon[0].Y), new(polygon[1].X, polygon[1].Y));
         }
 

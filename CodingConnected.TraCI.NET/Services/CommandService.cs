@@ -1,8 +1,4 @@
-using CodingConnected.TraCI.NET.Constants;
-using CodingConnected.TraCI.NET.DataTypes;
-using CodingConnected.TraCI.NET.ProtocolTypes;
-
-namespace CodingConnected.TraCI.NET.Services;
+namespace CodingConnected.Traci.Services;
 
 internal partial class CommandService(ITCPConnectService tcpService, IDebugService debugHelper) : ICommandService
     {
@@ -79,7 +75,7 @@ internal partial class CommandService(ITCPConnectService tcpService, IDebugServi
     /// Helper GenerateSubscribeCommand for Object Context Subscription
     /// </summary>
     /// <returns></returns>
-    public TraCICommand GenerateSubscribeCommand(
+    public TraciCommand GenerateSubscribeCommand(
         double beginTime,
         double endTime,
         byte commandIdentifier,
@@ -93,11 +89,11 @@ internal partial class CommandService(ITCPConnectService tcpService, IDebugServi
         List<byte> commandPart2 = contextDomain.HasValue ? [contextDomain.Value] : [];
         List<byte> commandPart3 = contextRange.HasValue ? [.. TraciDouble.AsBytes(contextRange.Value)] : [];
         List<byte> commandPart4 = [(byte)variables.Count, .. variables];
-        TraCICommand command = new(commandIdentifier, [.. commandPart1, .. commandPart2, .. commandPart3, .. commandPart4]);
+        TraciCommand command = new(commandIdentifier, [.. commandPart1, .. commandPart2, .. commandPart3, .. commandPart4]);
         return command;
         }
 
-    public TraCICommand GenerateCommand(byte commandIdentifier, byte? messageType = null, string? id = null, ITraciType? contents = null)
+    public TraciCommand GenerateCommand(byte commandIdentifier, byte? messageType = null, string? id = null, ITraciType? contents = null)
         {
         byte[] commandPart1 = messageType.HasValue ? [messageType.Value] : [];
         var commandPart2 = id is null ? [] : TraciString.AsBytes(id);
@@ -107,7 +103,7 @@ internal partial class CommandService(ITCPConnectService tcpService, IDebugServi
             {
             commandPart3 = [.. commandPart3.Skip(1)];
             }
-        TraCICommand command = new(commandIdentifier, [.. commandPart1, .. commandPart2, .. commandPart3]);
+        TraciCommand command = new(commandIdentifier, [.. commandPart1, .. commandPart2, .. commandPart3]);
 
         _debugHelper.LogToConsole($"GenerateCommand : {command.DebugString}");
 

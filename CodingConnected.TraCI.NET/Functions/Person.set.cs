@@ -1,8 +1,5 @@
-using CodingConnected.TraCI.NET.Constants;
-using CodingConnected.TraCI.NET.DataTypes;
-using static CodingConnected.TraCI.NET.Constants.CommandIdentifier;
-using static CodingConnected.TraCI.NET.Constants.CommandIdentifier.Set;
-namespace CodingConnected.TraCI.NET.Functions;
+using static CodingConnected.Traci.Constants.CommandIdentifier.Set;
+namespace CodingConnected.Traci.Functions;
 
 public partial class Person
     {
@@ -182,7 +179,7 @@ public partial class Person
     /// see <see href="https://sumo.dlr.de/pydoc/traci._person.html#PersonDomain-rerouteTraveltime"/>
     /// </remarks>
     public bool RerouteTravelTime(string personId) =>
-        _helper.ExecuteSetCommand(PERSON_VARIABLE, REROUTE_TRAVELTIME, personId, new TraciCompoundObject());
+        _helper.ExecuteSetCommand(PERSON_VARIABLE, CommandIdentifier.REROUTE_TRAVELTIME, personId, new TraciCompoundObject());
 
     /// <summary>
     /// Moves the person to a new position after normal movements have taken place.<para/>

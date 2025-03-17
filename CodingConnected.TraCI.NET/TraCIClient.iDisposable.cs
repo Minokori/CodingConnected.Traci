@@ -1,4 +1,4 @@
-namespace CodingConnected.TraCI.NET;
+namespace CodingConnected.Traci;
 
 public partial class TraciClient
     {

@@ -8,7 +8,7 @@ public static partial class TraciConstants
     /// <summary>
     /// Traci API version
     /// </summary>
-    public static int TRACI_VERSION => 18;
+    public static int TRACI_VERSION => 21;
 
     // return value for invalid queries (especially vehicle is not on the road), see Position::INVALID
     public const double INVALID_DOUBLE_VALUE = -1073741824;

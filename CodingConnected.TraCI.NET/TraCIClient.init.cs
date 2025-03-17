@@ -1,8 +1,8 @@
-using CodingConnected.TraCI.NET.Functions;
-using CodingConnected.TraCI.NET.Services;
+using CodingConnected.Traci.Functions;
+using CodingConnected.Traci.Services;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace CodingConnected.TraCI.NET;
+namespace CodingConnected.Traci;
 
 public partial class TraciClient
     {
@@ -27,7 +27,7 @@ public partial class TraciClient
         servicesBuilder.AddSingleton<VehicleType>();
         servicesBuilder.AddSingleton<Route>();
         servicesBuilder.AddSingleton<POI>();
-        servicesBuilder.AddSingleton<Polygon>();
+        servicesBuilder.AddSingleton<PolygonFunctions>();
         servicesBuilder.AddSingleton<Junction>();
         servicesBuilder.AddSingleton<Edge>();
         servicesBuilder.AddSingleton<Gui>();

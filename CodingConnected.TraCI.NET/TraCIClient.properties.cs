@@ -1,8 +1,8 @@
-using CodingConnected.TraCI.NET.Functions;
-using CodingConnected.TraCI.NET.Services;
+using CodingConnected.Traci.Functions;
+using CodingConnected.Traci.Services;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace CodingConnected.TraCI.NET;
+namespace CodingConnected.Traci;
 
 public partial class TraciClient
     {
@@ -29,7 +29,7 @@ public partial class TraciClient
 
     public POI POI => services.GetRequiredService<POI>();
 
-    public Polygon Polygon => services.GetRequiredService<Polygon>();
+    public PolygonFunctions Polygon => services.GetRequiredService<PolygonFunctions>();
 
     public Junction Junction => services.GetRequiredService<Junction>();
 

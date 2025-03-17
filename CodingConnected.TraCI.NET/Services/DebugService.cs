@@ -1,4 +1,4 @@
-namespace CodingConnected.TraCI.NET.Services;
+namespace CodingConnected.Traci.Services;
 internal class DebugService(bool enableDebug = false) : IDebugService
     {
 

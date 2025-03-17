@@ -1,7 +1,5 @@
-using CodingConnected.TraCI.NET.Constants;
-using CodingConnected.TraCI.NET.DataTypes;
-using static CodingConnected.TraCI.NET.Constants.CommandIdentifier;
-namespace CodingConnected.TraCI.NET.Functions;
+using static CodingConnected.Traci.Constants.CommandIdentifier.Set;
+namespace CodingConnected.Traci.Functions;
 
 public partial class Edge
 // https://sumo.dlr.de/docs/TraCI/Change_Edge_State.html
@@ -26,7 +24,7 @@ public partial class Edge
                 (null, _) or (_, null) => throw new ArgumentException($"Both {nameof(beginTime)} and {nameof(endTime)} must be specified"),
                 _ => [new TraciDouble(beginTime.Value), new TraciDouble(endTime.Value), new TraciDouble(travelTime)],
                 };
-        return _helper.ExecuteSetCommand(Set.EDGE_VARIABLE, TraciConstants.VAR_EDGE_TRAVELTIME, edgeId, tmp);
+        return _helper.ExecuteSetCommand(EDGE_VARIABLE, TraciConstants.VAR_EDGE_TRAVELTIME, edgeId, tmp);
         }
 
     /// <summary>
@@ -50,7 +48,7 @@ public partial class Edge
                 _ => [new TraciDouble(beginTime.Value), new TraciDouble(endTime.Value), new TraciDouble(effort)],
                 };
 
-        return _helper.ExecuteSetCommand(Set.EDGE_VARIABLE, TraciConstants.VAR_EDGE_EFFORT, edgeId, tmp);
+        return _helper.ExecuteSetCommand(EDGE_VARIABLE, TraciConstants.VAR_EDGE_EFFORT, edgeId, tmp);
         }
 
     /// <summary>
@@ -65,6 +63,6 @@ public partial class Edge
     public bool SetMaxSpeed(string edgeId, double speed)
         {
         TraciDouble tmp = new(speed);
-        return _helper.ExecuteSetCommand(Set.EDGE_VARIABLE, TraciConstants.VAR_MAXSPEED, edgeId, tmp);
+        return _helper.ExecuteSetCommand(EDGE_VARIABLE, TraciConstants.VAR_MAXSPEED, edgeId, tmp);
         }
     }

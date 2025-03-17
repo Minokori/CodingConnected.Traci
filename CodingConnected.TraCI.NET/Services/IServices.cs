@@ -1,8 +1,6 @@
 using System.Net.Sockets;
-using CodingConnected.TraCI.NET.DataTypes;
-using CodingConnected.TraCI.NET.ProtocolTypes;
 
-namespace CodingConnected.TraCI.NET.Services;
+namespace CodingConnected.Traci.Services;
 
 public interface ITCPConnectService : IDisposable
     {
@@ -10,7 +8,7 @@ public interface ITCPConnectService : IDisposable
     NetworkStream? Stream { get; }
     Task ConnectAsync(string hostname, int port);
     bool Connect(string hostname, int port);
-    List<TraciResult> SendMessage(TraCICommand command);
+    List<TraciResult> SendMessage(TraciCommand command);
     }
 
 public interface ICommandService
@@ -55,8 +53,8 @@ public interface ICommandService
         byte contextDomain,
         double contextRange);
 
-    TraCICommand GenerateCommand(byte commandIdentifier, byte? variable = null, string? id = null, ITraciType? extendParameter = null);
-    TraCICommand GenerateSubscribeCommand(
+    TraciCommand GenerateCommand(byte commandIdentifier, byte? variable = null, string? id = null, ITraciType? extendParameter = null);
+    TraciCommand GenerateSubscribeCommand(
         double beginTime,
         double endTime,
         byte commandIdentifier,

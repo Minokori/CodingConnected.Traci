@@ -1,10 +1,6 @@
-using CodingConnected.TraCI.NET.Constants;
-using CodingConnected.TraCI.NET.DataTypes;
-using CodingConnected.TraCI.NET.ProtocolTypes;
-using CodingConnected.TraCI.NET.Services;
-using static CodingConnected.TraCI.NET.Constants.CommandIdentifier;
-using static CodingConnected.TraCI.NET.Constants.TraciConstants;
-namespace CodingConnected.TraCI.NET.Functions;
+using CodingConnected.Traci.Services;
+
+namespace CodingConnected.Traci.Functions;
 
 /// <summary>
 /// Control-related commands
@@ -19,7 +15,12 @@ namespace CodingConnected.TraCI.NET.Functions;
 /// </response>
 /// </list>
 /// </remarks>
-public class Control(ITCPConnectService tcpService, ICommandService helper, IEventService eventService, IDebugService logger) : FunctionBase(tcpService, helper, logger)
+public class Control(
+    ITCPConnectService tcpService,
+    ICommandService helper,
+    IEventService eventService,
+    IDebugService logger
+) : FunctionBase(tcpService, helper, logger)
     {
     private readonly IEventService _events = eventService;
 
@@ -41,7 +42,7 @@ public class Control(ITCPConnectService tcpService, ICommandService helper, IEve
     /// </remarks>
     public (int traciApiVersion, string sumoVersion) GetVersion()
         {
-        var command = _helper.GenerateCommand(GETVERSION);
+        var command = _helper.GenerateCommand(CommandIdentifier.GETVERSION);
         var results = _tcpService.SendMessage(command);
         switch ((results[0] as IStatusResponse).Result)
             {
@@ -49,12 +50,12 @@ public class Control(ITCPConnectService tcpService, ICommandService helper, IEve
                     {
                     (var apiVersion, var leftBytes) = TraciInteger.FromBytes(results[1].Content);
                     (var version, _) = TraciString.FromBytes(leftBytes);
-                    if (apiVersion.Value != TRACI_VERSION)
+                    if (apiVersion.Value != TraciConstants.TRACI_VERSION)
                         {
                         Console.WriteLine(
                             $"Warning: TraCI API version mismatch."
                                 + $" SUMO installed with API version : {apiVersion.Value}."
-                                + $" This library is using API version {TRACI_VERSION}."
+                                + $" This library is using API version {TraciConstants.TRACI_VERSION}."
                         );
                         }
                     return new(apiVersion.Value, version.Value);
@@ -78,7 +79,10 @@ public class Control(ITCPConnectService tcpService, ICommandService helper, IEve
     public void SimStep(double targetTime = 0)
         {
         // make a simulation step
-        var command = _helper.GenerateCommand(SIMSTEP, extendParameter: new TraciDouble(targetTime, true));
+        var command = _helper.GenerateCommand(
+            CommandIdentifier.SIMSTEP,
+            extendParameter: new TraciDouble(targetTime, true)
+        );
         // get the results
         var results = _tcpService.SendMessage(command);
         if (results.Count != 1)
@@ -96,13 +100,21 @@ public class Control(ITCPConnectService tcpService, ICommandService helper, IEve
                     {
                     case 0x0e: // 0xeX => VariableType Subscription Content
                             {
-                            eventArgs = new VariableSubscriptionEventArgs(response.ObjectId, response.VariableCount);
+                            eventArgs = new VariableSubscriptionEventArgs(
+                                response.ObjectId,
+                                response.VariableCount
+                            );
                             break;
                             }
                     case 0x09: // 0x9X => Object Context Subscription Content
                             {
-                            var c = (TraCIContextSubscriptionResponse)response;
-                            eventArgs = new ContextSubscriptionEventArgs(c.ObjectId, c.ContextDomain, c.VariableCount, c.ObjectCount);
+                            var c = (TraciContextSubscriptionResponse)response;
+                            eventArgs = new ContextSubscriptionEventArgs(
+                                c.ObjectId,
+                                c.ContextDomain,
+                                c.VariableCount,
+                                c.ObjectCount
+                            );
                             break;
                             }
                     default:
@@ -163,22 +175,30 @@ public class Control(ITCPConnectService tcpService, ICommandService helper, IEve
                         _events.OnPersonSubscription(eventArgs);
                         break;
                     case Response.Subscribe.INDUCTIONLOOP_CONTEXT:
-                        _events.OnInductionLoopContextSubscription((ContextSubscriptionEventArgs)eventArgs);
+                        _events.OnInductionLoopContextSubscription(
+                            (ContextSubscriptionEventArgs)eventArgs
+                        );
                         break;
                     case Response.Subscribe.LANE_CONTEXT:
                         _events.OnLaneContextSubscription((ContextSubscriptionEventArgs)eventArgs);
                         break;
                     case Response.Subscribe.VEHICLE_CONTEXT:
-                        _events.OnVehicleContextSubscription((ContextSubscriptionEventArgs)eventArgs);
+                        _events.OnVehicleContextSubscription(
+                            (ContextSubscriptionEventArgs)eventArgs
+                        );
                         break;
                     case Response.Subscribe.POI_CONTEXT:
                         _events.OnPOIContextSubscription((ContextSubscriptionEventArgs)eventArgs);
                         break;
                     case Response.Subscribe.POLYGON_CONTEXT:
-                        _events.OnPolygonContextSubscription((ContextSubscriptionEventArgs)eventArgs);
+                        _events.OnPolygonContextSubscription(
+                            (ContextSubscriptionEventArgs)eventArgs
+                        );
                         break;
                     case Response.Subscribe.JUNCTION_CONTEXT:
-                        _events.OnJunctionContextSubscription((ContextSubscriptionEventArgs)eventArgs);
+                        _events.OnJunctionContextSubscription(
+                            (ContextSubscriptionEventArgs)eventArgs
+                        );
                         break;
                     case Response.Subscribe.EDGE_CONTEXT:
                         _events.OnEdgeContextSubscription((ContextSubscriptionEventArgs)eventArgs);
@@ -199,7 +219,7 @@ public class Control(ITCPConnectService tcpService, ICommandService helper, IEve
     /// </remarks>
     public void ExecuteMove()
         {
-        var command = _helper.GenerateCommand(EXECUTE_MOVE);
+        var command = _helper.GenerateCommand(CommandIdentifier.EXECUTE_MOVE);
         _ = _tcpService.SendMessage(command);
         }
 
@@ -211,7 +231,7 @@ public class Control(ITCPConnectService tcpService, ICommandService helper, IEve
     /// </remarks>
     public void Close()
         {
-        var command = _helper.GenerateCommand(CLOSE);
+        var command = _helper.GenerateCommand(CommandIdentifier.CLOSE);
         _ = _tcpService.SendMessage(command);
         }
 
@@ -226,7 +246,7 @@ public class Control(ITCPConnectService tcpService, ICommandService helper, IEve
 
     public void Load(List<string> options)
         {
-        var command = _helper.GenerateCommand(LOAD, extendParameter: new TraciStringList(options));
+        var command = _helper.GenerateCommand(CommandIdentifier.LOAD, extendParameter: new TraciStringList(options));
         _ = _tcpService.SendMessage(command);
         }
 
@@ -241,7 +261,7 @@ public class Control(ITCPConnectService tcpService, ICommandService helper, IEve
     /// </remarks>
     public void SetOrder(int index)
         {
-        var command = _helper.GenerateCommand(SETORDER, extendParameter: new TraciInteger(index));
+        var command = _helper.GenerateCommand(CommandIdentifier.SETORDER, extendParameter: new TraciInteger(index));
         _ = _tcpService.SendMessage(command);
         }
     }

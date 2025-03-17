@@ -1,7 +1,5 @@
-using CodingConnected.TraCI.NET.DataTypes;
-using static CodingConnected.TraCI.NET.Constants.CommandIdentifier.Set;
-
-namespace CodingConnected.TraCI.NET.Functions;
+using static CodingConnected.Traci.Constants.CommandIdentifier;
+namespace CodingConnected.Traci.Functions;
 
 
 public partial class Calibrator
@@ -44,7 +42,7 @@ public partial class Calibrator
             new TraciString(departLane),
             new TraciString(departSpeed)
             ];
-        return _helper.ExecuteSetCommand(CALIBRATOR_VARIABLE, FLOW,
+        return _helper.ExecuteSetCommand(Set.CALIBRATOR_VARIABLE, Set.FLOW,
             calibrationId, tmp);
         }
     }

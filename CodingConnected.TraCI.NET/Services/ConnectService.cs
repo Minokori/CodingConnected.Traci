@@ -1,7 +1,6 @@
 using System.Net.Sockets;
-using CodingConnected.TraCI.NET.ProtocolTypes;
 
-namespace CodingConnected.TraCI.NET.Services;
+namespace CodingConnected.Traci.Services;
 
 internal class ConnectService : ITCPConnectService
     {
@@ -57,7 +56,7 @@ internal class ConnectService : ITCPConnectService
             }
         }
 
-    public List<TraciResult> SendMessage(TraCICommand command)
+    public List<TraciResult> SendMessage(TraciCommand command)
         {
         if (Client is null || !Client.Connected)
             {

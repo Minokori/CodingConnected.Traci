@@ -1,6 +1,4 @@
-using CodingConnected.TraCI.NET.ProtocolTypes;
-
-namespace CodingConnected.TraCI.NET.Services;
+namespace CodingConnected.Traci.Services;
 
 public class EventService : IEventService
     {

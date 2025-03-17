@@ -1,5 +1,3 @@
-using CodingConnected.TraCI.NET.Constants;
-
 #region static variables
 
 var sumoFile =

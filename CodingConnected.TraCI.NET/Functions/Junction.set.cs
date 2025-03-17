@@ -1,4 +1,4 @@
-﻿namespace CodingConnected.TraCI.NET.Functions;
+namespace CodingConnected.Traci.Functions;
 
 public partial class Junction
     {

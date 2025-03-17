@@ -1,7 +1,5 @@
-using CodingConnected.TraCI.NET.Constants;
-using CodingConnected.TraCI.NET.DataTypes;
-using static CodingConnected.TraCI.NET.Constants.CommandIdentifier.Get;
-namespace CodingConnected.TraCI.NET.Functions;
+using static CodingConnected.Traci.Constants.CommandIdentifier;
+namespace CodingConnected.Traci.Functions;
 public partial class Junction
     {
     /// <summary>
@@ -16,7 +14,7 @@ public partial class Junction
     /// </remarks>
     public List<string> GetIdList()
         {
-        var result = _helper.ExecuteGetCommand(JUNCTION_VARIABLE, TraciConstants.ID_LIST, "");
+        var result = _helper.ExecuteGetCommand(Get.JUNCTION_VARIABLE, TraciConstants.ID_LIST, "");
         return (TraciStringList)result.Data;
         }
 
@@ -30,7 +28,7 @@ public partial class Junction
     /// </remarks>
     public int GetIdCount()
         {
-        var result = _helper.ExecuteGetCommand(JUNCTION_VARIABLE, TraciConstants.ID_COUNT, "");
+        var result = _helper.ExecuteGetCommand(Get.JUNCTION_VARIABLE, TraciConstants.ID_COUNT, "");
         return (TraciInteger)result.Data;
         }
 
@@ -46,7 +44,7 @@ public partial class Junction
     public (double x, double y, double z) GetPosition(string junctionId, bool includeZ = false)
         {
         var result = _helper.ExecuteGetCommand(
-            JUNCTION_VARIABLE,
+            Get.JUNCTION_VARIABLE,
             includeZ ? TraciConstants.VAR_POSITION3D : TraciConstants.VAR_POSITION,
             junctionId
         );
@@ -63,8 +61,8 @@ public partial class Junction
     /// </remarks>
     public List<(double x, double y)> GetShape(string junctionId)
         {
-        var result = _helper.ExecuteGetCommand(JUNCTION_VARIABLE, TraciConstants.VAR_SHAPE, junctionId);
-        var polygon = (DataTypes.Polygon)result.Data;
+        var result = _helper.ExecuteGetCommand(Get.JUNCTION_VARIABLE, TraciConstants.VAR_SHAPE, junctionId);
+        var polygon = (Polygon)result.Data;
         return [.. polygon];
         }
 
@@ -78,7 +76,7 @@ public partial class Junction
     /// </remarks>
     public List<string> GetIncomingEdges(string junctionId)
         {
-        var result = _helper.ExecuteGetCommand(JUNCTION_VARIABLE, TraciConstants.INCOMING_EDGES, junctionId);
+        var result = _helper.ExecuteGetCommand(Get.JUNCTION_VARIABLE, TraciConstants.INCOMING_EDGES, junctionId);
         return (TraciStringList)result.Data;
         }
 
@@ -92,7 +90,7 @@ public partial class Junction
     /// </remarks>
     public List<string> GetOutgoingEdges(string junctionId)
         {
-        var result = _helper.ExecuteGetCommand(JUNCTION_VARIABLE, TraciConstants.OUTGOING_EDGES, junctionId);
+        var result = _helper.ExecuteGetCommand(Get.JUNCTION_VARIABLE, TraciConstants.OUTGOING_EDGES, junctionId);
         return (TraciStringList)result.Data;
         }
     }

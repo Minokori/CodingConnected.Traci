@@ -1,7 +1,6 @@
-using CodingConnected.TraCI.NET.Constants;
-using CodingConnected.TraCI.NET.Services;
+using CodingConnected.Traci.Services;
 
-namespace CodingConnected.TraCI.NET.Functions;
+namespace CodingConnected.Traci.Functions;
 /// <summary>
 /// Multi Entry Exit Detector (E3 Detector) related Commands<para/>
 /// </summary>

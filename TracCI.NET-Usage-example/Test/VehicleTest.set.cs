@@ -1,5 +1,3 @@
-using CodingConnected.TraCI.NET.Constants;
-
 namespace TracCI.NET.UsageExample.Test;
 internal partial class VehicleTest
     {
