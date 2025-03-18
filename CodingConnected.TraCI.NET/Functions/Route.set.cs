@@ -1,5 +1,5 @@
-using static CodingConnected.Traci.Constants.CommandIdentifier.Set;
 namespace CodingConnected.Traci.Functions;
+
 public partial class Route
     {
     /// <summary>
@@ -14,6 +14,6 @@ public partial class Route
     public bool Add(string routeId, List<string> edges)
         {
         TraciStringList tmp = new(edges);
-        return _helper.ExecuteSetCommand(ROUTE_VARIABLE, TraciConstants.ADD, routeId, tmp);
+        return _helper.ExecuteSetCommand(Set.ROUTE_VARIABLE, TraciConstants.ADD, routeId, tmp);
         }
     }

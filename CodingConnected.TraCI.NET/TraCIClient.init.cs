@@ -39,10 +39,6 @@ public partial class TraciClient
         servicesBuilder.AddSingleton<RouteProbe>();
         servicesBuilder.AddSingleton<VariableSpeedSign>();
         services = servicesBuilder.BuildServiceProvider();
-
-
-
-
         }
 
     }

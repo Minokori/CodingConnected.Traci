@@ -72,7 +72,13 @@ public sealed class WalkingStage : TraciCompoundObject
 
     public string StopId => (TraciString)this[5];
 
-    public WalkingStage(List<string> edges, double arrivalPosition, int duration, double speed, string stopId)
+    public WalkingStage(
+        List<string> edges,
+        double arrivalPosition,
+        int duration,
+        double speed,
+        string stopId
+    )
         {
         Clear();
         Add(new TraciInteger(2));

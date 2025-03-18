@@ -6,16 +6,19 @@ namespace CodingConnected.Traci.ProtocolTypes;
 public partial class TraciResult : IAnswerFromSumo
     {
     byte IAnswerFromSumo.Variable => Content[0];
-    int IAnswerFromSumo.SumoIdLength => BitConverter.ToInt32(Content.Skip(1).Take(4).Reverse().ToArray());
+    int IAnswerFromSumo.SumoIdLength =>
+        BitConverter.ToInt32(Content.Skip(1).Take(4).Reverse().ToArray());
 
     string IAnswerFromSumo.SumoId =>
         Encoding.ASCII.GetString(
-            [.. Content
-                .Skip(
-                    1 /* remainBytes of Variable */
-                        + 4 /* remainBytes of SumoIdLength */
-                )
-                .Take(((IAnswerFromSumo)this).SumoIdLength)]
+            [
+                .. Content
+                    .Skip(
+                        1 /* remainBytes of Variable */
+                            + 4 /* remainBytes of SumoIdLength */
+                    )
+                    .Take(((IAnswerFromSumo)this).SumoIdLength),
+            ]
         );
 
     byte IAnswerFromSumo.ReturnType =>
@@ -44,12 +47,14 @@ public partial class TraciResult : IAnswerFromSumo
                 TraciCompoundObject value = [];
                 while (bytes.Any())
                     {
-                    (var innerObject, bytes) = GetValueFromTypeAndArray(bytes.First(), bytes.Skip(1));
+                    (var innerObject, bytes) = GetValueFromTypeAndArray(
+                        bytes.First(),
+                        bytes.Skip(1)
+                    );
                     value.Add(innerObject);
                     }
                 return value;
                 }
-
 
             var (traciValue, remainBytes) = GetValueFromTypeAndArray(
                 ((IAnswerFromSumo)this).ReturnType,

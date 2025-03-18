@@ -7,8 +7,8 @@ namespace CodingConnected.Traci.DataTypes;
 public sealed class Position2D : TraciListType<TraciDouble, double>, ITraciType
     {
     public override DataType TypeIdentifier => DataType.X_Y;
-    public double X => this[0].Value;
-    public double Y => this[1].Value;
+    public double X => this[0];
+    public double Y => this[1];
 
     public static new (Position2D position2D, IEnumerable<byte> remainingBytes) FromBytes(IEnumerable<byte> bytes)
         {
@@ -22,7 +22,7 @@ public sealed class Position2D : TraciListType<TraciDouble, double>, ITraciType
 
     public Position2D(double x, double y)
         {
-
+        Clear();
         Add(new(x));
         Add(new(y));
         }

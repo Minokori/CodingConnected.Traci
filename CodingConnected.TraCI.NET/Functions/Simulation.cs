@@ -25,13 +25,13 @@ public partial class Simulation(ITCPConnectService tcpService, ICommandService h
     public int GetEmergencyStoppingVehiclesNumber(string id)
         {
         var result = _helper.ExecuteGetCommand(SIM_VARIABLE, TraciConstants.VAR_EMERGENCYSTOPPING_VEHICLES_NUMBER);
-        return ((TraciInteger)result.Data).Value;
+        return (TraciInteger)result.Data;
         }
 
     public List<string> GetEmergencyStoppingVehiclesIDList(string id)
         {
         var result = _helper.ExecuteGetCommand(SIM_VARIABLE, TraciConstants.VAR_EMERGENCYSTOPPING_VEHICLES_IDS);
-        return ((TraciStringList)result.Data).Value;
+        return (TraciStringList)result.Data;
         }
 
     /// <summary>

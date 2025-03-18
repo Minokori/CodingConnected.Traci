@@ -1,4 +1,3 @@
-#pragma warning disable IDE0130 // 命名空间与文件夹结构不匹配
 namespace CodingConnected.Traci.DataTypes;
 
 /// <summary>
@@ -17,7 +16,10 @@ public class TrafficLightPhase : TraciArrayType
     public string SucceedingRoad => (TraciString)this[1];
     public PhaseState Phase => (PhaseState)((TraciByte)this[2]).Value;
 
-    public static new Tuple<TrafficLightPhase, IEnumerable<byte>> FromBytes(IEnumerable<byte> bytes)
+    public static new (
+        TrafficLightPhase trafficLightPhase,
+        IEnumerable<byte> remainingBytes
+    ) FromBytes(IEnumerable<byte> bytes)
         {
         (var precRoad, bytes) = TraciString.FromBytes(bytes);
         (var succRoad, bytes) = TraciString.FromBytes(bytes);

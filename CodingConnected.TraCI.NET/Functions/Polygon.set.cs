@@ -1,4 +1,3 @@
-using static CodingConnected.Traci.Constants.CommandIdentifier.Set;
 namespace CodingConnected.Traci.Functions;
 
 public partial class PolygonFunctions
@@ -15,14 +14,13 @@ public partial class PolygonFunctions
     public bool SetType(string id, string typeId)
         {
         TraciString tmp = new(typeId);
-        return _helper.ExecuteSetCommand(POLYGON_VARIABLE, TraciConstants.VAR_TYPE, id, tmp);
+        return _helper.ExecuteSetCommand(Set.POLYGON_VARIABLE, TraciConstants.VAR_TYPE, id, tmp);
         }
 
     /// <summary>
     /// Sets the shape's color to the given value
     /// </summary>
     /// <param name="polygonId"></param>
-    /// <param name="color"></param>
     /// <returns></returns>
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/pydoc/traci._polygon.html#PolygonDomain-setColor"/>
@@ -30,7 +28,12 @@ public partial class PolygonFunctions
     public bool SetColor(string polygonId, int r, int g, int b, int a = 255)
         {
         Color color = new(r, g, b, a);
-        return _helper.ExecuteSetCommand(POLYGON_VARIABLE, TraciConstants.VAR_COLOR, polygonId, color);
+        return _helper.ExecuteSetCommand(
+            Set.POLYGON_VARIABLE,
+            TraciConstants.VAR_COLOR,
+            polygonId,
+            color
+        );
         }
 
     /// <summary>
@@ -45,7 +48,12 @@ public partial class PolygonFunctions
     public bool SetShape(string polygonId, List<(double x, double y)> shape)
         {
         Polygon polygon = new(shape);
-        return _helper.ExecuteSetCommand(POLYGON_VARIABLE, TraciConstants.VAR_SHAPE, polygonId, polygon);
+        return _helper.ExecuteSetCommand(
+            Set.POLYGON_VARIABLE,
+            TraciConstants.VAR_SHAPE,
+            polygonId,
+            polygon
+        );
         }
 
     /// <summary>
@@ -60,7 +68,7 @@ public partial class PolygonFunctions
     public bool SetFilled(string id, bool filled)
         {
         TraciInteger tmp = new(filled == true ? (byte)1 : (byte)0);
-        return _helper.ExecuteSetCommand(POLYGON_VARIABLE, TraciConstants.VAR_FILL, id, tmp);
+        return _helper.ExecuteSetCommand(Set.POLYGON_VARIABLE, TraciConstants.VAR_FILL, id, tmp);
         }
 
     /// <summary>
@@ -75,7 +83,12 @@ public partial class PolygonFunctions
     public bool SetLineWidth(string polygonId, double lineWidth)
         {
         TraciDouble tmp = new(lineWidth);
-        return _helper.ExecuteSetCommand(POLYGON_VARIABLE, TraciConstants.VAR_WIDTH, polygonId, tmp);
+        return _helper.ExecuteSetCommand(
+            Set.POLYGON_VARIABLE,
+            TraciConstants.VAR_WIDTH,
+            polygonId,
+            tmp
+        );
         }
 
     /// <summary>
@@ -91,18 +104,28 @@ public partial class PolygonFunctions
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/pydoc/traci._polygon.html#PolygonDomain-add"/>
     /// </remarks>
-    public bool Add(string id, string name, int r, int g, int b, int a, bool filled, int layer, List<(double x, double y)> shape)
+    public bool Add(
+        string id,
+        string name,
+        int r,
+        int g,
+        int b,
+        int a,
+        bool filled,
+        int layer,
+        List<(double x, double y)> shape
+    )
         {
         var tmp = new TraciCompoundObject
         {
             new TraciString(name),
             new Color(r, g, b, a),
-            new TraciUnsignedByte(filled == false ?(byte) 0 :(byte) 1),
-            new TraciInteger(layer) ,
+            new TraciUnsignedByte(filled == false ? (byte)0 : (byte)1),
+            new TraciInteger(layer),
             new Polygon(shape),
         };
 
-        return _helper.ExecuteSetCommand(POLYGON_VARIABLE, TraciConstants.ADD, id, tmp);
+        return _helper.ExecuteSetCommand(Set.POLYGON_VARIABLE, TraciConstants.ADD, id, tmp);
         }
 
     /// <summary>
@@ -117,7 +140,7 @@ public partial class PolygonFunctions
     public bool Remove(string id, int layer)
         {
         TraciInteger tmp = new(layer);
-        return _helper.ExecuteSetCommand(POLYGON_VARIABLE, TraciConstants.REMOVE, id, tmp);
+        return _helper.ExecuteSetCommand(Set.POLYGON_VARIABLE, TraciConstants.REMOVE, id, tmp);
         }
 
     /// <summary>
@@ -126,7 +149,7 @@ public partial class PolygonFunctions
     /// <param name="polygonId">ID of the shape, upon which the specified dynamics shall act</param>
     /// <param name="trackedObjectId">ID of a SUMO traffic object, which shall be tracked by the shape</param>
     /// <param name="timeSpan"> list of time points for timing the animation keyframes (must start with element zero) If it has length zero, no animation is taken into account.</param>
-    /// <param name="alphaSpan">list of alpha values to be attained at keyframes intermediate values areobtained by linear interpolation.Must have length equal to timeSpan, or zero if no alpha animation is desired.</param>
+    /// <param name="alphaSpan">list of alpha values to be attained at keyframes intermediate values are obtained by linear interpolation.Must have length equal to timeSpan, or zero if no alpha animation is desired.</param>
     /// <param name="looped">Whether the animation should restart when the last keyframe is reached. In that case the animation jumps to the first keyframe as soon as the last is reached.If looped==false, the controlled shape is removed as soon as the timeSpan elapses.</param>
     /// <param name="rotate">Whether, the shape should be rotated with the tracked object (only applies when such is given) The center of rotation is the object's position.</param>
     /// <returns></returns>
@@ -144,12 +167,17 @@ public partial class PolygonFunctions
         {
         var tmp = new TraciCompoundObject
         {
-            new TraciString(trackedObjectId)  ,
+            new TraciString(trackedObjectId),
             new TraciDoubleList(timeSpan),
             new TraciDoubleList(alphaSpan),
-            new TraciUnsignedByte(looped == false ?(byte) 0 :(byte) 1),
-            new TraciUnsignedByte(rotate == false ?(byte) 0 :(byte) 1),
+            new TraciUnsignedByte(looped == false ? (byte)0 : (byte)1),
+            new TraciUnsignedByte(rotate == false ? (byte)0 : (byte)1),
         };
-        return _helper.ExecuteSetCommand(POLYGON_VARIABLE, TraciConstants.VAR_ADD_DYNAMICS, polygonId, tmp);
+        return _helper.ExecuteSetCommand(
+            Set.POLYGON_VARIABLE,
+            TraciConstants.VAR_ADD_DYNAMICS,
+            polygonId,
+            tmp
+        );
         }
     }

@@ -1,18 +1,23 @@
-using static CodingConnected.Traci.Constants.CommandIdentifier.Get;
 namespace CodingConnected.Traci.Functions;
+
 public partial class ParkingArea
-    {    /// <summary>
-         /// The end position of the stop along the lane measured in m
-         /// </summary>
-         /// <param name="stopId"></param>
-         /// <returns></returns>
-         /// <remarks>
-         /// see <see href="https://sumo.dlr.de/pydoc/traci._parkingarea.html#ParkingAreaDomain-getEndPos"/>
-         /// </remarks>
+    {
+    /// <summary>
+    /// The end position of the stop along the lane measured in m
+    /// </summary>
+    /// <param name="stopId"></param>
+    /// <returns></returns>
+    /// <remarks>
+    /// see <see href="https://sumo.dlr.de/pydoc/traci._parkingarea.html#ParkingAreaDomain-getEndPos"/>
+    /// </remarks>
     public double GetEndPosition(string stopId)
         {
-        var result = _helper.ExecuteGetCommand(PARKINGAREA_VARIABLE, TraciConstants.VAR_LANEPOSITION, stopId);
-        return ((TraciDouble)result.Data).Value;
+        var result = _helper.ExecuteGetCommand(
+            Get.PARKINGAREA_VARIABLE,
+            TraciConstants.VAR_LANEPOSITION,
+            stopId
+        );
+        return (TraciDouble)result.Data;
         }
 
     /// <summary>
@@ -25,8 +30,12 @@ public partial class ParkingArea
     /// </remarks>
     public string GetLaneId(string stopId)
         {
-        var result = _helper.ExecuteGetCommand(PARKINGAREA_VARIABLE, TraciConstants.VAR_LANE_ID, stopId);
-        return ((TraciString)result.Data).Value;
+        var result = _helper.ExecuteGetCommand(
+            Get.PARKINGAREA_VARIABLE,
+            TraciConstants.VAR_LANE_ID,
+            stopId
+        );
+        return (TraciString)result.Data;
         }
 
     /// <summary>
@@ -39,8 +48,12 @@ public partial class ParkingArea
     /// </remarks>
     public string GetName(string stopId)
         {
-        var result = _helper.ExecuteGetCommand(PARKINGAREA_VARIABLE, TraciConstants.VAR_NAME, stopId);
-        return ((TraciString)result.Data).Value;
+        var result = _helper.ExecuteGetCommand(
+            Get.PARKINGAREA_VARIABLE,
+            TraciConstants.VAR_NAME,
+            stopId
+        );
+        return (TraciString)result.Data;
         }
 
     /// <summary>
@@ -53,8 +66,12 @@ public partial class ParkingArea
     /// </remarks>
     public double GetStartPosition(string stopId)
         {
-        var result = _helper.ExecuteGetCommand(PARKINGAREA_VARIABLE, TraciConstants.VAR_POSITION, stopId);
-        return ((TraciDouble)result.Data).Value;
+        var result = _helper.ExecuteGetCommand(
+            Get.PARKINGAREA_VARIABLE,
+            TraciConstants.VAR_POSITION,
+            stopId
+        );
+        return (TraciDouble)result.Data;
         }
 
     /// <summary>
@@ -68,11 +85,11 @@ public partial class ParkingArea
     public int GetVehicleCount(string stopId)
         {
         var result = _helper.ExecuteGetCommand(
-            PARKINGAREA_VARIABLE,
+            Get.PARKINGAREA_VARIABLE,
             TraciConstants.VAR_STOP_STARTING_VEHICLES_NUMBER,
             stopId
         );
-        return ((TraciInteger)result.Data).Value;
+        return (TraciInteger)result.Data;
         }
 
     /// <summary>
@@ -86,11 +103,11 @@ public partial class ParkingArea
     public List<string> GetVehicleIds(string stopId)
         {
         var result = _helper.ExecuteGetCommand(
-            PARKINGAREA_VARIABLE,
+            Get.PARKINGAREA_VARIABLE,
             TraciConstants.VAR_STOP_STARTING_VEHICLES_IDS,
             stopId
         );
-        return ((TraciStringList)result.Data).Value;
+        return (TraciStringList)result.Data;
         }
 
     /// <summary>
@@ -104,10 +121,10 @@ public partial class ParkingArea
     public List<string> GetAcceptedBadges(string stopId)
         {
         var result = _helper.ExecuteGetCommand(
-            PARKINGAREA_VARIABLE,
+            Get.PARKINGAREA_VARIABLE,
             TraciConstants.VAR_BADGES,
             stopId
         );
-        return ((TraciStringList)result.Data).Value;
+        return (TraciStringList)result.Data;
         }
     }

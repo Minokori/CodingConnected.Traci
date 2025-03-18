@@ -11,7 +11,6 @@ public sealed class Polygon : List<Position2D>, ITraciType
     {
     public DataType TypeIdentifier => DataType.POLYGON;
 
-
     public byte[] ToBytes()
         {
         List<byte> bytes = [(byte)Count];
@@ -22,7 +21,9 @@ public sealed class Polygon : List<Position2D>, ITraciType
         return [.. bytes];
         }
 
-    public static (Polygon polygon, IEnumerable<byte> remainingBytes) FromBytes(IEnumerable<byte> bytes)
+    public static (Polygon polygon, IEnumerable<byte> remainingBytes) FromBytes(
+        IEnumerable<byte> bytes
+    )
         {
         int count = bytes.First();
         bytes = [.. bytes.Skip(1)];
@@ -48,8 +49,13 @@ public sealed class Polygon : List<Position2D>, ITraciType
     /// this will return the lower left and upper right corner of the polygon(first and last point)
     /// </summary>
     /// <param name="polygon"></param>
-    public static implicit operator (double lowerLeftX, double lowerLeftY, double rightUpperX, double rightUpperY)(Polygon polygon) => (polygon[0].X, polygon[0].Y, polygon[-1].X, polygon[-1].Y);
+    public static implicit operator (
+        double lowerLeftX,
+        double lowerLeftY,
+        double rightUpperX,
+        double rightUpperY
+    )(Polygon polygon) => (polygon[0].X, polygon[0].Y, polygon[-1].X, polygon[-1].Y);
 
-
-    public static implicit operator List<(double x, double y)>(Polygon polygon) => [.. polygon.Select(i => (i.X, i.Y))];
+    public static implicit operator List<(double x, double y)>(Polygon polygon) =>
+        [.. polygon.Select(i => (i.X, i.Y))];
     }

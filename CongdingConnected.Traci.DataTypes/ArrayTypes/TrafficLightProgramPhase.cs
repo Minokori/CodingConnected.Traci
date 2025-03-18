@@ -1,5 +1,3 @@
-#pragma warning disable IDE0130 // 命名空间与文件夹结构不匹配
-
 namespace CodingConnected.Traci.DataTypes;
 
 /// <summary>
@@ -7,7 +5,8 @@ namespace CodingConnected.Traci.DataTypes;
 /// so use definitions in below link as standard<para/>
 /// see <see href="https://sumo.dlr.de/docs/Simulation/Traffic_Lights.html#phase_attributes"/>
 /// </summary>
-public sealed class TrafficLightProgramPhase(IEnumerable<ITraciType> innerObjects) : TraciArrayType(innerObjects)
+public sealed class TrafficLightProgramPhase(IEnumerable<ITraciType> innerObjects)
+    : TraciArrayType(innerObjects)
     {
     /// <summary>
     /// The duration of the phase
@@ -25,7 +24,6 @@ public sealed class TrafficLightProgramPhase(IEnumerable<ITraciType> innerObject
     /// The maximum duration of the phase when using type actuated. Optional, if minDur is not set it defaults to duration , otherwise to 2147483.
     /// </summary>
     public double MaxDuration => (TraciDouble)this[3];
-
 
     public ITraciType Next => this[4];
 

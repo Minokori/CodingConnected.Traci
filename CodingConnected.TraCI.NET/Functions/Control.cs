@@ -42,28 +42,28 @@ public class Control(
     /// </remarks>
     public (int traciApiVersion, string sumoVersion) GetVersion()
         {
-        var command = _helper.GenerateCommand(CommandIdentifier.GETVERSION);
+        var command = _helper.GenerateCommand(GETVERSION);
         var results = _tcpService.SendMessage(command);
         switch ((results[0] as IStatusResponse).Result)
             {
             case ResultCode.Success:
+                {
+                (var apiVersion, var leftBytes) = TraciInteger.FromBytes(results[1].Content);
+                (var version, _) = TraciString.FromBytes(leftBytes);
+                if (apiVersion != TraciConstants.TRACI_VERSION)
                     {
-                    (var apiVersion, var leftBytes) = TraciInteger.FromBytes(results[1].Content);
-                    (var version, _) = TraciString.FromBytes(leftBytes);
-                    if (apiVersion.Value != TraciConstants.TRACI_VERSION)
-                        {
-                        Console.WriteLine(
-                            $"Warning: TraCI API version mismatch."
-                                + $" SUMO installed with API version : {apiVersion.Value}."
-                                + $" This library is using API version {TraciConstants.TRACI_VERSION}."
-                        );
-                        }
-                    return new(apiVersion.Value, version.Value);
+                    Console.WriteLine(
+                        $"Warning: TraCI API version mismatch."
+                            + $" SUMO installed with API version : {apiVersion}."
+                            + $" This library is using API version {TraciConstants.TRACI_VERSION}."
+                    );
                     }
+                return new(apiVersion, version);
+                }
             default:
-                    {
-                    return new(-1, "");
-                    }
+                {
+                return new(-1, "");
+                }
             }
         }
 
@@ -80,7 +80,7 @@ public class Control(
         {
         // make a simulation step
         var command = _helper.GenerateCommand(
-            CommandIdentifier.SIMSTEP,
+            SIMSTEP,
             extendParameter: new TraciDouble(targetTime, true)
         );
         // get the results
@@ -99,24 +99,24 @@ public class Control(
                 switch (response.Identifier >> 4)
                     {
                     case 0x0e: // 0xeX => VariableType Subscription Content
-                            {
-                            eventArgs = new VariableSubscriptionEventArgs(
-                                response.ObjectId,
-                                response.VariableCount
-                            );
-                            break;
-                            }
+                        {
+                        eventArgs = new VariableSubscriptionEventArgs(
+                            response.ObjectId,
+                            response.VariableCount
+                        );
+                        break;
+                        }
                     case 0x09: // 0x9X => Object Context Subscription Content
-                            {
-                            var c = (TraciContextSubscriptionResponse)response;
-                            eventArgs = new ContextSubscriptionEventArgs(
-                                c.ObjectId,
-                                c.ContextDomain,
-                                c.VariableCount,
-                                c.ObjectCount
-                            );
-                            break;
-                            }
+                        {
+                        var c = (TraciContextSubscriptionResponse)response;
+                        eventArgs = new ContextSubscriptionEventArgs(
+                            c.ObjectId,
+                            c.ContextDomain,
+                            c.VariableCount,
+                            c.ObjectCount
+                        );
+                        break;
+                        }
                     default:
                         break;
                     }
@@ -219,7 +219,7 @@ public class Control(
     /// </remarks>
     public void ExecuteMove()
         {
-        var command = _helper.GenerateCommand(CommandIdentifier.EXECUTE_MOVE);
+        var command = _helper.GenerateCommand(EXECUTE_MOVE);
         _ = _tcpService.SendMessage(command);
         }
 
@@ -231,7 +231,7 @@ public class Control(
     /// </remarks>
     public void Close()
         {
-        var command = _helper.GenerateCommand(CommandIdentifier.CLOSE);
+        var command = _helper.GenerateCommand(CLOSE);
         _ = _tcpService.SendMessage(command);
         }
 
@@ -246,7 +246,10 @@ public class Control(
 
     public void Load(List<string> options)
         {
-        var command = _helper.GenerateCommand(CommandIdentifier.LOAD, extendParameter: new TraciStringList(options));
+        var command = _helper.GenerateCommand(
+            LOAD,
+            extendParameter: new TraciStringList(options)
+        );
         _ = _tcpService.SendMessage(command);
         }
 
@@ -261,7 +264,10 @@ public class Control(
     /// </remarks>
     public void SetOrder(int index)
         {
-        var command = _helper.GenerateCommand(CommandIdentifier.SETORDER, extendParameter: new TraciInteger(index));
+        var command = _helper.GenerateCommand(
+            SETORDER,
+            extendParameter: new TraciInteger(index)
+        );
         _ = _tcpService.SendMessage(command);
         }
     }

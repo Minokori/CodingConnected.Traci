@@ -1,4 +1,3 @@
-using static CodingConnected.Traci.Constants.CommandIdentifier.Set;
 namespace CodingConnected.Traci.Functions;
 
 public partial class Edge
@@ -16,15 +15,32 @@ public partial class Edge
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/pydoc/traci._edge.html#EdgeDomain-adaptTraveltime"/>
     /// </remarks>
-    public bool AdaptTravelTime(string edgeId, double travelTime, double? beginTime = null, double? endTime = null)
+    public bool AdaptTravelTime(
+        string edgeId,
+        double travelTime,
+        double? beginTime = null,
+        double? endTime = null
+    )
         {
         TraciCompoundObject tmp = (beginTime, endTime) switch
             {
                 (null, null) => [new TraciDouble(travelTime)],
-                (null, _) or (_, null) => throw new ArgumentException($"Both {nameof(beginTime)} and {nameof(endTime)} must be specified"),
-                _ => [new TraciDouble(beginTime.Value), new TraciDouble(endTime.Value), new TraciDouble(travelTime)],
+                (null, _) or (_, null) => throw new ArgumentException(
+                    $"Both {nameof(beginTime)} and {nameof(endTime)} must be specified"
+                ),
+                _ =>
+                [
+                    new TraciDouble(beginTime.Value),
+                new TraciDouble(endTime.Value),
+                new TraciDouble(travelTime),
+            ],
                 };
-        return _helper.ExecuteSetCommand(EDGE_VARIABLE, TraciConstants.VAR_EDGE_TRAVELTIME, edgeId, tmp);
+        return _helper.ExecuteSetCommand(
+            Set.EDGE_VARIABLE,
+            TraciConstants.VAR_EDGE_TRAVELTIME,
+            edgeId,
+            tmp
+        );
         }
 
     /// <summary>
@@ -39,16 +55,33 @@ public partial class Edge
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/pydoc/traci._edge.html#EdgeDomain-setEffort"/>
     /// </remarks>
-    public bool SetEffort(string edgeId, double effort, double? beginTime = null, double? endTime = null)
+    public bool SetEffort(
+        string edgeId,
+        double effort,
+        double? beginTime = null,
+        double? endTime = null
+    )
         {
         TraciCompoundObject tmp = (beginTime, endTime) switch
             {
                 (null, null) => [new TraciDouble(effort)],
-                (null, _) or (_, null) => throw new ArgumentException($"Both {nameof(beginTime)} and {nameof(endTime)} must be specified"),
-                _ => [new TraciDouble(beginTime.Value), new TraciDouble(endTime.Value), new TraciDouble(effort)],
+                (null, _) or (_, null) => throw new ArgumentException(
+                    $"Both {nameof(beginTime)} and {nameof(endTime)} must be specified"
+                ),
+                _ =>
+                [
+                    new TraciDouble(beginTime.Value),
+                new TraciDouble(endTime.Value),
+                new TraciDouble(effort),
+            ],
                 };
 
-        return _helper.ExecuteSetCommand(EDGE_VARIABLE, TraciConstants.VAR_EDGE_EFFORT, edgeId, tmp);
+        return _helper.ExecuteSetCommand(
+            Get.EDGE_VARIABLE,
+            TraciConstants.VAR_EDGE_EFFORT,
+            edgeId,
+            tmp
+        );
         }
 
     /// <summary>
@@ -63,6 +96,11 @@ public partial class Edge
     public bool SetMaxSpeed(string edgeId, double speed)
         {
         TraciDouble tmp = new(speed);
-        return _helper.ExecuteSetCommand(EDGE_VARIABLE, TraciConstants.VAR_MAXSPEED, edgeId, tmp);
+        return _helper.ExecuteSetCommand(
+            Set.EDGE_VARIABLE,
+            TraciConstants.VAR_MAXSPEED,
+            edgeId,
+            tmp
+        );
         }
     }

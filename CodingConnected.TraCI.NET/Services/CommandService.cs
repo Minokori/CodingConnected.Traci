@@ -43,7 +43,7 @@ internal partial class CommandService(ITCPConnectService tcpService, IDebugServi
 
     /// <summary>
     /// Context subscriptions are allowing the obtaining of specific values from surrounding objects of a certain so called "EGO" object.
-    /// With these datas one can determine the traffic status around that EGO object. Such an EGO Object can be any possible Vehicle, inductive loop, points-of-interest, and such like.
+    /// With these data one can determine the traffic status around that EGO object. Such an EGO Object can be any possible Vehicle, inductive loop, points-of-interest, and such like.
     /// A vehicle driving through a city, for example, is surrounded by a lot of different and changing vehicles, lanes, junctions, or points-of-interest along his ride.
     /// Context subscriptions can provide selected variables of those objects that surround the EGO object within a certain range.
     ///

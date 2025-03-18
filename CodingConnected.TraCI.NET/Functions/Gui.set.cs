@@ -1,4 +1,3 @@
-using static CodingConnected.Traci.Constants.CommandIdentifier.Set;
 namespace CodingConnected.Traci.Functions;
 
 public partial class Gui
@@ -12,12 +11,17 @@ public partial class Gui
     /// <returns>success or not</returns>
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/pydoc/traci._gui.html#GuiDomain-setZoom"/>
-    /// 
+    ///
     /// </remarks>
     public bool SetZoom(string viewId, double zoom)
         {
         TraciDouble tmp = new(zoom);
-        return _helper.ExecuteSetCommand(GUI_VARIABLE, TraciConstants.VAR_VIEW_ZOOM, viewId, tmp);
+        return _helper.ExecuteSetCommand(
+            Set.GUI_VARIABLE,
+            TraciConstants.VAR_VIEW_ZOOM,
+            viewId,
+            tmp
+        );
         }
 
     /// <summary>
@@ -29,7 +33,13 @@ public partial class Gui
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/pydoc/traci._gui.html#GuiDomain-setOffset"/>
     /// </remarks>
-    public bool SetOffset(string viewId, Position2D position) => _helper.ExecuteSetCommand(GUI_VARIABLE, TraciConstants.VAR_VIEW_OFFSET, viewId, position);
+    public bool SetOffset(string viewId, Position2D position) =>
+        _helper.ExecuteSetCommand(
+            Set.GUI_VARIABLE,
+            TraciConstants.VAR_VIEW_OFFSET,
+            viewId,
+            position
+        );
 
     /// <summary>
     /// Moves the center of the visible network to the given position
@@ -44,7 +54,12 @@ public partial class Gui
     public bool SetOffset(string viewId, double x, double y)
         {
         Position2D position = new(x, y);
-        return _helper.ExecuteSetCommand(GUI_VARIABLE, TraciConstants.VAR_VIEW_OFFSET, viewId, position);
+        return _helper.ExecuteSetCommand(
+            Set.GUI_VARIABLE,
+            TraciConstants.VAR_VIEW_OFFSET,
+            viewId,
+            position
+        );
         }
 
     /// <summary>
@@ -59,7 +74,12 @@ public partial class Gui
     public bool SetSchema(string viewId, string schemaName)
         {
         TraciString tmp = new(schemaName);
-        return _helper.ExecuteSetCommand(GUI_VARIABLE, TraciConstants.VAR_VIEW_SCHEMA, viewId, tmp);
+        return _helper.ExecuteSetCommand(
+            Set.GUI_VARIABLE,
+            TraciConstants.VAR_VIEW_SCHEMA,
+            viewId,
+            tmp
+        );
         }
 
     /// <summary>
@@ -73,9 +93,15 @@ public partial class Gui
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/pydoc/traci._gui.html#GuiDomain-setBoundary"/>
     /// </remarks>
-    public bool SetBoundary(string viewId, Polygon boundaryBox) => boundaryBox.Count != 2
+    public bool SetBoundary(string viewId, Polygon boundaryBox) =>
+        boundaryBox.Count != 2
             ? throw new ArgumentException("The boundary box must contain exactly 2 points")
-            : _helper.ExecuteSetCommand(GUI_VARIABLE, TraciConstants.VAR_VIEW_BOUNDARY, viewId, boundaryBox);
+            : _helper.ExecuteSetCommand(
+                Set.GUI_VARIABLE,
+                TraciConstants.VAR_VIEW_BOUNDARY,
+                viewId,
+                boundaryBox
+            );
 
     /// <summary>
     /// Sets the boundary of the visible network. <para/>
@@ -94,15 +120,20 @@ public partial class Gui
     public bool SetBoundary(string viewId, double xMin, double yMin, double xMax, double yMax)
         {
         Polygon boundaryBox = [new(xMin, yMin), new(xMax, yMax)];
-        return _helper.ExecuteSetCommand(GUI_VARIABLE, TraciConstants.VAR_VIEW_BOUNDARY, viewId, boundaryBox);
+        return _helper.ExecuteSetCommand(
+            Set.GUI_VARIABLE,
+            TraciConstants.VAR_VIEW_BOUNDARY,
+            viewId,
+            boundaryBox
+        );
         }
 
     /// <summary>
     /// Save a screenshot to the given file.<para/>
     /// Save a screenshot for the given view to the given filename at the next call to simulationStep.<para/>
-    /// The fileformat is guessed from the extension,
+    /// The file format is guessed from the extension,
     /// the available formats differ from platform to platform but should at least
-    /// <b><u>ps, svg and pdf</u></b>, on linux probably gif, png and jpg as well.<para/>
+    /// <b><u>ps, svg and pdf</u></b>, on Linux probably gif, png and jpg as well.<para/>
     /// Width and height of the image can be given as optional parameters.
     /// </summary>
     /// <param name="viewId">given view ID</param>
@@ -111,19 +142,34 @@ public partial class Gui
     /// <param name="height">height of the image</param>
     /// <returns>success or not</returns>
     /// <remarks>
-    /// In python traci module, the method has <paramref name="width"/> and <paramref name="height"/> parameters, which is not discribed in doucument below.
+    /// In python traci module, the method has <paramref name="width"/> and <paramref name="height"/> parameters, which is not described in document below.
     /// if you meet any error, please make the boolean parameter <paramref name="useWidthHeight"/>  = false. <para/>
     /// Once we check <paramref name="width"/> and <paramref name="height"/> work well, we will remove the <paramref name="useWidthHeight"/> parameter.
     /// <para/>
     /// see <see href="https://sumo.dlr.de/pydoc/traci._gui.html#GuiDomain-screenshot"/>
     /// </remarks>
 
-    public bool Screenshot(string viewId, string filename, int width = -1, int height = -1, bool useWidthHeight = true)
+    public bool Screenshot(
+        string viewId,
+        string filename,
+        int width = -1,
+        int height = -1,
+        bool useWidthHeight = true
+    )
         {
-        // TODO check if width and height works well
-        TraciCompoundObject tmp = [new TraciString(filename), new TraciInteger(width), new TraciInteger(height)];
+        TraciCompoundObject tmp =
+        [
+            new TraciString(filename),
+            new TraciInteger(width),
+            new TraciInteger(height),
+        ];
         TraciString tmp2 = new(filename);
-        return _helper.ExecuteSetCommand(GUI_VARIABLE, TraciConstants.VAR_SCREENSHOT, viewId, useWidthHeight ? tmp : tmp2);
+        return _helper.ExecuteSetCommand(
+            Set.GUI_VARIABLE,
+            TraciConstants.VAR_SCREENSHOT,
+            viewId,
+            useWidthHeight ? tmp : tmp2
+        );
         }
 
     /// <summary>
@@ -141,6 +187,11 @@ public partial class Gui
         {
         viewId = viewId is null ? "View #0" : viewId;
         TraciString tmp = new(vehicleId);
-        return _helper.ExecuteSetCommand(GUI_VARIABLE, TraciConstants.VAR_TRACK_VEHICLE, viewId, tmp);
+        return _helper.ExecuteSetCommand(
+            Set.GUI_VARIABLE,
+            TraciConstants.VAR_TRACK_VEHICLE,
+            viewId,
+            tmp
+        );
         }
     }

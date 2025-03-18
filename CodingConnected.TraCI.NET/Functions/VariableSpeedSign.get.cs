@@ -1,4 +1,3 @@
-using static CodingConnected.Traci.Constants.CommandIdentifier.Get;
 namespace CodingConnected.Traci.Functions;
 
 public partial class VariableSpeedSign
@@ -12,7 +11,11 @@ public partial class VariableSpeedSign
     /// </remarks>
     public List<string> GetIdList()
         {
-        var result = _helper.ExecuteGetCommand(VARIABLESPEEDSIGN_VARIABLE, TraciConstants.ID_LIST, "ignored");
+        var result = _helper.ExecuteGetCommand(
+            Get.VARIABLESPEEDSIGN_VARIABLE,
+            TraciConstants.ID_LIST,
+            "ignored"
+        );
         return (TraciStringList)result.Data;
         }
 
@@ -26,7 +29,11 @@ public partial class VariableSpeedSign
 
     public int GetIdCount()
         {
-        var result = _helper.ExecuteGetCommand(VARIABLESPEEDSIGN_VARIABLE, TraciConstants.ID_COUNT, "ignored");
+        var result = _helper.ExecuteGetCommand(
+            Get.VARIABLESPEEDSIGN_VARIABLE,
+            TraciConstants.ID_COUNT,
+            "ignored"
+        );
         return (TraciInteger)result.Data;
         }
     }

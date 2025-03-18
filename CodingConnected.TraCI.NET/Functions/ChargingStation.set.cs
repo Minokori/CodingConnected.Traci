@@ -1,4 +1,3 @@
-using static CodingConnected.Traci.Constants.CommandIdentifier.Set;
 namespace CodingConnected.Traci.Functions;
 
 public partial class ChargingStation
@@ -15,7 +14,12 @@ public partial class ChargingStation
     public bool SetChargingPower(string stopId, double power)
         {
         TraciDouble tmp = new(power);
-        return _helper.ExecuteSetCommand(CHARGINGSTATION_VARIABLE, TraciConstants.VAR_CHARGING_POWER, stopId, tmp);
+        return _helper.ExecuteSetCommand(
+            Set.CHARGINGSTATION_VARIABLE,
+            TraciConstants.VAR_CHARGING_POWER,
+            stopId,
+            tmp
+        );
         }
 
     /// <summary>
@@ -30,7 +34,12 @@ public partial class ChargingStation
     public bool SetEfficiency(string stopId, double efficiency)
         {
         TraciDouble tmp = new(efficiency);
-        return _helper.ExecuteSetCommand(CHARGINGSTATION_VARIABLE, TraciConstants.VAR_CHARGING_EFFICIENCY, stopId, tmp);
+        return _helper.ExecuteSetCommand(
+            Set.CHARGINGSTATION_VARIABLE,
+            TraciConstants.VAR_CHARGING_EFFICIENCY,
+            stopId,
+            tmp
+        );
         }
 
     /// <summary>
@@ -45,7 +54,12 @@ public partial class ChargingStation
     public bool SetChargeInTransit(string stopId, int inTransit)
         {
         TraciInteger tmp = new(inTransit);
-        return _helper.ExecuteSetCommand(CHARGINGSTATION_VARIABLE, TraciConstants.VAR_CHARGING_TRANSIT, stopId, tmp);
+        return _helper.ExecuteSetCommand(
+            Set.CHARGINGSTATION_VARIABLE,
+            TraciConstants.VAR_CHARGING_TRANSIT,
+            stopId,
+            tmp
+        );
         }
 
     /// <summary>
@@ -60,6 +74,11 @@ public partial class ChargingStation
     public bool SetChargeDelay(string stopId, double delay)
         {
         TraciDouble tmp = new(delay);
-        return _helper.ExecuteSetCommand(CHARGINGSTATION_VARIABLE, TraciConstants.VAR_CHARGING_DELAY, stopId, tmp);
+        return _helper.ExecuteSetCommand(
+            Set.CHARGINGSTATION_VARIABLE,
+            TraciConstants.VAR_CHARGING_DELAY,
+            stopId,
+            tmp
+        );
         }
     }

@@ -1,12 +1,12 @@
 namespace CodingConnected.Traci.DataTypes;
 
-// TODO https://sumo.dlr.de/docs/Simulation/Traffic_Lights.html#tllogic_attributes
 /// <summary>
 /// Cause some describe of logic properties in set/get document have some different,
 /// so use definitions in below link as standard<para/>
 /// see <see href="https://sumo.dlr.de/docs/Simulation/Traffic_Lights.html#tllogic_attributes"/>
 /// </summary>
-public sealed class TrafficLightLogic(IEnumerable<ITraciType> innerObjects) : TraciCompoundObject(innerObjects)
+public sealed class TrafficLightLogic(IEnumerable<ITraciType> innerObjects)
+    : TraciCompoundObject(innerObjects)
     {
     //protected override bool IsComplete => false;
 

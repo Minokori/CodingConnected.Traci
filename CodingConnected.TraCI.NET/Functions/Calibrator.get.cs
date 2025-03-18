@@ -1,4 +1,3 @@
-using static CodingConnected.Traci.Constants.CommandIdentifier;
 namespace CodingConnected.Traci.Functions;
 
 public partial class Calibrator
@@ -13,8 +12,12 @@ public partial class Calibrator
     /// </remarks>
     public double GetBegin(string calibratorId)
         {
-        var result = _helper.ExecuteGetCommand(Get.CALIBRATOR_VARIABLE, TraciConstants.VAR_BEGIN, calibratorId);
-        return ((TraciDouble)result.Data).Value;
+        var result = _helper.ExecuteGetCommand(
+            Get.CALIBRATOR_VARIABLE,
+            TraciConstants.VAR_BEGIN,
+            calibratorId
+        );
+        return (TraciDouble)result.Data;
         }
 
     /// <summary>
@@ -27,8 +30,12 @@ public partial class Calibrator
     /// </remarks>
     public string GetEdgeId(string calibratorId)
         {
-        var result = _helper.ExecuteGetCommand(Get.CALIBRATOR_VARIABLE, TraciConstants.VAR_ROAD_ID, calibratorId);
-        return ((TraciString)result.Data).Value;
+        var result = _helper.ExecuteGetCommand(
+            Get.CALIBRATOR_VARIABLE,
+            TraciConstants.VAR_ROAD_ID,
+            calibratorId
+        );
+        return (TraciString)result.Data;
         }
 
     /// <summary>
@@ -41,8 +48,12 @@ public partial class Calibrator
     /// </remarks>
     public double GetEnd(string calibratorId)
         {
-        var result = _helper.ExecuteGetCommand(Get.CALIBRATOR_VARIABLE, TraciConstants.VAR_END, calibratorId);
-        return ((TraciDouble)result.Data).Value;
+        var result = _helper.ExecuteGetCommand(
+            Get.CALIBRATOR_VARIABLE,
+            TraciConstants.VAR_END,
+            calibratorId
+        );
+        return (TraciDouble)result.Data;
         }
 
     /// <summary>
@@ -55,8 +66,12 @@ public partial class Calibrator
     /// </remarks>
     public double GetInserted(string calibratorId)
         {
-        var result = _helper.ExecuteGetCommand(Get.CALIBRATOR_VARIABLE, TraciConstants.VAR_INSERTED, calibratorId);
-        return ((TraciDouble)result.Data).Value;
+        var result = _helper.ExecuteGetCommand(
+            Get.CALIBRATOR_VARIABLE,
+            TraciConstants.VAR_INSERTED,
+            calibratorId
+        );
+        return (TraciDouble)result.Data;
         }
 
     /// <summary>
@@ -69,8 +84,12 @@ public partial class Calibrator
     /// </remarks>
     public string GetLaneId(string calibratorId)
         {
-        var result = _helper.ExecuteGetCommand(Get.CALIBRATOR_VARIABLE, TraciConstants.VAR_LANE_ID, calibratorId);
-        return ((TraciString)result.Data).Value;
+        var result = _helper.ExecuteGetCommand(
+            Get.CALIBRATOR_VARIABLE,
+            TraciConstants.VAR_LANE_ID,
+            calibratorId
+        );
+        return (TraciString)result.Data;
         }
 
     /// <summary>
@@ -83,8 +102,12 @@ public partial class Calibrator
     /// </remarks>
     public double GetPassed(string calibratorId)
         {
-        var result = _helper.ExecuteGetCommand(Get.CALIBRATOR_VARIABLE, TraciConstants.VAR_PASSED, calibratorId);
-        return ((TraciDouble)result.Data).Value;
+        var result = _helper.ExecuteGetCommand(
+            Get.CALIBRATOR_VARIABLE,
+            TraciConstants.VAR_PASSED,
+            calibratorId
+        );
+        return (TraciDouble)result.Data;
         }
 
     /// <summary>
@@ -97,8 +120,12 @@ public partial class Calibrator
     /// </remarks>
     public double GetRemoved(string calibratorId)
         {
-        var result = _helper.ExecuteGetCommand(Get.CALIBRATOR_VARIABLE, TraciConstants.VAR_REMOVED, calibratorId);
-        return ((TraciDouble)result.Data).Value;
+        var result = _helper.ExecuteGetCommand(
+            Get.CALIBRATOR_VARIABLE,
+            TraciConstants.VAR_REMOVED,
+            calibratorId
+        );
+        return (TraciDouble)result.Data;
         }
 
     /// <summary>
@@ -111,8 +138,12 @@ public partial class Calibrator
     /// </remarks>
     public string GetRouteId(string calibratorId)
         {
-        var result = _helper.ExecuteGetCommand(Get.CALIBRATOR_VARIABLE, TraciConstants.VAR_ROUTE_ID, calibratorId);
-        return ((TraciString)result.Data).Value;
+        var result = _helper.ExecuteGetCommand(
+            Get.CALIBRATOR_VARIABLE,
+            TraciConstants.VAR_ROUTE_ID,
+            calibratorId
+        );
+        return (TraciString)result.Data;
         }
 
     /// <summary>
@@ -125,8 +156,12 @@ public partial class Calibrator
     /// </remarks>
     public double GetRouteProbeId(string calibratorId)
         {
-        var result = _helper.ExecuteGetCommand(Get.CALIBRATOR_VARIABLE, TraciConstants.VAR_ROUTE_PROBE, calibratorId);
-        return ((TraciDouble)result.Data).Value;
+        var result = _helper.ExecuteGetCommand(
+            Get.CALIBRATOR_VARIABLE,
+            TraciConstants.VAR_ROUTE_PROBE,
+            calibratorId
+        );
+        return (TraciDouble)result.Data;
         }
 
     /// <summary>
@@ -139,8 +174,12 @@ public partial class Calibrator
     /// </remarks>
     public double GetSpeed(string calibratorId)
         {
-        var result = _helper.ExecuteGetCommand(Get.CALIBRATOR_VARIABLE, TraciConstants.VAR_SPEED, calibratorId);
-        return ((TraciDouble)result.Data).Value;
+        var result = _helper.ExecuteGetCommand(
+            Get.CALIBRATOR_VARIABLE,
+            TraciConstants.VAR_SPEED,
+            calibratorId
+        );
+        return (TraciDouble)result.Data;
         }
 
     /// <summary>
@@ -153,8 +192,12 @@ public partial class Calibrator
     /// </remarks>
     public string GetTypeId(string calibratorId)
         {
-        var result = _helper.ExecuteGetCommand(Get.CALIBRATOR_VARIABLE, TraciConstants.VAR_TYPE, calibratorId);
-        return ((TraciString)result.Data).Value;
+        var result = _helper.ExecuteGetCommand(
+            Get.CALIBRATOR_VARIABLE,
+            TraciConstants.VAR_TYPE,
+            calibratorId
+        );
+        return (TraciString)result.Data;
         }
 
     /// <summary>
@@ -168,8 +211,12 @@ public partial class Calibrator
 
     public List<string> GetVTypes(string calibratorId)
         {
-        var result = _helper.ExecuteGetCommand(Get.CALIBRATOR_VARIABLE, TraciConstants.VAR_VTYPES, calibratorId);
-        return ((TraciStringList)result.Data).Value;
+        var result = _helper.ExecuteGetCommand(
+            Get.CALIBRATOR_VARIABLE,
+            TraciConstants.VAR_VTYPES,
+            calibratorId
+        );
+        return (TraciStringList)result.Data;
         }
 
     /// <summary>
@@ -182,7 +229,11 @@ public partial class Calibrator
     /// </remarks>
     public double GetVehiclePerHour(string calibratorId)
         {
-        var result = _helper.ExecuteGetCommand(Get.CALIBRATOR_VARIABLE, TraciConstants.VAR_VEHSPERHOUR, calibratorId);
-        return ((TraciDouble)result.Data).Value;
+        var result = _helper.ExecuteGetCommand(
+            Get.CALIBRATOR_VARIABLE,
+            TraciConstants.VAR_VEHSPERHOUR,
+            calibratorId
+        );
+        return (TraciDouble)result.Data;
         }
     }

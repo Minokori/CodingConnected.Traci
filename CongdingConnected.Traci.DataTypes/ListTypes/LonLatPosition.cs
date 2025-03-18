@@ -1,4 +1,5 @@
 namespace CodingConnected.Traci.DataTypes;
+
 /// <summary>
 /// A position within the simulation network in geo-coordinates,
 /// described by two double values (longitude and latitude).
@@ -6,10 +7,12 @@ namespace CodingConnected.Traci.DataTypes;
 public sealed class LonLatPosition : TraciListType<TraciDouble, double>, ITraciType
     {
     public override DataType TypeIdentifier => DataType.LON_LAT;
-    public double Longitude => this[0].Value;
-    public double Latitude => this[1].Value;
+    public double Longitude => this[0];
+    public double Latitude => this[1];
 
-    public static new (LonLatPosition longLatPosition, IEnumerable<byte> remainingBytes) FromBytes(IEnumerable<byte> bytes)
+    public static new (LonLatPosition longLatPosition, IEnumerable<byte> remainingBytes) FromBytes(
+        IEnumerable<byte> bytes
+    )
         {
         (var longitude, bytes) = TraciDouble.FromBytes(bytes);
         (var latitude, bytes) = TraciDouble.FromBytes(bytes);
@@ -21,7 +24,8 @@ public sealed class LonLatPosition : TraciListType<TraciDouble, double>, ITraciT
 
     public LonLatPosition(double longitude, double latitude)
         {
-        this[0] = new(longitude);
-        this[1] = new(latitude);
+        Clear();
+        Add(new(longitude));
+        Add(new(latitude));
         }
     }

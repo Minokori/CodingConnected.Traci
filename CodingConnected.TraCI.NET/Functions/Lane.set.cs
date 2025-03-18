@@ -1,4 +1,3 @@
-using static CodingConnected.Traci.Constants.CommandIdentifier.Set;
 namespace CodingConnected.Traci.Functions;
 
 public partial class Lane
@@ -12,8 +11,9 @@ public partial class Lane
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/pydoc/traci._lane.html#LaneDomain-setAllowed"/>
     /// </remarks>
-    public bool SetAllowed(string laneId, List<string> allowedClasses) => _helper.ExecuteSetCommand(
-            LANE_VARIABLE,
+    public bool SetAllowed(string laneId, List<string> allowedClasses) =>
+        _helper.ExecuteSetCommand(
+            Set.LANE_VARIABLE,
             TraciConstants.LANE_ALLOWED,
             laneId,
             new TraciStringList(allowedClasses)
@@ -28,8 +28,9 @@ public partial class Lane
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/pydoc/traci._lane.html#LaneDomain-setDisallowed"/>
     /// </remarks>
-    public bool SetDisallowed(string laneId, List<string> disallowedClasses) => _helper.ExecuteSetCommand(
-            LANE_VARIABLE,
+    public bool SetDisallowed(string laneId, List<string> disallowedClasses) =>
+        _helper.ExecuteSetCommand(
+            Set.LANE_VARIABLE,
             TraciConstants.LANE_DISALLOWED,
             laneId,
             new TraciStringList(disallowedClasses)
@@ -49,10 +50,15 @@ public partial class Lane
         {
         var tmp = new TraciCompoundObject
         {
-            new TraciStringList (allowedClasses),
-            new TraciByte ( (byte)direction ),
+            new TraciStringList(allowedClasses),
+            new TraciByte((byte)direction),
         };
-        return _helper.ExecuteSetCommand(LANE_VARIABLE, TraciConstants.LANE_CHANGES, laneId, tmp);
+        return _helper.ExecuteSetCommand(
+            Set.LANE_VARIABLE,
+            TraciConstants.LANE_CHANGES,
+            laneId,
+            tmp
+        );
         }
 
     /// <summary>
@@ -67,7 +73,7 @@ public partial class Lane
     public bool SetLength(string laneId, double length)
         {
         TraciDouble tmp = new(length);
-        return _helper.ExecuteSetCommand(LANE_VARIABLE, TraciConstants.VAR_LENGTH, laneId, tmp);
+        return _helper.ExecuteSetCommand(Set.LANE_VARIABLE, TraciConstants.VAR_LENGTH, laneId, tmp);
         }
 
     /// <summary>
@@ -82,6 +88,11 @@ public partial class Lane
     public bool SetMaxSpeed(string laneId, double speed)
         {
         TraciDouble tmp = new(speed);
-        return _helper.ExecuteSetCommand(LANE_VARIABLE, TraciConstants.VAR_MAXSPEED, laneId, tmp);
+        return _helper.ExecuteSetCommand(
+            Set.LANE_VARIABLE,
+            TraciConstants.VAR_MAXSPEED,
+            laneId,
+            tmp
+        );
         }
     }

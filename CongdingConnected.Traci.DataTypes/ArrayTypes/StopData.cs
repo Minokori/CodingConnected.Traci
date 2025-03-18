@@ -1,8 +1,7 @@
-#pragma warning disable IDE0130 // 命名空间与文件夹结构不匹配
 namespace CodingConnected.Traci.DataTypes;
+
 public sealed class StopData(IEnumerable<ITraciType> innerObjects) : TraciArrayType(innerObjects)
     {
-
     public string LaneId => (TraciString)this[0];
 
     public double EndPosition => (TraciDouble)this[1];

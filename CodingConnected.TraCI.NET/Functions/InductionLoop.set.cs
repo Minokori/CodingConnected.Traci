@@ -13,7 +13,7 @@ public partial class InductionLoop
     public bool OverrideTimeSinceDetection(string loopId, double time)
         {
         TraciDouble tmp = new(time);
-        return _helper.ExecuteSetCommand(CommandIdentifier.Set.INDUCTIONLOOP_VARIABLE, TraciConstants.VAR_VIRTUAL_DETECTION, loopId, tmp);
+        return _helper.ExecuteSetCommand(Set.INDUCTIONLOOP_VARIABLE, TraciConstants.VAR_VIRTUAL_DETECTION, loopId, tmp);
 
         }
     }

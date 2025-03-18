@@ -1,4 +1,3 @@
-using static CodingConnected.Traci.Constants.CommandIdentifier.Get;
 namespace CodingConnected.Traci.Functions;
 
 public partial class Rerouter
@@ -12,7 +11,7 @@ public partial class Rerouter
     /// </remarks>
     public List<string> GetIdList()
         {
-        var result = _helper.ExecuteGetCommand(REROUTER_VARIABLE, TraciConstants.ID_LIST, "ignored");
+        var result = _helper.ExecuteGetCommand(Get.REROUTER_VARIABLE, TraciConstants.ID_LIST, "ignored");
         return (TraciStringList)result.Data;
         }
 
@@ -26,7 +25,7 @@ public partial class Rerouter
 
     public int GetIdCount()
         {
-        var result = _helper.ExecuteGetCommand(REROUTER_VARIABLE, TraciConstants.ID_COUNT, "ignored");
+        var result = _helper.ExecuteGetCommand(Get.REROUTER_VARIABLE, TraciConstants.ID_COUNT, "ignored");
         return (TraciInteger)result.Data;
         }
     }

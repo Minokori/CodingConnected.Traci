@@ -38,7 +38,6 @@ public partial class TraciClient : IDisposable
     /// <param name="port"></param>
     /// <param name="gui">enable sumo-gui window</param>
     /// <param name="quit">auto quit sumo when simulation end</param>
-    /// <param name="hostname">host </param>
     /// <returns></returns>
     public async Task<(int traciApiVersion, string sumoVersion)> Start(
         string? sumoFile = null,
@@ -70,5 +69,11 @@ public partial class TraciClient : IDisposable
         return (versionId, versionString);
         }
 
+    /// <summary>
+    /// low level method to send a command to the sumo server.<para/>
+    /// <b>NOT </b>recommended to use this method directly.
+    /// </summary>
+    /// <param name="command"></param>
+    /// <returns></returns>
     public List<TraciResult> SendMessage(TraciCommand command) => TcpService.SendMessage(command);
     }

@@ -1,4 +1,3 @@
-using static CodingConnected.Traci.Constants.CommandIdentifier.Get;
 namespace CodingConnected.Traci.Functions;
 
 public partial class RouteProbe
@@ -11,7 +10,11 @@ public partial class RouteProbe
     /// </remarks>
     public List<string> GetIdList()
         {
-        var result = _helper.ExecuteGetCommand(ROUTEPROBE_VARIABLE, TraciConstants.ID_LIST, "ignored");
+        var result = _helper.ExecuteGetCommand(
+            Get.ROUTEPROBE_VARIABLE,
+            TraciConstants.ID_LIST,
+            "ignored"
+        );
         return (TraciStringList)result.Data;
         }
 
@@ -25,7 +28,11 @@ public partial class RouteProbe
 
     public int GetIdCount()
         {
-        var result = _helper.ExecuteGetCommand(ROUTEPROBE_VARIABLE, TraciConstants.ID_COUNT, "ignored");
+        var result = _helper.ExecuteGetCommand(
+            Get.ROUTEPROBE_VARIABLE,
+            TraciConstants.ID_COUNT,
+            "ignored"
+        );
         return (TraciInteger)result.Data;
         }
     }

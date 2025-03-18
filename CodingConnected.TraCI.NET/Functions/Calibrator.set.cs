@@ -1,6 +1,4 @@
-using static CodingConnected.Traci.Constants.CommandIdentifier;
 namespace CodingConnected.Traci.Functions;
-
 
 public partial class Calibrator
     {
@@ -32,17 +30,17 @@ public partial class Calibrator
         string departSpeed = "max"
     )
         {
-        TraciCompoundObject tmp = [
-            new TraciDouble(begin) ,
+        TraciCompoundObject tmp =
+        [
+            new TraciDouble(begin),
             new TraciDouble(end),
             new TraciDouble(vehiclePerHour),
             new TraciDouble(speed),
-            new TraciString(typeId) ,
+            new TraciString(typeId),
             new TraciString(routeId),
             new TraciString(departLane),
-            new TraciString(departSpeed)
-            ];
-        return _helper.ExecuteSetCommand(Set.CALIBRATOR_VARIABLE, Set.FLOW,
-            calibrationId, tmp);
+            new TraciString(departSpeed),
+        ];
+        return _helper.ExecuteSetCommand(Set.CALIBRATOR_VARIABLE, Set.FLOW, calibrationId, tmp);
         }
     }

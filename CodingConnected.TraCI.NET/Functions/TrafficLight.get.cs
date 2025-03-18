@@ -1,10 +1,9 @@
-using static CodingConnected.Traci.Constants.CommandIdentifier.Get;
 namespace CodingConnected.Traci.Functions;
 
 public partial class TrafficLight
     {
     /// <summary>
-    /// 	Returns a list of ids of all traffic lights within the scenario 
+    /// 	Returns a list of ids of all traffic lights within the scenario
     /// 	(the given Traffic Lights ID is ignored)
     /// </summary>
     /// <returns></returns>
@@ -13,12 +12,12 @@ public partial class TrafficLight
     /// </remarks>
     public List<string> GetIdList()
         {
-        var result = _helper.ExecuteGetCommand(TL_VARIABLE, TraciConstants.ID_LIST, "ignored");
-        return ((TraciStringList)result.Data).Value;
+        var result = _helper.ExecuteGetCommand(Get.SIM_VARIABLE, TraciConstants.ID_LIST, "ignored");
+        return (TraciStringList)result.Data;
         }
 
     /// <summary>
-    /// 	Returns the number of traffic lights within the scenario 
+    /// 	Returns the number of traffic lights within the scenario
     /// 	(the given Traffic Lights ID is ignored)
     /// </summary>
     /// <returns></returns>
@@ -27,8 +26,12 @@ public partial class TrafficLight
     /// </remarks>
     public int GetIdCount()
         {
-        var result = _helper.ExecuteGetCommand(TL_VARIABLE, TraciConstants.ID_COUNT, "ignored");
-        return ((TraciInteger)result.Data).Value;
+        var result = _helper.ExecuteGetCommand(
+            Get.SIM_VARIABLE,
+            TraciConstants.ID_COUNT,
+            "ignored"
+        );
+        return (TraciInteger)result.Data;
         }
 
     /// <summary>
@@ -43,8 +46,12 @@ public partial class TrafficLight
     /// </remarks>
     public string GetRedYellowGreenState(string tlsId)
         {
-        var result = _helper.ExecuteGetCommand(TL_VARIABLE, TraciConstants.TL_RED_YELLOW_GREEN_STATE, tlsId);
-        return ((TraciString)result.Data).Value;
+        var result = _helper.ExecuteGetCommand(
+            Get.SIM_VARIABLE,
+            TraciConstants.TL_RED_YELLOW_GREEN_STATE,
+            tlsId
+        );
+        return (TraciString)result.Data;
         }
 
     /// <summary>
@@ -59,8 +66,12 @@ public partial class TrafficLight
     /// </remarks>
     public double GetPhaseDuration(string tlsId)
         {
-        var result = _helper.ExecuteGetCommand(TL_VARIABLE, TraciConstants.TL_PHASE_DURATION, tlsId);
-        return ((TraciDouble)result.Data).Value;
+        var result = _helper.ExecuteGetCommand(
+            Get.SIM_VARIABLE,
+            TraciConstants.TL_PHASE_DURATION,
+            tlsId
+        );
+        return (TraciDouble)result.Data;
         }
 
     /// <summary>
@@ -74,8 +85,12 @@ public partial class TrafficLight
     /// </remarks>
     public List<string> GetControlledLanes(string tlsId)
         {
-        var result = _helper.ExecuteGetCommand(TL_VARIABLE, TraciConstants.TL_CONTROLLED_LANES, tlsId);
-        return ((TraciStringList)result.Data).Value;
+        var result = _helper.ExecuteGetCommand(
+            Get.SIM_VARIABLE,
+            TraciConstants.TL_CONTROLLED_LANES,
+            tlsId
+        );
+        return (TraciStringList)result.Data;
         }
 
     /// <summary>
@@ -89,7 +104,11 @@ public partial class TrafficLight
     /// </remarks>
     public List<ControlledLinks> GetControlledLinks(string tlsId)
         {
-        var result = _helper.ExecuteGetCommand(TL_VARIABLE, TraciConstants.TL_CONTROLLED_LINKS, tlsId);
+        var result = _helper.ExecuteGetCommand(
+            Get.SIM_VARIABLE,
+            TraciConstants.TL_CONTROLLED_LINKS,
+            tlsId
+        );
         return ((TraciCompoundObject)result.Data).ToControlledLinks();
         }
 
@@ -104,8 +123,12 @@ public partial class TrafficLight
 
     public int GetPhase(string tlsId)
         {
-        var result = _helper.ExecuteGetCommand(TL_VARIABLE, TraciConstants.TL_CURRENT_PHASE, tlsId);
-        return ((TraciInteger)result.Data).Value;
+        var result = _helper.ExecuteGetCommand(
+            Get.SIM_VARIABLE,
+            TraciConstants.TL_CURRENT_PHASE,
+            tlsId
+        );
+        return (TraciInteger)result.Data;
         }
 
     /// <summary>
@@ -118,8 +141,12 @@ public partial class TrafficLight
     /// </remarks>
     public string GetProgram(string tlsId)
         {
-        var result = _helper.ExecuteGetCommand(TL_VARIABLE, TraciConstants.TL_CURRENT_PROGRAM, tlsId);
-        return ((TraciString)result.Data).Value;
+        var result = _helper.ExecuteGetCommand(
+            Get.SIM_VARIABLE,
+            TraciConstants.TL_CURRENT_PROGRAM,
+            tlsId
+        );
+        return (TraciString)result.Data;
         }
 
     /// <summary>
@@ -133,7 +160,14 @@ public partial class TrafficLight
     /// </remarks>
     public List<TrafficLightLogic> GetCompleteRedYellowGreenDefinition(string tlsId)
         {
-        var result = (TraciCompoundObject)_helper.ExecuteGetCommand(TL_VARIABLE, TraciConstants.TL_COMPLETE_DEFINITION_RYG, tlsId).Data;
+        var result = (TraciCompoundObject)
+            _helper
+                .ExecuteGetCommand(
+                    Get.SIM_VARIABLE,
+                    TraciConstants.TL_COMPLETE_DEFINITION_RYG,
+                    tlsId
+                )
+                .Data;
         return result.ToTrafficLightLogics();
         }
 
@@ -151,10 +185,13 @@ public partial class TrafficLight
     /// </remarks>
     public double GetNextSwitch(string tlsId)
         {
-        var result = _helper.ExecuteGetCommand(TL_VARIABLE, TraciConstants.TL_NEXT_SWITCH, tlsId);
-        return ((TraciDouble)result.Data).Value;
+        var result = _helper.ExecuteGetCommand(
+            Get.SIM_VARIABLE,
+            TraciConstants.TL_NEXT_SWITCH,
+            tlsId
+        );
+        return (TraciDouble)result.Data;
         }
-
 
     /// <summary>
     /// Returns the time spent in the current phase (in seconds)
@@ -166,8 +203,12 @@ public partial class TrafficLight
     /// </remarks>
     public double GetSpentDuration(string tlsId)
         {
-        var result = _helper.ExecuteGetCommand(TL_VARIABLE, TraciConstants.TL_SPENT_DURATION, tlsId);
-        return ((TraciDouble)result.Data).Value;
+        var result = _helper.ExecuteGetCommand(
+            Get.SIM_VARIABLE,
+            TraciConstants.TL_SPENT_DURATION,
+            tlsId
+        );
+        return (TraciDouble)result.Data;
         }
 
     /// <summary>
@@ -182,8 +223,13 @@ public partial class TrafficLight
     public List<string> GetBlockingVehicles(string tlsId, int linkIndex)
         {
         var tmp = new TraciInteger(linkIndex);
-        var result = _helper.ExecuteGetCommand(TL_VARIABLE, TraciConstants.TL_BLOCKING_VEHICLES, tlsId, tmp);
-        return ((TraciStringList)result.Data).Value;
+        var result = _helper.ExecuteGetCommand(
+            Get.SIM_VARIABLE,
+            TraciConstants.TL_BLOCKING_VEHICLES,
+            tlsId,
+            tmp
+        );
+        return (TraciStringList)result.Data;
         }
 
     /// <summary>
@@ -198,8 +244,13 @@ public partial class TrafficLight
     public List<string> GetRivalVehicles(string tlsId, int linkIndex)
         {
         TraciInteger tmp = new(linkIndex);
-        var result = _helper.ExecuteGetCommand(TL_VARIABLE, TraciConstants.TL_RIVAL_VEHICLES, tlsId, tmp);
-        return ((TraciStringList)result.Data).Value;
+        var result = _helper.ExecuteGetCommand(
+            Get.SIM_VARIABLE,
+            TraciConstants.TL_RIVAL_VEHICLES,
+            tlsId,
+            tmp
+        );
+        return (TraciStringList)result.Data;
         }
 
     /// <summary>
@@ -214,7 +265,12 @@ public partial class TrafficLight
     public List<string> GetPriorityVehicles(string tlsId, int linkIndex)
         {
         TraciInteger tmp = new(linkIndex);
-        var result = _helper.ExecuteGetCommand(TL_VARIABLE, TraciConstants.TL_PRIORITY_VEHICLES, tlsId, tmp);
-        return ((TraciStringList)result.Data).Value;
+        var result = _helper.ExecuteGetCommand(
+            Get.SIM_VARIABLE,
+            TraciConstants.TL_PRIORITY_VEHICLES,
+            tlsId,
+            tmp
+        );
+        return (TraciStringList)result.Data;
         }
     }

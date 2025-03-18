@@ -1,4 +1,3 @@
-using static CodingConnected.Traci.Constants.CommandIdentifier.Set;
 namespace CodingConnected.Traci.Functions;
 
 public partial class TrafficLight
@@ -16,7 +15,12 @@ public partial class TrafficLight
     public bool SetRedYellowGreenState(string tlsId, string state)
         {
         var tmp = new TraciString(state);
-        return _helper.ExecuteSetCommand(TL_VARIABLE, TraciConstants.TL_RED_YELLOW_GREEN_STATE, tlsId, tmp);
+        return _helper.ExecuteSetCommand(
+            Set.SIM_VARIABLE,
+            TraciConstants.TL_RED_YELLOW_GREEN_STATE,
+            tlsId,
+            tmp
+        );
         }
 
     /// <summary>
@@ -34,7 +38,14 @@ public partial class TrafficLight
         {
         var fullState = GetRedYellowGreenState(tlsId);
         return tlsLinkIndex < fullState.Length
-            && SetRedYellowGreenState(tlsId, string.Concat(fullState.AsSpan(0, tlsLinkIndex), state, fullState.AsSpan(tlsLinkIndex + 1)));
+            && SetRedYellowGreenState(
+                tlsId,
+                string.Concat(
+                    fullState.AsSpan(0, tlsLinkIndex),
+                    state,
+                    fullState.AsSpan(tlsLinkIndex + 1)
+                )
+            );
         }
 
     /// <summary>
@@ -51,7 +62,12 @@ public partial class TrafficLight
     public bool SetPhase(string tlsId, int index)
         {
         TraciInteger tmp = new(index);
-        return _helper.ExecuteSetCommand(TL_VARIABLE, TraciConstants.TL_PHASE_INDEX, tlsId, tmp);
+        return _helper.ExecuteSetCommand(
+            Set.SIM_VARIABLE,
+            TraciConstants.TL_PHASE_INDEX,
+            tlsId,
+            tmp
+        );
         }
 
     /// <summary>
@@ -67,7 +83,7 @@ public partial class TrafficLight
     public bool SetProgram(string tlsId, string programId)
         {
         TraciString tmp = new(programId);
-        return _helper.ExecuteSetCommand(TL_VARIABLE, TraciConstants.TL_PROGRAM, tlsId, tmp);
+        return _helper.ExecuteSetCommand(Set.SIM_VARIABLE, TraciConstants.TL_PROGRAM, tlsId, tmp);
         }
 
     /// <summary>
@@ -82,7 +98,12 @@ public partial class TrafficLight
     public bool SetPhaseDuration(string tlsId, double phaseDuration)
         {
         TraciDouble tmp = new(phaseDuration);
-        return _helper.ExecuteSetCommand(TL_VARIABLE, TraciConstants.TL_PHASE_DURATION, tlsId, tmp);
+        return _helper.ExecuteSetCommand(
+            Set.SIM_VARIABLE,
+            TraciConstants.TL_PHASE_DURATION,
+            tlsId,
+            tmp
+        );
         }
 
     /// <summary>
@@ -96,5 +117,11 @@ public partial class TrafficLight
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/pydoc/traci._trafficlight.html#TrafficLightDomain-setProgramLogic"/>
     /// </remarks>
-    public bool SetProgramLogic(string tlsId, TrafficLightLogic logic) => _helper.ExecuteSetCommand(TL_VARIABLE, TraciConstants.TL_COMPLETE_PROGRAM_RYG, tlsId, logic);
+    public bool SetProgramLogic(string tlsId, TrafficLightLogic logic) =>
+        _helper.ExecuteSetCommand(
+            Set.SIM_VARIABLE,
+            TraciConstants.TL_COMPLETE_PROGRAM_RYG,
+            tlsId,
+            logic
+        );
     }

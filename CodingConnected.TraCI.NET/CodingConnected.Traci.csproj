@@ -47,6 +47,9 @@
     </ItemGroup>
     <ItemGroup>
         <Using Include="CodingConnected.Traci.Constants" />
+        <Using Include="CodingConnected.Traci.Constants.CommandIdentifier">
+          <Static>True</Static>
+        </Using>
         <Using Include="CodingConnected.Traci.DataTypes" />
         <Using Include="CodingConnected.Traci.ProtocolTypes" />
     </ItemGroup>

@@ -7,11 +7,14 @@ namespace CodingConnected.Traci.DataTypes;
 public sealed class LonLatAltPosition : TraciListType<TraciDouble, double>, ITraciType
     {
     public override DataType TypeIdentifier => DataType.LON_LAT_ALT;
-    public double Longitude => this[0].Value;
-    public double Latitude => this[1].Value;
-    public double Altitude => this[2].Value;
+    public double Longitude => this[0];
+    public double Latitude => this[1];
+    public double Altitude => this[2];
 
-    public static new (LonLatAltPosition longLatPosition, IEnumerable<byte> remainingBytes) FromBytes(IEnumerable<byte> bytes)
+    public static new (
+        LonLatAltPosition longLatPosition,
+        IEnumerable<byte> remainingBytes
+    ) FromBytes(IEnumerable<byte> bytes)
         {
         (var longitude, bytes) = TraciDouble.FromBytes(bytes);
         (var latitude, bytes) = TraciDouble.FromBytes(bytes);

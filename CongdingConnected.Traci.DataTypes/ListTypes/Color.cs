@@ -8,12 +8,14 @@ public sealed class Color : TraciListType<TraciByte, byte>, ITraciType
     {
     public override DataType TypeIdentifier => DataType.COLOR;
 
-    public byte R => this[0].Value;
-    public byte G => this[1].Value;
-    public byte B => this[2].Value;
-    public byte A => this[3].Value;
+    public byte R => this[0];
+    public byte G => this[1];
+    public byte B => this[2];
+    public byte A => this[3];
 
-    public static new (Color color, IEnumerable<byte> remainingBytes) FromBytes(IEnumerable<byte> bytes)
+    public static new (Color color, IEnumerable<byte> remainingBytes) FromBytes(
+        IEnumerable<byte> bytes
+    )
         {
         (var r, bytes) = TraciByte.FromBytes(bytes);
         (var g, bytes) = TraciByte.FromBytes(bytes);
@@ -42,5 +44,6 @@ public sealed class Color : TraciListType<TraciByte, byte>, ITraciType
         a = A;
         }
 
-    public static implicit operator (int r, int g, int b, int a)(Color color) => new(color.R, color.G, color.B, color.A);
+    public static implicit operator (int r, int g, int b, int a)(Color color) =>
+        new(color.R, color.G, color.B, color.A);
     }

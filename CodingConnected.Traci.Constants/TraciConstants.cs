@@ -83,49 +83,49 @@ public static partial class TraciConstants
     public const byte VAR_VEHICLE_NUMBER = 0x22;
 
     /// <summary>
-    /// get aggregated occupancy (get: inductionloop, e2)
+    /// get aggregated occupancy (get: induction loop, e2)
     /// </summary>
     public const byte VAR_INTERVAL_OCCUPANCY = 0x23;
 
     /// <summary>
-    /// get aggregated speed (get: inductionloop, e2)
+    /// get aggregated speed (get: induction loop, e2)
     /// </summary>
     public const byte VAR_INTERVAL_SPEED = 0x24;
 
     /// <summary>
-    /// get aggregated vehicle count (get: inductionloop, e2)
+    /// get aggregated vehicle count (get: induction loop, e2)
     /// </summary>
     public const byte VAR_INTERVAL_NUMBER = 0x25;
 
     /// <summary>
-    /// get aggregated vehicle ids (get: inductionloop)
+    /// get aggregated vehicle ids (get: induction loop)
     /// </summary>
     public const byte VAR_INTERVAL_IDS = 0x26;
 
     public const byte VAR_INTERVAL_MAX_JAM_LENGTH_METERS = 0x32;
 
     /// <summary>
-    /// get aggregated speed of last written interval (get: inductionloop, e2)
+    /// get aggregated speed of last written interval (get: induction loop, e2)
     /// </summary>
     public const byte VAR_LAST_INTERVAL_OCCUPANCY = 0x27;
 
     /// <summary>
-    /// get aggregated occupancy of last written interval (get: inductionloop, e2)
+    /// get aggregated occupancy of last written interval (get: induction loop, e2)
     /// </summary>
     public const byte VAR_LAST_INTERVAL_SPEED = 0x28;
 
     /// <summary>
-    /// get aggregated vehicle count of last written interval (get: inductionloop, e2)
+    /// get aggregated vehicle count of last written interval (get: induction loop, e2)
     /// </summary>
     public const byte VAR_LAST_INTERVAL_NUMBER = 0x29;
 
     /// <summary>
-    /// get aggregated vehicle ids of last written interval (get: inductionloop)
+    /// get aggregated vehicle ids of last written interval (get: induction loop)
     /// </summary>
     public const byte VAR_LAST_INTERVAL_IDS = 0x2a;
 
     /// <summary>
-    /// lanes (get: variablespeedsign, multi-entry/multi-exit detector)
+    /// lanes (get: variable speed sign, multi-entry/multi-exit detector)
     /// </summary>
     public const byte VAR_LANES = 0x30;
 
@@ -295,7 +295,7 @@ public static partial class TraciConstants
     // maximum allowed/possible speed (get: vehicle types, lanes, set: edges, lanes)
     public const byte VAR_MAXSPEED = 0x41;
 
-    // position (2D) (get: vehicle, poi, inductionloop, areadetector; set: poi)
+    // position (2D) (get: vehicle, poi, induction loop, area detector; set: poi)
     public const byte VAR_POSITION = 0x42;
 
     // position (3D) (get: vehicle, poi, set: poi)
@@ -304,7 +304,7 @@ public static partial class TraciConstants
     // angle (get: vehicle)
     public const byte VAR_ANGLE = 0x43;
 
-    // angle (get: vehicle types, lanes, arealdetector, set: lanes)
+    // angle (get: vehicle types, lanes, area detector, set: lanes)
     public const byte VAR_LENGTH = 0x44;
 
     // color (get: vehicles, vehicle types, polygons, pois)
@@ -390,7 +390,7 @@ public static partial class TraciConstants
     // road id (get: vehicles)
     public const byte VAR_ROAD_ID = 0x50;
 
-    // lane id (get: vehicles, inductionloop, arealdetector)
+    // lane id (get: vehicles, induction loop, area detector)
     public const byte VAR_LANE_ID = 0x51;
 
     // lane index (get: vehicle, edge)
@@ -479,16 +479,16 @@ public static partial class TraciConstants
     // position (1D lateral position relative to center of the current lane) (get: vehicle)
     public const byte VAR_LANEPOSITION_LAT = 0xb8;
 
-    // get/set prefered lateral alignment within the lane (vehicle)
+    // get/set preferred lateral alignment within the lane (vehicle)
     public const byte VAR_LATALIGNMENT = 0xb9;
 
-    // get/set maximum lateral speed (vehicle, vtypes)
+    // get/set maximum lateral speed (vehicle, vehicle types)
     public const byte VAR_MAXSPEED_LAT = 0xba;
 
-    // get/set minimum lateral gap (vehicle, vtypes)
+    // get/set minimum lateral gap (vehicle, vehicle types)
     public const byte VAR_MINGAP_LAT = 0xbb;
 
-    // get/set vehicle height (vehicle, vtypes)
+    // get/set vehicle height (vehicle, vehicle types)
     public const byte VAR_HEIGHT = 0xbc;
 
     // get/set vehicle line
@@ -761,7 +761,7 @@ public static partial class TraciConstants
     public const int LCA_UNKNOWN = 1073741824;
 
     /// <summary>
-    /// full name (get: edges, simulation, trafficlight)
+    /// full name (get: edges, simulation, traffic light)
     /// </summary>
     public const byte VAR_NAME = 0x1b;
 
@@ -796,7 +796,7 @@ public static partial class TraciConstants
     public const byte VAR_ROUTE_PROBE = 0x17;
 
     /// <summary>
-    /// vtype list (get: calibrator)
+    /// vehicle type list (get: calibrator)
     /// </summary>
     public const byte VAR_VTYPES = 0x1e;
 

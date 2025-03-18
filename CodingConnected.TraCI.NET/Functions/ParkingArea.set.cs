@@ -1,4 +1,3 @@
-using static CodingConnected.Traci.Constants.CommandIdentifier.Set;
 namespace CodingConnected.Traci.Functions;
 
 public partial class ParkingArea
@@ -15,6 +14,11 @@ public partial class ParkingArea
     public bool SetAcceptedBadges(string stopId, List<string> badges)
         {
         TraciStringList tmp = new(badges);
-        return _helper.ExecuteSetCommand(PARKINGAREA_VARIABLE, TraciConstants.VAR_BADGES, stopId, tmp);
+        return _helper.ExecuteSetCommand(
+            Set.PARKINGAREA_VARIABLE,
+            TraciConstants.VAR_BADGES,
+            stopId,
+            tmp
+        );
         }
     }

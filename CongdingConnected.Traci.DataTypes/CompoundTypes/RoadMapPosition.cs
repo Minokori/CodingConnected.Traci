@@ -1,4 +1,5 @@
 namespace CodingConnected.Traci.DataTypes;
+
 /// <summary>
 /// Alternative position description that is also used by sumo in most cases.
 /// </summary>
@@ -27,8 +28,9 @@ public sealed class RoadMapPosition : TraciCompoundObject
     /// </summary>
     public byte LaneId => (TraciByte)this[2];
 
-
-    public static new (RoadMapPosition roadMapPosition, IEnumerable<byte> remainingBytes) FromBytes(IEnumerable<byte> bytes)
+    public static new (RoadMapPosition roadMapPosition, IEnumerable<byte> remainingBytes) FromBytes(
+        IEnumerable<byte> bytes
+    )
         {
         (var roadId, bytes) = TraciString.FromBytes(bytes);
         (var pos, bytes) = TraciDouble.FromBytes(bytes);

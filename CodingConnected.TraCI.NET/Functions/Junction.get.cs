@@ -1,4 +1,3 @@
-using static CodingConnected.Traci.Constants.CommandIdentifier;
 namespace CodingConnected.Traci.Functions;
 public partial class Junction
     {

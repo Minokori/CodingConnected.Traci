@@ -2,8 +2,8 @@ namespace CodingConnected.Traci.DataTypes;
 
 /// <summary>
 /// This type is used to report the different phases of a traffic light.
-/// A total of Length phases is reported 
-/// together with the preceding and succeeding roads 
+/// A total of Length phases is reported
+/// together with the preceding and succeeding roads
 /// that are affected by the respective light phase.
 /// </summary>
 /// <remarks>
@@ -23,7 +23,9 @@ public sealed class TrafficLightPhaseList : List<TrafficLightPhase>, ITraciType
         return [.. bytes];
         }
 
-    public static (TrafficLightPhaseList tlsPhaseList, IEnumerable<byte> remainingBytes) FromBytes(IEnumerable<byte> bytes)
+    public static (TrafficLightPhaseList tlsPhaseList, IEnumerable<byte> remainingBytes) FromBytes(
+        IEnumerable<byte> bytes
+    )
         {
         // how many phases are there
         int count = bytes.First();

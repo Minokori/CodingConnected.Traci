@@ -16,7 +16,7 @@ internal class ConnectService : ITCPConnectService
     /// <param name="port">Port at which SUMO exposes the API</param>
     public async Task ConnectAsync(string hostname, int port)
         {
-        Client = new TcpClient { ReceiveBufferSize = 32768, SendBufferSize = 32768 };
+        Client = new() { ReceiveBufferSize = 32768, SendBufferSize = 32768 };
         while (!Client.Connected)
             {
             try
@@ -35,7 +35,6 @@ internal class ConnectService : ITCPConnectService
     public bool Connect(string hostname, int port)
         {
         Client = new TcpClient { ReceiveBufferSize = 32768, SendBufferSize = 32768 };
-
         try
             {
             Client.Connect(hostname, port);

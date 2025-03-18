@@ -1,4 +1,3 @@
-using static CodingConnected.Traci.Constants.CommandIdentifier.Get;
 namespace CodingConnected.Traci.Functions;
 
 public partial class InductionLoop
@@ -13,7 +12,11 @@ public partial class InductionLoop
     /// </remarks>
     public List<string> GetIdList()
         {
-        var result = _helper.ExecuteGetCommand(INDUCTIONLOOP_VARIABLE, TraciConstants.ID_LIST, "ignored");
+        var result = _helper.ExecuteGetCommand(
+            Get.INDUCTIONLOOP_VARIABLE,
+            TraciConstants.ID_LIST,
+            "ignored"
+        );
         return (TraciStringList)result.Data;
         }
 
@@ -29,7 +32,11 @@ public partial class InductionLoop
 
     public double GetPosition(string loopId)
         {
-        var result = _helper.ExecuteGetCommand(INDUCTIONLOOP_VARIABLE, TraciConstants.VAR_POSITION, loopId);
+        var result = _helper.ExecuteGetCommand(
+            Get.INDUCTIONLOOP_VARIABLE,
+            TraciConstants.VAR_POSITION,
+            loopId
+        );
         return (TraciDouble)result.Data;
         }
 
@@ -43,7 +50,11 @@ public partial class InductionLoop
     /// </remarks>
     public string GetLaneId(string loopId)
         {
-        var result = _helper.ExecuteGetCommand(INDUCTIONLOOP_VARIABLE, TraciConstants.VAR_LANE_ID, loopId);
+        var result = _helper.ExecuteGetCommand(
+            Get.INDUCTIONLOOP_VARIABLE,
+            TraciConstants.VAR_LANE_ID,
+            loopId
+        );
         return (TraciString)result.Data;
         }
 
@@ -57,8 +68,12 @@ public partial class InductionLoop
     /// </remarks>
     public int GetIdCount()
         {
-        var result = _helper.ExecuteGetCommand(INDUCTIONLOOP_VARIABLE, TraciConstants.ID_COUNT, "ignored");
-        return ((TraciInteger)result.Data).Value;
+        var result = _helper.ExecuteGetCommand(
+            Get.INDUCTIONLOOP_VARIABLE,
+            TraciConstants.ID_COUNT,
+            "ignored"
+        );
+        return (TraciInteger)result.Data;
         }
 
     /// <summary>
@@ -72,8 +87,12 @@ public partial class InductionLoop
     /// </remarks>
     public int GetLastStepVehicleNumber(string loopId)
         {
-        var result = _helper.ExecuteGetCommand(INDUCTIONLOOP_VARIABLE, TraciConstants.LAST_STEP_VEHICLE_NUMBER, loopId);
-        return ((TraciInteger)result.Data).Value;
+        var result = _helper.ExecuteGetCommand(
+            Get.INDUCTIONLOOP_VARIABLE,
+            TraciConstants.LAST_STEP_VEHICLE_NUMBER,
+            loopId
+        );
+        return (TraciInteger)result.Data;
         }
 
     /// <summary>
@@ -83,8 +102,12 @@ public partial class InductionLoop
     /// <returns></returns>
     public double GetLastStepMeanSpeed(string id)
         {
-        var result = _helper.ExecuteGetCommand(INDUCTIONLOOP_VARIABLE, TraciConstants.LAST_STEP_MEAN_SPEED, id);
-        return ((TraciDouble)result.Data).Value;
+        var result = _helper.ExecuteGetCommand(
+            Get.INDUCTIONLOOP_VARIABLE,
+            TraciConstants.LAST_STEP_MEAN_SPEED,
+            id
+        );
+        return (TraciDouble)result.Data;
         }
 
     /// <summary>
@@ -97,7 +120,11 @@ public partial class InductionLoop
     /// </remarks>
     public List<string> GetLastStepVehicleIds(string loopId)
         {
-        var result = _helper.ExecuteGetCommand(INDUCTIONLOOP_VARIABLE, TraciConstants.LAST_STEP_VEHICLE_ID_LIST, loopId);
+        var result = _helper.ExecuteGetCommand(
+            Get.INDUCTIONLOOP_VARIABLE,
+            TraciConstants.LAST_STEP_VEHICLE_ID_LIST,
+            loopId
+        );
         return (TraciStringList)result.Data;
         }
 
@@ -111,8 +138,12 @@ public partial class InductionLoop
     /// </remarks>
     public double GetLastStepOccupancy(string loopId)
         {
-        var result = _helper.ExecuteGetCommand(INDUCTIONLOOP_VARIABLE, TraciConstants.LAST_STEP_OCCUPANCY, loopId);
-        return ((TraciDouble)result.Data).Value;
+        var result = _helper.ExecuteGetCommand(
+            Get.INDUCTIONLOOP_VARIABLE,
+            TraciConstants.LAST_STEP_OCCUPANCY,
+            loopId
+        );
+        return (TraciDouble)result.Data;
         }
 
     /// <summary>
@@ -125,8 +156,12 @@ public partial class InductionLoop
     /// </remarks>
     public double GetLastStepMeanLength(string loopId)
         {
-        var result = _helper.ExecuteGetCommand(INDUCTIONLOOP_VARIABLE, TraciConstants.LAST_STEP_LENGTH, loopId);
-        return ((TraciDouble)result.Data).Value;
+        var result = _helper.ExecuteGetCommand(
+            Get.INDUCTIONLOOP_VARIABLE,
+            TraciConstants.LAST_STEP_LENGTH,
+            loopId
+        );
+        return (TraciDouble)result.Data;
         }
 
     /// <summary>
@@ -139,8 +174,12 @@ public partial class InductionLoop
     /// </remarks>
     public double GetTimeSinceDetection(string loopId)
         {
-        var result = _helper.ExecuteGetCommand(INDUCTIONLOOP_VARIABLE, TraciConstants.LAST_STEP_TIME_SINCE_DETECTION, loopId);
-        return ((TraciDouble)result.Data).Value;
+        var result = _helper.ExecuteGetCommand(
+            Get.INDUCTIONLOOP_VARIABLE,
+            TraciConstants.LAST_STEP_TIME_SINCE_DETECTION,
+            loopId
+        );
+        return (TraciDouble)result.Data;
         }
 
     /// <summary>
@@ -153,7 +192,14 @@ public partial class InductionLoop
     /// </remarks>
     public List<VehicleInformationPacket> GetVehicleData(string loopId)
         {
-        var result = (TraciCompoundObject)_helper.ExecuteGetCommand(INDUCTIONLOOP_VARIABLE, TraciConstants.LAST_STEP_VEHICLE_DATA, loopId).Data;
+        var result = (TraciCompoundObject)
+            _helper
+                .ExecuteGetCommand(
+                    Get.INDUCTIONLOOP_VARIABLE,
+                    TraciConstants.LAST_STEP_VEHICLE_DATA,
+                    loopId
+                )
+                .Data;
         return result.ToVehicleInformationPackets();
         }
 
@@ -167,8 +213,12 @@ public partial class InductionLoop
     /// </remarks>
     public double GetIntervalOccupancy(string loopId)
         {
-        var result = _helper.ExecuteGetCommand(INDUCTIONLOOP_VARIABLE, TraciConstants.VAR_INTERVAL_OCCUPANCY, loopId);
-        return ((TraciDouble)result.Data).Value;
+        var result = _helper.ExecuteGetCommand(
+            Get.INDUCTIONLOOP_VARIABLE,
+            TraciConstants.VAR_INTERVAL_OCCUPANCY,
+            loopId
+        );
+        return (TraciDouble)result.Data;
         }
 
     /// <summary>
@@ -181,8 +231,12 @@ public partial class InductionLoop
     /// </remarks>
     public double GetIntervalMeanSpeed(string loopId)
         {
-        var result = _helper.ExecuteGetCommand(INDUCTIONLOOP_VARIABLE, TraciConstants.VAR_INTERVAL_SPEED, loopId);
-        return ((TraciDouble)result.Data).Value;
+        var result = _helper.ExecuteGetCommand(
+            Get.INDUCTIONLOOP_VARIABLE,
+            TraciConstants.VAR_INTERVAL_SPEED,
+            loopId
+        );
+        return (TraciDouble)result.Data;
         }
 
     /// <summary>
@@ -195,8 +249,12 @@ public partial class InductionLoop
     /// </remarks>
     public int GetIntervalVehicleNumber(string loopId)
         {
-        var result = _helper.ExecuteGetCommand(INDUCTIONLOOP_VARIABLE, TraciConstants.VAR_INTERVAL_NUMBER, loopId);
-        return ((TraciInteger)result.Data).Value;
+        var result = _helper.ExecuteGetCommand(
+            Get.INDUCTIONLOOP_VARIABLE,
+            TraciConstants.VAR_INTERVAL_NUMBER,
+            loopId
+        );
+        return (TraciInteger)result.Data;
         }
 
     /// <summary>
@@ -209,7 +267,11 @@ public partial class InductionLoop
     /// </remarks>
     public List<string> GetIntervalVehicleIds(string loopId)
         {
-        var result = _helper.ExecuteGetCommand(INDUCTIONLOOP_VARIABLE, TraciConstants.VAR_INTERVAL_IDS, loopId);
+        var result = _helper.ExecuteGetCommand(
+            Get.INDUCTIONLOOP_VARIABLE,
+            TraciConstants.VAR_INTERVAL_IDS,
+            loopId
+        );
         return (TraciStringList)result.Data;
         }
 
@@ -223,8 +285,12 @@ public partial class InductionLoop
     /// </remarks>
     public double GetLastIntervalOccupancy(string loopId)
         {
-        var result = _helper.ExecuteGetCommand(INDUCTIONLOOP_VARIABLE, TraciConstants.VAR_LAST_INTERVAL_OCCUPANCY, loopId);
-        return ((TraciDouble)result.Data).Value;
+        var result = _helper.ExecuteGetCommand(
+            Get.INDUCTIONLOOP_VARIABLE,
+            TraciConstants.VAR_LAST_INTERVAL_OCCUPANCY,
+            loopId
+        );
+        return (TraciDouble)result.Data;
         }
 
     /// <summary>
@@ -237,8 +303,12 @@ public partial class InductionLoop
     /// </remarks>
     public double GetLastIntervalMeanSpeed(string loopId)
         {
-        var result = _helper.ExecuteGetCommand(INDUCTIONLOOP_VARIABLE, TraciConstants.VAR_LAST_INTERVAL_SPEED, loopId);
-        return ((TraciDouble)result.Data).Value;
+        var result = _helper.ExecuteGetCommand(
+            Get.INDUCTIONLOOP_VARIABLE,
+            TraciConstants.VAR_LAST_INTERVAL_SPEED,
+            loopId
+        );
+        return (TraciDouble)result.Data;
         }
 
     /// <summary>
@@ -251,8 +321,12 @@ public partial class InductionLoop
     /// </remarks>
     public int GetLastIntervalVehicleNumber(string loopId)
         {
-        var result = _helper.ExecuteGetCommand(INDUCTIONLOOP_VARIABLE, TraciConstants.VAR_LAST_INTERVAL_NUMBER, loopId);
-        return ((TraciInteger)result.Data).Value;
+        var result = _helper.ExecuteGetCommand(
+            Get.INDUCTIONLOOP_VARIABLE,
+            TraciConstants.VAR_LAST_INTERVAL_NUMBER,
+            loopId
+        );
+        return (TraciInteger)result.Data;
         }
 
     /// <summary>
@@ -265,7 +339,11 @@ public partial class InductionLoop
     /// </remarks>
     public List<string> GetLastIntervalVehicleIds(string loopId)
         {
-        var result = _helper.ExecuteGetCommand(INDUCTIONLOOP_VARIABLE, TraciConstants.VAR_LAST_INTERVAL_IDS, loopId);
+        var result = _helper.ExecuteGetCommand(
+            Get.INDUCTIONLOOP_VARIABLE,
+            TraciConstants.VAR_LAST_INTERVAL_IDS,
+            loopId
+        );
         return (TraciStringList)result.Data;
         }
     }
