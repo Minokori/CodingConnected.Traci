@@ -1,25 +1,26 @@
 namespace CodingConnected.Traci.Constants;
 public static partial class CommandIdentifier
     {
+
     /// <summary>
     /// command: get version
     /// </summary>
-    public const byte GETVERSION = 0x00;
+    private const byte GETVERSION = 0x00;
 
     /// <summary>
     /// command: load
     /// </summary>
-    public const byte LOAD = 0x01;
+    private const byte LOAD = 0x01;
 
     /// <summary>
     /// command: simulation step
     /// </summary>
-    public const byte SIMSTEP = 0x02;
+    private const byte SIMSTEP = 0x02;
 
     /// <summary>
     /// command: set connection priority (execution order)
     /// </summary>
-    public const byte SETORDER = 0x03;
+    private const byte SETORDER = 0x03;
 
     /// <summary>
     /// command: stop node

@@ -85,9 +85,9 @@ internal partial class CommandService(ITCPConnectService tcpService, IDebugServi
         double? contextRange = null
     )
         {
-        List<byte> commandPart1 = [.. TraciDouble.AsBytes(beginTime), .. TraciDouble.AsBytes(endTime), .. TraciString.AsBytes(objectId)];
+        List<byte> commandPart1 = [.. new TraciDouble(beginTime).ToBytes(), .. new TraciDouble(endTime).ToBytes(), .. new TraciString(objectId).ToBytes()];
         List<byte> commandPart2 = contextDomain.HasValue ? [contextDomain.Value] : [];
-        List<byte> commandPart3 = contextRange.HasValue ? [.. TraciDouble.AsBytes(contextRange.Value)] : [];
+        List<byte> commandPart3 = contextRange.HasValue ? [.. new TraciDouble(contextRange.Value).ToBytes()] : [];
         List<byte> commandPart4 = [(byte)variables.Count, .. variables];
         TraciCommand command = new(commandIdentifier, [.. commandPart1, .. commandPart2, .. commandPart3, .. commandPart4]);
         return command;
@@ -96,7 +96,7 @@ internal partial class CommandService(ITCPConnectService tcpService, IDebugServi
     public TraciCommand GenerateCommand(byte commandIdentifier, byte? messageType = null, string? id = null, ITraciType? contents = null)
         {
         byte[] commandPart1 = messageType.HasValue ? [messageType.Value] : [];
-        var commandPart2 = id is null ? [] : TraciString.AsBytes(id);
+        var commandPart2 = id is null ? [] : new TraciString(id).ToBytes();
 
         byte[] commandPart3 = contents is not null ? [(byte)contents.TypeIdentifier, .. contents.ToBytes()] : [];
         if (contents is not null && contents.TypeIdentifier == DataType.NULL)

@@ -16,5 +16,4 @@ public sealed class TraciByte(byte value) : TraciBaseType<byte>(value), ITraciTy
         IEnumerable<byte> bytes
     ) => new(new(bytes.First()), bytes.Skip(1));
 
-    public static new byte[] AsBytes(byte value) => [value];
     }

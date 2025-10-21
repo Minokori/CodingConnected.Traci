@@ -24,15 +24,6 @@ public sealed class TraciDoubleList : TraciListType<TraciDouble, double>, ITraci
         return new(doubles, bytes);
         }
 
-    public static byte[] AsBytes(List<double> value)
-        {
-        List<byte> bytes = [.. TraciInteger.AsBytes(value.Count)];
-        foreach (var d in value)
-            {
-            bytes.AddRange(TraciDouble.AsBytes(d));
-            }
-        return [.. bytes];
-        }
 
     public TraciDoubleList(List<double>? value = null) => value?.ForEach(d => Add(new(d)));
 

@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <TargetFramework>net9.0</TargetFramework>
+        <TargetFramework>net10.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
@@ -12,8 +12,9 @@
         <PackageProjectUrl>https://github.com/Minokori/CodingConnected.Traci/tree/feature_updates</PackageProjectUrl>
         <PackageIcon>sumo-logo.png</PackageIcon>
         <PackageTags>Traci;SUMO</PackageTags>
-        <PackageReleaseNotes>Break Change.
-Split the original project into 3 parts.
+        <PackageReleaseNotes>
+            Break Change.
+            Split the original project into 3 parts.
         </PackageReleaseNotes>
         <IncludeSymbols>False</IncludeSymbols>
         <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
@@ -30,13 +31,13 @@ Split the original project into 3 parts.
         <IsAotCompatible>True</IsAotCompatible>
     </PropertyGroup>
     <ItemGroup>
-      <None Update="README.md">
-        <Pack>True</Pack>
-        <PackagePath>\</PackagePath>
-      </None>
-      <None Update="sumo-logo.png">
-        <Pack>True</Pack>
-        <PackagePath>\</PackagePath>
-      </None>
+        <None Update="README.md">
+            <Pack>True</Pack>
+            <PackagePath>\</PackagePath>
+        </None>
+        <None Update="sumo-logo.png">
+            <Pack>True</Pack>
+            <PackagePath>\</PackagePath>
+        </None>
     </ItemGroup>
 </Project>

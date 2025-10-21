@@ -1,6 +1,9 @@
 namespace CodingConnected.Traci.Constants;
 
-
+/// <summary>
+/// 数据类型标识符.<para/>
+/// <see cref="NULL"/> 不是 traci 协议中的数据类型, 只是为了一些兼容性. 用于指示某些 Traci 数据类型转化为字节流时, 不需要添加类型标识符.
+/// </summary>
 public enum DataType : byte
     {
     /// <summary>

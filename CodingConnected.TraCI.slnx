@@ -1,0 +1,17 @@
+<Solution>
+  <Configurations>
+    <Platform Name="Any CPU" />
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Folder Name="/Solution Items/">
+    <File Path=".editorconfig" />
+    <File Path="LICENSE.md" />
+    <File Path="README.md" />
+  </Folder>
+  <Project Path="CodingConnect.Traci.ProtocolTypes/CodingConnected.Traci.ProtocolTypes.csproj" />
+  <Project Path="CodingConnected.Traci.Constants/CodingConnected.Traci.Constants.csproj" />
+  <Project Path="CodingConnected.Traci.NET/CodingConnected.Traci.csproj" />
+  <Project Path="CongdingConnected.Traci.DataTypes/CodingConnected.Traci.DataTypes.csproj" />
+  <Project Path="TracCI.NET-Usage-example/TracCI.NET-Usage-example.csproj" />
+</Solution>

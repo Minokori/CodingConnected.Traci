@@ -21,5 +21,4 @@ public sealed class TraciDouble(double value, bool raw = false)
             bytes.Skip(DataSize.DOUBLE_SIZE)
         );
 
-    public static new byte[] AsBytes(double value) => [.. GetBytes(value).Reverse()];
     }

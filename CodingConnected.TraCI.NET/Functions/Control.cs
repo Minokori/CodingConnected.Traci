@@ -42,7 +42,7 @@ public class Control(
     /// </remarks>
     public (int traciApiVersion, string sumoVersion) GetVersion()
         {
-        var command = _helper.GenerateCommand(GETVERSION);
+        var command = _helper.GenerateCommand(ControlVariables.GETVERSION);
         var results = _tcpService.SendMessage(command);
         switch ((results[0] as IStatusResponse).Result)
             {
@@ -80,7 +80,7 @@ public class Control(
         {
         // make a simulation step
         var command = _helper.GenerateCommand(
-            SIMSTEP,
+            ControlVariables.SIMSTEP,
             extendParameter: new TraciDouble(targetTime, true)
         );
         // get the results
@@ -247,7 +247,7 @@ public class Control(
     public void Load(List<string> options)
         {
         var command = _helper.GenerateCommand(
-            LOAD,
+            ControlVariables.LOAD,
             extendParameter: new TraciStringList(options)
         );
         _ = _tcpService.SendMessage(command);
@@ -265,7 +265,7 @@ public class Control(
     public void SetOrder(int index)
         {
         var command = _helper.GenerateCommand(
-            SETORDER,
+            ControlVariables.SETORDER,
             extendParameter: new TraciInteger(index)
         );
         _ = _tcpService.SendMessage(command);

@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <TargetFramework>net9.0</TargetFramework>
+        <TargetFramework>net10.0</TargetFramework>
         <OutputType>Exe</OutputType>
         <RootNamespace>TracCI.NET.UsageExample</RootNamespace>
         <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
@@ -13,11 +13,11 @@
         </None>
     </ItemGroup>
     <ItemGroup>
-      <PackageReference Include="CodingConnected.Traci" Version="1.2.0" />
+        <PackageReference Include="CodingConnected.Traci" Version="1.2.0" />
     </ItemGroup>
     <ItemGroup>
-      <Using Include="CodingConnected.Traci" />
-      <Using Include="CodingConnected.Traci.Constants" />
-      <Using Include="System.Reflection" />
+        <Using Include="CodingConnected.Traci" />
+        <Using Include="CodingConnected.Traci.Constants" />
+        <Using Include="System.Reflection" />
     </ItemGroup>
 </Project>

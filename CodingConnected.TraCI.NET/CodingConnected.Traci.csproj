@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <TargetFramework>net9.0</TargetFramework>
+        <TargetFramework>net10.0</TargetFramework>
         <OutputType>Library</OutputType>
         <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
         <LangVersion>latest</LangVersion>
@@ -39,16 +39,17 @@
         </None>
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="CodingConnected.Traci.Constants" Version="1.0.0" />
-        <PackageReference Include="CodingConnected.Traci.DataTypes" Version="1.0.0" />
-        <PackageReference Include="CodingConnected.Traci.ProtocolTypes" Version="1.0.0" />
-        <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
         <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.0" />
+    </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\CodingConnect.Traci.ProtocolTypes\CodingConnected.Traci.ProtocolTypes.csproj" />
+        <ProjectReference Include="..\CodingConnected.Traci.Constants\CodingConnected.Traci.Constants.csproj" />
+        <ProjectReference Include="..\CongdingConnected.Traci.DataTypes\CodingConnected.Traci.DataTypes.csproj" />
     </ItemGroup>
     <ItemGroup>
         <Using Include="CodingConnected.Traci.Constants" />
         <Using Include="CodingConnected.Traci.Constants.CommandIdentifier">
-          <Static>True</Static>
+            <Static>True</Static>
         </Using>
         <Using Include="CodingConnected.Traci.DataTypes" />
         <Using Include="CodingConnected.Traci.ProtocolTypes" />

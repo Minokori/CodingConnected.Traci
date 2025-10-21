@@ -13,5 +13,4 @@ public sealed class TraciInteger(int value) : TraciBaseType<int>(value), ITraciT
     public static new (TraciInteger traciData, IEnumerable<byte> remainingBytes) FromBytes(IEnumerable<byte> bytes) =>
         new(new(ToInt32(bytes.Take(DataSize.INTEGER_SIZE).Reverse().ToArray())), bytes.Skip(DataSize.INTEGER_SIZE));
 
-    public static new byte[] AsBytes(int value) => [.. GetBytes(value).Reverse()];
     }

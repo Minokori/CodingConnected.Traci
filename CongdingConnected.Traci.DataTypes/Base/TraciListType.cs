@@ -32,10 +32,6 @@ public abstract class TraciListType<U, T> : List<U>, ITraciType
             $"{nameof(FromBytes)} is not implemented in abstract class"
         );
 
-    public static byte[] AsBytes(IEnumerable<T> value) =>
-        throw new NotImplementedException(
-            $"{nameof(AsBytes)} is not implemented in abstract class"
-        );
 
     public static implicit operator List<T>(TraciListType<U, T> traciData) => traciData.Value;
 

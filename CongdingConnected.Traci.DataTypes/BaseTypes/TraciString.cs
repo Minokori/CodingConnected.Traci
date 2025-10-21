@@ -17,5 +17,4 @@ public sealed class TraciString(string value, bool raw = false) : TraciBaseType<
         return new(new(Encoding.ASCII.GetString([.. bytes.Skip(DataSize.INTEGER_SIZE).Take(length)])), bytes.Skip(DataSize.INTEGER_SIZE + length));
         }
 
-    public static new byte[] AsBytes(string value) => [.. GetBytes(value.Length).Reverse(), .. Encoding.ASCII.GetBytes(value)];
     }

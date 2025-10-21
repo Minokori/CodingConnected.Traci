@@ -10,7 +10,7 @@ namespace CodingConnected.Traci.DataTypes;
 /// </remarks>
 public sealed class RoadMapPosition : TraciCompoundObject
     {
-    protected override bool IsComplete => false;
+    protected override bool HasCount => false;
     public override DataType TypeIdentifier => DataType.ROADMAP;
 
     /// <summary>

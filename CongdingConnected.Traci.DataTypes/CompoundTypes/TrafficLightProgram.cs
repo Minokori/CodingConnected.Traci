@@ -8,7 +8,7 @@ namespace CodingConnected.Traci.DataTypes;
 public sealed class TrafficLightLogic(IEnumerable<ITraciType> innerObjects)
     : TraciCompoundObject(innerObjects)
     {
-    //protected override bool IsComplete => false;
+    //protected override bool HasCount => false;
 
     /// <summary>
     /// The id of the traffic light program; This must be a new program name for the traffic light id.

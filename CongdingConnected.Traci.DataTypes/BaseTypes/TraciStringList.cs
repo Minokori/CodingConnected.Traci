@@ -32,15 +32,6 @@ public sealed class TraciStringList : TraciListType<TraciString, string>, ITraci
         return new(strings, bytes);
         }
 
-    public static byte[] AsBytes(List<string> value)
-        {
-        List<byte> bytes = [.. TraciInteger.AsBytes(value.Count)];
-        foreach (var str in value)
-            {
-            bytes.AddRange(TraciString.AsBytes(str));
-            }
-        return [.. bytes];
-        }
     public TraciStringList(List<string>? value = null) => value?.ForEach(str => Add(new(str)));
 
     }
