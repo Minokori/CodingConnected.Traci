@@ -4,7 +4,7 @@ namespace CodingConnected.Traci.ProtocolTypes;
 /// 从 TCP 传回来的 bytes 解析得到的基本数据结构<para/>
 /// basic data structure parsed from bytes returned from TCP
 /// </summary>
-public partial class TraciResult : IStatusResponse, IAnswerFromSumo
+public sealed partial class TraciResult : IStatusResponse, IAnswerFromSumo
     {
     /// <summary>
     /// The length of the content bytes
@@ -20,5 +20,7 @@ public partial class TraciResult : IStatusResponse, IAnswerFromSumo
     /// The response content <b>(excludes length and identifier)</b>
     /// </summary>
     public byte[] Content { get; init; } = [];
+
+    private ReadOnlySpan<byte> ContentSpan => Content;
 
     }

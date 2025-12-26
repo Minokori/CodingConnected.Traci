@@ -17,4 +17,4 @@ namespace CodingConnected.Traci.Functions;
 /// </item>
 /// </list>
 /// </remarks>
-public partial class ChargingStation(ITCPConnectService tcpService, ICommandService helper, IDebugService logger) : FunctionBase(tcpService, helper, logger) { }
+public partial class ChargingStation(ITcpConnectService tcpService, ICommandService helper, IDebugService logger) : FunctionBase(tcpService, helper, logger) { }

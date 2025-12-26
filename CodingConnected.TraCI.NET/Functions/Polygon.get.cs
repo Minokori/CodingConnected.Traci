@@ -80,7 +80,7 @@ public partial class PolygonFunctions
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/pydoc/traci._polygon.html#PolygonDomain-getShape"/>
     /// </remarks>
-    public List<(double x, double y)> GetShape(string polygonId)
+    public (double x, double y)[] GetShape(string polygonId)
         {
         var result = _helper.ExecuteGetCommand(
             Get.POLYGON_VARIABLE,

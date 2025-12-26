@@ -5,7 +5,7 @@ namespace CodingConnected.Traci.Functions;
 /// <summary>
 /// Control-related commands
 /// </summary>
-/// <param name="tcpService"><see cref="ITCPConnectService"/></param>
+/// <param name="tcpService"><see cref="ITcpConnectService"/></param>
 /// <param name="helper"><see cref="ICommandService"/></param>
 /// <param name="eventService"><see cref="IEventService"/> </param>
 /// <remarks>
@@ -16,7 +16,7 @@ namespace CodingConnected.Traci.Functions;
 /// </list>
 /// </remarks>
 public class Control(
-    ITCPConnectService tcpService,
+    ITcpConnectService tcpService,
     ICommandService helper,
     IEventService eventService,
     IDebugService logger
@@ -48,8 +48,8 @@ public class Control(
             {
             case ResultCode.Success:
                 {
-                (var apiVersion, var leftBytes) = TraciInteger.FromBytes(results[1].Content);
-                (var version, _) = TraciString.FromBytes(leftBytes);
+                var apiVersion = TraciInteger.FromSpan(results[1].Content, out var remainingBytes);
+                var version = TraciString.FromSpan(remainingBytes, out _);
                 if (apiVersion != TraciConstants.TRACI_VERSION)
                     {
                     Console.WriteLine(
@@ -204,7 +204,7 @@ public class Control(
                         _events.OnEdgeContextSubscription((ContextSubscriptionEventArgs)eventArgs);
                         break;
                     default:
-                        throw new Exception();
+                        throw new NotSupportedException();
                     }
                 }
             }
@@ -244,11 +244,11 @@ public class Control(
     /// see <see href="https://sumo.dlr.de/docs/TraCI/Control-related_commands.html#command_0x01_load"/>
     /// </remarks>
 
-    public void Load(List<string> options)
+    public void Load(IList<string> options)
         {
         var command = _helper.GenerateCommand(
             ControlVariables.LOAD,
-            extendParameter: new TraciStringList(options)
+            extendParameter: new TraciStringList([.. options])
         );
         _ = _tcpService.SendMessage(command);
         }

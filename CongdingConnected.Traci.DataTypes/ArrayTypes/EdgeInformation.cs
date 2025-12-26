@@ -12,5 +12,5 @@ public sealed class EdgeInformation(IEnumerable<ITraciType> innerObjects)
     /// 0: lane may not be used for continuing drive, 1: it may be used
     /// </summary>
     public byte LaneInformation => (TraciUnsignedByte)this[4];
-    public List<string> BestSubsequentLanes => (TraciStringList)this[5];
+    public IList<string> BestSubsequentLanes => [.. (TraciStringList)this[5]];
     }

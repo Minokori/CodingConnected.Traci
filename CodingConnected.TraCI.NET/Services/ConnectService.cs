@@ -1,32 +1,29 @@
+using System.Buffers;
+using System.Buffers.Binary;
+using System.Diagnostics;
 using System.Net.Sockets;
 
 namespace CodingConnected.Traci.Services;
 
-internal class ConnectService : ITCPConnectService
+internal sealed class ConnectService : ITcpConnectService, IDisposable
     {
-    private readonly byte[] _receiveBuffer = new byte[32768];
+    private byte[] ReceiveBuffer { get; } = ArrayPool<byte>.Shared.Rent(8194);
 
-    public TcpClient? Client { get; private set; }
+    public TcpClient Client { get; } = new TcpClient();
     public NetworkStream? Stream { get; private set; }
 
-    /// <summary>
-    /// Connects to the SUMO server instance
-    /// </summary>
-    /// <param name="hostname">Hostname or ip address where SUMO is running</param>
-    /// <param name="port">Port at which SUMO exposes the API</param>
     public async Task ConnectAsync(string hostname, int port)
         {
-        Client = new() { ReceiveBufferSize = 32768, SendBufferSize = 32768 };
         while (!Client.Connected)
             {
             try
                 {
-                await Client.ConnectAsync(hostname, port);
+                await Client.ConnectAsync(hostname, port).ConfigureAwait(false);
                 }
-            catch (Exception)
+            catch (SocketException)
                 {
-                Console.WriteLine("Failed to connect to SUMO server. Retrying in 0.05 second");
-                await Task.Delay(50);
+                await Task.Delay(50).ConfigureAwait(false);
+                Debug.WriteLine("Retrying connection to SUMO in 0.05s ...");
                 }
             }
         Stream = Client.GetStream();
@@ -34,12 +31,11 @@ internal class ConnectService : ITCPConnectService
 
     public bool Connect(string hostname, int port)
         {
-        Client = new TcpClient { ReceiveBufferSize = 32768, SendBufferSize = 32768 };
         try
             {
             Client.Connect(hostname, port);
             }
-        catch (Exception)
+        catch (SocketException)
             {
             return false;
             }
@@ -49,59 +45,42 @@ internal class ConnectService : ITCPConnectService
             Stream = Client.GetStream();
             return true;
             }
-        else
-            {
-            return false;
-            }
+        return false;
         }
 
-    public List<TraciResult> SendMessage(TraciCommand command)
+    public IList<TraciResult> SendMessage(TraciCommand command)
         {
-        if (Client is null || !Client.Connected)
+        if (Client is null || !Client.Connected || Stream is null)
             {
             return [];
             }
 
-        //send message
-        Client.Client.Send(command.ToMessageBytes());
+        // 1. 发送数据
+        Stream.Write(command.ToMessageSpan());
 
-        //read responseBytes
-        try
+        // 2. 读取头部 (4字节)
+        Stream.ReadExactly(ReceiveBuffer, 0, 4);
+
+        // 3. 解析长度 (高效零拷贝)
+        int messageLength = BinaryPrimitives.ReadInt32BigEndian(ReceiveBuffer.AsSpan(0, 4));
+
+        // 4. 读取剩余的消息体
+        // totalLength 包含了头部的4字节，我们需要再读 (messageLength - 4)
+        int bodyLength = messageLength - 4;
+        if (bodyLength > 0)
             {
-            var hasReadLength = Stream!.Read(_receiveBuffer, 0, 32768);
-            if (hasReadLength < 0)
-                {
-                // Read returns 0 if the client closes the connection
-                throw new IOException();
-                }
-
-            // Totals Byte to read
-            var totalLength = BitConverter.ToInt32([.. _receiveBuffer.Take(4).Reverse()], 0);
-
-            // push all byte to responseBytes
-            List<byte> responseBytes = [.. _receiveBuffer.Take(hasReadLength).ToArray()];
-
-            // if buffer is not enough to read all bytes, read until all bytes are read
-            if (hasReadLength != totalLength)
-                {
-                while (hasReadLength < totalLength)
-                    {
-                    var innerLength = Stream.Read(_receiveBuffer, 0, 32768);
-                    responseBytes.AddRange([.. _receiveBuffer.Take(innerLength)]);
-                    hasReadLength += innerLength;
-                    }
-                }
-            return responseBytes.AsTraCIResults();
+            // 从偏移量 4 开始，读取剩余所有字节
+            Stream.ReadExactly(ReceiveBuffer, 4, bodyLength);
             }
-        catch
-            {
-            return [];
-            }
+
+        // 5. 解析结果
+        return new ReadOnlySpan<byte>(ReceiveBuffer, 0, messageLength).AsTraciResults();
         }
 
     public void Dispose()
         {
         Client?.Close();
         Stream?.Dispose();
+        ArrayPool<byte>.Shared.Return(ReceiveBuffer);
         }
     }

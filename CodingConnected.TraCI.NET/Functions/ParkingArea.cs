@@ -17,7 +17,7 @@ namespace CodingConnected.Traci.Functions;
 /// </item>
 /// </list>
 /// </remarks>
-public partial class ParkingArea(ITCPConnectService tcpService, ICommandService helper, IDebugService logger) : FunctionBase(tcpService, helper, logger)
+public partial class ParkingArea(ITcpConnectService tcpService, ICommandService helper, IDebugService logger) : FunctionBase(tcpService, helper, logger)
     {
 
     }

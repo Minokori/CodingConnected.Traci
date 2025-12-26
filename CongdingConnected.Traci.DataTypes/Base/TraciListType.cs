@@ -1,19 +1,17 @@
+using System.Diagnostics.CodeAnalysis;
+
 namespace CodingConnected.Traci.DataTypes;
 
 /// <summary>
 /// a <see cref="List{T}"/> of <see cref="TraciBaseType{U}"/> values
 /// </summary>
-/// <typeparam name="U">the type of value inner the <typeparamref name="T"/></typeparam>
-/// <typeparam name="T">a class inherit from <see cref="TraciBaseType{T}"/></typeparam>
-public abstract class TraciListType<U, T> : List<U>, ITraciType
-    where U : TraciBaseType<T>
+/// <typeparam name="TBaseType">a class inherit from <see cref="TraciBaseType{T}"/></typeparam>
+/// <typeparam name="TValue">the type of value inner the <typeparamref name="TValue"/></typeparam>
+public abstract class TraciListType<TBaseType, TValue> : List<TBaseType>, ITraciType where TBaseType : TraciBaseType<TValue>
     {
-    public virtual DataType TypeIdentifier =>
-        throw new NotImplementedException(
-            $"{nameof(TypeIdentifier)} is not implemented in abstract class"
-        );
+    public virtual DataType TypeIdentifier => DataType.NULL;
 
-    public virtual List<T> Value => [.. this.Select(i => i)];
+    public virtual List<TValue> Value => [.. this.Select(i => i)];
 
     public virtual byte[] ToBytes()
         {
@@ -25,17 +23,16 @@ public abstract class TraciListType<U, T> : List<U>, ITraciType
         return [.. result];
         }
 
-    public static (TraciListType<U, T> traciData, IEnumerable<byte> remainingBytes) FromBytes(
-        IEnumerable<byte> bytes
-    ) =>
-        throw new NotImplementedException(
-            $"{nameof(FromBytes)} is not implemented in abstract class"
-        );
+    public virtual void WriteToSpan(Span<byte> destination, ref int offset)
+        {
+        foreach (var item in this)
+            {
+            item.WriteToSpan(destination, ref offset);
+            }
+        }
 
+    public static implicit operator List<TValue>([NotNull] TraciListType<TBaseType, TValue> traciData) => traciData.Value;
 
-    public static implicit operator List<T>(TraciListType<U, T> traciData) => traciData.Value;
-
-    public override string? ToString() =>
-        "[" + string.Concat(Value.Select(i => i!.ToString() + ", ")) + "]";
+    public override string? ToString() => "[" + string.Concat(Value.Select(i => i!.ToString() + ", ")) + "]";
 
     }

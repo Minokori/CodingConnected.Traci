@@ -1,9 +1,11 @@
+using System.Buffers;
+
 namespace CodingConnected.Traci.Services;
 
-internal partial class CommandService(ITCPConnectService tcpService, IDebugService debugHelper) : ICommandService
+internal sealed partial class CommandService(ITcpConnectService tcpService) : ICommandService
     {
-    private readonly ITCPConnectService _tcpService = tcpService;
-    private readonly IDebugService _debugHelper = debugHelper;
+    private readonly ITcpConnectService _tcpService = tcpService;
+    private readonly byte[] _buffer = ArrayPool<byte>.Shared.Rent(1024);
 
     public bool ExecuteSetCommand(byte commandIdentifier, byte variable, string id, ITraciType? value = null)
         {
@@ -27,7 +29,7 @@ internal partial class CommandService(ITCPConnectService tcpService, IDebugServi
         try
             {
             var answer = response.ExtractData(commandIdentifier, variable);
-            return answer is null ? throw new Exception("Answer from traci is null") : answer;
+            return answer is null ? throw new InvalidOperationException("Answer from traci is null, please check command.") : answer;
             }
         catch
             {
@@ -35,7 +37,7 @@ internal partial class CommandService(ITCPConnectService tcpService, IDebugServi
             }
         }
 
-    public void ExecuteSubscribeCommand(double beginTime, double endTime, byte commandIdentifier, List<byte> variables, string objectId)
+    public void ExecuteSubscribeCommand(double beginTime, double endTime, byte commandIdentifier, IList<byte> variables, string objectId)
         {
         var command = GenerateSubscribeCommand(beginTime, endTime, commandIdentifier, variables, objectId);
         _ = _tcpService.SendMessage(command);
@@ -61,7 +63,7 @@ internal partial class CommandService(ITCPConnectService tcpService, IDebugServi
         double beginTime,
         double endTime,
         byte commandIdentifier,
-        List<byte> variables,
+        IList<byte> variables,
         string objectId,
         byte contextDomain,
         double contextRange
@@ -79,7 +81,7 @@ internal partial class CommandService(ITCPConnectService tcpService, IDebugServi
         double beginTime,
         double endTime,
         byte commandIdentifier,
-        List<byte> variables,
+        IList<byte> variables,
         string objectId,
         byte? contextDomain = null,
         double? contextRange = null
@@ -95,18 +97,31 @@ internal partial class CommandService(ITCPConnectService tcpService, IDebugServi
 
     public TraciCommand GenerateCommand(byte commandIdentifier, byte? messageType = null, string? id = null, ITraciType? contents = null)
         {
-        byte[] commandPart1 = messageType.HasValue ? [messageType.Value] : [];
-        var commandPart2 = id is null ? [] : new TraciString(id).ToBytes();
-
-        byte[] commandPart3 = contents is not null ? [(byte)contents.TypeIdentifier, .. contents.ToBytes()] : [];
-        if (contents is not null && contents.TypeIdentifier == DataType.NULL)
+        Span<byte> commandParts = new(_buffer);
+        int offset = 0;
+        // Part1: Message Type
+        if (messageType.HasValue)
             {
-            commandPart3 = [.. commandPart3.Skip(1)];
+            commandParts[offset] = messageType.Value;
+            offset += 1;
             }
-        TraciCommand command = new(commandIdentifier, [.. commandPart1, .. commandPart2, .. commandPart3]);
-
-        _debugHelper.LogToConsole($"GenerateCommand : {command.DebugString}");
-
-        return command;
+        // Part2: ID
+        if (id is not null)
+            {
+            new TraciString(id).WriteToSpan(commandParts, ref offset);
+            }
+        // Part3: Contents
+        if (contents is not null)
+            {
+            if (contents.TypeIdentifier != DataType.NULL)
+                {
+                commandParts[offset] = (byte)contents.TypeIdentifier;
+                offset += 1;
+                }
+            contents.WriteToSpan(commandParts, ref offset);
+            }
+        TraciCommand commandOptimized = new(commandIdentifier, commandParts[..offset].ToArray());
+        return commandOptimized;
         }
+
     }

@@ -1,3 +1,6 @@
+
+using System.Buffers.Binary;
+
 namespace CodingConnected.Traci.DataTypes;
 /// <summary>
 /// a <see cref="List{T}"/> of <see cref="ITraciType"/> values
@@ -17,7 +20,7 @@ public class TraciCompoundObject : TraciArrayType, ITraciType
     /// In theses cases, override this property to false.
     /// </remarks>
     protected virtual bool HasCount => true;
-    public virtual DataType TypeIdentifier => HasCount ? DataType.COMPOUND : throw new NotImplementedException($"a sub-list of {nameof(TraciCompoundObject)} has no TYPE ");
+    public virtual DataType TypeIdentifier => HasCount ? DataType.COMPOUND : DataType.NULL;
 
     public override byte[] ToBytes()
         {
@@ -27,8 +30,15 @@ public class TraciCompoundObject : TraciArrayType, ITraciType
         return [.. bytes];
         }
 
-    public static new (TraciCompoundObject traciData, IEnumerable<byte> remainingBytes) FromBytes(IEnumerable<byte> bytes) => throw new NotImplementedException($"{nameof(TraciCompoundObject)} cannot frombytes directly cause the class inner it is uncertain");
-
+    public override void WriteToSpan(Span<byte> span, ref int offset)
+        {
+        if (HasCount)
+            {
+            BinaryPrimitives.WriteInt32BigEndian(span[offset..], Count);
+            offset += DataSize.INTEGER_SIZE;
+            }
+        base.WriteToSpan(span, ref offset);
+        }
 
     public TraciCompoundObject()
         {

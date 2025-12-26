@@ -1,9 +1,15 @@
+using System.Buffers.Binary;
 using static System.BitConverter;
+
 namespace CodingConnected.Traci.DataTypes;
 
-public sealed class TraciDoubleList : TraciListType<TraciDouble, double>, ITraciType
+public sealed class TraciDoubleList
+    : TraciListType<TraciDouble, double>,
+        ITraciType,
+        IFromTraci<TraciDoubleList>
     {
     public override DataType TypeIdentifier => DataType.DOUBLELIST;
+
     public override byte[] ToBytes()
         {
         List<byte> bytes = [.. GetBytes(Count).Reverse()];
@@ -11,20 +17,29 @@ public sealed class TraciDoubleList : TraciListType<TraciDouble, double>, ITraci
         return [.. bytes];
         }
 
-    public static new (TraciDoubleList traciData, IEnumerable<byte> remainingBytes) FromBytes(IEnumerable<byte> bytes)
+
+    public static TraciDoubleList FromSpan(
+        ReadOnlySpan<byte> sourceBytes,
+        out ReadOnlySpan<byte> remainingBytes
+    )
         {
-        var count = ToInt32(bytes.Take(DataSize.INTEGER_SIZE).Reverse().ToArray());
-        bytes = bytes.Skip(DataSize.INTEGER_SIZE);
+        var count = BinaryPrimitives.ReadInt32BigEndian(sourceBytes);
+        var bytes = sourceBytes[DataSize.INTEGER_SIZE..];
         TraciDoubleList doubles = [];
         for (var i = 0; i < count; i++)
             {
-            (var result, bytes) = TraciDouble.FromBytes(bytes);
+            var result = TraciDouble.FromSpan(bytes, out bytes);
             doubles.Add(result);
             }
-        return new(doubles, bytes);
+        remainingBytes = bytes;
+        return doubles;
         }
 
-
-    public TraciDoubleList(List<double>? value = null) => value?.ForEach(d => Add(new(d)));
-
+    public TraciDoubleList(IList<double>? value = null)
+        {
+        foreach (var item in value is null ? [] : value)
+            {
+            Add(new(item));
+            }
+        }
     }

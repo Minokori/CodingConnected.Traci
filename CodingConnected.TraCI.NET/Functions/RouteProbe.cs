@@ -13,6 +13,6 @@ namespace CodingConnected.Traci.Functions;
 /// </item>
 /// </list>
 /// </remarks>
-public partial class RouteProbe(ITCPConnectService tcpService, ICommandService helper, IDebugService logger) : FunctionBase(tcpService, helper, logger)
+public partial class RouteProbe(ITcpConnectService tcpService, ICommandService helper, IDebugService logger) : FunctionBase(tcpService, helper, logger)
     {
     }

@@ -1,3 +1,5 @@
+using System.Diagnostics.CodeAnalysis;
+
 namespace CodingConnected.Traci.Functions;
 
 public partial class Gui
@@ -93,7 +95,7 @@ public partial class Gui
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/pydoc/traci._gui.html#GuiDomain-setBoundary"/>
     /// </remarks>
-    public bool SetBoundary(string viewId, Polygon boundaryBox) =>
+    public bool SetBoundary(string viewId, [NotNull] Polygon boundaryBox) =>
         boundaryBox.Count != 2
             ? throw new ArgumentException("The boundary box must contain exactly 2 points")
             : _helper.ExecuteSetCommand(

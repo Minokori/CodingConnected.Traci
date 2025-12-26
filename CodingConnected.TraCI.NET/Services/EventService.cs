@@ -1,6 +1,6 @@
 namespace CodingConnected.Traci.Services;
 
-public class EventService : IEventService
+public sealed class EventService : IEventService
     {
     public event EventHandler<ContextSubscriptionEventArgs>? EdgeContextSubscription;
     public event EventHandler<SubscriptionEventArgs>? EdgeSubscription;

@@ -19,16 +19,19 @@
         </PackageReleaseNotes>
         <PackageTags>Traci; SUMO</PackageTags>
         <PackageReadmeFile>README.md</PackageReadmeFile>
+        <AnalysisLevel>latest-all</AnalysisLevel>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
         <IsTrimmable>True</IsTrimmable>
         <IsAotCompatible>True</IsAotCompatible>
+        <NoWarn>1701;1702;CA2225,CA1002</NoWarn>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
         <IsTrimmable>True</IsTrimmable>
         <IsAotCompatible>True</IsAotCompatible>
+        <NoWarn>1701;1702;CA2225</NoWarn>
     </PropertyGroup>
 
     <ItemGroup>

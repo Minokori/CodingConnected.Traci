@@ -1,9 +1,10 @@
+
 namespace CodingConnected.Traci.DataTypes;
 
 /// <summary>
 /// a single phase in <see cref="TrafficLightPhaseList"/>
 /// </summary>
-public class TrafficLightPhase : TraciArrayType
+public sealed class TrafficLightPhase : TraciArrayType, ITraciType, IFromTraci<TrafficLightPhase>
     {
     /// <summary>
     /// preceding road affected by the respective light phase.
@@ -16,16 +17,12 @@ public class TrafficLightPhase : TraciArrayType
     public string SucceedingRoad => (TraciString)this[1];
     public PhaseState Phase => (PhaseState)((TraciByte)this[2]).Value;
 
-    public static new (
-        TrafficLightPhase trafficLightPhase,
-        IEnumerable<byte> remainingBytes
-    ) FromBytes(IEnumerable<byte> bytes)
+    public static TrafficLightPhase FromSpan(ReadOnlySpan<byte> sourceBytes, out ReadOnlySpan<byte> remainingBytes)
         {
-        (var precRoad, bytes) = TraciString.FromBytes(bytes);
-        (var succRoad, bytes) = TraciString.FromBytes(bytes);
-        (var phase, bytes) = TraciByte.FromBytes(bytes);
-        TrafficLightPhase result = [precRoad, succRoad, phase];
-        return new(result, bytes);
+        var precRoad = TraciString.FromSpan(sourceBytes, out sourceBytes);
+        var succRoad = TraciString.FromSpan(sourceBytes, out sourceBytes);
+        var phase = TraciByte.FromSpan(sourceBytes, out remainingBytes);
+        return [precRoad, succRoad, phase];
         }
 
     private TrafficLightPhase() { }

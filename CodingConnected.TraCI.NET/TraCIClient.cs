@@ -8,12 +8,12 @@ namespace CodingConnected.Traci;
 /// A simple )and yet incomplete) client-side implementation of TraCI, for using SUMO
 /// with .NET applications.
 /// </summary>
-public partial class TraciClient : IDisposable
+public sealed partial class TraciClient : IDisposable
     {
     public string SumoFile { get; private set; }
     public int Port { get; private set; }
-    private ITCPConnectService TcpService => services.GetRequiredService<ITCPConnectService>();
-    private readonly ServiceProvider services;
+    private ITcpConnectService TcpService => Services.GetRequiredService<ITcpConnectService>();
+    private ServiceProvider Services { get; set; }
 
     /// <summary>
     /// Connects to the SUMO server instance
@@ -26,8 +26,19 @@ public partial class TraciClient : IDisposable
     ) =>
         await TcpService
             .ConnectAsync(hostname, port)
-            .ContinueWith(_ => Control.GetVersion())
-            .ContinueWith(versionTask => versionTask.Result);
+            .ContinueWith(
+                _ => Control.GetVersion(),
+                CancellationToken.None,
+                TaskContinuationOptions.None,
+                TaskScheduler.Default
+            )
+            .ContinueWith(
+                versionTask => versionTask.Result,
+                CancellationToken.None,
+                TaskContinuationOptions.None,
+                TaskScheduler.Default
+            )
+            .ConfigureAwait(false);
 
     public bool Connect(string hostname, int port) => TcpService.Connect(hostname, port);
 
@@ -56,16 +67,18 @@ public partial class TraciClient : IDisposable
             + $" {(quit ? " --quit-on-end " : " ")}"
             + $" --num-clients 1";
         var sumoExecutable = gui ? "sumo-gui" : "sumo";
-        Process sumoProcess = new()
+        using Process sumoProcess = new()
             {
             StartInfo = new()
                 {
                 Arguments = args,
                 FileName = sumoExecutable, // The executable for the sumo
+                UseShellExecute = true
                 },
             };
-        await Task.Run(sumoProcess.Start);
-        var (versionId, versionString) = await ConnectAsync("127.0.0.1", Port);
+        _ = sumoProcess.Start();
+        var (versionId, versionString) = await ConnectAsync("127.0.0.1", Port)
+            .ConfigureAwait(false);
         return (versionId, versionString);
         }
 
@@ -75,5 +88,5 @@ public partial class TraciClient : IDisposable
     /// </summary>
     /// <param name="command"></param>
     /// <returns></returns>
-    public List<TraciResult> SendMessage(TraciCommand command) => TcpService.SendMessage(command);
+    public IList<TraciResult> SendMessage(TraciCommand command) => TcpService.SendMessage(command);
     }

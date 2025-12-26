@@ -190,7 +190,7 @@ public partial class InductionLoop
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/pydoc/traci._inductionloop.html#InductionLoopDomain-getVehicleData"/>
     /// </remarks>
-    public List<VehicleInformationPacket> GetVehicleData(string loopId)
+    public IList<VehicleInformationPacket> GetVehicleData(string loopId)
         {
         var result = (TraciCompoundObject)
             _helper

@@ -1,3 +1,5 @@
+using System.Buffers.Binary;
+using System.Diagnostics;
 using System.Text;
 using static CodingConnected.Traci.ProtocolTypes.TraciResultExtension;
 
@@ -6,70 +8,75 @@ namespace CodingConnected.Traci.ProtocolTypes;
 public partial class TraciResult : IAnswerFromSumo
     {
     byte IAnswerFromSumo.Variable => Content[0];
-    int IAnswerFromSumo.SumoIdLength =>
-        BitConverter.ToInt32(Content.Skip(1).Take(4).Reverse().ToArray());
+    int IAnswerFromSumo.SumoIdLength => BinaryPrimitives.ReadInt32BigEndian(ContentSpan[1..5]);
 
     string IAnswerFromSumo.SumoId =>
         Encoding.ASCII.GetString(
-            [
-                .. Content
-                    .Skip(
-                        1 /* remainBytes of Variable */
-                            + 4 /* remainBytes of SumoIdLength */
-                    )
-                    .Take(((IAnswerFromSumo)this).SumoIdLength),
+            ContentSpan[
+                (
+                    1 /* remainBytes of Variable */
+                    + 4 /* remainBytes of SumoIdLength */
+                )..(1 + 4 + ((IAnswerFromSumo)this).SumoIdLength)
             ]
         );
 
     byte IAnswerFromSumo.ReturnType =>
-        Content
-            .Skip(
-                1 /* remainBytes of Variable*/
-                    + 4 /* remainBytes of SumoIdLength*/
-                    + ((IAnswerFromSumo)this).SumoIdLength /* remainBytes of SumoId */
-            )
-            .First();
+        ContentSpan[
+            1 /* remainBytes of Variable*/
+                + 4 /* remainBytes of SumoIdLength*/
+                + ((IAnswerFromSumo)this).SumoIdLength /* remainBytes of SumoId */
+        ];
 
     ITraciType IAnswerFromSumo.Data
         {
         get
             {
-            if (((IAnswerFromSumo)this).Variable == TraciConstants.VAR_NEXT_STOPS2)
+            switch (((IAnswerFromSumo)this).Variable)
                 {
-                var bytes = Content.Skip(
-                    1 /* remainBytes of Variable */
-                        + 4 /* remainBytes of SumoIdLength */
-                        + ((IAnswerFromSumo)this).SumoIdLength /* remainBytes of SumoId */
-                        + 1 /* remainBytes of ReturnType: 0F */
-                        + 4 /* an int*/
-                        + 5 /*an int with type identifier*/
-                );
-                TraciCompoundObject value = [];
-                while (bytes.Any())
+                case TraciConstants.VAR_NEXT_STOPS2:
                     {
-                    (var innerObject, bytes) = GetValueFromTypeAndArray(
-                        bytes.First(),
-                        bytes.Skip(1)
-                    );
-                    value.Add(innerObject);
+                    ReadOnlySpan<byte> span = ContentSpan[
+                        (
+                            1 /* remainBytes of Variable */
+                            + 4 /* remainBytes of SumoIdLength */
+                            + ((IAnswerFromSumo)this).SumoIdLength /* remainBytes of SumoId */
+                            + 1 /* remainBytes of ReturnType: 0F */
+                            + 4 /* an int*/
+                            + 5
+                        ) /*an int with type identifier*/
+                        ..
+                    ];
+                    TraciCompoundObject result = [];
+                    while (!span.IsEmpty)
+                        {
+                        var innerObject = GetValueFromTypeAndSpan(span[0], span[1..], out span);
+                        result.Add(innerObject);
+                        }
+                    return result;
                     }
-                return value;
+                default:
+                    {
+                    ReadOnlySpan<byte> span = Content;
+                    var result = GetValueFromTypeAndSpan(
+                        ((IAnswerFromSumo)this).ReturnType,
+                        span[
+                            (
+                                1 /* remainBytes of Variable */
+                                + 4 /* remainBytes of SumoIdLength */
+                                + ((IAnswerFromSumo)this).SumoIdLength /* remainBytes of SumoId */
+                                + 1
+                            ) /* remainBytes of ReturnType */
+                            ..
+                        ],
+                        out span
+                    );
+                    Debug.Assert(
+                        span.IsEmpty,
+                        $"[ERROR]: Not all bytes were consumed {span.ToArray()}"
+                    );
+                    return result;
+                    }
                 }
-
-            var (traciValue, remainBytes) = GetValueFromTypeAndArray(
-                ((IAnswerFromSumo)this).ReturnType,
-                Content.Skip(
-                    1 /* remainBytes of Variable */
-                        + 4 /* remainBytes of SumoIdLength */
-                        + ((IAnswerFromSumo)this).SumoIdLength /* remainBytes of SumoId */
-                        + 1 /* remainBytes of ReturnType */
-                )
-            );
-            if (remainBytes.Any())
-                {
-                Console.WriteLine($"Not all bytes were consumed {remainBytes}");
-                }
-            return traciValue;
             }
         }
     }

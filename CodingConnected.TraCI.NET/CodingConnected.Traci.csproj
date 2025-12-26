@@ -19,6 +19,7 @@
         <Authors>CodingConnected,Minokori</Authors>
         <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
         <PackageOutputPath>D:\Lenovo\Documents\Visual Studio 2022\Nuget Debug Packages\</PackageOutputPath>
+        <AnalysisLevel>latest-all</AnalysisLevel>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
         <IsTrimmable>True</IsTrimmable>

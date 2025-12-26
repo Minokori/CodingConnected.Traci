@@ -6,48 +6,48 @@ namespace CodingConnected.Traci;
 
 public partial class TraciClient
     {
-    public IEventService EventService => services.GetRequiredService<IEventService>();
-    public Control Control => services.GetRequiredService<Control>();
+    public IEventService EventService => Services.GetRequiredService<IEventService>();
+    public Control Control => Services.GetRequiredService<Control>();
 
-    public InductionLoop InductionLoop => services.GetRequiredService<InductionLoop>();
+    public InductionLoop InductionLoop => Services.GetRequiredService<InductionLoop>();
 
-    public LaneAreaDetector LaneAreaDetector => services.GetRequiredService<LaneAreaDetector>();
+    public LaneAreaDetector LaneAreaDetector => Services.GetRequiredService<LaneAreaDetector>();
 
-    public MultiEntryExitDetector MultiEntryExitDetector => services.GetRequiredService<MultiEntryExitDetector>();
+    public MultiEntryExitDetector MultiEntryExitDetector => Services.GetRequiredService<MultiEntryExitDetector>();
 
-    public Lane Lane => services.GetRequiredService<Lane>();
+    public Lane Lane => Services.GetRequiredService<Lane>();
 
-    public TrafficLight TrafficLight => services.GetRequiredService<TrafficLight>();
+    public TrafficLight TrafficLight => Services.GetRequiredService<TrafficLight>();
 
-    public Vehicle Vehicle => services.GetRequiredService<Vehicle>();
+    public Vehicle Vehicle => Services.GetRequiredService<Vehicle>();
 
-    public Person Person => services.GetRequiredService<Person>();
+    public Person Person => Services.GetRequiredService<Person>();
 
-    public VehicleType VehicleType => services.GetRequiredService<VehicleType>();
+    public VehicleType VehicleType => Services.GetRequiredService<VehicleType>();
 
-    public Route Route => services.GetRequiredService<Route>();
+    public Route Route => Services.GetRequiredService<Route>();
 
-    public POI POI => services.GetRequiredService<POI>();
+    public POI POI => Services.GetRequiredService<POI>();
 
-    public PolygonFunctions Polygon => services.GetRequiredService<PolygonFunctions>();
+    public PolygonFunctions Polygon => Services.GetRequiredService<PolygonFunctions>();
 
-    public Junction Junction => services.GetRequiredService<Junction>();
+    public Junction Junction => Services.GetRequiredService<Junction>();
 
-    public Edge Edge => services.GetRequiredService<Edge>();
+    public Edge Edge => Services.GetRequiredService<Edge>();
 
-    public Simulation Simulation => services.GetRequiredService<Simulation>();
+    public Simulation Simulation => Services.GetRequiredService<Simulation>();
 
-    public Gui Gui => services.GetRequiredService<Gui>();
+    public Gui Gui => Services.GetRequiredService<Gui>();
 
-    public RouteProbe RouteProbe => services.GetRequiredService<RouteProbe>();
+    public RouteProbe RouteProbe => Services.GetRequiredService<RouteProbe>();
 
-    public VariableSpeedSign VariableSpeedSign => services.GetRequiredService<VariableSpeedSign>();
+    public VariableSpeedSign VariableSpeedSign => Services.GetRequiredService<VariableSpeedSign>();
 
-    public BusStop BusStop => services.GetRequiredService<BusStop>();
+    public BusStop BusStop => Services.GetRequiredService<BusStop>();
 
-    public ParkingArea ParkingArea => services.GetRequiredService<ParkingArea>();
+    public ParkingArea ParkingArea => Services.GetRequiredService<ParkingArea>();
 
-    public Calibrator Calibrator => services.GetRequiredService<Calibrator>();
+    public Calibrator Calibrator => Services.GetRequiredService<Calibrator>();
 
-    public ChargingStation ChargingStation => services.GetRequiredService<ChargingStation>();
+    public ChargingStation ChargingStation => Services.GetRequiredService<ChargingStation>();
     }

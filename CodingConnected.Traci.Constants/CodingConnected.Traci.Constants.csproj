@@ -23,6 +23,7 @@
         <Version>1.0.0</Version>
         <PackageReadmeFile>README.md</PackageReadmeFile>
         <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
+        <AnalysisLevel>latest-all</AnalysisLevel>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
         <IsAotCompatible>True</IsAotCompatible>

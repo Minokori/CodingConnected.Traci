@@ -1,5 +1,6 @@
 namespace CodingConnected.Traci.Services;
-internal class DebugService(bool enableDebug = false) : IDebugService
+
+internal sealed class DebugService(bool enableDebug = false) : IDebugService
     {
 
     private readonly bool _debugMode = enableDebug;
@@ -8,7 +9,7 @@ internal class DebugService(bool enableDebug = false) : IDebugService
         {
         if (_debugMode)
             {
-            Console.WriteLine(debugMessage.ToLower());
+            Console.WriteLine(debugMessage.ToLower(System.Globalization.CultureInfo.CurrentCulture));
             }
         }
     }

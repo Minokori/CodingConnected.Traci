@@ -4,23 +4,25 @@ namespace CodingConnected.Traci.DataTypes;
 /// A position within the simulation network in geo-coordinates with altitude,
 /// described by three double values (longitude, latitude, and altitude).
 /// </summary>
-public sealed class LonLatAltPosition : TraciListType<TraciDouble, double>, ITraciType
+public sealed class LonLatAltPosition
+    : TraciListType<TraciDouble, double>,
+        ITraciType,
+        IFromTraci<LonLatAltPosition>
     {
     public override DataType TypeIdentifier => DataType.LON_LAT_ALT;
     public double Longitude => this[0];
     public double Latitude => this[1];
     public double Altitude => this[2];
 
-    public static new (
-        LonLatAltPosition longLatPosition,
-        IEnumerable<byte> remainingBytes
-    ) FromBytes(IEnumerable<byte> bytes)
+    public static LonLatAltPosition FromSpan(
+        ReadOnlySpan<byte> sourceBytes,
+        out ReadOnlySpan<byte> remainingBytes
+    )
         {
-        (var longitude, bytes) = TraciDouble.FromBytes(bytes);
-        (var latitude, bytes) = TraciDouble.FromBytes(bytes);
-        (var altitude, bytes) = TraciDouble.FromBytes(bytes);
-        LonLatAltPosition result = [longitude, latitude, altitude];
-        return new(result, bytes);
+        var longitude = TraciDouble.FromSpan(sourceBytes, out sourceBytes);
+        var latitude = TraciDouble.FromSpan(sourceBytes, out sourceBytes);
+        var altitude = TraciDouble.FromSpan(sourceBytes, out remainingBytes);
+        return [longitude, latitude, altitude];
         }
 
     private LonLatAltPosition() { }

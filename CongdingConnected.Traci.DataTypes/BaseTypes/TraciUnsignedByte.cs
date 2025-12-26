@@ -3,16 +3,25 @@ namespace CodingConnected.Traci.DataTypes;
 /// <summary>
 /// unsigned <see cref="byte"/> value in traci
 /// </summary>
+/// <param name="value">unsigned byte 值</param>
+/// <param name="raw">是否包含 TypeIdentifier(默认为否)</param>
 public sealed class TraciUnsignedByte(byte value, bool raw = false)
     : TraciBaseType<byte>(value),
-        ITraciType
+        ITraciType, IFromTraci<TraciUnsignedByte>
     {
     public override DataType TypeIdentifier => raw ? DataType.NULL : DataType.UNSIGNEDBYTE;
 
     public override byte[] ToBytes() => [Value];
+    public override void WriteToSpan(Span<byte> destination, ref int offset)
+        {
+        destination[offset] = Value;
+        offset += 1;
+        }
 
-    public static new (TraciUnsignedByte TraciData, IEnumerable<byte> RemainingBytes) FromBytes(
-        IEnumerable<byte> bytes
-    ) => new(new(bytes.First()), bytes.Skip(1));
-
+    public static TraciUnsignedByte FromSpan(ReadOnlySpan<byte> sourceBytes, out ReadOnlySpan<byte> remainingBytes)
+        {
+        TraciUnsignedByte result = new(sourceBytes[0]);
+        remainingBytes = sourceBytes[1..];
+        return result;
+        }
     }

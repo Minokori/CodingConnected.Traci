@@ -82,7 +82,7 @@ public partial class Lane
     ///<remarks>
     /// see <see href="https://sumo.dlr.de/pydoc/traci._lane.html#LaneDomain-getLinks"/>
     /// </remarks>
-    public List<Link> GetLinks(string laneId)
+    public IList<Link> GetLinks(string laneId)
         {
         var result = (TraciCompoundObject)
             _helper.ExecuteGetCommand(Get.LANE_VARIABLE, TraciConstants.LANE_LINKS, laneId).Data;

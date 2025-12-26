@@ -537,7 +537,7 @@ public partial class Vehicle
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/pydoc/traci._vehicle.html#VehicleDomain-getBestLanes"/>
     /// </remarks>
-    public List<EdgeInformation> GetBestLanes(string vehicleId)
+    public IList<EdgeInformation> GetBestLanes(string vehicleId)
         {
         var result = _helper.ExecuteGetCommand(
             Get.VEHICLE_VARIABLE,
@@ -930,7 +930,7 @@ public partial class Vehicle
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/pydoc/traci._vehicle.html#VehicleDomain-getNextTLS"/>
     /// </remarks>
-    public List<UpcomingTrafficLights> GetNextTLS(string vehicleId)
+    public IList<UpcomingTrafficLights> GetNextTLS(string vehicleId)
         {
         var result = _helper.ExecuteGetCommand(
             Get.VEHICLE_VARIABLE,
@@ -1294,7 +1294,7 @@ public partial class Vehicle
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/pydoc/traci._vehicle.html#VehicleDomain-getStops"/>
     /// </remarks>
-    public List<StopData> GetStops(string vehicleId, int limit = 0)
+    public IList<StopData> GetStops(string vehicleId, int limit = 0)
         {
         //BUG sumo returns an traci compound object, which identifies itself with 9 objects in it, but it got many objects in it(num of stop*16)
         var tmp = new TraciInteger(limit);
@@ -1370,7 +1370,7 @@ public partial class Vehicle
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/pydoc/traci._vehicle.html#VehicleDomain-getNextLinks"/>
     /// </remarks>
-    public List<Link> GetNextLinks(string vehicleId)
+    public IList<Link> GetNextLinks(string vehicleId)
         {
         var result = _helper.ExecuteGetCommand(
             Get.VEHICLE_VARIABLE,
@@ -1859,7 +1859,7 @@ public partial class Vehicle
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/pydoc/traci._vehicle.html#VehicleDomain-getJunctionFoes"/>
     /// </remarks>
-    public List<Foe> GetJunctionFoes(string vehicleId, double distance = 0.0)
+    public IList<Foe> GetJunctionFoes(string vehicleId, double distance = 0.0)
         {
         TraciDouble tmp = new(distance);
         var result = _helper.ExecuteGetCommand(

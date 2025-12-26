@@ -4,7 +4,7 @@ namespace CodingConnected.Traci.Constants;
 /// 数据类型标识符.<para/>
 /// <see cref="NULL"/> 不是 traci 协议中的数据类型, 只是为了一些兼容性. 用于指示某些 Traci 数据类型转化为字节流时, 不需要添加类型标识符.
 /// </summary>
-public enum DataType : byte
+public enum DataType
     {
     /// <summary>
     /// Position in geo-coordinates (longitude, latitude)
@@ -43,6 +43,8 @@ public enum DataType : byte
     COMPOUND = 0x0F,
     DOUBLELIST = 0x10,
     COLOR = 0x11,
-    /*this flag is NOT from traci, just for some compatibility*/
+    /// <summary>
+    /// this flag is NOT from traci, just for some compatibility
+    /// </summary>
     NULL = 0xFF
     }

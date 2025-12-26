@@ -2,7 +2,8 @@ namespace CodingConnected.Traci.Constants;
 
 // TODO why short not sbyte?
 // TODO why same value?
-public enum ArrivalFlag : short
+[Flags]
+public enum Arrival : short
     {
     LANE_CURRENT = -0x02,
     SPEED_CURRENT = LANE_CURRENT,

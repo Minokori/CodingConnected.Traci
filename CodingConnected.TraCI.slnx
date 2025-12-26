@@ -13,5 +13,5 @@
   <Project Path="CodingConnected.Traci.Constants/CodingConnected.Traci.Constants.csproj" />
   <Project Path="CodingConnected.Traci.NET/CodingConnected.Traci.csproj" />
   <Project Path="CongdingConnected.Traci.DataTypes/CodingConnected.Traci.DataTypes.csproj" />
-  <Project Path="TracCI.NET-Usage-example/TracCI.NET-Usage-example.csproj" />
+  <Project Path="CodingConnected.Traci.ConsoleTest/CodingConnected.Traci.ConsoleTest.csproj" />
 </Solution>

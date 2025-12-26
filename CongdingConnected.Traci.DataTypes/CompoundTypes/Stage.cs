@@ -1,6 +1,6 @@
 namespace CodingConnected.Traci.DataTypes;
 
-public class Stage : TraciCompoundObject
+public sealed class Stage : TraciCompoundObject
     {
     public int StageType => (TraciInteger)this[0];
 
@@ -9,7 +9,7 @@ public class Stage : TraciCompoundObject
     public string Line => (TraciString)this[2];
 
     public string DestinationStop => (TraciString)this[3];
-    public List<string> Edges => (TraciStringList)this[4];
+    public IList<string> Edges => [.. (TraciStringList)this[4]];
 
     public double TravelTime => (TraciDouble)this[5];
 
@@ -58,7 +58,7 @@ public sealed class WalkingStage : TraciCompoundObject
     {
     public int StageType => (TraciInteger)this[0];
 
-    public List<string> Edges => (TraciStringList)this[1];
+    public IList<string> Edges => [.. (TraciStringList)this[1]];
 
     public double ArrivalPosition => (TraciDouble)this[2];
 
@@ -73,7 +73,7 @@ public sealed class WalkingStage : TraciCompoundObject
     public string StopId => (TraciString)this[5];
 
     public WalkingStage(
-        List<string> edges,
+        IList<string> edges,
         double arrivalPosition,
         int duration,
         double speed,

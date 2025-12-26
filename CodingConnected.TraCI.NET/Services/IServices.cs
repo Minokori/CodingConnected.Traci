@@ -2,13 +2,11 @@ using System.Net.Sockets;
 
 namespace CodingConnected.Traci.Services;
 
-public interface ITCPConnectService : IDisposable
+public interface ITcpConnectService : IDisposable
     {
-    TcpClient? Client { get; }
-    NetworkStream? Stream { get; }
     Task ConnectAsync(string hostname, int port);
     bool Connect(string hostname, int port);
-    List<TraciResult> SendMessage(TraciCommand command);
+    IList<TraciResult> SendMessage(TraciCommand command);
     }
 
 public interface ICommandService
@@ -16,10 +14,10 @@ public interface ICommandService
     /// <summary>
     /// Execute a get command.<para/>
     /// </summary>
-    /// <param name="commandIdentifier">specify which command to execute</param>
-    /// <param name="variable">specify which variable to get</param>
-    /// <param name="id">specify the object id to work on</param>
-    /// <param name="extendParameter">if get command requires extend parameter, put it here.</param>
+    /// <param name="commandIdentifier">指明执行何种命令. specify which command to execute</param>
+    /// <param name="variable">指明要获取何种变量. specify which variable to get</param>
+    /// <param name="id">指明变量所属的对象id. specify the object id to work on</param>
+    /// <param name="extendParameter">指令需要的其他额外参数. if get command requires extend parameter, put it here.</param>
     /// <returns></returns>
     IAnswerFromSumo ExecuteGetCommand(byte commandIdentifier, byte? variable, string? id = "", ITraciType? extendParameter = null);
 
@@ -42,13 +40,13 @@ public interface ICommandService
     /// <param name="commandIdentifier">specify which command to execute</param>
     /// <param name="variables">specify which variables to subscribe</param>
     /// <param name="objectId">specify the object id to subscribe</param>
-    void ExecuteSubscribeCommand(double beginTime, double endTime, byte commandIdentifier, List<byte> variables, string objectId);
+    void ExecuteSubscribeCommand(double beginTime, double endTime, byte commandIdentifier, IList<byte> variables, string objectId);
 
     void ExecuteSubscribeContextCommand(
         double beginTime,
         double endTime,
         byte commandIdentifier,
-        List<byte> variables,
+        IList<byte> variables,
         string objectId,
         byte contextDomain,
         double contextRange);
@@ -58,7 +56,7 @@ public interface ICommandService
         double beginTime,
         double endTime,
         byte commandIdentifier,
-        List<byte> variables,
+        IList<byte> variables,
         string objectId,
         /*below params for context subscribe*/
         byte? contextDomain = null,

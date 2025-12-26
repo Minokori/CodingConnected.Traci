@@ -1,3 +1,5 @@
+using System.Diagnostics.CodeAnalysis;
+
 namespace CodingConnected.Traci.DataTypes;
 
 /// <summary>
@@ -7,7 +9,7 @@ namespace CodingConnected.Traci.DataTypes;
 /// <remarks>
 /// see <see href="https://sumo.dlr.de/docs/TraCI/Protocol.html#polygon_ubyte_identifier_0x06"/>
 /// </remarks>
-public sealed class Polygon : List<Position2D>, ITraciType
+public sealed class Polygon : List<Position2D>, ITraciType, IFromTraci<Polygon>
     {
     public DataType TypeIdentifier => DataType.POLYGON;
 
@@ -21,22 +23,25 @@ public sealed class Polygon : List<Position2D>, ITraciType
         return [.. bytes];
         }
 
-    public static (Polygon polygon, IEnumerable<byte> remainingBytes) FromBytes(
-        IEnumerable<byte> bytes
+
+    public static Polygon FromSpan(
+        ReadOnlySpan<byte> sourceBytes,
+        out ReadOnlySpan<byte> remainingBytes
     )
         {
-        int count = bytes.First();
-        bytes = [.. bytes.Skip(1)];
+        int count = sourceBytes[0];
+        sourceBytes = sourceBytes[1..];
         Polygon points = [];
         for (var i = 0; i < count; i++)
             {
-            (var result, bytes) = Position2D.FromBytes([.. bytes]);
+            var result = Position2D.FromSpan(sourceBytes, out sourceBytes);
             points.Add(result);
             }
-        return new(points, bytes);
+        remainingBytes = sourceBytes;
+        return points;
         }
 
-    public Polygon(params IEnumerable<(double x, double y)> points)
+    public Polygon([NotNull] params IEnumerable<(double x, double y)> points)
         {
         Clear();
         foreach (var (x, y) in points)
@@ -54,8 +59,17 @@ public sealed class Polygon : List<Position2D>, ITraciType
         double lowerLeftY,
         double rightUpperX,
         double rightUpperY
-    )(Polygon polygon) => (polygon[0].X, polygon[0].Y, polygon[-1].X, polygon[-1].Y);
+    )([NotNull] Polygon polygon) => (polygon[0].X, polygon[0].Y, polygon[-1].X, polygon[-1].Y);
 
-    public static implicit operator List<(double x, double y)>(Polygon polygon) =>
+    public static implicit operator (double x, double y)[](Polygon polygon) =>
         [.. polygon.Select(i => (i.X, i.Y))];
+
+    public (
+        double lowerLeftX,
+        double lowerLeftY,
+        double rightUpperX,
+        double rightUpperY
+    ) ToValueTuple() => (this[0].X, this[0].Y, this[-1].X, this[-1].Y);
+
+    public (double x, double y)[] ToValueTupleArray() => [.. this.Select(i => (i.X, i.Y))];
     }

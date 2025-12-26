@@ -102,7 +102,7 @@ public partial class TrafficLight
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/pydoc/traci._trafficlight.html#TrafficLightDomain-getControlledLinks"/>
     /// </remarks>
-    public List<ControlledLinks> GetControlledLinks(string tlsId)
+    public IList<ControlledLinks> GetControlledLinks(string tlsId)
         {
         var result = _helper.ExecuteGetCommand(
             Get.SIM_VARIABLE,
@@ -158,7 +158,7 @@ public partial class TrafficLight
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/pydoc/traci._trafficlight.html#TrafficLightDomain-getAllProgramLogics"/>
     /// </remarks>
-    public List<TrafficLightLogic> GetCompleteRedYellowGreenDefinition(string tlsId)
+    public IList<TrafficLightLogic> GetCompleteRedYellowGreenDefinition(string tlsId)
         {
         var result = (TraciCompoundObject)
             _helper

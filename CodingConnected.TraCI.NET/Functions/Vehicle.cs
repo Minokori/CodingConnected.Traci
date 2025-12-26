@@ -20,7 +20,7 @@ namespace CodingConnected.Traci.Functions;
 /// </item>
 /// </list>
 /// </remarks>
-public partial class Vehicle(ITCPConnectService tcpService, ICommandService helper, IDebugService logger, Simulation simulation)
+public partial class Vehicle(ITcpConnectService tcpService, ICommandService helper, IDebugService logger, Simulation simulation)
     : TraCIContextSubscribeCommands(tcpService, helper, logger)
     {
     protected override CommandIdentifier.Subscribe ContextSubscribeCommand => CommandIdentifier.Subscribe.VEHICLE_CONTEXT;

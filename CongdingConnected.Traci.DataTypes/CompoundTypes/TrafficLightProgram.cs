@@ -31,7 +31,7 @@ public sealed class TrafficLightLogic(IEnumerable<ITraciType> innerObjects)
     /// <u> <see cref="Type"/> and <see cref="SubParameter"/> aren't currently implemented therefore they are 0.</u>
     /// </remarks>
     public int CurrentPhaseIndex => (TraciInteger)this[2];
-    public List<TrafficLightProgramPhase> TrafficLightPhases
+    public IList<TrafficLightProgramPhase> TrafficLightPhases
         {
         get
             {

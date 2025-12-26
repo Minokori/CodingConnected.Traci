@@ -8,17 +8,17 @@ namespace CodingConnected.Traci.Functions;
 /// </summary>
 /// <param name="tcpService">send/receive data to/from traci host</param>
 /// <param name="helper">parse commands/convert contents from response</param>
-public abstract class FunctionBase(ITCPConnectService tcpService, ICommandService helper, IDebugService logger)
+public abstract class FunctionBase(ITcpConnectService tcpService, ICommandService helper, IDebugService logger)
     {
     protected ICommandService _helper = helper;
     protected IDebugService _logger = logger;
-    protected ITCPConnectService _tcpService = tcpService;
+    protected ITcpConnectService _tcpService = tcpService;
     public virtual void Subscribe(string objectId, int beginTime, int endTime, List<byte> VariablesToSubscribeTo) => throw new NotImplementedException();
     }
 
 
 
-public abstract class TraCIContextSubscribeCommands(ITCPConnectService tcpService, ICommandService helper, IDebugService logger) : FunctionBase(tcpService, helper, logger)
+public abstract class TraCIContextSubscribeCommands(ITcpConnectService tcpService, ICommandService helper, IDebugService logger) : FunctionBase(tcpService, helper, logger)
     {
     /// <summary>
     /// Cache an empty list of bytes to unsubscribe. Prevents allocation when multiple unsubscribe occur.

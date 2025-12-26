@@ -19,6 +19,7 @@
         </PackageReleaseNotes>
         <PackageIcon>sumo-logo.png</PackageIcon>
         <PackageReadmeFile>README.md</PackageReadmeFile>
+        <AnalysisLevel>latest-all</AnalysisLevel>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

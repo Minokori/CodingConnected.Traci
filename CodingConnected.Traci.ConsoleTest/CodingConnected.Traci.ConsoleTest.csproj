@@ -1,0 +1,32 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <OutputType>Exe</OutputType>
+        <RootNamespace>CodingConnected.Traci.ConsoleTest</RootNamespace>
+        <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+        <LangVersion>latest</LangVersion>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <PublishAot>True</PublishAot>
+        <PublishTrimmed>True</PublishTrimmed>
+        <AnalysisLevel>latest-recommended</AnalysisLevel>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+        <NoWarn>1701;1702;CS8321;CS0219</NoWarn>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+        <NoWarn>1701;1702;CS8321;CS0219</NoWarn>
+    </PropertyGroup>
+    <ItemGroup>
+        <None Include="sumo-scenarios\**">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+    </ItemGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\CodingConnected.Traci.NET\CodingConnected.Traci.csproj" />
+    </ItemGroup>
+    <ItemGroup>
+        <Using Include="CodingConnected.Traci" />
+        <Using Include="CodingConnected.Traci.Constants" />
+        <Using Include="System.Reflection" />
+    </ItemGroup>
+</Project>
