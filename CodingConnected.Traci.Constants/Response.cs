@@ -2,8 +2,10 @@ namespace CodingConnected.Traci.Constants;
 
 public static class Response
     {
-    public enum Get : byte
+    public enum Getter
         {
+        NONE = 0x00,
+
         /// <summary>
         /// response: get induction loop (e1) variable
         /// </summary>
@@ -80,8 +82,10 @@ public static class Response
         PERSON_VARIABLE = 0xbe,
         }
 
-    public enum Subscribe : byte
+    public enum Subscribe : int
         {
+        NONE = 0x00,
+
         /// <summary>
         /// response: subscribe induction loop (e1) context
         /// </summary>

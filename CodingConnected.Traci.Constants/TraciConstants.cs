@@ -8,58 +8,94 @@ public static partial class TraciConstants
     /// <summary>
     /// Traci API version
     /// </summary>
-    public static int TRACI_VERSION => 21;
+    public static int TraciVersion => 21;
 
-    // return value for invalid queries (especially vehicle is not on the road), see Position::INVALID
-    public const double INVALID_DOUBLE_VALUE = -1073741824;
+    /// <summary>
+    ///  return value for invalid queries (especially vehicle is not on the road), -2^30
+    /// </summary>
+    public const double InvalidDoubleValue = -1073741824;
 
-    // return value for invalid queries (especially vehicle is not on the road), see Position::INVALID
-    public const double INVALID_INT_VALUE = -1073741824;
+    /// <summary>
+    /// return value for invalid queries (especially vehicle is not on the road), -2^30
+    /// </summary>
+    public const double InvalidIntegerValue = -1073741824;
 
-    // maximum value for client ordering (2 ^ 30)
-    public const double MAX_ORDER = 1073741824;
+    /// <summary>
+    /// maximum value for client ordering (2^30)
+    /// </summary>
+    public const double MaxOrder = 1073741824;
 
     // ****************************************
     // VARIABLE TYPES (for GET_*_VARIABLE)
     // ****************************************
-    // list of instances' ids (get: all)
-    public const byte ID_LIST = 0x00;
+    /// <summary>
+    /// list of instances' ids (get: all)
+    /// </summary>
+    public const byte IdList = 0x00;
 
-    // count of instances (get: all)
-    public const byte ID_COUNT = 0x01;
+    /// <summary>
+    /// count of instances (get: all)
+    /// </summary>
+    public const byte IdCount = 0x01;
 
-    // subscribe object variables (get: all)
-    public const byte AUTOMATIC_VARIABLES_SUBSCRIPTION = 0x02;
+    /// <summary>
+    /// subscribe object variables (get: all)
+    /// </summary>
+    public const byte AutomaticVariablesSubscription = 0x02;
 
-    // subscribe context variables (get: all)
-    public const byte AUTOMATIC_CONTEXT_SUBSCRIPTION = 0x03;
+    /// <summary>
+    /// subscribe context variables (get: all)
+    /// </summary>
+    public const byte AutomaticContextSubscription = 0x03;
 
-    // generic attributes (get/set: all)
-    public const byte GENERIC_ATTRIBUTE = 0x03;
+    /// <summary>
+    /// generic attributes (get/set: all)
+    /// </summary>
+    public const byte GenericAttribute = 0x03;
 
-    // last step vehicle number (get: induction loops, multi-entry/multi-exit detector, lanes, edges)
-    public const byte LAST_STEP_VEHICLE_NUMBER = 0x10;
+    #region LAST STEP VARIABLES
+    /// <summary>
+    /// last step vehicle number (get: induction loops, multi-entry/multi-exit detector, lanes, edges)
+    /// </summary>
+    public const byte LastStepVehicleNumber = 0x10;
 
-    // last step vehicle number (get: induction loops, multi-entry/multi-exit detector, lanes, edges)
-    public const byte LAST_STEP_MEAN_SPEED = 0x11;
+    /// <summary>
+    /// last step vehicle number (get: induction loops, multi-entry/multi-exit detector, lanes, edges)
+    /// </summary>
+    public const byte LastStepMeanSpeed = 0x11;
 
-    // last step vehicle list (get: induction loops, multi-entry/multi-exit detector, lanes, edges)
-    public const byte LAST_STEP_VEHICLE_ID_LIST = 0x12;
+    /// <summary>
+    /// last step vehicle list (get: induction loops, multi-entry/multi-exit detector, lanes, edges)
+    /// </summary>
+    public const byte LastStepVehicleIdList = 0x12;
 
-    // last step occupancy (get: induction loops, lanes, edges)
-    public const byte LAST_STEP_OCCUPANCY = 0x13;
+    /// <summary>
+    /// last step occupancy (get: induction loops, lanes, edges)
+    /// </summary>
+    public const byte LastStepOccupancy = 0x13;
 
-    // last step vehicle halting number (get: multi-entry/multi-exit detector, lanes, edges)
-    public const byte LAST_STEP_VEHICLE_HALTING_NUMBER = 0x14;
+    /// <summary>
+    /// last step vehicle halting number (get: multi-entry/multi-exit detector, lanes, edges)
+    /// </summary>
+    public const byte LastStepVehicleHaltingNumber = 0x14;
 
-    // last step mean vehicle length (get: induction loops, lanes, edges)
-    public const byte LAST_STEP_LENGTH = 0x15;
+    /// <summary>
+    /// last step mean vehicle length (get: induction loops, lanes, edges)
+    /// </summary>
+    public const byte LastStepLength = 0x15;
 
-    // last step time since last detection (get: induction loops)
-    public const byte LAST_STEP_TIME_SINCE_DETECTION = 0x16;
+    /// <summary>
+    /// last step time since last detection (get: induction loops)
+    /// </summary>
+    public const byte LastStepTimeSinceDetection = 0x16;
 
-    // entry times
-    public const byte LAST_STEP_VEHICLE_DATA = 0x17;
+    /// <summary>
+    /// entry times
+    /// </summary>
+    public const byte LastStepVehicleData = 0x17;
+
+    #endregion
+
 
     // last step jam length in vehicles
     public const byte JAM_LENGTH_VEHICLE = 0x18;

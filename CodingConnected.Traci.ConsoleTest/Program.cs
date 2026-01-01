@@ -10,7 +10,7 @@ var sumoFile = Path.Combine(".", "sumo-scenarios", "visualization", "paradeConta
 Console.WriteLine($"SUMO file path:{sumoFile}");
 
 /* Create a TraciClient for the commands */
-using TraciClient client = new(sumoFile, 4321, false);
+using TraciClient client = new(sumoFile, 4321);
 (var api, var ver) = await client.Start();
 Console.WriteLine($"Connected to SUMO version: {api}, Version String:{ver}");
 

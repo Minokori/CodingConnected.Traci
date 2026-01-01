@@ -1,117 +1,116 @@
 namespace CodingConnected.Traci.Constants;
+
 public static partial class CommandIdentifier
     {
-
     /// <summary>
     /// command: get version
     /// </summary>
-    private const byte GETVERSION = 0x00;
+    public const byte GetVersion = 0x00;
 
     /// <summary>
     /// command: load
     /// </summary>
-    private const byte LOAD = 0x01;
+    public const byte Load = 0x01;
 
     /// <summary>
     /// command: simulation step
     /// </summary>
-    private const byte SIMSTEP = 0x02;
+    public const byte SimulationStep = 0x02;
 
     /// <summary>
     /// command: set connection priority (execution order)
     /// </summary>
-    private const byte SETORDER = 0x03;
+    public const byte SetOrder = 0x03;
 
     /// <summary>
     /// command: stop node
     /// </summary>
-    public const byte STOP = 0x12;
+    public const byte Stop = 0x12;
 
     /// <summary>
     /// command: set lane
     /// </summary>
-    public const byte CHANGELANE = 0x13;
+    public const byte ChangeLane = 0x13;
 
     /// <summary>
     /// command: slow down
     /// </summary>
-    public const byte SLOWDOWN = 0x14;
+    public const byte Slowdown = 0x14;
 
     /// <summary>
     /// command: set sub-lane (vehicle)
     /// </summary>
-    public const byte CHANGESUBLANE = 0x15;
+    public const byte ChangeSublane = 0x15;
 
     /// <summary>
     /// command: replace vehicle stop and update route
     /// </summary>
-    public const byte REPLACE_STOP = 0x17;
+    public const byte ReplaceStop = 0x17;
 
     /// <summary>
     /// command: insert vehicle stop and update route
     /// </summary>
-    public const byte INSERT_STOP = 0x18;
+    public const byte InsertStop = 0x18;
 
     /// <summary>
     /// command: Resume from parking
     /// </summary>
-    public const byte RESUME = 0x19;
+    public const byte Resume = 0x19;
 
     /// <summary>
     /// command: send dispatch request for the given taxi
     /// </summary>
-    public const byte TAXI_DISPATCH = 0x21;
+    public const byte TaxiDispatch = 0x21;
 
     /// <summary>
     /// command: change target
     /// </summary>
-    public const byte CHANGETARGET = 0x31;
+    public const byte ChangeTarget = 0x31;
 
-    public const byte EXECUTE_MOVE = 0x7d;
+    public const byte ExecuteMove = 0x7d;
 
     /// <summary>
     /// command: add subscription filter
     /// </summary>
-    public const byte ADD_SUBSCRIPTION_FILTER = 0x7e;
+    public const byte AddSubscriptionFilter = 0x7e;
 
     /// <summary>
     /// command: close sumo
     /// </summary>
-    public const byte CLOSE = 0x7F;
+    public const byte Close = 0x7F;
 
     /// <summary>
     /// force rerouting based on travel time (vehicles)
     /// </summary>
-    public const byte REROUTE_TRAVELTIME = 0x90;
+    public const byte RerouteTravelTime = 0x90;
 
     /// <summary>
     /// force rerouting based on effort (vehicles)
     /// </summary>
-    public const byte REROUTE_EFFORT = 0x91;
+    public const byte RerouteEffort = 0x91;
 
     /// <summary>
     ///  clears the simulation of all not inserted vehicles (set: simulation)
     /// </summary>
-    public const byte CLEAR_PENDING_VEHICLES = 0x94;
+    public const byte ClearPendingVehicles = 0x94;
 
     /// <summary>
     /// triggers saving simulation state (set: simulation)
     /// </summary>
-    public const byte SAVE_SIMSTATE = 0x95;
+    public const byte SaveSimulationState = 0x95;
 
     /// <summary>
     /// triggers saving simulation state (set: simulation)
     /// </summary>
-    public const byte LOAD_SIMSTATE = 0x96;
+    public const byte LoadSimulationState = 0x96;
 
     /// <summary>
     /// command: reroute to parking area
     /// </summary>
-    public const byte REROUTE_TO_PARKING = 0xc2;
+    public const byte RerouteToParking = 0xc2;
 
     /// <summary>
     /// command: change lane area detector
     /// </summary>
-    public const byte CHANGE_LANE_AREA_DETECTOR = 0xcd;
+    public const byte ChangeLaneAreaDetector = 0xcd;
     }
-

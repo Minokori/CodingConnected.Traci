@@ -33,9 +33,9 @@ internal partial class VehicleTest
 
     private static bool SetAdaptedTravelTime(TraciClient client) => client.Vehicle.SetAdaptedTravelTime("v0", "beg");
 
-    private static bool SetSignals(TraciClient client) => client.Vehicle.SetSignals("v0", VehicleSignaling.VEH_SIGNAL_EMERGENCY_RED);
+    private static bool SetSignals(TraciClient client) => client.Vehicle.SetSignals("v0", VehicleSignalling.EmergencyRed);
 
-    private static bool SetRoutingMode(TraciClient client) => client.Vehicle.SetRoutingMode("v0", RoutingMode.DEFAULT);
+    private static bool SetRoutingMode(TraciClient client) => client.Vehicle.SetRoutingMode("v0", RoutingMode.Default);
 
 
     private static bool MoveTo(TraciClient client) => client.Vehicle.MoveTo("v0", "end_0", 10);
@@ -63,7 +63,7 @@ internal partial class VehicleTest
 
     private static bool Add(TraciClient client) => client.Vehicle.Add("v100", "r");
 
-    private static bool Remove(TraciClient client) => client.Vehicle.Remove("v100", RemoveReason.TELEPORT);
+    private static bool Remove(TraciClient client) => client.Vehicle.Remove("v100", RemoveReason.Teleport);
 
     private static bool SetLength(TraciClient client) => client.Vehicle.SetLength("v0", 10);
 

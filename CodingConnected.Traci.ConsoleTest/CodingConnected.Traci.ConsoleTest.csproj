@@ -22,7 +22,7 @@
         </None>
     </ItemGroup>
     <ItemGroup>
-      <ProjectReference Include="..\CodingConnected.Traci.NET\CodingConnected.Traci.csproj" />
+      <ProjectReference Include="..\CodingConnected.Traci\CodingConnected.Traci.csproj" />
     </ItemGroup>
     <ItemGroup>
         <Using Include="CodingConnected.Traci" />

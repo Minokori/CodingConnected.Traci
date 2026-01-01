@@ -1,0 +1,183 @@
+namespace CodingConnected.Traci.Functions;
+
+public partial class PolygonFunctions
+    {
+    /// <summary>
+    /// Sets the shape's type to the given value
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="typeId"></param>
+    /// <returns></returns>
+    /// <remarks>
+    /// see <see href="https://sumo.dlr.de/pydoc/traci._polygon.html#PolygonDomain-setType"/>
+    /// </remarks>
+    public bool SetType(string id, string typeId)
+        {
+        TraciString tmp = new(typeId);
+        return Helper.ExecuteSetCommand(Setter.Polygon, TraciConstants.VAR_TYPE, id, tmp);
+        }
+
+    /// <summary>
+    /// Sets the shape's color to the given value
+    /// </summary>
+    /// <param name="polygonId"></param>
+    /// <returns></returns>
+    /// <remarks>
+    /// see <see href="https://sumo.dlr.de/pydoc/traci._polygon.html#PolygonDomain-setColor"/>
+    /// </remarks>
+    public bool SetColor(string polygonId, int r, int g, int b, int a = 255)
+        {
+        Color color = new(r, g, b, a);
+        return Helper.ExecuteSetCommand(
+            Setter.Polygon,
+            TraciConstants.VAR_COLOR,
+            polygonId,
+            color
+        );
+        }
+
+    /// <summary>
+    /// Sets the shape's shape to the given value
+    /// </summary>
+    /// <param name="polygonId"></param>
+    /// <param name="shape"></param>
+    /// <returns></returns>
+    /// <remarks>
+    /// see <see href="https://sumo.dlr.de/pydoc/traci._polygon.html#PolygonDomain-setShape"/>
+    /// </remarks>
+    public bool SetShape(string polygonId, List<(double x, double y)> shape)
+        {
+        Polygon polygon = new(shape);
+        return Helper.ExecuteSetCommand(
+            Setter.Polygon,
+            TraciConstants.VAR_SHAPE,
+            polygonId,
+            polygon
+        );
+        }
+
+    /// <summary>
+    /// Marks that the shape shall be filled if the value is !=0.
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="filled"></param>
+    /// <returns></returns>
+    /// <remarks>
+    /// see <see href="https://sumo.dlr.de/pydoc/traci._polygon.html#PolygonDomain-setFilled"/>
+    /// </remarks>
+    public bool SetFilled(string id, bool filled)
+        {
+        TraciInteger tmp = new(filled == true ? (byte)1 : (byte)0);
+        return Helper.ExecuteSetCommand(Setter.Polygon, TraciConstants.VAR_FILL, id, tmp);
+        }
+
+    /// <summary>
+    /// Sets drawing width for unfilled shape
+    /// </summary>
+    /// <param name="polygonId"></param>
+    /// <param name="lineWidth"></param>
+    /// <returns></returns>
+    /// <remarks>
+    /// see <see href="https://sumo.dlr.de/pydoc/traci._polygon.html#PolygonDomain-setLineWidth"/>
+    /// </remarks>
+    public bool SetLineWidth(string polygonId, double lineWidth)
+        {
+        TraciDouble tmp = new(lineWidth);
+        return Helper.ExecuteSetCommand(
+            Setter.Polygon,
+            TraciConstants.VAR_WIDTH,
+            polygonId,
+            tmp
+        );
+        }
+
+    /// <summary>
+    /// Adds the defined PolygonFunctions
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="name"></param>
+    /// <param name="color"></param>
+    /// <param name="filled"></param>
+    /// <param name="layer"></param>
+    /// <param name="shape"></param>
+    /// <returns></returns>
+    /// <remarks>
+    /// see <see href="https://sumo.dlr.de/pydoc/traci._polygon.html#PolygonDomain-add"/>
+    /// </remarks>
+    public bool Add(
+        string id,
+        string name,
+        int r,
+        int g,
+        int b,
+        int a,
+        bool filled,
+        int layer,
+        List<(double x, double y)> shape
+    )
+        {
+        var tmp = new TraciCompoundObject
+        {
+            new TraciString(name),
+            new Color(r, g, b, a),
+            new TraciUnsignedByte(filled == false ? (byte)0 : (byte)1),
+            new TraciInteger(layer),
+            new Polygon(shape),
+        };
+
+        return Helper.ExecuteSetCommand(Setter.Polygon, TraciConstants.ADD, id, tmp);
+        }
+
+    /// <summary>
+    /// Removes the defined PolygonFunctions
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="layer"></param>
+    /// <returns></returns>
+    /// <remarks>
+    /// see <see href="https://sumo.dlr.de/pydoc/traci._polygon.html#PolygonDomain-remove"/>
+    /// </remarks>
+    public bool Remove(string id, int layer)
+        {
+        TraciInteger tmp = new(layer);
+        return Helper.ExecuteSetCommand(Setter.Polygon, TraciConstants.REMOVE, id, tmp);
+        }
+
+    /// <summary>
+    /// Adds the specified dynamics for the PolygonFunctions
+    /// </summary>
+    /// <param name="polygonId">ID of the shape, upon which the specified dynamics shall act</param>
+    /// <param name="trackedObjectId">ID of a SUMO traffic object, which shall be tracked by the shape</param>
+    /// <param name="timeSpan"> list of time points for timing the animation keyframes (must start with element zero) If it has length zero, no animation is taken into account.</param>
+    /// <param name="alphaSpan">list of alpha values to be attained at keyframes intermediate values are obtained by linear interpolation.Must have length equal to timeSpan, or zero if no alpha animation is desired.</param>
+    /// <param name="looped">Whether the animation should restart when the last keyframe is reached. In that case the animation jumps to the first keyframe as soon as the last is reached.If looped==false, the controlled shape is removed as soon as the timeSpan elapses.</param>
+    /// <param name="rotate">Whether, the shape should be rotated with the tracked object (only applies when such is given) The center of rotation is the object's position.</param>
+    /// <returns></returns>
+    /// <remarks>
+    /// see <see href="https://sumo.dlr.de/pydoc/traci._polygon.html#PolygonDomain-addDynamics"/>
+    /// </remarks>
+    public bool AddDynamics(
+        string polygonId,
+        string trackedObjectId = "",
+        List<double>? timeSpan = null,
+        List<double>? alphaSpan = null,
+        bool looped = false,
+        bool rotate = true
+    )
+        {
+        var tmp = new TraciCompoundObject
+        {
+            new TraciString(trackedObjectId),
+            new TraciDoubleList(timeSpan),
+            new TraciDoubleList(alphaSpan),
+            new TraciUnsignedByte(looped == false ? (byte)0 : (byte)1),
+            new TraciUnsignedByte(rotate == false ? (byte)0 : (byte)1),
+        };
+        return Helper.ExecuteSetCommand(
+            Setter.Polygon,
+            TraciConstants.VAR_ADD_DYNAMICS,
+            polygonId,
+            tmp
+        );
+        }
+    }

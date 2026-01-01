@@ -9,9 +9,9 @@
     <File Path="LICENSE.md" />
     <File Path="README.md" />
   </Folder>
-  <Project Path="CodingConnect.Traci.ProtocolTypes/CodingConnected.Traci.ProtocolTypes.csproj" />
+  <Project Path="CodingConnected.Traci.ProtocolTypes/CodingConnected.Traci.ProtocolTypes.csproj" />
   <Project Path="CodingConnected.Traci.Constants/CodingConnected.Traci.Constants.csproj" />
-  <Project Path="CodingConnected.Traci.NET/CodingConnected.Traci.csproj" />
-  <Project Path="CongdingConnected.Traci.DataTypes/CodingConnected.Traci.DataTypes.csproj" />
+  <Project Path="CodingConnected.Traci/CodingConnected.Traci.csproj" />
+  <Project Path="CodingConnected.Traci.DataTypes/CodingConnected.Traci.DataTypes.csproj" />
   <Project Path="CodingConnected.Traci.ConsoleTest/CodingConnected.Traci.ConsoleTest.csproj" />
 </Solution>
