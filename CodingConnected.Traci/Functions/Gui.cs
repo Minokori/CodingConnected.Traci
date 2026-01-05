@@ -20,7 +20,7 @@ namespace CodingConnected.Traci.Functions;
 /// </item>
 /// </list>
 /// </remarks>
-public partial class Gui(ISumoConnectService tcpService, ITraciCommandService helper, ILogger logger) : FunctionBase(tcpService, helper, logger)
+public partial class Gui(ISumoConnectService tcpService, ITraciCommandService helper) : FunctionBase(tcpService, helper)
     {
     /// <summary>
     /// subscribe to a list of variables of a vehicle type

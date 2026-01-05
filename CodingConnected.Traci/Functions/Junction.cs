@@ -17,7 +17,7 @@ namespace CodingConnected.Traci.Functions;
 /// </item>
 /// </list>
 /// </remarks>
-public partial class Junction(ISumoConnectService tcpService, ITraciCommandService helper, ILogger logger) : TraciContextSubscribeCommands(tcpService, helper, logger)
+public partial class Junction(ISumoConnectService tcpService, ITraciCommandService helper) : TraciContextSubscribeCommands(tcpService, helper)
     {
     protected override CommandIdentifier.Subscribe ContextSubscribeCommand => CommandIdentifier.Subscribe.JunctionContext;
 

@@ -22,9 +22,8 @@ namespace CodingConnected.Traci.Functions;
 /// </remarks>
 public partial class MultiEntryExitDetector(
     ISumoConnectService tcpService,
-    ITraciCommandService helper,
-    ILogger logger
-) : FunctionBase(tcpService, helper, logger)
+    ITraciCommandService helper
+) : FunctionBase(tcpService, helper)
     {
     /// <summary>
     /// subscribe to a list of variables of a vehicle type

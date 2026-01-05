@@ -1,5 +1,4 @@
 using CodingConnected.Traci.Services;
-using Microsoft.Extensions.Logging;
 
 namespace CodingConnected.Traci.Functions;
 
@@ -17,7 +16,6 @@ namespace CodingConnected.Traci.Functions;
 /// </remarks>
 public partial class VariableSpeedSign(
     ISumoConnectService tcpService,
-    ITraciCommandService helper,
-    ILogger logger
-) : FunctionBase(tcpService, helper, logger)
+    ITraciCommandService helper
+) : FunctionBase(tcpService, helper)
     { }

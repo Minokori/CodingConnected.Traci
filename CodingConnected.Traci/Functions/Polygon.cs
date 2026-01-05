@@ -1,5 +1,4 @@
 using CodingConnected.Traci.Services;
-using Microsoft.Extensions.Logging;
 namespace CodingConnected.Traci.Functions;
 
 
@@ -21,7 +20,7 @@ namespace CodingConnected.Traci.Functions;
 /// </item>
 /// </list>
 /// </remarks>
-public partial class PolygonFunctions(ISumoConnectService tcpService, ITraciCommandService helper, ILogger logger) : TraciContextSubscribeCommands(tcpService, helper, logger)
+public partial class PolygonFunctions(ISumoConnectService tcpService, ITraciCommandService helper) : TraciContextSubscribeCommands(tcpService, helper)
     {
 
     protected override CommandIdentifier.Subscribe ContextSubscribeCommand => CommandIdentifier.Subscribe.PolygonContext;

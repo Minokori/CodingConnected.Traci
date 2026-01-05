@@ -1,7 +1,7 @@
 # CodingConnected.Traci
 
 一个非官方的TraCI库的 .NET 实现。  
-*该库由 [@Minokori](https://github.com/Minokori) 复刻自 [@CodingConnected](https://github.com/CodingConnected/)的库 [CodingConnected.TraCI](https://github.com/CodingConnected/CodingConnected.Traci) ,但仅仅包含了其中的 .NET 实现。如果您想阅读原始库的README文档，请点击 [此处](./README_old.md)。*  
+*该库由 [@Minokori](https://github.com/Minokori) 复刻自 [@CodingConnected](https://github.com/CodingConnected/)的库 [CodingConnected.TraCI](https://github.com/CodingConnected/CodingConnected.Traci) ,但仅仅包含了其中的 .NET 实现。如果您想阅读原始库的README文档，请点击 [此处](./CodingConnected.Traci/README_old.md)。*  
 
 *如果您在使用过程中发现了任何bug，请提交 issue。*  
 

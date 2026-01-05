@@ -1,5 +1,6 @@
 #region get path methods
 using CodingConnected.Traci.ConsoleTest.Test;
+using Microsoft.Extensions.DependencyInjection;
 
 Console.WriteLine(TraciClient.GetSumoRootPath());
 Console.WriteLine(TraciClient.GetSumoExecutablePath());
@@ -9,8 +10,16 @@ Console.WriteLine(TraciClient.GetSumoExampleMapsPath());
 var sumoFile = Path.Combine(".", "sumo-scenarios", "visualization", "paradeContainers", "test.sumocfg");
 Console.WriteLine($"SUMO file path:{sumoFile}");
 
+// create a new TraciClient
+ServiceCollection services = new();
+services.AddDefaultSumoConnectService().AddDefaultTraciCommandService().AddDefaultEventService();
+services.AddTraciClient();
 /* Create a TraciClient for the commands */
-using TraciClient client = new(sumoFile, 4321);
+//using TraciClient client = new(sumoFile, 4321);
+var provider = services.BuildServiceProvider();
+
+var client = provider.GetTraciClient(sumoFile, 4321);
+//var client = NewTraciClient.Create(sumoFile, 4321);
 (var api, var ver) = await client.Start();
 Console.WriteLine($"Connected to SUMO version: {api}, Version String:{ver}");
 

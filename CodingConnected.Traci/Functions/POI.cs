@@ -1,5 +1,4 @@
 using CodingConnected.Traci.Services;
-using Microsoft.Extensions.Logging;
 namespace CodingConnected.Traci.Functions;
 
 /// <summary>
@@ -20,7 +19,7 @@ namespace CodingConnected.Traci.Functions;
 /// </item>
 /// </list>
 /// </remarks>
-public partial class POI(ISumoConnectService tcpService, ITraciCommandService helper, ILogger logger) : TraciContextSubscribeCommands(tcpService, helper, logger)
+public partial class POI(ISumoConnectService tcpService, ITraciCommandService helper) : TraciContextSubscribeCommands(tcpService, helper)
     {
     protected override CommandIdentifier.Subscribe ContextSubscribeCommand => CommandIdentifier.Subscribe.PoiContext;
 

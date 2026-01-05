@@ -1,4 +1,5 @@
 namespace CodingConnected.Traci.ConsoleTest.Test;
+
 public static partial class GuiTest
     {
     public static void TestGui(this TraciClient client)
@@ -35,4 +36,5 @@ public static partial class GuiTest
                 }
             }
         }
+
     }

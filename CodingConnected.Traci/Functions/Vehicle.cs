@@ -1,5 +1,4 @@
 using CodingConnected.Traci.Services;
-using Microsoft.Extensions.Logging;
 namespace CodingConnected.Traci.Functions;
 
 /// <summary>
@@ -20,10 +19,10 @@ namespace CodingConnected.Traci.Functions;
 /// </item>
 /// </list>
 /// </remarks>
-public partial class Vehicle(ISumoConnectService tcpService, ITraciCommandService helper, ILogger logger, Simulation simulation)
-    : TraciContextSubscribeCommands(tcpService, helper, logger)
+public partial class Vehicle(ISumoConnectService tcpService, ITraciCommandService helper, Simulation simulation)
+    : TraciContextSubscribeCommands(tcpService, helper)
     {
-    protected override CommandIdentifier.Subscribe ContextSubscribeCommand => CommandIdentifier.Subscribe.VehicleContext;
+    protected override Subscribe ContextSubscribeCommand => CommandIdentifier.Subscribe.VehicleContext;
     private readonly Simulation _simulation = simulation;
 
     /// <summary>

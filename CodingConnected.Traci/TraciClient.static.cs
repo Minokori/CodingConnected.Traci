@@ -1,3 +1,5 @@
+using CodingConnected.Traci.Services;
+
 namespace CodingConnected.Traci;
 
 public partial class TraciClient
@@ -32,5 +34,18 @@ public partial class TraciClient
             )
             : examplePath;
         }
-    }
 
+
+    public static TraciClient Create(string sumoFilePath, int port)
+        {
+        ConnectService connectService = new();
+        CommandService commandService = new(connectService);
+        EventService eventService = new();
+        TraciClient traciClient = new(connectService, commandService, eventService)
+            {
+            SumoFile = sumoFilePath,
+            Port = port
+            };
+        return traciClient;
+        }
+    }

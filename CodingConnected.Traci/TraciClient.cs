@@ -1,19 +1,81 @@
 using System.Diagnostics;
+using CodingConnected.Traci.Functions;
 using CodingConnected.Traci.Services;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace CodingConnected.Traci;
 
-/// <summary>
-/// A simple )and yet incomplete) client-side implementation of TraCI, for using SUMO
-/// with .NET applications.
-/// </summary>
-public sealed partial class TraciClient : IDisposable
+public sealed partial class TraciClient
     {
-    public string SumoFile { get; private set; }
-    public int Port { get; private set; }
-    private ISumoConnectService TcpService => Services.GetRequiredService<ISumoConnectService>();
-    private ServiceProvider Services { get; set; }
+    public TraciClient(
+            ISumoConnectService sumoConnectService,
+            ITraciCommandService traciCommandService,
+            ITraciEventService traciEventService
+        )
+        {
+        // get services
+        SumoConnectService = sumoConnectService;
+        TraciCommandService = traciCommandService;
+        TraciEventService = traciEventService;
+        // init functions
+        Simulation = new(SumoConnectService, TraciCommandService);
+        Control = new(SumoConnectService, TraciCommandService, TraciEventService);
+        InductionLoop = new(SumoConnectService, TraciCommandService);
+        LaneAreaDetector = new(SumoConnectService, TraciCommandService);
+        MultiEntryExitDetector = new(SumoConnectService, TraciCommandService);
+        Lane = new(SumoConnectService, TraciCommandService);
+        TrafficLight = new(SumoConnectService, TraciCommandService);
+        Vehicle = new(SumoConnectService, TraciCommandService, Simulation);
+        Person = new(SumoConnectService, TraciCommandService);
+        VehicleType = new(SumoConnectService, TraciCommandService);
+        Route = new(SumoConnectService, TraciCommandService);
+        POI = new(SumoConnectService, TraciCommandService);
+        Polygon = new(SumoConnectService, TraciCommandService);
+        Junction = new(SumoConnectService, TraciCommandService);
+        Edge = new(SumoConnectService, TraciCommandService);
+        Gui = new(SumoConnectService, TraciCommandService);
+        BusStop = new(SumoConnectService, TraciCommandService);
+        Calibrator = new(SumoConnectService, TraciCommandService);
+        ChargingStation = new(SumoConnectService, TraciCommandService);
+        ParkingArea = new(SumoConnectService, TraciCommandService);
+        Rerouter = new(SumoConnectService, TraciCommandService);
+        RouteProbe = new(SumoConnectService, TraciCommandService);
+        VariableSpeedSign = new(SumoConnectService, TraciCommandService);
+        }
+
+    #region private services
+    private ISumoConnectService SumoConnectService { get; init; }
+    private ITraciCommandService TraciCommandService { get; init; }
+    private ITraciEventService TraciEventService { get; init; }
+    #endregion
+
+    #region public functions
+    public BusStop BusStop { get; init; }
+    public Calibrator Calibrator { get; init; }
+    public ChargingStation ChargingStation { get; init; }
+    public Control Control { get; init; }
+    public Edge Edge { get; init; }
+    public Gui Gui { get; init; }
+    public InductionLoop InductionLoop { get; init; }
+    public Junction Junction { get; init; }
+    public Lane Lane { get; init; }
+    public LaneAreaDetector LaneAreaDetector { get; init; }
+    public MultiEntryExitDetector MultiEntryExitDetector { get; init; }
+    public ParkingArea ParkingArea { get; init; }
+    public Person Person { get; init; }
+    public POI POI { get; init; }
+    public PolygonFunctions Polygon { get; init; }
+    public Rerouter Rerouter { get; init; }
+    public Route Route { get; init; }
+    public RouteProbe RouteProbe { get; init; }
+    public Simulation Simulation { get; init; }
+    public TrafficLight TrafficLight { get; init; }
+    public VariableSpeedSign VariableSpeedSign { get; init; }
+    public Vehicle Vehicle { get; init; }
+    public VehicleType VehicleType { get; init; }
+    #endregion
+
+    public string SumoFile { get; set; } = string.Empty;
+    public int Port { get; set; } = 2000;
 
     /// <summary>
     /// Connects to the SUMO server instance
@@ -24,7 +86,7 @@ public sealed partial class TraciClient : IDisposable
         string hostname,
         int port
     ) =>
-        await TcpService
+        await SumoConnectService
             .ConnectAsync(hostname, port)
             .ContinueWith(
                 _ => Control.GetVersion(),
@@ -40,26 +102,16 @@ public sealed partial class TraciClient : IDisposable
             )
             .ConfigureAwait(false);
 
-    public bool Connect(string hostname, int port) => TcpService.Connect(hostname, port);
 
-    /// <summary>
-    /// provide an easy way to start a sumo instance on local machine.
-    /// </summary>
-    /// <param name="sumoFile">*.sumocfg file.</param>
-    /// <param name="port"></param>
-    /// <param name="gui">enable sumo-gui window</param>
-    /// <param name="quit">auto quit sumo when simulation end</param>
-    /// <returns></returns>
     public async Task<(int traciApiVersion, string sumoVersion)> Start(
-        string? sumoFile = null,
-        int? port = null,
-        bool gui = true,
-        bool quit = true
-    )
+    string? sumoFile = null,
+    int? port = null,
+    bool gui = true,
+    bool quit = true
+)
         {
         SumoFile = sumoFile ?? SumoFile;
         Port = port ?? Port;
-
         var args =
             $"-c {SumoFile}"
             + $" --remote-port {Port}"
@@ -74,7 +126,6 @@ public sealed partial class TraciClient : IDisposable
                 Arguments = args,
                 FileName = sumoExecutable, // The executable for the sumo
                 UseShellExecute = true,
-
                 },
             };
         _ = sumoProcess.Start();
@@ -83,11 +134,6 @@ public sealed partial class TraciClient : IDisposable
         return (versionId, versionString);
         }
 
-    /// <summary>
-    /// low level method to send a command to the sumo server.<para/>
-    /// <b>NOT </b>recommended to use this method directly.
-    /// </summary>
-    /// <param name="command"></param>
-    /// <returns></returns>
-    public IList<TraciResult> SendMessage(TraciCommand command) => TcpService.SendMessage(command);
+    public List<TraciResult> SendCommand(TraciCommand traciCommand) => SumoConnectService.SendMessage(traciCommand);
     }
+

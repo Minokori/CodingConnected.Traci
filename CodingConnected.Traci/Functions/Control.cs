@@ -18,9 +18,8 @@ namespace CodingConnected.Traci.Functions;
 public class Control(
     ISumoConnectService tcpService,
     ITraciCommandService helper,
-    ITraciEventService eventService,
-    ILogger logger
-) : FunctionBase(tcpService, helper, logger)
+    ITraciEventService eventService
+) : FunctionBase(tcpService, helper)
     {
     private readonly ITraciEventService _events = eventService;
 

@@ -1,5 +1,4 @@
 using CodingConnected.Traci.Services;
-using Microsoft.Extensions.Logging;
 
 namespace CodingConnected.Traci.Functions;
 
@@ -21,7 +20,7 @@ namespace CodingConnected.Traci.Functions;
 /// </item>
 /// </list>
 /// </remarks>
-public partial class VehicleType(ISumoConnectService tcpService, ITraciCommandService helper, ILogger logger) : FunctionBase(tcpService, helper, logger)
+public partial class VehicleType(ISumoConnectService tcpService, ITraciCommandService helper) : FunctionBase(tcpService, helper)
     {
 
     /// <summary>

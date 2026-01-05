@@ -2,17 +2,24 @@ using System.Diagnostics.CodeAnalysis;
 using CodingConnected.Traci.Functions;
 using CodingConnected.Traci.Services;
 using Microsoft.Extensions.DependencyInjection;
-#pragma warning disable CA1034 // 嵌套类型应不可见
+#pragma warning disable CA1034 ,CA1708// 嵌套类型应不可见
 
 namespace CodingConnected.Traci;
 
 public static class TraciServiceCollectionExtension
     {
+    /// <summary>
+    /// Provides extension methods for registering SUMO TraCI client and related services with an <see
+    /// cref="IServiceCollection"/> for dependency injection.
+    /// </summary>
+    /// <remarks>These extension methods simplify the registration of SUMO TraCI client components and related
+    /// services in an application's dependency injection container. Use these methods during application startup to
+    /// ensure all required services are available for SUMO simulation integration.</remarks>
+    /// <param name="services">The service collection to which SUMO TraCI client and related services will be added.</param>
     extension(IServiceCollection services)
         {
-        private IServiceCollection AddTraciClientFunctions()
-            {
-            return services
+        private IServiceCollection AddTraciClientFunctions() =>
+            services
                 .AddSingleton<Simulation>()
                 .AddSingleton<Control>()
                 .AddSingleton<InductionLoop>()
@@ -36,7 +43,6 @@ public static class TraciServiceCollectionExtension
                 .AddSingleton<Rerouter>()
                 .AddSingleton<RouteProbe>()
                 .AddSingleton<VariableSpeedSign>();
-            }
 
         public IServiceCollection AddSumoConnectService<
             [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] T
@@ -65,5 +71,20 @@ public static class TraciServiceCollectionExtension
         public IServiceCollection AddDefaultEventService() =>
             services.AddSingleton<ITraciEventService, EventService>();
 
+
+        public IServiceCollection AddTraciClient() => services.AddSingleton<TraciClient>();
+
+        }
+
+
+    extension(IServiceProvider serviceProvider)
+        {
+        public TraciClient GetTraciClient(string? sumoFilePath = null, int? path = null)
+            {
+            var traciClient = serviceProvider.GetRequiredService<TraciClient>();
+            traciClient.SumoFile = sumoFilePath ?? traciClient.SumoFile;
+            traciClient.Port = path ?? traciClient.Port;
+            return traciClient;
+            }
         }
     }
