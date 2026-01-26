@@ -4,8 +4,8 @@ namespace CodingConnected.Traci.Functions;
 /// <summary>
 /// Route related Commands
 /// </summary>
-/// <param name="tcpService"></param>
-/// <param name="helper"></param>
+/// <param name="sumoConnnectService"></param>
+/// <param name="traciCommandService"></param>
 /// <remarks>
 /// <list type="bullet">
 /// <item>
@@ -19,7 +19,7 @@ namespace CodingConnected.Traci.Functions;
 /// </item>
 /// </list>
 /// </remarks>
-public partial class Route(ISumoConnectService tcpService, ITraciCommandService helper) : FunctionBase(tcpService, helper)
+public partial class Route(ISumoConnectService sumoConnnectService, ITraciCommandService traciCommandService) : FunctionBase(sumoConnnectService, traciCommandService)
     {
     /// <summary>
     /// subscribe to a list of variables of a vehicle type

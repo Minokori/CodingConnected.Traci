@@ -19,7 +19,7 @@ namespace CodingConnected.Traci.Functions;
 /// </item>
 /// </list>
 /// </remarks>
-public partial class Lane(ISumoConnectService tcpService, ITraciCommandService helper) : TraciContextSubscribeCommands(tcpService, helper)
+public partial class Lane(ISumoConnectService sumoConnectService, ITraciCommandService traciCommandService) : TraciContextSubscribeCommands(sumoConnectService, traciCommandService)
     {
     protected override CommandIdentifier.Subscribe ContextSubscribeCommand => CommandIdentifier.Subscribe.LaneContext;
 

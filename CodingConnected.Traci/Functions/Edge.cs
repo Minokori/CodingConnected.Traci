@@ -1,13 +1,12 @@
 using CodingConnected.Traci.Services;
-using Microsoft.Extensions.Logging;
-namespace CodingConnected.Traci.Functions;
 
+namespace CodingConnected.Traci.Functions;
 
 /// <summary>
 /// Edge related Commands
 /// </summary>
-/// <param name="tcpService"></param>
-/// <param name="helper"></param>
+/// <param name="sumoConnectService"></param>
+/// <param name="traciCommandService"></param>
 /// <remarks>
 /// <list type="bullet">
 /// <item>
@@ -21,9 +20,13 @@ namespace CodingConnected.Traci.Functions;
 /// </item>
 /// </list>
 /// </remarks>
-public partial class Edge(ISumoConnectService tcpService, ITraciCommandService helper) : TraciContextSubscribeCommands(tcpService, helper)
+public partial class Edge(
+    ISumoConnectService sumoConnectService,
+    ITraciCommandService traciCommandService
+) : TraciContextSubscribeCommands(sumoConnectService, traciCommandService)
     {
-    protected override CommandIdentifier.Subscribe ContextSubscribeCommand => CommandIdentifier.Subscribe.EdgeContext;
+    protected override CommandIdentifier.Subscribe ContextSubscribeCommand =>
+        CommandIdentifier.Subscribe.EdgeContext;
 
     /// <summary>
     /// subscribe to a list of variables of a edge
@@ -35,5 +38,17 @@ public partial class Edge(ISumoConnectService tcpService, ITraciCommandService h
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/docs/TraCI/Object_Variable_Subscription.html#command_0xdx_subscribe_variable"/>
     /// </remarks>
-    public void Subscribe(string edgeId, double beginTime, double endTime, List<byte> ListOfVariablesToSubsribeTo) => Helper.ExecuteSubscribeCommand(beginTime, endTime, (byte)CommandIdentifier.Subscribe.EdgeVariable, ListOfVariablesToSubsribeTo, edgeId);
+    public void Subscribe(
+        string edgeId,
+        double beginTime,
+        double endTime,
+        List<byte> ListOfVariablesToSubsribeTo
+    ) =>
+        Helper.ExecuteSubscribeCommand(
+            beginTime,
+            endTime,
+            (byte)CommandIdentifier.Subscribe.EdgeVariable,
+            ListOfVariablesToSubsribeTo,
+            edgeId
+        );
     }

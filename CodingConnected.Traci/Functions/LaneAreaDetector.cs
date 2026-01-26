@@ -1,5 +1,4 @@
 using CodingConnected.Traci.Services;
-using Microsoft.Extensions.Logging;
 namespace CodingConnected.Traci.Functions;
 
 
@@ -7,8 +6,8 @@ namespace CodingConnected.Traci.Functions;
 /// Lane Area Detector (E2 Detector) related Commands<para/>
 /// <u>Warning: some contents in <see href="https://sumo.dlr.de/docs/TraCI/Lane_Area_Detector_Value_Retrieval.html"/> have error, we haven't check them out yet.</u>
 /// </summary>
-/// <param name="tcpService"></param>
-/// <param name="helper"></param>
+/// <param name="sumoConnectService"></param>
+/// <param name="traciCommandService"></param>
 /// <remarks>
 /// <list type="bullet">
 /// <item>
@@ -22,7 +21,7 @@ namespace CodingConnected.Traci.Functions;
 /// </item>
 /// </list>
 /// </remarks>
-public partial class LaneAreaDetector(ISumoConnectService tcpService, ITraciCommandService helper) : FunctionBase(tcpService, helper)
+public partial class LaneAreaDetector(ISumoConnectService sumoConnectService, ITraciCommandService traciCommandService) : FunctionBase(sumoConnectService, traciCommandService)
     {
     /// <summary>
     /// subscribe to a list of variables of a E2 detector

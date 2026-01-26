@@ -1,13 +1,12 @@
 using CodingConnected.Traci.Services;
-using Microsoft.Extensions.Logging;
 namespace CodingConnected.Traci.Functions;
 
 /// <summary>
 /// Control-related commands
 /// </summary>
-/// <param name="tcpService"><see cref="ISumoConnectService"/></param>
-/// <param name="helper"><see cref="ITraciCommandService"/></param>
-/// <param name="eventService"><see cref="ITraciEventService"/> </param>
+/// <param name="sumoConnectService"><see cref="ISumoConnectService"/></param>
+/// <param name="traciCommandService"><see cref="ITraciCommandService"/></param>
+/// <param name="traciEventService"><see cref="ITraciEventService"/> </param>
 /// <remarks>
 /// <list type="bullet">
 /// <response>
@@ -16,12 +15,12 @@ namespace CodingConnected.Traci.Functions;
 /// </list>
 /// </remarks>
 public class Control(
-    ISumoConnectService tcpService,
-    ITraciCommandService helper,
-    ITraciEventService eventService
-) : FunctionBase(tcpService, helper)
+    ISumoConnectService sumoConnectService,
+    ITraciCommandService traciCommandService,
+    ITraciEventService traciEventService
+) : FunctionBase(sumoConnectService, traciCommandService)
     {
-    private readonly ITraciEventService _events = eventService;
+    private ITraciEventService Events { get; init; } = traciEventService;
 
     /// <summary>
     /// Returns a tuple containing the TraCI API Version number (integer) and a string identifying the SUMO apiVersion running on the TraCI server in human-readable form.
@@ -107,12 +106,12 @@ public class Control(
                         }
                     case 0x09: // 0x9X => Object Context Subscription Content
                         {
-                        var c = (TraciContextSubscriptionResponse)response;
+                        var csr = (TraciContextSubscriptionResponse)response;
                         eventArgs = new ContextSubscriptionEventArgs(
-                            c.ObjectId,
-                            c.ContextDomain,
-                            c.VariableCount,
-                            c.ObjectCount
+                            csr.ObjectId,
+                            csr.ContextDomain,
+                            csr.VariableCount,
+                            csr.ObjectCount
                         );
                         break;
                         }
@@ -129,78 +128,78 @@ public class Control(
                 switch ((Response.Subscribe)response.Identifier)
                     {
                     case Response.Subscribe.INDUCTIONLOOP_VARIABLE:
-                        _events.OnInductionLoopSubscription(eventArgs);
+                        Events.OnInductionLoopSubscription(eventArgs);
                         break;
                     case Response.Subscribe.MULTIENTRYEXIT_VARIABLE:
-                        _events.OnMultiEntryExitSubscription(eventArgs);
+                        Events.OnMultiEntryExitSubscription(eventArgs);
                         break;
                     case Response.Subscribe.TL_VARIABLE:
-                        _events.OnTrafficLightSubscription(eventArgs);
+                        Events.OnTrafficLightSubscription(eventArgs);
                         break;
                     case Response.Subscribe.LANE_VARIABLE:
-                        _events.OnLaneSubscription(eventArgs);
+                        Events.OnLaneSubscription(eventArgs);
                         break;
                     case Response.Subscribe.VEHICLE_VARIABLE:
-                        _events.OnVehicleSubscription(eventArgs);
+                        Events.OnVehicleSubscription(eventArgs);
                         break;
                     case Response.Subscribe.VEHICLETYPE_VARIABLE:
-                        _events.OnVehicleTypeSubscription(eventArgs);
+                        Events.OnVehicleTypeSubscription(eventArgs);
                         break;
                     case Response.Subscribe.ROUTE_VARIABLE:
-                        _events.OnRouteSubscription(eventArgs);
+                        Events.OnRouteSubscription(eventArgs);
                         break;
                     case Response.Subscribe.POI_VARIABLE:
-                        _events.OnPOISubscription(eventArgs);
+                        Events.OnPOISubscription(eventArgs);
                         break;
                     case Response.Subscribe.POLYGON_VARIABLE:
-                        _events.OnPolygonSubscription(eventArgs);
+                        Events.OnPolygonSubscription(eventArgs);
                         break;
                     case Response.Subscribe.JUNCTION_VARIABLE:
-                        _events.OnJunctionSubscription(eventArgs);
+                        Events.OnJunctionSubscription(eventArgs);
                         break;
                     case Response.Subscribe.EDGE_VARIABLE:
-                        _events.OnEdgeSubscription(eventArgs);
+                        Events.OnEdgeSubscription(eventArgs);
                         break;
                     case Response.Subscribe.SIM_VARIABLE:
-                        _events.OnSimulationSubscription(eventArgs);
+                        Events.OnSimulationSubscription(eventArgs);
                         break;
                     case Response.Subscribe.GUI_VARIABLE:
-                        _events.OnGUISubscription(eventArgs);
+                        Events.OnGUISubscription(eventArgs);
                         break;
                     case Response.Subscribe.LANEAREA_VARIABLE:
-                        _events.OnLaneAreaSubscription(eventArgs);
+                        Events.OnLaneAreaSubscription(eventArgs);
                         break;
                     case Response.Subscribe.PERSON_VARIABLE:
-                        _events.OnPersonSubscription(eventArgs);
+                        Events.OnPersonSubscription(eventArgs);
                         break;
                     case Response.Subscribe.INDUCTIONLOOP_CONTEXT:
-                        _events.OnInductionLoopContextSubscription(
+                        Events.OnInductionLoopContextSubscription(
                             (ContextSubscriptionEventArgs)eventArgs
                         );
                         break;
                     case Response.Subscribe.LANE_CONTEXT:
-                        _events.OnLaneContextSubscription((ContextSubscriptionEventArgs)eventArgs);
+                        Events.OnLaneContextSubscription((ContextSubscriptionEventArgs)eventArgs);
                         break;
                     case Response.Subscribe.VEHICLE_CONTEXT:
-                        _events.OnVehicleContextSubscription(
+                        Events.OnVehicleContextSubscription(
                             (ContextSubscriptionEventArgs)eventArgs
                         );
                         break;
                     case Response.Subscribe.POI_CONTEXT:
-                        _events.OnPOIContextSubscription((ContextSubscriptionEventArgs)eventArgs);
+                        Events.OnPOIContextSubscription((ContextSubscriptionEventArgs)eventArgs);
                         break;
                     case Response.Subscribe.POLYGON_CONTEXT:
-                        _events.OnPolygonContextSubscription(
+                        Events.OnPolygonContextSubscription(
                             (ContextSubscriptionEventArgs)eventArgs
                         );
                         break;
                     case Response.Subscribe.JUNCTION_CONTEXT:
-                        _events.OnJunctionContextSubscription(
+                        Events.OnJunctionContextSubscription(
                             (ContextSubscriptionEventArgs)eventArgs
                         );
                         break;
                     case Response.Subscribe.EDGE_CONTEXT:
-                        _events.OnEdgeContextSubscription((ContextSubscriptionEventArgs)eventArgs);
+                        Events.OnEdgeContextSubscription((ContextSubscriptionEventArgs)eventArgs);
                         break;
                     default:
                         throw new NotSupportedException();

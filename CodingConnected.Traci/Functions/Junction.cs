@@ -1,12 +1,12 @@
 using CodingConnected.Traci.Services;
-using Microsoft.Extensions.Logging;
+
 namespace CodingConnected.Traci.Functions;
 
 /// <summary>
 /// Junction related Commands
 /// </summary>
-/// <param name="tcpService"></param>
-/// <param name="helper"></param>
+/// <param name="sumoConnectService"></param>
+/// <param name="traciCommandService"></param>
 /// <remarks>
 /// <list type="bullet">
 /// <item>
@@ -17,9 +17,13 @@ namespace CodingConnected.Traci.Functions;
 /// </item>
 /// </list>
 /// </remarks>
-public partial class Junction(ISumoConnectService tcpService, ITraciCommandService helper) : TraciContextSubscribeCommands(tcpService, helper)
+public partial class Junction(
+    ISumoConnectService sumoConnectService,
+    ITraciCommandService traciCommandService
+) : TraciContextSubscribeCommands(sumoConnectService, traciCommandService)
     {
-    protected override CommandIdentifier.Subscribe ContextSubscribeCommand => CommandIdentifier.Subscribe.JunctionContext;
+    protected override Subscribe ContextSubscribeCommand =>
+        CommandIdentifier.Subscribe.JunctionContext;
 
     /// <summary>
     /// subscribe to a list of variables of a junction
@@ -31,5 +35,17 @@ public partial class Junction(ISumoConnectService tcpService, ITraciCommandServi
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/docs/TraCI/Object_Variable_Subscription.html#command_0xdx_subscribe_variable"/>
     /// </remarks>
-    public void Subscribe(string junctionId, double beginTime, double endTime, List<byte> ListOfVariablesToSubsribeTo) => Helper.ExecuteSubscribeCommand(beginTime, endTime, (byte)CommandIdentifier.Subscribe.JunctionVariable, ListOfVariablesToSubsribeTo, junctionId);
+    public void Subscribe(
+        string junctionId,
+        double beginTime,
+        double endTime,
+        List<byte> ListOfVariablesToSubsribeTo
+    ) =>
+        Helper.ExecuteSubscribeCommand(
+            beginTime,
+            endTime,
+            (byte)CommandIdentifier.Subscribe.JunctionVariable,
+            ListOfVariablesToSubsribeTo,
+            junctionId
+        );
     }

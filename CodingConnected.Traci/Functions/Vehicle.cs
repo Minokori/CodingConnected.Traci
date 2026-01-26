@@ -4,8 +4,8 @@ namespace CodingConnected.Traci.Functions;
 /// <summary>
 /// Vehicle related Commands
 /// </summary>
-/// <param name="tcpService"></param>
-/// <param name="helper"></param>
+/// <param name="sumoConnectService"></param>
+/// <param name="traciCommandService"></param>
 /// <remarks>
 /// <list type="bullet">
 /// <item>
@@ -19,11 +19,11 @@ namespace CodingConnected.Traci.Functions;
 /// </item>
 /// </list>
 /// </remarks>
-public partial class Vehicle(ISumoConnectService tcpService, ITraciCommandService helper, Simulation simulation)
-    : TraciContextSubscribeCommands(tcpService, helper)
+public partial class Vehicle(ISumoConnectService sumoConnectService, ITraciCommandService traciCommandService, Simulation simulation)
+    : TraciContextSubscribeCommands(sumoConnectService, traciCommandService)
     {
     protected override Subscribe ContextSubscribeCommand => CommandIdentifier.Subscribe.VehicleContext;
-    private readonly Simulation _simulation = simulation;
+    private Simulation Simulation { get; init; } = simulation;
 
     /// <summary>
     /// subscribe to a list of variables of a vehicle

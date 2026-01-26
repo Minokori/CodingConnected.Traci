@@ -1,12 +1,11 @@
 using CodingConnected.Traci.Services;
-using Microsoft.Extensions.Logging;
 namespace CodingConnected.Traci.Functions;
 
 /// <summary>
 /// Multi Entry Exit Detector (E3 Detector) related Commands<para/>
 /// </summary>
-/// <param name="tcpService"></param>
-/// <param name="helper"></param>
+/// <param name="sumoConnectService"></param>
+/// <param name="traciCommandService"></param>
 /// <remarks>
 /// <list type="bullet">
 /// <item>
@@ -21,9 +20,9 @@ namespace CodingConnected.Traci.Functions;
 /// </list>
 /// </remarks>
 public partial class MultiEntryExitDetector(
-    ISumoConnectService tcpService,
-    ITraciCommandService helper
-) : FunctionBase(tcpService, helper)
+    ISumoConnectService sumoConnectService,
+    ITraciCommandService traciCommandService
+) : FunctionBase(sumoConnectService, traciCommandService)
     {
     /// <summary>
     /// subscribe to a list of variables of a vehicle type

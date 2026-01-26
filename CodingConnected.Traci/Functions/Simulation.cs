@@ -1,11 +1,12 @@
+using System.Diagnostics;
 using CodingConnected.Traci.Services;
 namespace CodingConnected.Traci.Functions;
 
 /// <summary>
 /// Simulation related Commands
 /// </summary>
-/// <param name="tcpService"></param>
-/// <param name="helper"></param>
+/// <param name="sumoConnectService"></param>
+/// <param name="traciCommandService"></param>
 /// <remarks>
 /// <list type="bullet">
 /// <item>
@@ -19,16 +20,18 @@ namespace CodingConnected.Traci.Functions;
 /// </item>
 /// </list>
 /// </remarks>
-public partial class Simulation(ISumoConnectService tcpService, ITraciCommandService helper) : FunctionBase(tcpService, helper)
+public partial class Simulation(ISumoConnectService sumoConnectService, ITraciCommandService traciCommandService) : FunctionBase(sumoConnectService, traciCommandService)
     {
     public int GetEmergencyStoppingVehiclesNumber(string id)
         {
+        Debug.WriteLine($"[WARN]: {id} not used");
         var result = Helper.ExecuteGetCommand(GetVariable.Simulation, TraciConstants.VAR_EMERGENCYSTOPPING_VEHICLES_NUMBER);
         return (TraciInteger)result.Data;
         }
 
     public List<string> GetEmergencyStoppingVehiclesIDList(string id)
         {
+        Debug.WriteLine($"[WARN]: {id} not used");
         var result = Helper.ExecuteGetCommand(GetVariable.Simulation, TraciConstants.VAR_EMERGENCYSTOPPING_VEHICLES_IDS);
         return (TraciStringList)result.Data;
         }

@@ -1,11 +1,12 @@
 using CodingConnected.Traci.Services;
+
 namespace CodingConnected.Traci.Functions;
 
 /// <summary>
 /// Person related Commands
 /// </summary>
-/// <param name="tcpService"></param>
-/// <param name="helper"></param>
+/// <param name="sumoConnectService"></param>
+/// <param name="traciCommandService"></param>
 /// <remarks>
 /// <list type="bullet">
 /// <item>
@@ -19,7 +20,10 @@ namespace CodingConnected.Traci.Functions;
 /// </item>
 /// </list>
 /// </remarks>
-public partial class Person(ISumoConnectService tcpService, ITraciCommandService helper) : FunctionBase(tcpService, helper)
+public partial class Person(
+    ISumoConnectService sumoConnectService,
+    ITraciCommandService traciCommandService
+) : FunctionBase(sumoConnectService, traciCommandService)
     {
     /// <summary>
     /// subscribe to a list of variables of a person
@@ -31,5 +35,17 @@ public partial class Person(ISumoConnectService tcpService, ITraciCommandService
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/docs/TraCI/Object_Variable_Subscription.html#command_0xdx_subscribe_variable"/>
     /// </remarks>
-    public override void Subscribe(string objectId, int beginTime, int endTime, List<byte> VariablesToSubscribeTo) => Helper.ExecuteSubscribeCommand(beginTime, endTime, (byte)CommandIdentifier.Subscribe.PersonVariable, VariablesToSubscribeTo, objectId);
+    public override void Subscribe(
+        string objectId,
+        int beginTime,
+        int endTime,
+        List<byte> VariablesToSubscribeTo
+    ) =>
+        Helper.ExecuteSubscribeCommand(
+            beginTime,
+            endTime,
+            (byte)CommandIdentifier.Subscribe.PersonVariable,
+            VariablesToSubscribeTo,
+            objectId
+        );
     }

@@ -1,24 +1,32 @@
 using CodingConnected.Traci.Services;
-using Microsoft.Extensions.Logging;
-namespace CodingConnected.Traci.Functions;
 
+namespace CodingConnected.Traci.Functions;
 
 /// <summary>
 /// Base class for TraCI Functions
 /// </summary>
 /// <param name="sumoConnectService">send/receive data to/from traci host</param>
-/// <param name="helper">parse commands/convert contents from response</param>
-public abstract class FunctionBase(ISumoConnectService sumoConnectService, ITraciCommandService helper)
+/// <param name="traciCommandService">parse commands/convert contents from response</param>
+public abstract class FunctionBase(
+    ISumoConnectService sumoConnectService,
+    ITraciCommandService traciCommandService
+)
     {
-    protected ITraciCommandService Helper { get; } = helper;
+    protected ITraciCommandService Helper { get; } = traciCommandService;
     protected ISumoConnectService SumoHelper { get; } = sumoConnectService;
 
-    public virtual void Subscribe(string objectId, int beginTime, int endTime, List<byte> VariablesToSubscribeTo) => throw new NotImplementedException();
+    public virtual void Subscribe(
+        string objectId,
+        int beginTime,
+        int endTime,
+        List<byte> VariablesToSubscribeTo
+    ) => throw new NotImplementedException();
     }
 
-
-
-public abstract class TraciContextSubscribeCommands(ISumoConnectService tcpService, ITraciCommandService helper) : FunctionBase(tcpService, helper)
+public abstract class TraciContextSubscribeCommands(
+    ISumoConnectService sumoConnectService,
+    ITraciCommandService traciCommandService
+) : FunctionBase(sumoConnectService, traciCommandService)
     {
     /// <summary>
     /// Cache an empty list of bytes to unsubscribe. Prevents allocation when multiple unsubscribe occur.
@@ -58,22 +66,25 @@ public abstract class TraciContextSubscribeCommands(ISumoConnectService tcpServi
         byte contextDomain,
         double dist,
         List<byte> ListOfVariablesToSubscribeTo
-    ) => Helper.ExecuteSubscribeContextCommand(
+    ) =>
+        Helper.ExecuteSubscribeContextCommand(
             beginTime,
             endTime,
             (byte)ContextSubscribeCommand,
             ListOfVariablesToSubscribeTo,
             objectId,
             contextDomain,
-            dist);
+            dist
+        );
 
-    public void UnsubscribeContext(string objectId, byte contextDomain) => Helper.ExecuteSubscribeContextCommand(
+    public void UnsubscribeContext(string objectId, byte contextDomain) =>
+        Helper.ExecuteSubscribeContextCommand(
             TraciConstants.InvalidDoubleValue,
             TraciConstants.InvalidDoubleValue,
             (byte)ContextSubscribeCommand,
-            EmptyVariableSubscriptionList
-,
+            EmptyVariableSubscriptionList,
             objectId,
             contextDomain,
-            TraciConstants.InvalidDoubleValue);
+            TraciConstants.InvalidDoubleValue
+        );
     }

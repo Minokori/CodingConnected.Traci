@@ -974,7 +974,7 @@ public partial class Vehicle
         int personNumber = 0
     )
         {
-        depart = depart is null ? _simulation.GetTime().ToString() : depart;
+        depart = depart is null ? Simulation.GetTime().ToString() : depart;
         var tmp = new TraciCompoundObject()
         {
             new TraciString(routeId),

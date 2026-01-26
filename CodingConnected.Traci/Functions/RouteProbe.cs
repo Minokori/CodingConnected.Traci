@@ -1,10 +1,12 @@
 using CodingConnected.Traci.Services;
+
 namespace CodingConnected.Traci.Functions;
+
 /// <summary>
 /// Router probe related Commands
 /// </summary>
-/// <param name="tcpService"></param>
-/// <param name="helper"></param>
+/// <param name="sumoConnetService"></param>
+/// <param name="traciCommandService"></param>
 /// <remarks>
 /// <list type="bullet">
 /// <item>
@@ -12,6 +14,8 @@ namespace CodingConnected.Traci.Functions;
 /// </item>
 /// </list>
 /// </remarks>
-public partial class RouteProbe(ISumoConnectService tcpService, ITraciCommandService helper) : FunctionBase(tcpService, helper)
-    {
-    }
+public partial class RouteProbe(
+    ISumoConnectService sumoConnetService,
+    ITraciCommandService traciCommandService
+) : FunctionBase(sumoConnetService, traciCommandService)
+    { }

@@ -1,13 +1,12 @@
 using CodingConnected.Traci.Services;
-using Microsoft.Extensions.Logging;
 namespace CodingConnected.Traci.Functions;
 
 
 /// <summary>
 /// Induction loop related Commands
 /// </summary>
-/// <param name="tcpService"></param>
-/// <param name="helper"></param>
+/// <param name="sumoConnectService"></param>
+/// <param name="traciCommandService"></param>
 /// <remarks>
 /// <list type="bullet">
 /// <item>
@@ -21,7 +20,7 @@ namespace CodingConnected.Traci.Functions;
 /// </item>
 /// </list>
 /// </remarks>
-public partial class InductionLoop(ISumoConnectService tcpService, ITraciCommandService helper) : TraciContextSubscribeCommands(tcpService, helper)
+public partial class InductionLoop(ISumoConnectService sumoConnectService, ITraciCommandService traciCommandService) : TraciContextSubscribeCommands(sumoConnectService, traciCommandService)
     {
     protected override CommandIdentifier.Subscribe ContextSubscribeCommand => CommandIdentifier.Subscribe.InductionLoopContext;
 

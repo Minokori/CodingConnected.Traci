@@ -1,11 +1,12 @@
 using CodingConnected.Traci.Services;
+
 namespace CodingConnected.Traci.Functions;
 
 /// <summary>
 /// rerouter related Commands
 /// </summary>
-/// <param name="tcpService"></param>
-/// <param name="helper"></param>
+/// <param name="sumoConnnectService"></param>
+/// <param name="traciCommandService"></param>
 /// <remarks>
 /// <list type="bullet">
 /// <item>
@@ -13,7 +14,6 @@ namespace CodingConnected.Traci.Functions;
 /// </item>
 /// </list>
 /// </remarks>
-public partial class Rerouter(ISumoConnectService tcpService, ITraciCommandService helper) : FunctionBase(tcpService, helper)
-    {
-
-    }
+public partial class Rerouter(ISumoConnectService sumoConnnectService, ITraciCommandService traciCommandService)
+    : FunctionBase(sumoConnnectService, traciCommandService)
+    { }

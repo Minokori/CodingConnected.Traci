@@ -1,12 +1,11 @@
 using CodingConnected.Traci.Services;
-using Microsoft.Extensions.Logging;
 namespace CodingConnected.Traci.Functions;
 
 /// <summary>
 /// VehicleType related Commands
 /// </summary>
-/// <param name="tcpService"></param>
-/// <param name="helper"></param>
+/// <param name="sumoConnectService"></param>
+/// <param name="traciCommandService"></param>
 /// <remarks>
 /// <list type="bullet">
 /// <item>
@@ -20,7 +19,7 @@ namespace CodingConnected.Traci.Functions;
 /// </item>
 /// </list>
 /// </remarks>
-public partial class Gui(ISumoConnectService tcpService, ITraciCommandService helper) : FunctionBase(tcpService, helper)
+public partial class Gui(ISumoConnectService sumoConnectService, ITraciCommandService traciCommandService) : FunctionBase(sumoConnectService, traciCommandService)
     {
     /// <summary>
     /// subscribe to a list of variables of a vehicle type

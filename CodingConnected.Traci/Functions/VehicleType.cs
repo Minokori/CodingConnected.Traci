@@ -5,8 +5,8 @@ namespace CodingConnected.Traci.Functions;
 /// <summary>
 /// VehicleType related Commands
 /// </summary>
-/// <param name="tcpService"></param>
-/// <param name="helper"></param>
+/// <param name="sumoConnectService"></param>
+/// <param name="traciCommandService"></param>
 /// <remarks>
 /// <list type="bullet">
 /// <item>
@@ -20,9 +20,11 @@ namespace CodingConnected.Traci.Functions;
 /// </item>
 /// </list>
 /// </remarks>
-public partial class VehicleType(ISumoConnectService tcpService, ITraciCommandService helper) : FunctionBase(tcpService, helper)
+public partial class VehicleType(
+    ISumoConnectService sumoConnectService,
+    ITraciCommandService traciCommandService
+) : FunctionBase(sumoConnectService, traciCommandService)
     {
-
     /// <summary>
     /// subscribe to a list of variables of a vehicle type
     /// </summary>
@@ -33,5 +35,17 @@ public partial class VehicleType(ISumoConnectService tcpService, ITraciCommandSe
     /// <remarks>
     /// see <see href="https://sumo.dlr.de/docs/TraCI/Object_Variable_Subscription.html#command_0xdx_subscribe_variable"/>
     /// </remarks>
-    public void Subscribe(string typeId, double beginTime, double endTime, List<byte> ListOfVariablesToSubsribeTo) => Helper.ExecuteSubscribeCommand(beginTime, endTime, (byte)CommandIdentifier.Subscribe.VehicleTypeVariable, ListOfVariablesToSubsribeTo, typeId);
+    public void Subscribe(
+        string typeId,
+        double beginTime,
+        double endTime,
+        List<byte> ListOfVariablesToSubsribeTo
+    ) =>
+        Helper.ExecuteSubscribeCommand(
+            beginTime,
+            endTime,
+            (byte)CommandIdentifier.Subscribe.VehicleTypeVariable,
+            ListOfVariablesToSubsribeTo,
+            typeId
+        );
     }

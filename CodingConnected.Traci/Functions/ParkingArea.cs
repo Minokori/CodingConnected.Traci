@@ -1,11 +1,12 @@
 using CodingConnected.Traci.Services;
+
 namespace CodingConnected.Traci.Functions;
 
 /// <summary>
 /// Parking area related Commands
 /// </summary>
-/// <param name="tcpService"></param>
-/// <param name="helper"></param>
+/// <param name="sumoConnectService"></param>
+/// <param name="traciCommandService"></param>
 /// <remarks>
 /// <list type="bullet">
 /// <item>
@@ -16,7 +17,8 @@ namespace CodingConnected.Traci.Functions;
 /// </item>
 /// </list>
 /// </remarks>
-public partial class ParkingArea(ISumoConnectService tcpService, ITraciCommandService helper) : FunctionBase(tcpService, helper)
-    {
-
-    }
+public partial class ParkingArea(
+    ISumoConnectService sumoConnectService,
+    ITraciCommandService traciCommandService
+) : FunctionBase(sumoConnectService, traciCommandService)
+    { }

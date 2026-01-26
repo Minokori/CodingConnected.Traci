@@ -5,8 +5,8 @@ namespace CodingConnected.Traci.Functions;
 /// <summary>
 /// PolygonFunctions related Commands
 /// </summary>
-/// <param name="tcpService"></param>
-/// <param name="helper"></param>
+/// <param name="sumoConnectService"></param>
+/// <param name="traciCommandService"></param>
 /// <remarks>
 /// <list type="bullet">
 /// <item>
@@ -20,7 +20,7 @@ namespace CodingConnected.Traci.Functions;
 /// </item>
 /// </list>
 /// </remarks>
-public partial class PolygonFunctions(ISumoConnectService tcpService, ITraciCommandService helper) : TraciContextSubscribeCommands(tcpService, helper)
+public partial class PolygonFunctions(ISumoConnectService sumoConnectService, ITraciCommandService traciCommandService) : TraciContextSubscribeCommands(sumoConnectService, traciCommandService)
     {
 
     protected override CommandIdentifier.Subscribe ContextSubscribeCommand => CommandIdentifier.Subscribe.PolygonContext;
