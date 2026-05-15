@@ -1,0 +1,18 @@
+<Solution>
+  <Configurations>
+    <Platform Name="Any CPU" />
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Folder Name="/Solution Items/">
+    <File Path=".editorconfig" />
+    <File Path="LICENSE.md" />
+    <File Path="README.md" />
+  </Folder>
+  <Project Path="CodingConnected.Traci.ConsoleTest/CodingConnected.Traci.ConsoleTest.csproj" />
+  <Project Path="CodingConnected.Traci.Constants/CodingConnected.Traci.Constants.csproj" />
+  <Project Path="CodingConnected.Traci.DataTypes/CodingConnected.Traci.DataTypes.csproj" />
+  <Project Path="CodingConnected.Traci.ProtocolTypes/CodingConnected.Traci.ProtocolTypes.csproj" />
+  <Project Path="CodingConnected.Traci/CodingConnected.Traci.csproj" />
+  <Project Path="Minokori.Traffic.TraciExample/Minokori.Traffic.TraciExample.csproj" Id="07488adc-5167-4835-9aa8-92bbee6403e6" />
+</Solution>

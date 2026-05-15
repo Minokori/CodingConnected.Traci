@@ -1,0 +1,39 @@
+using CodingConnected.Traci.Services;
+namespace CodingConnected.Traci.Functions;
+
+/// <summary>
+/// Vehicle related Commands
+/// </summary>
+/// <param name="sumoConnectService"></param>
+/// <param name="traciCommandService"></param>
+/// <remarks>
+/// <list type="bullet">
+/// <item>
+/// subscribe-commands part see <see href="https://sumo.dlr.de/docs/TraCI/Object_Variable_Subscription.html#command_0xdx_subscribe_variable"/>
+/// </item>
+/// <item>
+/// get-commands part see <see href="https://sumo.dlr.de/docs/TraCI/Vehicle_Value_Retrieval.html"/>
+/// </item>
+/// <item>
+///  set-commands part see <see href="https://sumo.dlr.de/docs/TraCI/Change_Vehicle_State.html"/>
+/// </item>
+/// </list>
+/// </remarks>
+public partial class Vehicle(ISumoConnectService sumoConnectService, ITraciCommandService traciCommandService, Simulation simulation)
+    : TraciContextSubscribeCommands(sumoConnectService, traciCommandService)
+    {
+    protected override Subscribe ContextSubscribeCommand => CommandIdentifier.Subscribe.VehicleContext;
+    private Simulation Simulation { get; init; } = simulation;
+
+    /// <summary>
+    /// subscribe to a list of variables of a vehicle
+    /// </summary>
+    /// <param name="vehicleId">vehicle type ID</param>
+    /// <param name="beginTime">the subscription is executed only in time steps &gt;= this value; in ms</param>
+    /// <param name="endTime">the subscription is executed in time steps &lt;= this value; the subscription is removed if the simulation has reached a higher time step; in ms</param>
+    /// <param name="ListOfVariablesToSubsribeTo">The list of variables to return. please refer to <see cref="TraciConstants"/></param>
+    /// <remarks>
+    /// see <see href="https://sumo.dlr.de/docs/TraCI/Object_Variable_Subscription.html#command_0xdx_subscribe_variable"/>
+    /// </remarks>
+    public void Subscribe(string vehicleId, double beginTime, double endTime, List<byte> ListOfVariablesToSubsribeTo) => Helper.ExecuteSubscribeCommand(beginTime, endTime, (byte)CommandIdentifier.Subscribe.VehicleVariable, ListOfVariablesToSubsribeTo, vehicleId);
+    }

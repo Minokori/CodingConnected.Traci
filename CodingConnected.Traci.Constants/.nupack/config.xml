@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<NuPackConfig xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <PackArgs>
+    <OutputDirectory>D:\Lenovo\Documents\Visual Studio 2022\Projects\CodingConnected.Traci\CodingConnected.Traci.Constants\bin\NuPack</OutputDirectory>
+    <IncludeSymbols>false</IncludeSymbols>
+    <IncludeSource>false</IncludeSource>
+    <NoBuild>false</NoBuild>
+    <NoDependencies>false</NoDependencies>
+  </PackArgs>
+  <SymbolServers />
+</NuPackConfig>
